@@ -61,7 +61,7 @@ export default function WhatIsSection() {
           src="/images/background_gradient.webp"
           alt=""
           fill
-          priority
+          loading="lazy"
           quality={100}
           sizes="100vw"
           className="object-cover"

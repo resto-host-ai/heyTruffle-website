@@ -71,7 +71,7 @@ export default function ResultsSection() {
           src="/images/gradiante2.webp"
           alt=""
           fill
-          priority
+          loading="lazy"
           quality={100}
           sizes="100vw"
           className="object-cover"
