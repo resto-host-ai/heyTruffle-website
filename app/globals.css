@@ -8,8 +8,30 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  /* heytruffle brand cream — from Figma variable "White" */
+  --color-cream: #f6f3ec;
+  --color-brand-orange: #ef7200;
+  --color-brand-purple: #d592f3;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
+
+/* Infinite logo carousel */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee {
+  animation: marquee 45s linear infinite;
+}
+
+.group:hover .marquee {
+  animation-play-state: paused;
 }
 
 @media (prefers-color-scheme: dark) {
