@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 /** Nav links, in the order shown in the Figma design. */
 const NAV_LINKS = [
@@ -16,9 +16,23 @@ const NAV_LINKS = [
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="absolute inset-x-0 top-0 z-50 h-[90px] bg-gradient-to-b from-black/75 via-black/55 to-black/10">
+    <header
+      className={`fixed inset-x-0 top-0 z-50 backdrop-blur-xl transition-all duration-300 ${
+        scrolled
+          ? "h-[60px] bg-[#1c1917]/85 shadow-[0_8px_30px_rgba(0,0,0,0.25)]"
+          : "h-[80px] bg-black/35"
+      }`}
+    >
       <div className="mx-auto flex h-full max-w-[1280px] items-center justify-between px-6 md:px-10">
         {/* Logo */}
         <Link

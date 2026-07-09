@@ -3,6 +3,8 @@ import TrustedBy from "@/components/TrustedBy";
 import MomentSection from "@/components/MomentSection";
 import WhatIsSection from "@/components/WhatIsSection";
 import ResultsSection from "@/components/ResultsSection";
+import CaseStudies from "@/components/CaseStudies";
+import TeamSection from "@/components/TeamSection";
 
 export default function Home() {
   return (
@@ -15,6 +17,8 @@ export default function Home() {
         <WhatIsSection />
       </div>
       <ResultsSection />
+      <CaseStudies />
+      <TeamSection />
     </>
   );
 }

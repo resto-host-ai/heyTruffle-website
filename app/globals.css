@@ -46,3 +46,10 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Tailwind 4 resets buttons to cursor: default — restore pointer on all
+   interactive buttons (except disabled ones). */
+button:not(:disabled),
+[role="button"]:not(:disabled) {
+  cursor: pointer;
+}
