@@ -60,8 +60,10 @@ export default function ResultsSection() {
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
-          maskImage: "linear-gradient(to bottom, transparent 0%, #000 8%)",
-          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, #000 8%)",
+          maskImage:
+            "linear-gradient(to bottom, transparent 0%, #000 8%, #000 78%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, transparent 0%, #000 8%, #000 78%, transparent 100%)",
         }}
       >
         <Image
