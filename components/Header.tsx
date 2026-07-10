@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 /** Nav links, in the order shown in the reference design. */
 const NAV_BEFORE = [
   { label: "ROI Calculator", href: "/roi-calculator" },
-  { label: "Testimonials", href: "#testimonials" },
+  { label: "Testimonials", href: "/testimonials" },
   { label: "Case Study", href: "#case-studies" },
 ];
 
