@@ -147,7 +147,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="mailto:info@heytruffle.ai"
+                  href="mailto:info@heytruffle.com"
                   className="flex items-center gap-2.5 text-sm text-[#251f21]/80 transition-colors hover:text-[#251f21]"
                 >
                   <svg
@@ -165,7 +165,7 @@ export default function Footer() {
                     <rect x="2" y="4" width="20" height="16" rx="2" />
                     <path d="m2 7 10 6 10-6" />
                   </svg>
-                  info@heytruffle.ai
+                  info@heytruffle.com
                 </a>
               </li>
             </ul>
