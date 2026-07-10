@@ -34,6 +34,34 @@
   animation-play-state: paused;
 }
 
+/* ROI calculator — each step fades in when it mounts */
+@keyframes roi-fade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.roi-fade {
+  animation: roi-fade 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* ROI calculator — hide the number input's native spinners */
+.roi-number-input::-webkit-outer-spin-button,
+.roi-number-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.roi-number-input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
 /* Voice demo — transcript lines slide in as they're spoken */
 @keyframes msg-in {
   from {
