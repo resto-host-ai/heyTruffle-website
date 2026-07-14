@@ -1,5 +1,51 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { NOISE } from "@/lib/noise";
+
+/** Rises from below when it scrolls into view (once). */
+function RevealStep({
+  className = "",
+  children,
+}: {
+  className?: string;
+  children: ReactNode;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [shown, setShown] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShown(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.3, rootMargin: "0px 0px -12% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        transform: shown ? "none" : "translateY(50px)",
+        opacity: shown ? 1 : 0,
+        transition:
+          "transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s ease-out",
+      }}
+    >
+      {children}
+    </div>
+  );
+}
 
 const STATS = [
   {
@@ -89,27 +135,36 @@ export default function ResultsSection() {
 
         <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-[1fr_1fr_1.7fr]">
           {STATS.map((stat) => (
-            <div
-              key={stat.title}
-              className="relative flex min-h-[240px] flex-col overflow-hidden rounded-3xl p-7 md:min-h-[300px] md:p-8"
-              style={{
-                backgroundImage: `linear-gradient(180deg, #251f21 4%, ${stat.color} 115%)`,
-              }}
-            >
-              {/* grain */}
+            <div key={stat.title} className="relative">
+              {/* soft glow behind the card, in its own colour */}
               <div
                 aria-hidden
-                className="pointer-events-none absolute inset-0 opacity-40 mix-blend-overlay"
-                style={{ backgroundImage: NOISE }}
+                className="pointer-events-none absolute -inset-3 rounded-[34px] opacity-35 blur-2xl"
+                style={{ backgroundColor: stat.color }}
               />
-              <div className="relative flex h-full flex-col">
-                <h3 className="text-xl text-cream/95 md:text-2xl">{stat.title}</h3>
-                <p className="mt-6 font-light leading-none text-cream text-6xl md:text-7xl">
-                  {stat.value}
-                </p>
-                <p className="mt-auto max-w-[16rem] pt-8 text-sm leading-snug text-cream/80">
-                  {stat.desc}
-                </p>
+              <div
+                className="relative flex h-full min-h-[240px] flex-col overflow-hidden rounded-3xl p-7 md:min-h-[300px] md:p-8"
+                style={{
+                  backgroundImage: `linear-gradient(180deg, #251f21 4%, ${stat.color} 115%)`,
+                }}
+              >
+                {/* grain */}
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 opacity-40 mix-blend-overlay"
+                  style={{ backgroundImage: NOISE }}
+                />
+                <div className="relative flex h-full flex-col items-center text-center md:items-start md:text-left">
+                  <h3 className="text-xl text-cream/95 md:text-2xl">
+                    {stat.title}
+                  </h3>
+                  <p className="mt-6 font-light leading-none text-cream text-6xl md:text-7xl">
+                    {stat.value}
+                  </p>
+                  <p className="mt-auto max-w-[16rem] pt-8 text-sm leading-snug text-cream/80">
+                    {stat.desc}
+                  </p>
+                </div>
               </div>
             </div>
           ))}
@@ -131,9 +186,12 @@ export default function ResultsSection() {
             so your team can stay focused on running the restaurant.
           </p>
 
-          <div className="mt-24 flex flex-col gap-24 md:mt-32 md:gap-28">
+          <div className="mt-24 flex flex-col items-center gap-24 md:mt-32 md:items-start md:gap-28">
             {STEPS.map((step) => (
-              <div key={step.n} className={`max-w-sm ${step.indent}`}>
+              <RevealStep
+                key={step.n}
+                className={`flex max-w-sm flex-col items-center text-center md:block md:text-left ${step.indent}`}
+              >
                 <div
                   className="flex h-11 w-11 items-center justify-center rounded-full border border-white/25 text-sm font-bold text-cream shadow-[inset_0_2px_2px_rgba(255,255,255,0.5),inset_0_-3px_5px_rgba(0,0,0,0.4),0_5px_14px_rgba(0,0,0,0.35)]"
                   style={{ backgroundImage: step.circle }}
@@ -149,7 +207,7 @@ export default function ResultsSection() {
                 <p className="mt-3 text-sm leading-relaxed text-cream/70">
                   {step.desc}
                 </p>
-              </div>
+              </RevealStep>
             ))}
           </div>
         </div>

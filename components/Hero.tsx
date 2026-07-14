@@ -1,10 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import { openCalendly } from "@/components/BookDemoButton";
 
 export default function Hero() {
   return (
-    <section className="relative flex h-screen w-full items-center justify-center overflow-hidden">
+    <section className="relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden py-28 sm:py-24">
       {/* Static gradient background */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <Image
@@ -53,18 +54,18 @@ export default function Hero() {
 
         {/* Search + primary CTA */}
         <form
-          className="mt-2 flex h-[64px] w-full max-w-[559px] items-center overflow-hidden rounded-full border border-white/40 bg-[#f6f3ec]/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg"
+          className="mt-2 flex h-[56px] w-full max-w-[559px] items-center overflow-hidden rounded-full border border-white/40 bg-[#f6f3ec]/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg sm:h-[64px]"
           onSubmit={(e) => e.preventDefault()}
         >
           <input
             type="text"
             placeholder="Search for your restaurant"
             aria-label="Search for your restaurant"
-            className="h-full min-w-0 flex-1 bg-transparent pl-[38px] pr-4 text-[20px] leading-[1.1] text-[#251f21] outline-none placeholder:text-[#251f21]"
+            className="h-full min-w-0 flex-1 bg-transparent pl-6 pr-3 text-base leading-[1.1] text-[#251f21] outline-none placeholder:text-[#251f21] sm:pl-[38px] sm:pr-4 sm:text-[20px]"
           />
           <button
             type="submit"
-            className="flex h-full shrink-0 items-center justify-center gap-4 rounded-full bg-brand-orange px-[44px] text-[20px] font-bold leading-[1.1] text-[#f6f3ec] transition-colors hover:bg-[#d96700]"
+            className="flex h-full shrink-0 items-center justify-center gap-2 rounded-full bg-brand-orange px-6 text-base font-bold leading-[1.1] text-[#f6f3ec] transition-colors hover:bg-[#d96700] sm:gap-4 sm:px-[44px] sm:text-[20px]"
           >
             Try HeyTruffle
             <svg
@@ -87,6 +88,7 @@ export default function Hero() {
         {/* Secondary CTA */}
         <button
           type="button"
+          onClick={() => void openCalendly()}
           className="mt-6 flex h-[64px] items-center justify-center rounded-full bg-[#1c1917]/85 px-9 text-[20px] font-semibold text-cream shadow-lg backdrop-blur-md transition-colors hover:bg-[#1c1917]"
         >
           Talk to our team

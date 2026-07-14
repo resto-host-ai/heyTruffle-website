@@ -226,14 +226,30 @@ export default function HostsDemo() {
                 aria-label={`Play a sample call with ${h.name}`}
                 className="group flex flex-col items-center text-center"
               >
-                <Image
-                  src={h.image}
-                  alt={h.name}
-                  width={342}
-                  height={337}
-                  unoptimized
-                  className="h-44 w-44 object-contain transition-transform duration-300 group-hover:scale-105 md:h-52 md:w-52"
-                />
+                <span className="relative flex items-center justify-center">
+                  {/* sonar rings rippling outward in the host's colour */}
+                  <span
+                    aria-hidden
+                    className="host-ring pointer-events-none h-40 w-40 md:h-48 md:w-48"
+                    style={{ borderColor: h.color, animationDelay: "0s" }}
+                  />
+                  <span
+                    aria-hidden
+                    className="host-ring pointer-events-none h-40 w-40 md:h-48 md:w-48"
+                    style={{ borderColor: h.color, animationDelay: "1.5s" }}
+                  />
+                  <span className="host-alive relative block">
+                    {/* synchronized: no per-host delay */}
+                    <Image
+                      src={h.image}
+                      alt={h.name}
+                      width={342}
+                      height={337}
+                      unoptimized
+                      className="h-44 w-44 object-contain transition-transform duration-300 group-hover:scale-105 md:h-52 md:w-52"
+                    />
+                  </span>
+                </span>
                 <span className="mt-3 transition-transform duration-300 group-hover:scale-110">
                   <PlayIcon color={h.color} />
                 </span>

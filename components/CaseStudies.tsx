@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 type Case = {
@@ -39,9 +40,9 @@ const CASES: Case[] = [
   },
 ];
 
-// Percentage of the viewport each card occupies — the rest is the "peek"
-// of the next card on the right. Gap is added on top in the transform.
-const BASIS = 85; // %
+// Each card fills the full carousel width — one case study in view at a time,
+// no peek of the next. Gap is added on top in the transform.
+const BASIS = 100; // %
 const GAP = 16; // px (matches gap-4)
 
 export default function CaseStudies() {
@@ -69,7 +70,14 @@ export default function CaseStudies() {
         </p>
 
         {/* Carousel */}
-        <div className="mt-14 overflow-hidden">
+        <div className="relative mt-14">
+          {/* soft glow behind the active card, in its accent colour */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -inset-4 rounded-[36px] opacity-30 blur-3xl transition-colors duration-500"
+            style={{ backgroundColor: CASES[index].accent }}
+          />
+          <div className="relative overflow-hidden">
           <div
             className="flex gap-4 transition-transform duration-500 ease-out"
             style={{
@@ -79,7 +87,7 @@ export default function CaseStudies() {
             {CASES.map((c, i) => (
               <article
                 key={c.name}
-                className="relative flex shrink-0 grow-0 basis-[88%] flex-col overflow-hidden rounded-[28px] shadow-[0_24px_60px_rgba(0,0,0,0.35)] transition-colors duration-500 ease-out md:min-h-[400px] md:flex-row md:basis-[85%]"
+                className="relative flex w-full shrink-0 grow-0 basis-full flex-col overflow-hidden rounded-[28px] shadow-[0_24px_60px_rgba(0,0,0,0.35)] transition-colors duration-500 ease-out md:min-h-[400px] md:flex-row"
                 style={{ backgroundColor: i === index ? c.bg : c.bgIdle }}
               >
                 {/* Text */}
@@ -124,6 +132,7 @@ export default function CaseStudies() {
               </article>
             ))}
           </div>
+          </div>
         </div>
 
         {/* Dots */}
@@ -146,12 +155,12 @@ export default function CaseStudies() {
 
         {/* CTA */}
         <div className="mt-12 flex justify-center">
-          <button
-            type="button"
+          <Link
+            href="/case-study"
             className="rounded-full bg-brand-orange px-7 py-3.5 text-sm font-semibold text-cream transition-colors hover:bg-[#d96700]"
           >
             See all case studies
-          </button>
+          </Link>
         </div>
       </div>
     </section>

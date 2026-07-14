@@ -93,6 +93,50 @@
   animation: host-breathe 2.4s ease-in-out infinite;
 }
 
+/* Meet-the-hosts grid — avatars gently pulse so they feel "alive".
+   Lives on a wrapper so the image's hover scale still composes on top. */
+@keyframes host-alive {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.055);
+  }
+}
+.host-alive {
+  animation: host-alive 3.4s ease-in-out infinite;
+}
+
+/* Sonar rings that ripple outward from each avatar. transform carries the
+   centring translate so it composes with the scale inside the keyframe. */
+@keyframes host-ring {
+  0% {
+    transform: translate(-50%, -50%) scale(0.82);
+    opacity: 0.5;
+  }
+  70% {
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.45);
+    opacity: 0;
+  }
+}
+.host-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  /* Base state matches the 0% keyframe so the ring stays centred and hidden
+     even before/between animation cycles (e.g. during animation-delay). */
+  transform: translate(-50%, -50%) scale(0.82);
+  opacity: 0;
+  border-radius: 9999px;
+  border-width: 1.5px;
+  border-style: solid;
+  animation: host-ring 3s ease-out infinite both;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -106,9 +150,144 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* No widow/orphan words site-wide: balance short headings, and keep body
+   copy "pretty" so a lone word never wraps onto its own last line. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+p,
+li,
+blockquote,
+figcaption,
+summary,
+dt,
+dd {
+  text-wrap: pretty;
+}
+
 /* Tailwind 4 resets buttons to cursor: default — restore pointer on all
    interactive buttons (except disabled ones). */
 button:not(:disabled),
 [role="button"]:not(:disabled) {
   cursor: pointer;
+}
+
+/* Blog article body — markdown rendered to HTML gets styled here, matching
+   the home's warm/dark palette and serif headings. */
+.post-body {
+  color: rgba(37, 31, 33, 0.8);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+.post-body > :first-child {
+  margin-top: 0;
+}
+.post-body h2 {
+  font-family: var(--font-serif, ui-serif, Georgia, serif);
+  color: #251f21;
+  font-size: 1.75rem;
+  line-height: 1.2;
+  margin-top: 2.75rem;
+  margin-bottom: 1rem;
+}
+.post-body h3 {
+  font-family: var(--font-serif, ui-serif, Georgia, serif);
+  color: #251f21;
+  font-size: 1.35rem;
+  line-height: 1.25;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+.post-body h4 {
+  color: #251f21;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+.post-body p {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+.post-body a {
+  color: var(--color-brand-orange);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(239, 114, 0, 0.35);
+}
+.post-body a:hover {
+  text-decoration-color: var(--color-brand-orange);
+}
+.post-body strong {
+  color: #251f21;
+  font-weight: 600;
+}
+.post-body ul,
+.post-body ol {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+.post-body ul {
+  list-style: none;
+  padding-left: 0;
+}
+.post-body ul > li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+}
+.post-body ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  height: 0.4rem;
+  width: 0.4rem;
+  border-radius: 9999px;
+  background-image: linear-gradient(to right, #b53fc4, #ef7200);
+}
+.post-body ol {
+  list-style: decimal;
+}
+.post-body ol > li {
+  margin-top: 0.5rem;
+  padding-left: 0.25rem;
+}
+.post-body ol > li::marker {
+  color: var(--color-brand-orange);
+  font-weight: 600;
+}
+.post-body blockquote {
+  margin: 1.75rem 0;
+  padding: 0.5rem 0 0.5rem 1.5rem;
+  border-left: 3px solid var(--color-brand-orange);
+  color: rgba(37, 31, 33, 0.7);
+  font-style: italic;
+}
+.post-body h2 + p,
+.post-body h3 + p {
+  margin-top: 0.5rem;
+}
+.post-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 1rem;
+  margin: 2rem 0;
+}
+.post-body hr {
+  border: 0;
+  border-top: 1px solid rgba(37, 31, 33, 0.12);
+  margin: 2.5rem 0;
+}
+.post-body code {
+  background: rgba(37, 31, 33, 0.06);
+  padding: 0.15em 0.4em;
+  border-radius: 0.35rem;
+  font-size: 0.9em;
 }

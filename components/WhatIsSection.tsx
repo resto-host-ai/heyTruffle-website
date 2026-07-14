@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import HostsDemo from "./HostsDemo";
 
 const STATEMENTS = [
@@ -8,6 +11,25 @@ const STATEMENTS = [
 ];
 
 export default function WhatIsSection() {
+  const pillsRef = useRef<HTMLDivElement>(null);
+  const [struck, setStruck] = useState(false);
+
+  useEffect(() => {
+    const el = pillsRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStruck(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.5, rootMargin: "0px 0px -10% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <section className="relative overflow-hidden bg-[#251f21] pb-16 pt-8 md:pb-20 md:pt-10">
       {/* background_gradient.webp, faded at the top so it blends into the
@@ -38,14 +60,32 @@ export default function WhatIsSection() {
           What is Hey Truffle?
         </p>
 
-        <div className="mt-10 flex w-full max-w-[620px] flex-col gap-5">
-          {STATEMENTS.map((text) => (
+        <div
+          ref={pillsRef}
+          className="mt-10 flex w-full max-w-[620px] flex-col gap-5"
+        >
+          {STATEMENTS.map((text, i) => (
             <div
               key={text}
               className="flex h-[76px] items-center justify-center rounded-full border border-white/40 bg-[#f6f3ec]/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg"
             >
-              <span className="font-serif text-2xl text-cream line-through decoration-2 md:text-3xl">
+              <span className="relative inline-block font-serif text-2xl text-cream md:text-3xl">
                 {text}
+                {/* Same word with a real strikethrough, overlaid exactly on
+                    top and wiped in left-to-right — so the line always tracks
+                    the glyphs and never overshoots into the pill. */}
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 line-through decoration-2 md:decoration-[3px]"
+                  style={{
+                    clipPath: struck ? "inset(0 0 0 0)" : "inset(0 100% 0 0)",
+                    transition: `clip-path 0.55s cubic-bezier(0.65, 0, 0.35, 1) ${
+                      i * 0.18
+                    }s`,
+                  }}
+                >
+                  {text}
+                </span>
               </span>
             </div>
           ))}

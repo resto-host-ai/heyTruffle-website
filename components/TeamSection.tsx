@@ -76,7 +76,7 @@ export default function TeamSection() {
         </div>
 
         {/* ---- CTA card ---- */}
-        <div className="mt-24 grid grid-cols-1 items-center gap-10 rounded-[40px] bg-[#f6f3ec] px-10 py-12 shadow-[0_24px_60px_rgba(0,0,0,0.18)] md:mt-32 md:grid-cols-2 md:px-14 md:py-16">
+        <div className="mt-24 grid grid-cols-1 items-center gap-10 rounded-[40px] bg-[#f6f3ec] px-10 py-12 text-center shadow-[0_24px_60px_rgba(0,0,0,0.18)] md:mt-32 md:grid-cols-2 md:px-14 md:py-16 md:text-left">
           <h3 className="font-serif text-3xl leading-snug text-brand-orange md:text-4xl">
             Hear what HeyTruffle
             <br />
@@ -84,7 +84,7 @@ export default function TeamSection() {
             <br />
             your restaurant.
           </h3>
-          <div className="flex flex-col items-start">
+          <div className="flex flex-col items-center md:items-start">
             <p className="text-base font-semibold leading-snug text-[#251f21] md:text-lg">
               Start with a 90-day pilot.
               <br />
@@ -96,7 +96,7 @@ export default function TeamSection() {
             >
               Hear how your restaurant sounds
             </button>
-            <p className="mt-3 pl-2 text-xs text-[#251f21]/70">
+            <p className="mt-3 text-xs text-[#251f21]/70 md:pl-2">
               30 seconds. We call you.
             </p>
           </div>

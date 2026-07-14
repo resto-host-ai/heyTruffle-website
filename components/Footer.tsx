@@ -7,25 +7,25 @@ const COLUMNS = [
     links: [
       { label: "Features", href: "#features" },
       { label: "Pricing", href: "#pricing" },
-      { label: "ROI Calculator", href: "#roi-calculator" },
-      { label: "Testimonials", href: "#testimonials" },
+      { label: "ROI Calculator", href: "/roi-calculator" },
+      { label: "Testimonials", href: "/testimonials" },
     ],
   },
   {
     heading: "Company",
     links: [
-      { label: "Case Studies", href: "#case-studies" },
-      { label: "Blog", href: "#blog" },
-      { label: "FAQ", href: "#faq" },
+      { label: "Case Studies", href: "/case-study" },
+      { label: "Blog", href: "/blog" },
+      { label: "FAQ", href: "/faq" },
       { label: "Become a Partner", href: "#become-a-partner" },
-      { label: "Contact", href: "#contact" },
+      { label: "Contact", href: "mailto:info@heytruffle.com" },
     ],
   },
   {
     heading: "Legal",
     links: [
-      { label: "Privacy Policy", href: "#privacy-policy" },
-      { label: "Terms of Service", href: "#terms-of-service" },
+      { label: "Privacy Policy", href: "/privacy-policy" },
+      { label: "Terms of Service", href: "/terms-of-service" },
     ],
   },
 ];
@@ -34,9 +34,9 @@ export default function Footer() {
   return (
     <footer className="bg-gradient-to-b from-white to-[#e9e7e3] pt-20 text-[#251f21]">
       <div className="mx-auto max-w-[1280px] px-6 md:px-10">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-[2fr_1fr_1fr_1fr_1.2fr] md:gap-8">
+        <div className="grid grid-cols-1 gap-12 text-center md:grid-cols-[2fr_1fr_1fr_1fr_1.2fr] md:gap-8 md:text-left">
           {/* Brand */}
-          <div>
+          <div className="flex flex-col items-center md:items-start">
             <Link href="/" aria-label="heytruffle home">
               {/* Logo asset is cream — darken it for the light background */}
               <Image
@@ -52,7 +52,7 @@ export default function Footer() {
               A fully managed voice AI service that answers every call for your
               restaurant.
             </p>
-            <div className="mt-8 flex gap-3">
+            <div className="mt-8 flex justify-center gap-3 md:justify-start">
               <a
                 href="https://www.linkedin.com"
                 target="_blank"
@@ -105,12 +105,21 @@ export default function Footer() {
               <ul className="mt-6 space-y-4">
                 {col.links.map(({ label, href }) => (
                   <li key={label}>
-                    <Link
-                      href={href}
-                      className="text-sm text-[#251f21]/80 transition-colors hover:text-[#251f21]"
-                    >
-                      {label}
-                    </Link>
+                    {href.startsWith("mailto:") ? (
+                      <a
+                        href={href}
+                        className="text-sm text-[#251f21]/80 transition-colors hover:text-[#251f21]"
+                      >
+                        {label}
+                      </a>
+                    ) : (
+                      <Link
+                        href={href}
+                        className="text-sm text-[#251f21]/80 transition-colors hover:text-[#251f21]"
+                      >
+                        {label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -126,7 +135,7 @@ export default function Footer() {
               <li>
                 <a
                   href="tel:+14044822738"
-                  className="flex items-center gap-2.5 text-sm text-[#251f21]/80 transition-colors hover:text-[#251f21]"
+                  className="flex items-center justify-center gap-2.5 text-sm text-[#251f21]/80 transition-colors hover:text-[#251f21] md:justify-start"
                 >
                   <svg
                     width="16"
@@ -148,7 +157,7 @@ export default function Footer() {
               <li>
                 <a
                   href="mailto:info@heytruffle.com"
-                  className="flex items-center gap-2.5 text-sm text-[#251f21]/80 transition-colors hover:text-[#251f21]"
+                  className="flex items-center justify-center gap-2.5 text-sm text-[#251f21]/80 transition-colors hover:text-[#251f21] md:justify-start"
                 >
                   <svg
                     width="16"
@@ -174,7 +183,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-16 border-t border-[#251f21]/15 py-8">
-          <p className="text-sm text-[#251f21]/55">
+          <p className="text-center text-sm text-[#251f21]/55 md:text-left">
             © 2026 HeyTruffle. All rights reserved.
           </p>
         </div>
