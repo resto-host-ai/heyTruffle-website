@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import DemoAssistant from "@/components/DemoAssistant";
+import HeroBackground from "@/components/HeroBackground";
 
 export default function Hero() {
   const [query, setQuery] = useState("");
@@ -10,18 +11,8 @@ export default function Hero() {
 
   return (
     <section className="relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden py-28 sm:py-24">
-      {/* Static gradient background */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <Image
-          src="/images/hero-gradiants2.webp"
-          alt=""
-          fill
-          priority
-          quality={100}
-          sizes="100vw"
-          className="object-cover"
-        />
-      </div>
+      {/* Animated gradient background (Figma living-gradient) */}
+      <HeroBackground />
 
       {/* Bottom fade into the #251F21 of the next section */}
       <div

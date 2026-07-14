@@ -44,6 +44,58 @@ html {
   }
 }
 
+/* Hero background — the Figma gradient blobs drift slowly (aurora-style).
+   Percentages resolve against each blob's own box (transform-box: fill-box). */
+.hero-blob {
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform;
+}
+@keyframes hero-drift-a {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(12%, -9%, 0) scale(1.18);
+  }
+}
+@keyframes hero-drift-b {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1.12);
+  }
+  50% {
+    transform: translate3d(-14%, 11%, 0) scale(1);
+  }
+}
+@keyframes hero-drift-c {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate3d(11%, 9%, 0) scale(1.15) rotate(4deg);
+  }
+  66% {
+    transform: translate3d(-10%, -8%, 0) scale(0.9) rotate(-4deg);
+  }
+}
+.hero-b1 { animation: hero-drift-a 19s ease-in-out infinite; }
+.hero-b2 { animation: hero-drift-b 23s ease-in-out infinite; }
+.hero-b3 { animation: hero-drift-c 21s ease-in-out infinite; }
+.hero-b4 { animation: hero-drift-a 25s ease-in-out infinite reverse; }
+.hero-b5 { animation: hero-drift-b 18s ease-in-out infinite; }
+.hero-b6 { animation: hero-drift-c 26s ease-in-out infinite reverse; }
+.hero-b7 { animation: hero-drift-a 22s ease-in-out infinite; }
+.hero-b8 { animation: hero-drift-b 20s ease-in-out infinite reverse; }
+.hero-b9 { animation: hero-drift-c 30s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-blob {
+    animation: none !important;
+  }
+}
+
 /* Rebrand pop-up — modal entrance */
 @keyframes ht-pop {
   from {
