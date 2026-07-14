@@ -175,7 +175,7 @@ export default function ResultsSection() {
         </p>
 
         {/* ---- Getting started is simple ---- */}
-        <div className="mt-40 md:mt-56">
+        <div id="features" className="scroll-mt-24 mt-40 md:mt-56">
           <h2 className="text-center font-serif text-4xl leading-tight md:text-5xl">
             <span className="text-cream">Getting started is simple.</span>
             <br />

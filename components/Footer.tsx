@@ -5,8 +5,7 @@ const COLUMNS = [
   {
     heading: "Product",
     links: [
-      { label: "Features", href: "#features" },
-      { label: "Pricing", href: "#pricing" },
+      { label: "Features", href: "/#features" },
       { label: "ROI Calculator", href: "/roi-calculator" },
       { label: "Testimonials", href: "/testimonials" },
     ],
@@ -17,7 +16,6 @@ const COLUMNS = [
       { label: "Case Studies", href: "/case-study" },
       { label: "Blog", href: "/blog" },
       { label: "FAQ", href: "/faq" },
-      { label: "Become a Partner", href: "#become-a-partner" },
       { label: "Contact", href: "mailto:info@heytruffle.com" },
     ],
   },

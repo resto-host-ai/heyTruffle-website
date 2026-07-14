@@ -13,9 +13,7 @@ const NAV_BEFORE = [
 ];
 
 const NAV_AFTER = [
-  { label: "Features", href: "#features" },
-  { label: "Become a Partner", href: "#become-a-partner" },
-  { label: "Pricing", href: "#pricing" },
+  { label: "Features", href: "/#features" },
   { label: "Blog", href: "/blog" },
 ];
 
@@ -130,14 +128,16 @@ export default function Header() {
           />
         </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden items-center gap-6 lg:flex xl:gap-8">
+        {/* Desktop nav — centered relative to the page */}
+        <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-6 lg:flex xl:gap-8">
           {NAV_BEFORE.map((link) => (
             <NavLink key={link.label} {...link} />
           ))}
 
-          {/* Integrations dropdown */}
-          <div className="group relative">
+          {/* Integrations dropdown — panel centers on the page, not the button
+              (the nav is page-centered, so no `relative` here lets the panel
+              anchor to the nav's centre) */}
+          <div className="group">
             <button
               type="button"
               className="flex items-center gap-1.5 whitespace-nowrap text-[15px] leading-[1.1] text-cream mix-blend-luminosity transition-opacity hover:opacity-70"
@@ -193,9 +193,12 @@ export default function Header() {
           {NAV_AFTER.map((link) => (
             <NavLink key={link.label} {...link} />
           ))}
-
-          <DemoButton />
         </nav>
+
+        {/* Demo button — right side */}
+        <div className="hidden lg:block">
+          <DemoButton />
+        </div>
 
         {/* Mobile menu button */}
         <button
