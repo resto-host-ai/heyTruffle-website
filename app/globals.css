@@ -44,6 +44,21 @@ html {
   }
 }
 
+/* Rebrand pop-up — modal entrance */
+@keyframes ht-pop {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.ht-pop {
+  animation: ht-pop 0.28s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
 /* Monospace accent (KPI labels, dashboard captions) */
 .mono {
   font-family: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
