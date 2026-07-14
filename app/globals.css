@@ -5,6 +5,17 @@
   --foreground: #171717;
 }
 
+/* Smooth-scroll to in-page anchors (Features, Pricing, Meet the hosts, …). */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -12,8 +23,15 @@
   --color-cream: #f6f3ec;
   --color-brand-orange: #ef7200;
   --color-brand-purple: #d592f3;
-  --font-sans: var(--font-geist-sans);
+  /* Type families mirror the RestoHost site: Inter for body/UI, the SF Pro
+     Rounded stack for display headings (Tailwind `font-serif`), Geist Mono
+     for mono accents. */
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
+  --font-display: "SF Pro Rounded", ui-rounded, -apple-system,
+    BlinkMacSystemFont, "Segoe UI Variable", "Segoe UI", var(--font-inter),
+    system-ui, sans-serif;
+  --font-serif: var(--font-display);
 }
 
 /* Infinite logo carousel */
@@ -26,12 +44,88 @@
   }
 }
 
+/* Monospace accent (KPI labels, dashboard captions) */
+.mono {
+  font-family: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  font-feature-settings: "ss01";
+}
+
 .marquee {
   animation: marquee 45s linear infinite;
 }
 
 .group:hover .marquee {
   animation-play-state: paused;
+}
+
+/* Integrations — large full-colour brand tiles in two scroll-parallax rows,
+   mirroring the RestoHost "restaurant stack" section. */
+.int-fade {
+  position: relative;
+  overflow: hidden;
+  padding: 14px 0;
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    black 4%,
+    black 96%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    black 4%,
+    black 96%,
+    transparent 100%
+  );
+}
+.int-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 0 32px;
+  will-change: transform;
+}
+.int-row + .int-row {
+  margin-top: 16px;
+}
+.int-logo-link {
+  display: block;
+  line-height: 0;
+  width: clamp(140px, 17vw, 230px);
+  height: clamp(140px, 17vw, 230px);
+  flex-shrink: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  outline-offset: 4px;
+}
+.int-logo-link:focus-visible {
+  outline: 2px solid var(--color-brand-purple);
+}
+.int-logo {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  transition: transform 0.25s ease;
+}
+.int-logo-link:hover .int-logo {
+  transform: scale(1.04);
+}
+@media (max-width: 720px) {
+  .int-row {
+    gap: 8px;
+    padding: 0 16px;
+  }
+  .int-row + .int-row {
+    margin-top: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .int-row {
+    transform: none !important;
+  }
 }
 
 /* ROI calculator — each step fades in when it mounts */
@@ -147,7 +241,10 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont,
+    "Segoe UI Variable", "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* No widow/orphan words site-wide: balance short headings, and keep body
@@ -159,6 +256,9 @@ h4,
 h5,
 h6 {
   text-wrap: balance;
+  /* Match the RestoHost display treatment: heavier, tighter headings. */
+  font-weight: 600;
+  letter-spacing: -0.025em;
 }
 p,
 li,

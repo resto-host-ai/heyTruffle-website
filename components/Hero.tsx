@@ -1,6 +1,6 @@
-"use client";
-
 import Image from "next/image";
+import { BookDemoButton } from "@/components/BookDemoButton";
+import { MacbookDashboard } from "@/components/macbook-dashboard";
 
 export default function Hero() {
   return (
@@ -25,7 +25,7 @@ export default function Hero() {
       />
 
       {/* Content */}
-      <div className="flex flex-col items-center gap-8 px-6 text-center text-cream">
+      <div className="flex w-full max-w-[1120px] flex-col items-center gap-7 px-6 text-center text-cream">
         {/* Icon */}
         <Image
           src="/images/icono.svg"
@@ -38,59 +38,63 @@ export default function Hero() {
         />
 
         {/* Headline */}
-        <h1 className="font-serif text-5xl font-normal leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
-          You operate the restaurant.
-          <br />
-          We operate the phones.
+        <h1 className="max-w-4xl font-serif text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
+          Never miss <span className="text-[#d592f3]">a call</span> again.
         </h1>
 
-        {/* Subtitle */}
-        <p className="max-w-2xl text-base leading-relaxed text-cream/85 sm:text-lg">
-          A fully managed service that answers every call for your restaurants:
-          every reservation booked, every order taken, every catering inquiry
-          closed.
+        {/* Subhead */}
+        <p className="text-2xl font-medium tracking-tight text-cream/85 sm:text-3xl">
+          Your restaurant&apos;s AI host.
         </p>
 
-        {/* Search + primary CTA */}
-        <form
-          className="mt-2 flex h-[56px] w-full max-w-[559px] items-center overflow-hidden rounded-full border border-white/40 bg-[#f6f3ec]/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg sm:h-[64px]"
-          onSubmit={(e) => e.preventDefault()}
-        >
-          <input
-            type="text"
-            placeholder="Search for your restaurant"
-            aria-label="Search for your restaurant"
-            className="h-full min-w-0 flex-1 bg-transparent pl-6 pr-3 text-base leading-[1.1] text-[#251f21] outline-none placeholder:text-[#251f21] sm:pl-[38px] sm:pr-4 sm:text-[20px]"
-          />
-          <button
-            type="submit"
-            className="flex h-full shrink-0 items-center justify-center gap-2 rounded-full bg-brand-orange px-6 text-base font-bold leading-[1.1] text-[#f6f3ec] transition-colors hover:bg-[#d96700] sm:gap-4 sm:px-[44px] sm:text-[20px]"
-          >
-            Try HeyTruffle
+        {/* Description */}
+        <p className="max-w-2xl text-base leading-relaxed text-cream/80 sm:text-lg">
+          heytruffle is the most customizable, tailor-made voice AI solution for
+          restaurant chains in the U.S. We deeply verticalize with each client,
+          adapting to your brand and operations — pairing industry-leading
+          personalization with hands-on delivery and exceptional support.
+        </p>
+
+        {/* CTAs */}
+        <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
+          <BookDemoButton className="flex items-center gap-2 rounded-full bg-gradient-to-r from-[#b53fc4] to-[#ef7200] px-7 py-3.5 text-base font-bold text-white transition-opacity hover:opacity-90">
+            Get a Free Demo
             <svg
-              width="13"
-              height="27"
-              viewBox="0 0 19 40"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              strokeWidth="3.5"
+              strokeWidth="2.4"
               strokeLinecap="round"
               strokeLinejoin="round"
               aria-hidden
-              className="shrink-0"
             >
-              <path d="M3 4l13 16-13 16" />
+              <path d="M5 12h14M13 6l6 6-6 6" />
             </svg>
-          </button>
-        </form>
+          </BookDemoButton>
+          <a
+            href="#meet-the-hosts"
+            className="flex items-center gap-2 rounded-full bg-[#1c1917]/85 px-7 py-3.5 text-base font-semibold text-cream shadow-lg backdrop-blur-md transition-colors hover:bg-[#1c1917]"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden
+            >
+              <path d="M8 5v14l11-7z" />
+            </svg>
+            Listen to a host
+          </a>
+        </div>
 
-        {/* Secondary CTA */}
-        <a
-          href="mailto:info@heytruffle.com"
-          className="mt-6 flex h-[64px] items-center justify-center rounded-full bg-[#1c1917]/85 px-9 text-[20px] font-semibold text-cream shadow-lg backdrop-blur-md transition-colors hover:bg-[#1c1917]"
-        >
-          Talk to our team
-        </a>
+        {/* Live-style analytics dashboard — a light card that reads clearly
+            over the dark hero gradient */}
+        <div className="mt-12 w-full">
+          <MacbookDashboard />
+        </div>
       </div>
     </section>
   );

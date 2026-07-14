@@ -14,6 +14,7 @@ const NAV_BEFORE = [
 
 const NAV_AFTER = [
   { label: "Features", href: "/#features" },
+  { label: "Pricing", href: "/#pricing" },
   { label: "Blog", href: "/blog" },
 ];
 
@@ -44,10 +45,36 @@ const INTEGRATION_PAGES = new Set([
 const itemHref = (item: string) =>
   INTEGRATION_PAGES.has(item) ? `/integrations/${slug(item)}` : `#${slug(item)}`;
 
+/**
+ * Next's <Link> jumps to same-page anchors instantly, ignoring CSS
+ * scroll-behavior. When the anchor's target lives on the current page,
+ * take over and scroll smoothly instead; otherwise let the link navigate.
+ */
+function smoothScrollToAnchor(
+  href: string,
+  e: React.MouseEvent<HTMLAnchorElement>,
+) {
+  const hashIndex = href.indexOf("#");
+  if (hashIndex === -1) return;
+  if (typeof window === "undefined") return;
+
+  const path = href.slice(0, hashIndex) || "/";
+  // Only intercept when we're already on the page that hosts the target.
+  if (window.location.pathname !== path) return;
+
+  const el = document.getElementById(href.slice(hashIndex + 1));
+  if (!el) return;
+
+  e.preventDefault();
+  el.scrollIntoView({ behavior: "smooth" });
+  window.history.pushState(null, "", href.slice(hashIndex));
+}
+
 function NavLink({ label, href }: { label: string; href: string }) {
   return (
     <Link
       href={href}
+      onClick={(e) => smoothScrollToAnchor(href, e)}
       className="whitespace-nowrap text-[15px] leading-[1.1] text-cream mix-blend-luminosity transition-opacity hover:opacity-70"
     >
       {label}
@@ -317,7 +344,10 @@ export default function Header() {
                 <Link
                   key={label}
                   href={href}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={(e) => {
+                    smoothScrollToAnchor(href, e);
+                    setMenuOpen(false);
+                  }}
                   className="border-b border-white/10 py-4 text-center text-lg font-bold tracking-wide text-cream transition-opacity hover:opacity-70"
                 >
                   {label}

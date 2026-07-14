@@ -205,7 +205,13 @@ export default function Footer() {
             />
           </a>
 
-          <div className="flex flex-col items-center gap-1 text-center text-[13px] leading-[20px] text-[#5c5c5c] md:flex-row md:gap-4 md:text-[14px] md:leading-[30px]">
+          <div
+            className="flex flex-col items-center gap-1 text-center text-[13px] leading-[20px] text-[#5c5c5c] md:flex-row md:gap-4 md:text-[14px] md:leading-[30px]"
+            style={{
+              fontFamily:
+                "var(--font-montserrat), 'Montserrat', system-ui, sans-serif",
+            }}
+          >
             <span>Restaurant Marketing, Content &amp; Web Design</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
