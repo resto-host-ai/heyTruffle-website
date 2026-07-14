@@ -7,16 +7,12 @@ import { openCalendly } from "@/components/BookDemoButton";
 
 /** Nav links, in the order shown in the reference design. */
 const NAV_BEFORE = [
-  { label: "ROI Calculator", href: "/roi-calculator" },
-  { label: "Testimonials", href: "/testimonials" },
-  { label: "Case Study", href: "/case-study" },
+  { label: "Case Studies", href: "/case-study" },
+  { label: "How It Works", href: "/#how-it-works" },
+  { label: "About", href: "/#about" },
 ];
 
-const NAV_AFTER = [
-  { label: "Features", href: "/#features" },
-  { label: "Pricing", href: "/#pricing" },
-  { label: "Blog", href: "/blog" },
-];
+const NAV_AFTER = [{ label: "Contact", href: "/#contact" }];
 
 /** Integrations dropdown, grouped like the design. */
 const INTEGRATIONS = [
@@ -98,7 +94,7 @@ function DemoButton({
       }}
       className={`flex items-center gap-2 whitespace-nowrap rounded-full bg-gradient-to-r from-[#b53fc4] to-[#ef7200] px-5 py-2.5 text-[14px] font-bold text-white transition-opacity hover:opacity-90 ${className}`}
     >
-      Get a Free Demo
+      Book a demo
       <svg
         width="14"
         height="14"
@@ -297,7 +293,10 @@ export default function Header() {
                 <Link
                   key={label}
                   href={href}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={(e) => {
+                    smoothScrollToAnchor(href, e);
+                    setMenuOpen(false);
+                  }}
                   className="border-b border-white/10 py-4 text-center text-lg font-bold tracking-wide text-cream transition-opacity hover:opacity-70"
                 >
                   {label}

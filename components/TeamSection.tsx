@@ -4,7 +4,8 @@ import { NOISE } from "@/lib/noise";
 export default function TeamSection() {
   return (
     <section
-      className="relative overflow-hidden pb-28 pt-24 md:pb-36 md:pt-32"
+      id="about"
+      className="relative scroll-mt-24 overflow-hidden pb-28 pt-24 md:pb-36 md:pt-32"
       style={{
         // Figma: linear fill — White (#f6f3ec) at 21% → #EF7200 at 100%
         backgroundImage: "linear-gradient(180deg, #f6f3ec 21%, #ef7200 100%)",
