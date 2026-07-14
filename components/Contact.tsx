@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
 import { NOISE } from "@/lib/noise";
 
@@ -171,8 +172,21 @@ export default function Contact() {
                 </button>
 
                 <p className="mt-6 text-center text-xs text-cream/50">
-                  By submitting, you agree to our Privacy Policy and Terms of
-                  Service.
+                  By submitting, you agree to our{" "}
+                  <Link
+                    href="/privacy-policy"
+                    className="underline underline-offset-2 transition-colors hover:text-cream"
+                  >
+                    Privacy Policy
+                  </Link>{" "}
+                  and{" "}
+                  <Link
+                    href="/terms-of-service"
+                    className="underline underline-offset-2 transition-colors hover:text-cream"
+                  >
+                    Terms of Service
+                  </Link>
+                  .
                 </p>
               </>
             )}

@@ -120,6 +120,10 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileIntegrationsOpen, setMobileIntegrationsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  // The Calendly popup overlay sits behind the header's blurred, blend-mode
+  // nav, which makes it flicker/blend oddly while loading. Hide the header
+  // whenever that overlay is on the page.
+  const [overlayOpen, setOverlayOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -128,10 +132,20 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const obs = new MutationObserver(() =>
+      setOverlayOpen(!!document.querySelector(".calendly-overlay")),
+    );
+    obs.observe(document.body, { childList: true });
+    return () => obs.disconnect();
+  }, []);
+
   return (
     <>
     <header
       className={`fixed inset-x-0 top-0 z-50 backdrop-blur-xl transition-all duration-300 ${
+        overlayOpen ? "pointer-events-none opacity-0" : ""
+      } ${
         scrolled
           ? "h-[60px] bg-[#1c1917]/85 shadow-[0_8px_30px_rgba(0,0,0,0.25)]"
           : "h-[80px] bg-black/35"

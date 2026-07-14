@@ -34,12 +34,12 @@ export default function TeamSection() {
               That&apos;s the difference between software you maintain and a
               service that takes care of you.
             </p>
-            <button
-              type="button"
-              className="mt-9 rounded-full bg-[#1c1917] px-6 py-3 text-sm font-semibold text-cream transition-colors hover:bg-black"
+            <a
+              href="#contact"
+              className="mt-9 inline-block rounded-full bg-[#1c1917] px-6 py-3 text-sm font-semibold text-cream transition-colors hover:bg-black"
             >
               Talk to our team
-            </button>
+            </a>
           </div>
 
           {/* Portraits — like the Figma: one alpha mask (linear-gradient fill)

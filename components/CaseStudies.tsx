@@ -47,6 +47,8 @@ const GAP = 16; // px (matches gap-4)
 
 export default function CaseStudies() {
   const [index, setIndex] = useState(0);
+  const prev = () => setIndex((i) => (i - 1 + CASES.length) % CASES.length);
+  const next = () => setIndex((i) => (i + 1) % CASES.length);
 
   return (
     <section className="relative overflow-hidden bg-[#251f21] py-24 md:py-32">
@@ -135,22 +137,66 @@ export default function CaseStudies() {
           </div>
         </div>
 
-        {/* Dots */}
-        <div className="mt-8 flex justify-center gap-2.5">
-          {CASES.map((c, i) => (
-            <button
-              key={c.name}
-              type="button"
-              aria-label={`Show ${c.name}`}
-              aria-current={i === index}
-              onClick={() => setIndex(i)}
-              className={`h-2.5 rounded-full transition-all ${
-                i === index
-                  ? "w-2.5 bg-brand-orange"
-                  : "w-2.5 bg-cream/25 hover:bg-cream/40"
-              }`}
-            />
-          ))}
+        {/* Controls — prev arrow, dots, next arrow */}
+        <div className="mt-8 flex items-center justify-center gap-5">
+          <button
+            type="button"
+            aria-label="Previous case study"
+            onClick={prev}
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-cream/25 text-cream transition-colors hover:border-cream/50 hover:bg-cream/10"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden
+            >
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+
+          <div className="flex gap-2.5">
+            {CASES.map((c, i) => (
+              <button
+                key={c.name}
+                type="button"
+                aria-label={`Show ${c.name}`}
+                aria-current={i === index}
+                onClick={() => setIndex(i)}
+                className={`h-2.5 w-2.5 rounded-full transition-all ${
+                  i === index
+                    ? "bg-brand-orange"
+                    : "bg-cream/25 hover:bg-cream/40"
+                }`}
+              />
+            ))}
+          </div>
+
+          <button
+            type="button"
+            aria-label="Next case study"
+            onClick={next}
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-cream/25 text-cream transition-colors hover:border-cream/50 hover:bg-cream/10"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
         </div>
 
         {/* CTA */}
