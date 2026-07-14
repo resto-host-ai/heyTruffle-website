@@ -90,12 +90,12 @@ export default function TeamSection() {
               <br />
               See it work in your own restaurant first.
             </p>
-            <button
-              type="button"
-              className="mt-6 rounded-full bg-brand-orange px-7 py-3.5 text-sm font-semibold text-cream transition-colors hover:bg-[#d96700]"
+            <a
+              href="#meet-the-hosts"
+              className="mt-6 inline-block rounded-full bg-brand-orange px-7 py-3.5 text-sm font-semibold text-cream transition-colors hover:bg-[#d96700]"
             >
               Hear how your restaurant sounds
-            </button>
+            </a>
             <p className="mt-3 text-xs text-[#251f21]/70 md:pl-2">
               30 seconds. We call you.
             </p>

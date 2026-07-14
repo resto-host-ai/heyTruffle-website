@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { openCalendly } from "@/components/BookDemoButton";
 
 export default function Hero() {
   return (
@@ -86,13 +85,12 @@ export default function Hero() {
         </form>
 
         {/* Secondary CTA */}
-        <button
-          type="button"
-          onClick={() => void openCalendly()}
+        <a
+          href="mailto:info@heytruffle.com"
           className="mt-6 flex h-[64px] items-center justify-center rounded-full bg-[#1c1917]/85 px-9 text-[20px] font-semibold text-cream shadow-lg backdrop-blur-md transition-colors hover:bg-[#1c1917]"
         >
           Talk to our team
-        </button>
+        </a>
       </div>
     </section>
   );

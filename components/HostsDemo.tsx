@@ -206,7 +206,7 @@ export default function HostsDemo() {
   }, [revealedCount, activeId]);
 
   return (
-    <div className="mt-12 w-full rounded-[36px] bg-[#f6f3ec] px-6 py-12 shadow-2xl md:px-16 md:py-16">
+    <div id="meet-the-hosts" className="mt-12 w-full scroll-mt-28 rounded-[36px] bg-[#f6f3ec] px-6 py-12 shadow-2xl md:px-16 md:py-16">
       {!host ? (
         <>
           <h3 className="text-center font-serif text-4xl text-[#251f21] md:text-5xl">
