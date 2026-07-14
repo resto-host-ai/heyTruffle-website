@@ -21,7 +21,7 @@ export default function TrustedBy() {
   return (
     <section id="trusted" className="bg-[#251f21] pb-6 pt-16 md:pt-20">
       <div className="mx-auto max-w-[1280px] px-6">
-        <h2 className="text-center text-lg font-medium text-cream/90 md:text-xl">
+        <h2 className="reveal reveal-up text-center text-lg font-medium text-cream/90 md:text-xl">
           Across our restaurants, the AI answers more than{" "}
           <span className="text-[#d592f3]">56,000 calls every month.</span>
         </h2>

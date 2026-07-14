@@ -89,7 +89,7 @@ export default function Contact() {
 
       <div className="relative mx-auto max-w-[1080px] px-6 md:px-10">
         <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-[1fr_1.05fr]">
-          <div>
+          <div className="reveal reveal-up">
             <p className="text-xs uppercase tracking-[0.2em] text-cream/60">
               Get in touch
             </p>
@@ -105,7 +105,8 @@ export default function Contact() {
 
           <form
             onSubmit={onSubmit}
-            className="rounded-[28px] border border-white/10 bg-white/[0.04] p-7 backdrop-blur-sm md:p-8"
+            className="reveal reveal-up rounded-[28px] border border-white/10 bg-white/[0.04] p-7 backdrop-blur-sm md:p-8"
+            style={{ "--reveal-delay": "0.1s" } as React.CSSProperties}
           >
             {status === "submitted" ? (
               <SubmittedState />

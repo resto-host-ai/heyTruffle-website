@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import RebrandModal from "@/components/RebrandModal";
+import ScrollReveal from "@/components/ScrollReveal";
 
 // Same type families as the RestoHost site: Inter for body/UI, Montserrat
 // for the Resto Experience footer bar, and Geist Mono for mono accents.
@@ -43,11 +44,12 @@ export default function RootLayout({
       className={`${inter.variable} ${montserrat.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col overflow-x-hidden">
+      <body className="min-h-full flex flex-col overflow-x-clip">
         <Header />
         {children}
         <Footer />
         <RebrandModal />
+        <ScrollReveal />
       </body>
     </html>
   );

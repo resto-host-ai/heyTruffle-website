@@ -56,7 +56,7 @@ export default function WhatIsSection() {
       </div>
 
       <div className="relative mx-auto flex max-w-[1280px] flex-col items-center px-6 md:px-10">
-        <p className="text-xs uppercase tracking-[0.2em] text-cream/70">
+        <p className="reveal reveal-up text-xs uppercase tracking-[0.2em] text-cream/70">
           What is Hey Truffle?
         </p>
 
@@ -91,7 +91,7 @@ export default function WhatIsSection() {
           ))}
         </div>
 
-        <p className="mt-12 max-w-xl text-center text-base leading-relaxed text-cream/85 md:text-lg">
+        <p className="reveal reveal-up mt-12 max-w-xl text-center text-base leading-relaxed text-cream/85 md:text-lg">
           Most voice AI hands you software to set up and maintain.
           <br />
           We run it for you, so you get the result, not the homework.

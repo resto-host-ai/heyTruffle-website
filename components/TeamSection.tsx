@@ -21,7 +21,7 @@ export default function TeamSection() {
       <div className="relative mx-auto max-w-[1280px] px-6 md:px-10">
         <div className="grid grid-cols-1 items-center gap-14 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
           {/* Copy */}
-          <div>
+          <div className="reveal reveal-up">
             <h2 className="font-serif text-4xl leading-tight text-[#251f21] md:text-5xl">
               You&apos;re never handed
               <br />
@@ -45,7 +45,7 @@ export default function TeamSection() {
 
           {/* Portraits — like the Figma: one alpha mask (linear-gradient fill)
               applied to the whole pair, fading the group's outer edges. */}
-          <div>
+          <div className="reveal reveal-up" style={{ "--reveal-delay": "0.12s" } as React.CSSProperties}>
             <div
               className="grid grid-cols-2 gap-5"
               style={{

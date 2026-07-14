@@ -125,7 +125,7 @@ export default function ResultsSection() {
 
       <div className="relative mx-auto max-w-[1280px] px-6 md:px-10">
         {/* ---- The results speak for themselves ---- */}
-        <h2 className="text-center font-serif text-4xl text-cream md:text-5xl">
+        <h2 className="reveal reveal-up text-center font-serif text-4xl text-cream md:text-5xl">
           The results speak for themselves.
         </h2>
         <p className="mt-4 text-center text-sm text-cream/60">
@@ -176,12 +176,12 @@ export default function ResultsSection() {
 
         {/* ---- Getting started is simple ---- */}
         <div id="how-it-works" className="scroll-mt-24 mt-40 md:mt-56">
-          <h2 className="text-center font-serif text-4xl leading-tight md:text-5xl">
+          <h2 className="reveal reveal-up text-center font-serif text-4xl leading-tight md:text-5xl">
             <span className="text-cream">Getting started is simple.</span>
             <br />
             <span className="text-[#d592f3]">We handle the hard part.</span>
           </h2>
-          <p className="mx-auto mt-5 max-w-xl text-center text-sm leading-relaxed text-cream/70 md:text-base">
+          <p className="reveal reveal-up mx-auto mt-5 max-w-xl text-center text-sm leading-relaxed text-cream/70 md:text-base" style={{ "--reveal-delay": "0.08s" } as React.CSSProperties}>
             We take care of the setup, the training and the ongoing improvements
             so your team can stay focused on running the restaurant.
           </p>

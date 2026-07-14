@@ -44,6 +44,44 @@ html {
   }
 }
 
+/* Scroll-reveal system (ported from the implemented RestoHost design):
+   elements fade + move in when they enter the viewport. ScrollReveal toggles
+   `.is-visible`. Stagger via inline `--reveal-delay`. */
+.reveal {
+  opacity: 0;
+  transition:
+    opacity 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) var(--reveal-delay, 0s),
+    transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) var(--reveal-delay, 0s),
+    filter 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) var(--reveal-delay, 0s);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+}
+.reveal-up { transform: translateY(24px); }
+.reveal-up.is-visible { transform: translateY(0); }
+.reveal-left { transform: translateX(-18px); }
+.reveal-left.is-visible { transform: translateX(0); }
+.reveal-right { transform: translateX(18px); }
+.reveal-right.is-visible { transform: translateX(0); }
+.reveal-zoom { transform: scale(0.96); }
+.reveal-zoom.is-visible { transform: scale(1); }
+.reveal-blur { filter: blur(8px); transform: translateY(10px); }
+.reveal-blur.is-visible { filter: blur(0); transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-up,
+  .reveal-left,
+  .reveal-right,
+  .reveal-zoom,
+  .reveal-blur {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}
+
 /* Hero background — the Figma gradient blobs drift slowly (aurora-style).
    Percentages resolve against each blob's own box (transform-box: fill-box). */
 .hero-blob {
