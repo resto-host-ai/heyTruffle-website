@@ -1,51 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState, type ReactNode } from "react";
 import { NOISE } from "@/lib/noise";
-
-/** Rises from below when it scrolls into view (once). */
-function RevealStep({
-  className = "",
-  children,
-}: {
-  className?: string;
-  children: ReactNode;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [shown, setShown] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShown(true);
-          io.disconnect();
-        }
-      },
-      { threshold: 0.3, rootMargin: "0px 0px -12% 0px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  return (
-    <div
-      ref={ref}
-      className={className}
-      style={{
-        transform: shown ? "none" : "translateY(50px)",
-        opacity: shown ? 1 : 0,
-        transition:
-          "transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s ease-out",
-      }}
-    >
-      {children}
-    </div>
-  );
-}
 
 const STATS = [
   {
@@ -68,33 +24,6 @@ const STATS = [
     desc: "Generate in May from large parties reservations.",
     color: "#ef7200",
     wide: true,
-  },
-];
-
-const STEPS = [
-  {
-    n: "01",
-    title: "We train your AI host.",
-    desc: "We learn your menu, hours, policies, tone and integrations in English and Spanish.",
-    titleColor: "#f6f3ec",
-    circle: "linear-gradient(180deg, #9c5a2a 0%, #3d5c9c 100%)",
-    indent: "md:ml-[6%]",
-  },
-  {
-    n: "02",
-    title: "It answers every call.",
-    desc: "It books reservations, takes pickup and delivery orders directly into your POS, and handles catering, large parties and FAQs.",
-    titleColor: "#d592f3",
-    circle: "linear-gradient(180deg, #8f4a86 0%, #2f3d7c 100%)",
-    indent: "md:ml-[36%]",
-  },
-  {
-    n: "03",
-    title: "It knows when to step back.",
-    desc: "Some conversations need a human. Your AI host escalates those calls to your team, while we continuously monitor and improve performance every week.",
-    titleColor: "#ef7200",
-    circle: "linear-gradient(180deg, #bf6a2e 0%, #3d4a8c 100%)",
-    indent: "md:ml-[62%]",
   },
 ];
 
@@ -123,7 +52,7 @@ export default function ResultsSection() {
         />
       </div>
 
-      <div className="relative mx-auto max-w-[1440px] px-6 md:px-10">
+      <div className="relative mx-auto max-w-[1536px] px-6 md:px-10">
         {/* ---- The results speak for themselves ---- */}
         <h2 className="reveal reveal-up text-center font-serif text-[40px] font-bold! leading-[110%] text-cream md:text-[52px] lg:text-[64px]">
           The results speak for themselves.
@@ -164,47 +93,10 @@ export default function ResultsSection() {
           ))}
         </div>
 
-        <p className="mt-10 text-center text-base text-cream/85">
+        <p className="mt-10 text-center font-body text-[28px] font-normal leading-[120%] text-cream md:text-[40px]">
           Born inside Rreal Tacos from operators to operators.
         </p>
 
-        {/* ---- Getting started is simple ---- */}
-        <div id="how-it-works" className="scroll-mt-24 mt-40 md:mt-56">
-          <h2 className="reveal reveal-up text-center font-serif text-4xl leading-tight md:text-5xl">
-            <span className="text-cream">Getting started is simple.</span>
-            <br />
-            <span className="text-[#d592f3]">We handle the hard part.</span>
-          </h2>
-          <p className="reveal reveal-up font-body mx-auto mt-5 max-w-xl text-center text-sm leading-relaxed text-cream/70 md:text-base" style={{ "--reveal-delay": "0.08s" } as React.CSSProperties}>
-            We take care of the setup, the training and the ongoing improvements
-            so your team can stay focused on running the restaurant.
-          </p>
-
-          <div className="mt-24 flex flex-col items-center gap-24 md:mt-32 md:items-start md:gap-28">
-            {STEPS.map((step) => (
-              <RevealStep
-                key={step.n}
-                className={`flex max-w-sm flex-col items-center text-center md:block md:text-left ${step.indent}`}
-              >
-                <div
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-white/25 text-sm font-bold text-cream shadow-[inset_0_2px_2px_rgba(255,255,255,0.5),inset_0_-3px_5px_rgba(0,0,0,0.4),0_5px_14px_rgba(0,0,0,0.35)]"
-                  style={{ backgroundImage: step.circle }}
-                >
-                  {step.n}
-                </div>
-                <h3
-                  className="mt-5 text-2xl md:text-3xl"
-                  style={{ color: step.titleColor }}
-                >
-                  {step.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-cream/70">
-                  {step.desc}
-                </p>
-              </RevealStep>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );

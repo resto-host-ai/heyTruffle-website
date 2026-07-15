@@ -1,0 +1,141 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
+const STEPS = [
+  {
+    n: "01",
+    title: "We train your AI host.",
+    desc: "We learn your menu, hours, policies, tone and integrations in English and Spanish.",
+    titleColor: "#f6f3ec",
+    circle: "linear-gradient(180deg, #9c5a2a 0%, #3d5c9c 100%)",
+  },
+  {
+    n: "02",
+    title: "It answers every call.",
+    desc: "It books reservations, takes pickup and delivery orders directly into your POS, and handles catering, large parties and FAQs.",
+    titleColor: "#d592f3",
+    circle: "linear-gradient(180deg, #8f4a86 0%, #2f3d7c 100%)",
+  },
+  {
+    n: "03",
+    title: "It knows when to step back.",
+    desc: "Some conversations need a human. Your AI host escalates those calls to your team, while we continuously monitor and improve performance every week.",
+    titleColor: "#ef7200",
+    circle: "linear-gradient(180deg, #bf6a2e 0%, #3d4a8c 100%)",
+  },
+];
+
+export default function HowItWorks() {
+  const pinRef = useRef<HTMLDivElement>(null);
+  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Desktop: the section pins while the three steps reveal one at a time
+  // (fade + rise), each fully in before the next begins. Only once all three
+  // are shown does the page scroll on. Mobile: normal stacked flow, no pin.
+  useEffect(() => {
+    const pin = pinRef.current;
+    if (!pin) return;
+
+    const OFFSET = 150; // px each step rises into place
+    const seg = 1 / STEPS.length; // ordered slice of progress per step
+    const clamp = (n: number, lo = 0, hi = 1) => Math.min(hi, Math.max(lo, n));
+    const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
+
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const isDesktop = window.innerWidth >= 768;
+      if (!isDesktop) {
+        STEPS.forEach((_, i) => {
+          const el = stepRefs.current[i];
+          if (el) {
+            el.style.transform = "";
+            el.style.opacity = "";
+          }
+        });
+        return;
+      }
+
+      // Progress across the pinned scroll distance (0 → 1).
+      const total = pin.offsetHeight - window.innerHeight;
+      const rect = pin.getBoundingClientRect();
+      const p = total > 0 ? clamp(-rect.top / total) : 0;
+      // Finish revealing a bit before release so the third is fully shown while
+      // still pinned.
+      const rp = clamp(p / 0.85);
+
+      STEPS.forEach((_, i) => {
+        const el = stepRefs.current[i];
+        if (!el) return;
+        const localP = clamp((rp - i * seg) / seg);
+        el.style.transform = `translateY(${OFFSET * (1 - easeOut(localP))}px)`;
+        el.style.opacity = String(localP);
+      });
+    };
+
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    update();
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  return (
+    <section id="how-it-works" className="relative scroll-mt-24 bg-[#251f21]">
+      {/* Tall spacer drives the pinned reveal on desktop; auto height on mobile. */}
+      <div ref={pinRef} className="md:relative md:h-[260vh]">
+        <div className="mx-auto flex max-w-[1536px] flex-col px-6 py-24 md:sticky md:top-0 md:h-screen md:justify-center md:overflow-hidden md:px-10 md:py-0">
+          <h2 className="reveal reveal-up text-center font-serif text-[40px] font-bold! leading-[110%] md:text-[52px] lg:text-[64px]">
+            <span className="text-cream">Getting started is simple.</span>
+            <br />
+            <span className="text-[#d592f3]">We handle the hard part.</span>
+          </h2>
+          <p
+            className="reveal reveal-up font-body mx-auto mt-5 max-w-[980px] text-center text-[26px] font-normal leading-[140%] text-cream"
+            style={{ "--reveal-delay": "0.08s" } as React.CSSProperties}
+          >
+            We take care of the setup, the training and the ongoing improvements
+            so your team can stay focused on running the restaurant.
+          </p>
+
+          <div className="mt-16 grid grid-cols-1 gap-16 md:mt-20 md:grid-cols-3 md:items-start md:gap-10">
+            {STEPS.map((step, i) => (
+              <div
+                key={step.n}
+                ref={(el) => {
+                  stepRefs.current[i] = el;
+                }}
+                className="flex max-w-md flex-col items-center text-center will-change-transform md:items-start md:text-left"
+              >
+                <div
+                  className="flex h-16 w-16 items-center justify-center rounded-full border border-white/25 text-lg font-bold text-cream shadow-[inset_0_2px_2px_rgba(255,255,255,0.5),inset_0_-3px_5px_rgba(0,0,0,0.4),0_5px_14px_rgba(0,0,0,0.35)]"
+                  style={{ backgroundImage: step.circle }}
+                >
+                  {step.n}
+                </div>
+                <h3
+                  className="mt-6 font-body text-[28px] font-normal! leading-[120%] md:text-[40px]"
+                  style={{ color: step.titleColor }}
+                >
+                  {step.title}
+                </h3>
+                <p className="mt-3 font-body text-[26px] font-normal leading-[140%] text-cream">
+                  {step.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

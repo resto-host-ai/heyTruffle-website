@@ -40,7 +40,7 @@ export default function Partner() {
   return (
     <>
       <section id="become-a-partner" className="bg-[#251f21] pb-28 md:pb-36">
-        <div className="mx-auto max-w-[1440px] px-6 md:px-10">
+        <div className="mx-auto max-w-[1536px] px-6 md:px-10">
           <div className="relative overflow-hidden rounded-[40px] bg-[#1c1917] px-8 py-16 text-center shadow-[0_24px_60px_rgba(0,0,0,0.35)] md:px-14 md:py-24">
             {/* Warm radial glow, echoing the header CTA gradient */}
             <div

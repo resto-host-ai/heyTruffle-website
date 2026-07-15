@@ -20,7 +20,7 @@ const CARDS: {
     z: 10,
     range: [0.1, 1],
     enter: { x: 0, y: 0, rot: 0, op: 1 },
-    final: { x: -300, y: -94, rot: -10, op: 1 },
+    final: { x: -300, y: -49, rot: -10, op: 1 },
   },
   {
     src: "/images/img2.webp",
@@ -28,7 +28,7 @@ const CARDS: {
     z: 20,
     range: [0.1, 0.55],
     enter: { x: 30, y: 560, rot: 10, op: 0 },
-    final: { x: 0, y: -64, rot: -3, op: 1 },
+    final: { x: 0, y: -19, rot: -3, op: 1 },
   },
   {
     src: "/images/img3.webp",
@@ -36,7 +36,7 @@ const CARDS: {
     z: 30,
     range: [0.5, 0.92],
     enter: { x: 90, y: 600, rot: 16, op: 0 },
-    final: { x: 300, y: -42, rot: 8, op: 1 },
+    final: { x: 300, y: 3, rot: 8, op: 1 },
   },
 ];
 
@@ -108,7 +108,14 @@ export default function MomentSection() {
           <div className="absolute right-[-10%] top-[62%] h-[620px] w-[620px] -translate-y-1/2 rounded-full bg-[#ef7200] opacity-[0.28] blur-[130px]" />
         </div>
 
-        <div className="relative mx-auto flex h-full max-w-[1440px] flex-col px-6">
+        {/* Bottom fade so the glows melt into #251F21 before the section ends
+            (avoids a hard clipped edge against the next section) */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-gradient-to-b from-transparent to-[#251f21]"
+        />
+
+        <div className="relative mx-auto flex h-full max-w-[1536px] flex-col px-6">
           <div className="pt-4 md:pt-16">
             <h2 className="reveal reveal-up text-center font-serif text-[40px] font-bold! leading-[110%] text-[#ef7200] md:text-[52px] lg:text-[64px]">
               You know this moment.
@@ -146,7 +153,7 @@ export default function MomentSection() {
       </div>
 
       {/* Closing line — appears as the pinned scroll releases on desktop */}
-      <div className="relative mx-auto max-w-[1440px] px-6 pb-4 md:absolute md:inset-x-0 md:bottom-6">
+      <div className="relative mx-auto max-w-[1536px] px-6 pb-4 md:absolute md:inset-x-0 md:bottom-6">
         <p className="reveal reveal-up mt-8 text-center font-body text-[26px] font-normal leading-[140%] text-cream md:mt-0">
           Your host can be on the floor, or on the phone.{" "}
           <span className="font-bold text-cream">Not both.</span>

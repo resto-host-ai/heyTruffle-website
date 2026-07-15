@@ -10,7 +10,7 @@ type Case = {
   value: string;
   metric: string;
   desc: string;
-  image: string;
+  image?: string;
   bg: string; // active / centered
   bgIdle: string; // dimmed when off to the side
   accent: string;
@@ -45,31 +45,50 @@ const CASES: Case[] = [
 const BASIS = 100; // %
 const GAP = 16; // px (matches gap-4)
 
-export default function CaseStudies() {
+export default function CaseStudies({
+  heading = "Success you can measure.",
+  subtitle = "From independent restaurants to multi-location groups, these are the outcomes our partners are seeing.",
+  showCta = true,
+  cases = CASES,
+  transparent = false,
+}: {
+  heading?: string;
+  subtitle?: string | null;
+  showCta?: boolean;
+  cases?: Case[];
+  transparent?: boolean;
+} = {}) {
   const [index, setIndex] = useState(0);
-  const prev = () => setIndex((i) => (i - 1 + CASES.length) % CASES.length);
-  const next = () => setIndex((i) => (i + 1) % CASES.length);
+  const prev = () => setIndex((i) => (i - 1 + cases.length) % cases.length);
+  const next = () => setIndex((i) => (i + 1) % cases.length);
 
   return (
-    <section className="relative overflow-hidden bg-[#251f21] py-24 md:py-32">
+    <section
+      className={`relative overflow-hidden py-24 md:py-32 ${
+        transparent ? "" : "bg-[#251f21]"
+      }`}
+    >
       {/* warm ambient glow on the left */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -left-40 top-1/2 h-[520px] w-[520px] -translate-y-1/2 rounded-full opacity-70 blur-[120px]"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(239,114,0,0.45) 0%, rgba(213,146,243,0.22) 45%, transparent 72%)",
-        }}
-      />
+      {!transparent && (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -left-40 top-1/2 h-[520px] w-[520px] -translate-y-1/2 rounded-full opacity-70 blur-[120px]"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(239,114,0,0.45) 0%, rgba(213,146,243,0.22) 45%, transparent 72%)",
+          }}
+        />
+      )}
 
-      <div className="relative mx-auto max-w-[1440px] px-6 md:px-10">
-        <h2 className="reveal reveal-up text-center font-serif text-4xl text-cream md:text-5xl">
-          Success you can measure.
+      <div className="relative mx-auto max-w-[1536px] px-6 md:px-10">
+        <h2 className="reveal reveal-up text-center font-serif text-[40px] font-bold! leading-[110%] text-cream md:text-[52px] lg:text-[64px]">
+          {heading}
         </h2>
-        <p className="reveal reveal-up font-body mx-auto mt-4 max-w-xl text-center text-sm leading-relaxed text-cream/60 md:text-base" style={{ "--reveal-delay": "0.08s" } as React.CSSProperties}>
-          From independent restaurants to multi-location groups, these are the
-          outcomes our partners are seeing.
-        </p>
+        {subtitle && (
+          <p className="reveal reveal-up font-body mx-auto mt-4 max-w-3xl text-center text-[26px] font-normal leading-[140%] text-cream" style={{ "--reveal-delay": "0.08s" } as React.CSSProperties}>
+            {subtitle}
+          </p>
+        )}
 
         {/* Carousel */}
         <div className="relative mt-14">
@@ -77,60 +96,69 @@ export default function CaseStudies() {
           <div
             aria-hidden
             className="pointer-events-none absolute -inset-4 rounded-[36px] opacity-30 blur-3xl transition-colors duration-500"
-            style={{ backgroundColor: CASES[index].accent }}
+            style={{ backgroundColor: cases[index].accent }}
           />
-          <div className="relative overflow-hidden">
+          <div className="relative overflow-hidden rounded-[28px]">
           <div
             className="flex gap-4 transition-transform duration-500 ease-out"
             style={{
               transform: `translateX(calc(${-index} * (${BASIS}% + ${GAP}px)))`,
             }}
           >
-            {CASES.map((c, i) => (
+            {cases.map((c, i) => (
               <article
                 key={c.name}
-                className="relative flex w-full shrink-0 grow-0 basis-full flex-col overflow-hidden rounded-[28px] shadow-[0_24px_60px_rgba(0,0,0,0.35)] transition-colors duration-500 ease-out md:min-h-[400px] md:flex-row"
+                className="relative flex w-full shrink-0 grow-0 basis-full flex-col overflow-hidden rounded-[28px] shadow-[0_24px_60px_rgba(0,0,0,0.35)] transition-colors duration-500 ease-out md:h-[491.919px] md:flex-row"
                 style={{ backgroundColor: i === index ? c.bg : c.bgIdle }}
               >
                 {/* Text */}
                 <div className="relative z-10 flex flex-col justify-center p-8 md:w-1/2 md:p-12">
-                  <h3 className="text-2xl text-[#251f21] md:text-3xl">
+                  <h3 className="font-body text-[28px] font-normal! leading-[120%] text-[#251f21] md:text-[40px]">
                     {c.name}
                   </h3>
                   {c.location && (
-                    <p className="mt-1 text-sm text-[#251f21]/60">
+                    <p className="mt-1 font-body text-[20px] font-normal leading-[100%] text-[#251f21]">
                       {c.location}
                     </p>
                   )}
                   <p
-                    className="mt-8 font-light leading-none text-6xl md:mt-10 md:text-8xl"
+                    className="mt-8 font-body text-[64px] font-normal leading-[110%] md:mt-10 md:text-[96px] lg:text-[124.687px]"
                     style={{ color: c.accent }}
                   >
                     {c.value}
                   </p>
                   <p
-                    className="mt-5 text-xl leading-tight md:text-2xl"
+                    className="mt-5 font-body text-[28px] font-normal leading-[120%] md:text-[40px]"
                     style={{ color: c.accent }}
                   >
                     {c.metric}
                   </p>
-                  <p className="mt-3 max-w-sm text-sm leading-snug text-[#251f21]/75 md:text-base">
+                  <p className="mt-3 max-w-md font-body text-[26px] font-normal leading-[140%] text-[#251f21]">
                     {c.desc}
                   </p>
                 </div>
 
-                {/* Image — pinned top-to-bottom so it always fills the card (no gaps),
-                    with a soft shadow cast onto the text panel */}
-                <div className="relative h-52 w-full overflow-hidden md:absolute md:inset-y-0 md:right-0 md:h-auto md:w-1/2 md:rounded-l-[28px] md:shadow-[-18px_0_36px_rgba(0,0,0,0.25)]">
-                  <Image
-                    src={c.image}
-                    alt={c.name}
-                    fill
-                    quality={100}
-                    sizes="(max-width: 768px) 90vw, 45vw"
-                    className="scale-[1.03] object-cover"
+                {/* Image (or an accent gradient when a photo isn't available),
+                    pinned top-to-bottom so it always fills the card */}
+                {c.image ? (
+                  <div className="relative h-52 w-full overflow-hidden md:absolute md:inset-y-0 md:right-0 md:h-auto md:w-1/2 md:rounded-[28px] md:shadow-[-18px_0_36px_rgba(0,0,0,0.25)]">
+                    <Image
+                      src={c.image}
+                      alt={c.name}
+                      fill
+                      quality={100}
+                      sizes="(max-width: 768px) 90vw, 45vw"
+                      className="object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div
+                    className="relative h-52 w-full overflow-hidden md:absolute md:inset-y-0 md:right-0 md:h-auto md:w-1/2 md:rounded-[28px] md:shadow-[-18px_0_36px_rgba(0,0,0,0.25)]"
+                    style={{
+                      backgroundImage: `radial-gradient(120% 120% at 65% 25%, ${c.accent} 0%, #2a2224 60%, #1e1a1c 100%)`,
+                    }}
                   />
-                </div>
+                )}
               </article>
             ))}
           </div>
@@ -161,7 +189,7 @@ export default function CaseStudies() {
           </button>
 
           <div className="flex gap-2.5">
-            {CASES.map((c, i) => (
+            {cases.map((c, i) => (
               <button
                 key={c.name}
                 type="button"
@@ -200,14 +228,16 @@ export default function CaseStudies() {
         </div>
 
         {/* CTA */}
-        <div className="mt-12 flex justify-center">
-          <Link
-            href="/case-study"
-            className="rounded-full bg-brand-orange px-7 py-3.5 text-sm font-semibold text-cream transition-colors hover:bg-[#d96700]"
-          >
-            See all case studies
-          </Link>
-        </div>
+        {showCta && (
+          <div className="mt-12 flex justify-center">
+            <Link
+              href="/case-study"
+              className="inline-flex items-center justify-center gap-2.5 rounded-full border border-transparent bg-brand-orange px-[44px] py-[26px] font-body text-[20px] font-bold leading-[110%] text-cream transition-all duration-300 hover:[background:linear-gradient(180deg,#ae6a31_0%,#8f501e_100%)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]"
+            >
+              See all case studies
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );

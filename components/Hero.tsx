@@ -17,8 +17,9 @@ export default function Hero() {
       {/* Bottom fade into the #251F21 of the next section */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 -z-[5] h-48 bg-gradient-to-b from-transparent to-[#251f21]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 -z-[5] h-56 bg-gradient-to-b from-transparent to-[#251f21]"
       />
+
 
       {/* Content */}
       <div className="flex flex-col items-center gap-8 px-6 text-center text-cream">

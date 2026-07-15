@@ -38,7 +38,7 @@ const FEATURES = [
 export default function Features() {
   return (
     <section id="features" className="scroll-mt-24 bg-[#251f21] py-24 md:py-32">
-      <div className="mx-auto max-w-[1440px] px-6 md:px-10">
+      <div className="mx-auto max-w-[1536px] px-6 md:px-10">
         <div className="mx-auto mb-14 max-w-[680px] text-center">
           <p className="text-xs uppercase tracking-[0.2em] text-cream/60">
             What we deliver

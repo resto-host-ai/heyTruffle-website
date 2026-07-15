@@ -73,8 +73,15 @@ function KaraokeText({
   );
 }
 
-export default function HostsDemo() {
-  const [activeId, setActiveId] = useState<Host["id"] | null>(null);
+export default function HostsDemo({
+  soloHostId,
+}: {
+  /** Show a single host's call panel directly (no grid), paused and ready. */
+  soloHostId?: Host["id"];
+} = {}) {
+  const [activeId, setActiveId] = useState<Host["id"] | null>(
+    soloHostId ?? null,
+  );
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [maxProgress, setMaxProgress] = useState(0);
@@ -84,6 +91,18 @@ export default function HostsDemo() {
   const scrollerRef = useRef<HTMLDivElement>(null);
 
   const host = activeId ? HOSTS.find((h) => h.id === activeId) ?? null : null;
+
+  // Solo mode: preload the host's clip without auto-playing, so the visitor
+  // presses play to start it.
+  useEffect(() => {
+    if (!soloHostId) return;
+    const a = audioRef.current;
+    const h = HOSTS.find((x) => x.id === soloHostId);
+    if (!a || !h) return;
+    a.src = h.audio;
+    a.currentTime = 0;
+    setNeedsTap(true);
+  }, [soloHostId]);
 
   useEffect(() => {
     const a = audioRef.current;
@@ -206,7 +225,14 @@ export default function HostsDemo() {
   }, [revealedCount, activeId]);
 
   return (
-    <div id="meet-the-hosts" className="mt-12 w-full scroll-mt-28 rounded-[36px] bg-[#f6f3ec] px-6 py-12 shadow-2xl md:px-16 md:py-16">
+    <div
+      id="meet-the-hosts"
+      className={`w-full scroll-mt-28 ${
+        soloHostId
+          ? ""
+          : "mt-12 rounded-[36px] bg-[#f6f3ec] px-6 py-12 shadow-2xl md:px-16 md:py-16"
+      }`}
+    >
       {!host ? (
         <>
           <h3 className="text-center font-serif text-[40px] font-bold! leading-[110%] text-[#251f21] md:text-[52px] lg:text-[64px]">
@@ -270,27 +296,29 @@ export default function HostsDemo() {
         </>
       ) : (
         <div className="relative">
-          {/* Back to the grid */}
-          <button
-            type="button"
-            onClick={closeHost}
-            aria-label="Back to all hosts"
-            className="absolute -top-4 right-0 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-[#251f21]/15 text-[#251f21]/60 transition-colors hover:bg-[#251f21]/5 hover:text-[#251f21] md:-top-8 md:-right-8"
-          >
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
-              <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-            </svg>
-          </button>
+          {/* Back to the grid (hidden in solo mode) */}
+          {!soloHostId && (
+            <button
+              type="button"
+              onClick={closeHost}
+              aria-label="Back to all hosts"
+              className="absolute -top-4 right-0 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-[#251f21]/15 text-[#251f21]/60 transition-colors hover:bg-[#251f21]/5 hover:text-[#251f21] md:-top-8 md:-right-8"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
+                <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+              </svg>
+            </button>
+          )}
 
           <div className="grid gap-5 md:grid-cols-[250px_minmax(0,1fr)]">
             {/* ---- Sidebar ---- */}
-            <aside className="flex flex-col gap-6 self-start rounded-3xl border border-[#251f21]/5 bg-[#fdfbf5] p-6 shadow-sm md:min-h-[420px]">
+            <aside className="flex flex-col gap-6 self-start rounded-3xl border border-[#251f21]/5 bg-[#fdfbf5] p-6 font-body shadow-sm md:min-h-[420px]">
               <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#251f21]">
                 AI voice host
               </p>
               <div>
                 <p
-                  className="font-serif text-4xl md:text-5xl"
+                  className="font-serif text-4xl font-bold md:text-5xl"
                   style={{ color: host.color }}
                 >
                   {host.name}
@@ -383,7 +411,7 @@ export default function HostsDemo() {
               {/* Transcript */}
               <div
                 ref={scrollerRef}
-                className="flex h-[300px] flex-col gap-5 overflow-y-auto px-6 py-6 md:h-[320px] md:px-10"
+                className="flex h-[300px] flex-col gap-5 overflow-y-auto px-6 py-6 font-body md:h-[320px] md:px-10"
                 style={{
                   maskImage:
                     "linear-gradient(180deg, transparent 0, #000 28px, #000 calc(100% - 12px), transparent 100%)",

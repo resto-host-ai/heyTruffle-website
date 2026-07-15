@@ -51,9 +51,9 @@ export default function WhatIsSection() {
         className="pointer-events-none absolute inset-0"
         style={{
           maskImage:
-            "linear-gradient(to bottom, transparent 0%, #000 14%, #000 80%, transparent 100%)",
+            "linear-gradient(to bottom, transparent 0%, #000 30%, #000 80%, transparent 100%)",
           WebkitMaskImage:
-            "linear-gradient(to bottom, transparent 0%, #000 14%, #000 80%, transparent 100%)",
+            "linear-gradient(to bottom, transparent 0%, #000 30%, #000 80%, transparent 100%)",
         }}
       >
         <Image
@@ -67,7 +67,13 @@ export default function WhatIsSection() {
         />
       </div>
 
-      <div className="relative mx-auto flex max-w-[1440px] flex-col items-center px-6 md:px-10">
+      {/* Top fade so the section blends smoothly into the #251F21 above it */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-[420px] bg-gradient-to-b from-[#251f21] via-[#251f21]/70 to-transparent"
+      />
+
+      <div className="relative mx-auto flex max-w-[1536px] flex-col items-center px-6 md:px-10">
         <p className="reveal reveal-up text-center font-body text-[20px] font-normal uppercase leading-[110%] text-cream">
           What is Hey Truffle?
         </p>

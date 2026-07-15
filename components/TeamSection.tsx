@@ -18,26 +18,26 @@ export default function TeamSection() {
         style={{ backgroundImage: NOISE }}
       />
 
-      <div className="relative mx-auto max-w-[1440px] px-6 md:px-10">
+      <div className="relative mx-auto max-w-[1536px] px-6 md:px-10">
         <div className="grid grid-cols-1 items-center gap-14 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
           {/* Copy */}
           <div className="reveal reveal-up">
-            <h2 className="font-serif text-4xl leading-tight text-[#251f21] md:text-5xl">
+            <h2 className="font-serif text-[40px] font-bold! leading-[110%] text-[#251f21] md:text-[52px] lg:text-[64px]">
               You&apos;re never handed
               <br />
               a tool and left alone.
             </h2>
-            <p className="mt-8 max-w-sm text-sm leading-relaxed text-[#251f21]/85 md:text-base">
+            <p className="mt-8 max-w-xl font-body text-[26px] font-normal leading-[140%] text-[#251f21]">
               Every AI host is monitored by our team. We review real calls,
               catch what needs fixing, and improve your host every week.
             </p>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-[#251f21]/85 md:text-base">
+            <p className="mt-4 max-w-xl font-body text-[26px] font-normal leading-[140%] text-[#251f21]">
               That&apos;s the difference between software you maintain and a
               service that takes care of you.
             </p>
             <a
               href="#contact"
-              className="mt-9 inline-block rounded-full bg-[#1c1917] px-6 py-3 text-sm font-semibold text-cream transition-colors hover:bg-black"
+              className="mt-9 inline-flex items-center justify-center gap-2.5 rounded-full border border-transparent bg-[#1c1917] px-[44px] py-[26px] font-body text-[20px] font-bold leading-[110%] text-cream transition-all duration-300 hover:border-[#7a7d9a] hover:bg-[linear-gradient(180deg,#a5b3d1_0%,#7a7d9a_100%)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]"
             >
               Talk to our team
             </a>
@@ -70,7 +70,7 @@ export default function TeamSection() {
                 </div>
               ))}
             </div>
-            <p className="mt-4 text-center text-sm text-[#251f21]/80">
+            <p className="mt-4 text-center font-body text-[20px] font-normal leading-[110%] text-[#251f21]">
               Backed by real people.
             </p>
           </div>
@@ -78,7 +78,7 @@ export default function TeamSection() {
 
         {/* ---- CTA card ---- */}
         <div className="mt-24 grid grid-cols-1 items-center gap-10 rounded-[40px] bg-[#f6f3ec] px-10 py-12 text-center shadow-[0_24px_60px_rgba(0,0,0,0.18)] md:mt-32 md:grid-cols-2 md:px-14 md:py-16 md:text-left">
-          <h3 className="font-serif text-3xl leading-snug text-brand-orange md:text-4xl">
+          <h3 className="font-serif text-[40px] font-bold! leading-[110%] text-brand-orange md:text-[52px] lg:text-[64px]">
             Hear what HeyTruffle
             <br />
             would capture for
@@ -86,18 +86,18 @@ export default function TeamSection() {
             your restaurant.
           </h3>
           <div className="flex flex-col items-center md:items-start">
-            <p className="text-base font-semibold leading-snug text-[#251f21] md:text-lg">
+            <p className="font-body text-[26px] font-bold leading-[140%] text-[#251f21]">
               Start with a 90-day pilot.
               <br />
               See it work in your own restaurant first.
             </p>
             <a
               href="#meet-the-hosts"
-              className="mt-6 inline-block rounded-full bg-brand-orange px-7 py-3.5 text-sm font-semibold text-cream transition-colors hover:bg-[#d96700]"
+              className="mt-6 inline-flex items-center justify-center gap-2.5 rounded-full border border-transparent bg-brand-orange px-[44px] py-[26px] font-body text-[20px] font-bold leading-[110%] text-cream transition-all duration-300 hover:text-[#251f21] hover:[background:linear-gradient(180deg,#eca766_0%,#cd8e53_100%)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]"
             >
               Hear how your restaurant sounds
             </a>
-            <p className="mt-3 text-xs text-[#251f21]/70 md:pl-2">
+            <p className="mt-3 font-body text-[20px] font-normal leading-[110%] text-[#251f21] md:pl-2">
               30 seconds. We call you.
             </p>
           </div>

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { openCalendly } from "@/components/BookDemoButton";
 
@@ -66,49 +67,26 @@ function smoothScrollToAnchor(
   window.history.pushState(null, "", href.slice(hashIndex));
 }
 
+const stripSlash = (s: string) => s.replace(/\/+$/, "") || "/";
+
 function NavLink({ label, href }: { label: string; href: string }) {
+  const pathname = usePathname();
+  const path = href.split("#")[0] || "/";
+  // Only page-level links (not home-section anchors) get the active pill.
+  const active = path !== "/" && stripSlash(pathname) === stripSlash(path);
+
   return (
     <Link
       href={href}
       onClick={(e) => smoothScrollToAnchor(href, e)}
-      className="whitespace-nowrap text-[15px] leading-[1.1] text-cream mix-blend-luminosity transition-opacity hover:opacity-70"
+      className={`whitespace-nowrap text-center font-body text-[20px] leading-[110%] text-cream mix-blend-luminosity transition-opacity hover:opacity-70 ${
+        active
+          ? "rounded-full border-2 border-cream px-5 py-2 font-bold"
+          : "font-normal"
+      }`}
     >
       {label}
     </Link>
-  );
-}
-
-function DemoButton({
-  className = "",
-  onClick,
-}: {
-  className?: string;
-  onClick?: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={() => {
-        onClick?.();
-        void openCalendly();
-      }}
-      className={`flex items-center gap-2 whitespace-nowrap rounded-full bg-gradient-to-r from-[#b53fc4] to-[#ef7200] px-5 py-2.5 text-[14px] font-bold text-white transition-opacity hover:opacity-90 ${className}`}
-    >
-      Book a demo
-      <svg
-        width="14"
-        height="14"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden
-      >
-        <path d="M5 12h14M13 6l6 6-6 6" />
-      </svg>
-    </button>
   );
 }
 
@@ -147,7 +125,7 @@ export default function Header() {
           : "h-[80px] bg-black/35"
       }`}
     >
-      <div className="relative z-20 mx-auto flex h-full max-w-[1440px] items-center justify-between gap-6 px-6 md:px-10">
+      <div className="relative z-20 mx-auto flex h-full max-w-[1536px] items-center justify-between gap-6 px-6 md:px-10">
         {/* Logo */}
         <Link
           href="/"
@@ -166,7 +144,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop nav — centered relative to the page */}
-        <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-6 lg:flex xl:gap-8">
+        <nav className="hidden items-center gap-6 lg:flex xl:gap-8">
           {NAV_BEFORE.map((link) => (
             <NavLink key={link.label} {...link} />
           ))}
@@ -177,7 +155,7 @@ export default function Header() {
           <div className="group">
             <button
               type="button"
-              className="flex items-center gap-1.5 whitespace-nowrap text-[15px] leading-[1.1] text-cream mix-blend-luminosity transition-opacity hover:opacity-70"
+              className="flex items-center gap-1.5 whitespace-nowrap text-center font-body text-[20px] font-normal leading-[110%] text-cream mix-blend-luminosity transition-opacity hover:opacity-70"
             >
               Integrations
               <svg
@@ -196,33 +174,35 @@ export default function Header() {
               </svg>
             </button>
 
-            {/* Panel — the padding-top bridges the hover gap so the white box
-                sits flush against the header's bottom edge */}
+            {/* Panel — full-width bar flush against the header's bottom edge,
+                in the same dark/blurred style as the header. */}
             <div
-              className={`invisible absolute left-1/2 top-full -translate-x-1/2 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 ${
-                scrolled ? "pt-[20px]" : "pt-[30px]"
+              className={`invisible fixed inset-x-0 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 ${
+                scrolled ? "top-[60px]" : "top-[80px]"
               }`}
             >
-              <div className="grid w-max grid-cols-2 gap-x-14 gap-y-8 rounded-b-3xl bg-white p-8 shadow-[0_24px_60px_rgba(0,0,0,0.25)] md:grid-cols-4">
-                {INTEGRATIONS.map((group) => (
-                  <div key={group.heading} className="min-w-[130px]">
-                    <p className="border-b border-[#251f21]/15 pb-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#251f21]/55">
-                      {group.heading}
-                    </p>
-                    <ul className="mt-4 space-y-3">
-                      {group.items.map((item) => (
-                        <li key={item}>
-                          <Link
-                            href={itemHref(item)}
-                            className="text-[15px] font-medium text-[#251f21] transition-colors hover:text-brand-orange"
-                          >
-                            {item}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
+              <div className="border-t border-white/10 bg-[#1c1917]/95 shadow-[0_24px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+                <div className="mx-auto grid max-w-[1536px] grid-cols-2 gap-x-14 gap-y-8 px-6 py-10 md:grid-cols-4 md:px-10">
+                  {INTEGRATIONS.map((group) => (
+                    <div key={group.heading} className="min-w-[130px]">
+                      <p className="border-b border-white/10 pb-2 font-body text-[13px] font-semibold uppercase tracking-[0.2em] text-cream/50">
+                        {group.heading}
+                      </p>
+                      <ul className="mt-4 space-y-3">
+                        {group.items.map((item) => (
+                          <li key={item}>
+                            <Link
+                              href={itemHref(item)}
+                              className="font-body text-[20px] font-normal leading-[110%] text-cream transition-colors hover:text-brand-orange"
+                            >
+                              {item}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -230,12 +210,15 @@ export default function Header() {
           {NAV_AFTER.map((link) => (
             <NavLink key={link.label} {...link} />
           ))}
-        </nav>
 
-        {/* Demo button — right side */}
-        <div className="hidden lg:block">
-          <DemoButton />
-        </div>
+          <button
+            type="button"
+            onClick={() => void openCalendly()}
+            className="whitespace-nowrap text-center font-body text-[20px] font-normal leading-[110%] text-cream mix-blend-luminosity transition-opacity hover:opacity-70"
+          >
+            Book a demo
+          </button>
+        </nav>
 
         {/* Mobile menu button */}
         <button
@@ -367,9 +350,16 @@ export default function Header() {
                 </Link>
               ))}
 
-              <div className="mt-8 flex justify-center">
-                <DemoButton onClick={() => setMenuOpen(false)} />
-              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setMenuOpen(false);
+                  void openCalendly();
+                }}
+                className="border-b border-white/10 py-4 text-center text-lg font-bold tracking-wide text-cream transition-opacity hover:opacity-70"
+              >
+                Book a demo
+              </button>
             </div>
 
             {/* Social */}
