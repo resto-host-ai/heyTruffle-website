@@ -40,7 +40,7 @@ export default function Partner() {
   return (
     <>
       <section id="become-a-partner" className="bg-[#251f21] pb-28 md:pb-36">
-        <div className="mx-auto max-w-[1280px] px-6 md:px-10">
+        <div className="mx-auto max-w-[1440px] px-6 md:px-10">
           <div className="relative overflow-hidden rounded-[40px] bg-[#1c1917] px-8 py-16 text-center shadow-[0_24px_60px_rgba(0,0,0,0.35)] md:px-14 md:py-24">
             {/* Warm radial glow, echoing the header CTA gradient */}
             <div
@@ -62,7 +62,7 @@ export default function Partner() {
               <h2 className="mx-auto max-w-[760px] font-serif text-4xl leading-tight text-cream md:text-5xl">
                 Partner with <span className="text-[#d592f3]">heytruffle.</span>
               </h2>
-              <p className="mx-auto mt-6 max-w-[560px] text-base leading-relaxed text-cream/70 md:text-lg">
+              <p className="font-body mx-auto mt-6 max-w-[560px] text-base leading-relaxed text-cream/70 md:text-lg">
                 Whether you&rsquo;re inspired by technology, hospitality, or
                 simply the future of restaurants, we&rsquo;d love to explore
                 new partnerships together.

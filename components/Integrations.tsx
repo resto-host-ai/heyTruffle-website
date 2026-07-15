@@ -83,7 +83,7 @@ export default function Integrations() {
 
   return (
     <section ref={sectionRef} id="integrations" className="bg-[#251f21] py-24 md:py-32">
-      <div className="mx-auto max-w-[1280px] px-6 md:px-10">
+      <div className="mx-auto max-w-[1440px] px-6 md:px-10">
         <div className="mx-auto mb-12 max-w-[760px] text-center">
           <p className="text-xs uppercase tracking-[0.2em] text-cream/60">
             Restaurant stack
@@ -92,7 +92,7 @@ export default function Integrations() {
             Integrates with your existing{" "}
             <span className="text-[#d592f3]">restaurant stack.</span>
           </h2>
-          <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-cream/70 md:text-lg">
+          <p className="font-body mx-auto mt-5 max-w-xl text-base leading-relaxed text-cream/70 md:text-lg">
             Plug heytruffle into the tools you already use: POS, reservations
             and delivery aggregators. No migrations, no replatforming.
           </p>

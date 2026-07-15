@@ -209,10 +209,10 @@ export default function HostsDemo() {
     <div id="meet-the-hosts" className="mt-12 w-full scroll-mt-28 rounded-[36px] bg-[#f6f3ec] px-6 py-12 shadow-2xl md:px-16 md:py-16">
       {!host ? (
         <>
-          <h3 className="text-center font-serif text-4xl text-[#251f21] md:text-5xl">
+          <h3 className="text-center font-serif text-[40px] font-bold! leading-[110%] text-[#251f21] md:text-[52px] lg:text-[64px]">
             Meet the hosts
           </h3>
-          <p className="mx-auto mt-5 max-w-md text-center text-base leading-relaxed text-[#251f21]/70 md:text-lg">
+          <p className="font-body mx-auto mt-5 max-w-2xl text-center text-[26px] font-normal leading-[140%] text-[#251f21]">
             Trained for the restaurant. Tuned every week. Built to feel like
             part of the team.
           </p>
@@ -254,12 +254,12 @@ export default function HostsDemo() {
                   <PlayIcon color={h.color} />
                 </span>
                 <p
-                  className="mt-3 font-serif text-xl md:text-2xl"
+                  className="mt-3 text-center font-serif text-[28px] font-bold leading-[110%] md:text-[40px]"
                   style={{ color: h.color }}
                 >
                   {h.name}
                 </p>
-                <p className="mt-2 text-sm leading-snug text-[#251f21]/60 md:text-base">
+                <p className="mt-2 text-center font-body text-[26px] font-normal leading-[140%] text-[#251f21]/60">
                   {h.desc[0]}
                   <br />
                   {h.desc[1]}

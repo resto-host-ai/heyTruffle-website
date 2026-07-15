@@ -20,8 +20,8 @@ const TRACK = [...LOGOS, ...LOGOS];
 export default function TrustedBy() {
   return (
     <section id="trusted" className="bg-[#251f21] pb-6 pt-16 md:pt-20">
-      <div className="mx-auto max-w-[1280px] px-6">
-        <h2 className="reveal reveal-up text-center text-lg font-medium text-cream/90 md:text-xl">
+      <div className="mx-auto max-w-[1440px] px-6">
+        <h2 className="reveal reveal-up font-body text-center text-[26px] font-normal! leading-[140%] text-cream/90">
           Across our restaurants, the AI answers more than{" "}
           <span className="text-[#d592f3]">56,000 calls every month.</span>
         </h2>
@@ -45,7 +45,7 @@ export default function TrustedBy() {
         </div>
       </div>
 
-      <p className="mt-12 text-center text-sm text-cream/55">
+      <p className="mt-12 text-center font-body text-[20px] font-normal leading-[110%] text-cream">
         Trusted by leading U.S restaurants
       </p>
     </section>

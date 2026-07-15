@@ -62,11 +62,11 @@ export default function CaseStudies() {
         }}
       />
 
-      <div className="relative mx-auto max-w-[1280px] px-6 md:px-10">
+      <div className="relative mx-auto max-w-[1440px] px-6 md:px-10">
         <h2 className="reveal reveal-up text-center font-serif text-4xl text-cream md:text-5xl">
           Success you can measure.
         </h2>
-        <p className="reveal reveal-up mx-auto mt-4 max-w-xl text-center text-sm leading-relaxed text-cream/60 md:text-base" style={{ "--reveal-delay": "0.08s" } as React.CSSProperties}>
+        <p className="reveal reveal-up font-body mx-auto mt-4 max-w-xl text-center text-sm leading-relaxed text-cream/60 md:text-base" style={{ "--reveal-delay": "0.08s" } as React.CSSProperties}>
           From independent restaurants to multi-location groups, these are the
           outcomes our partners are seeing.
         </p>

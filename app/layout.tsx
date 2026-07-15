@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Inter, Montserrat } from "next/font/google";
+import {
+  Geist_Mono,
+  Google_Sans,
+  Gowun_Batang,
+  Inter,
+  Montserrat,
+} from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -8,11 +14,23 @@ import ScrollReveal from "@/components/ScrollReveal";
 
 // Same type families as the RestoHost site: Inter for body/UI, Montserrat
 // for the Resto Experience footer bar, and Geist Mono for mono accents.
-// Display headings use the SF Pro Rounded stack defined in globals.css.
+// Display headings use Gowun Batang (wired into --font-display in globals.css).
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+});
+
+const gowunBatang = Gowun_Batang({
+  variable: "--font-gowun-batang",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
+// Google Sans for section description / lead copy.
+const googleSans = Google_Sans({
+  variable: "--font-google-sans",
+  subsets: ["latin"],
 });
 
 const montserrat = Montserrat({
@@ -41,7 +59,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${montserrat.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${montserrat.variable} ${geistMono.variable} ${gowunBatang.variable} ${googleSans.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col overflow-x-clip">

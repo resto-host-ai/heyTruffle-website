@@ -133,7 +133,7 @@ export default function LegalPage({
           <h1 className="mt-6 font-serif text-5xl leading-tight text-cream md:text-6xl">
             {title} <span className="text-[#d592f3]">{titleAccent}</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-[680px] text-base leading-relaxed text-cream/70 md:text-lg">
+          <p className="font-body mx-auto mt-6 max-w-[680px] text-base leading-relaxed text-cream/70 md:text-lg">
             {intro}
           </p>
         </div>

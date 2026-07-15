@@ -31,7 +31,7 @@ const COLUMNS = [
 export default function Footer() {
   return (
     <footer className="bg-gradient-to-b from-white to-[#e9e7e3] pt-20 text-[#251f21]">
-      <div className="mx-auto max-w-[1280px] px-6 md:px-10">
+      <div className="mx-auto max-w-[1440px] px-6 md:px-10">
         <div className="grid grid-cols-1 gap-12 text-center md:grid-cols-[2fr_1fr_1fr_1fr_1.2fr] md:gap-8 md:text-left">
           {/* Brand */}
           <div className="flex flex-col items-center md:items-start">
@@ -189,7 +189,7 @@ export default function Footer() {
 
       {/* Resto Experience bar */}
       <div className="w-full bg-white px-6 py-4">
-        <div className="mx-auto flex max-w-[1280px] flex-col items-center gap-3 md:flex-row md:justify-between md:gap-0 md:px-4">
+        <div className="mx-auto flex max-w-[1440px] flex-col items-center gap-3 md:flex-row md:justify-between md:gap-0 md:px-4">
           <a
             href="https://restoexp.com"
             target="_blank"

@@ -30,13 +30,13 @@ const VIMEO_PARAMS =
 export default function Testimonials() {
   return (
     <section id="testimonials" className="relative bg-[#251f21] pb-24 md:pb-32">
-      <div className="mx-auto max-w-[1280px] px-6 md:px-10">
+      <div className="mx-auto max-w-[1440px] px-6 md:px-10">
         <div className="mx-auto mb-14 max-w-[720px] text-center">
           <h2 className="font-serif text-4xl text-cream md:text-5xl">
             What restaurants say about{" "}
             <span className="text-brand-orange">heytruffle.</span>
           </h2>
-          <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-cream/70 md:text-lg">
+          <p className="font-body mx-auto mt-5 max-w-xl text-base leading-relaxed text-cream/70 md:text-lg">
             Real stories from restaurant owners and teams who streamlined
             their operations.
           </p>

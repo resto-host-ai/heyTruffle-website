@@ -20,7 +20,7 @@ const CARDS: {
     z: 10,
     range: [0.1, 1],
     enter: { x: 0, y: 0, rot: 0, op: 1 },
-    final: { x: -300, y: -24, rot: -10, op: 1 },
+    final: { x: -300, y: -94, rot: -10, op: 1 },
   },
   {
     src: "/images/img2.webp",
@@ -28,7 +28,7 @@ const CARDS: {
     z: 20,
     range: [0.1, 0.55],
     enter: { x: 30, y: 560, rot: 10, op: 0 },
-    final: { x: 0, y: 6, rot: -3, op: 1 },
+    final: { x: 0, y: -64, rot: -3, op: 1 },
   },
   {
     src: "/images/img3.webp",
@@ -36,7 +36,7 @@ const CARDS: {
     z: 30,
     range: [0.5, 0.92],
     enter: { x: 90, y: 600, rot: 16, op: 0 },
-    final: { x: 300, y: 28, rot: 8, op: 1 },
+    final: { x: 300, y: -42, rot: 8, op: 1 },
   },
 ];
 
@@ -108,13 +108,13 @@ export default function MomentSection() {
           <div className="absolute right-[-10%] top-[62%] h-[620px] w-[620px] -translate-y-1/2 rounded-full bg-[#ef7200] opacity-[0.28] blur-[130px]" />
         </div>
 
-        <div className="relative mx-auto flex h-full max-w-[1280px] flex-col px-6">
-          <div className="pt-4 md:pt-24">
-            <h2 className="reveal reveal-up text-center font-serif text-4xl text-[#ef7200] md:text-5xl lg:text-6xl">
+        <div className="relative mx-auto flex h-full max-w-[1440px] flex-col px-6">
+          <div className="pt-4 md:pt-16">
+            <h2 className="reveal reveal-up text-center font-serif text-[40px] font-bold! leading-[110%] text-[#ef7200] md:text-[52px] lg:text-[64px]">
               You know this moment.
             </h2>
             <p
-              className="reveal reveal-up mt-3 text-center text-sm text-cream/70"
+              className="reveal reveal-up mt-3 text-center font-body text-[26px] font-normal leading-[140%] text-cream"
               style={{ "--reveal-delay": "0.08s" } as React.CSSProperties}
             >
               Friday 7:48 pm
@@ -146,8 +146,8 @@ export default function MomentSection() {
       </div>
 
       {/* Closing line — appears as the pinned scroll releases on desktop */}
-      <div className="relative mx-auto max-w-[1280px] px-6 pb-4 md:absolute md:inset-x-0 md:bottom-14">
-        <p className="reveal reveal-up text-center text-sm text-cream/70">
+      <div className="relative mx-auto max-w-[1440px] px-6 pb-4 md:absolute md:inset-x-0 md:bottom-6">
+        <p className="reveal reveal-up mt-8 text-center font-body text-[26px] font-normal leading-[140%] text-cream md:mt-0">
           Your host can be on the floor, or on the phone.{" "}
           <span className="font-bold text-cream">Not both.</span>
         </p>

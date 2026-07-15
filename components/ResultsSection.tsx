@@ -123,12 +123,12 @@ export default function ResultsSection() {
         />
       </div>
 
-      <div className="relative mx-auto max-w-[1280px] px-6 md:px-10">
+      <div className="relative mx-auto max-w-[1440px] px-6 md:px-10">
         {/* ---- The results speak for themselves ---- */}
-        <h2 className="reveal reveal-up text-center font-serif text-4xl text-cream md:text-5xl">
+        <h2 className="reveal reveal-up text-center font-serif text-[40px] font-bold! leading-[110%] text-cream md:text-[52px] lg:text-[64px]">
           The results speak for themselves.
         </h2>
-        <p className="mt-4 text-center text-sm text-cream/60">
+        <p className="mt-4 text-center font-body text-[26px] font-normal leading-[140%] text-cream">
           Rreal Tacos&nbsp;&nbsp;•&nbsp;&nbsp;12 locations&nbsp;&nbsp;•&nbsp;&nbsp;May
           16 2026
         </p>
@@ -136,12 +136,6 @@ export default function ResultsSection() {
         <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-[1fr_1fr_1.7fr]">
           {STATS.map((stat) => (
             <div key={stat.title} className="relative">
-              {/* soft glow behind the card, in its own colour */}
-              <div
-                aria-hidden
-                className="pointer-events-none absolute -inset-3 rounded-[34px] opacity-35 blur-2xl"
-                style={{ backgroundColor: stat.color }}
-              />
               <div
                 className="relative flex h-full min-h-[240px] flex-col overflow-hidden rounded-3xl p-7 md:min-h-[300px] md:p-8"
                 style={{
@@ -155,13 +149,13 @@ export default function ResultsSection() {
                   style={{ backgroundImage: NOISE }}
                 />
                 <div className="relative flex h-full flex-col items-center text-center md:items-start md:text-left">
-                  <h3 className="text-xl text-cream/95 md:text-2xl">
+                  <h3 className="font-body text-[28px] font-normal! leading-[120%] text-cream md:text-[40px]">
                     {stat.title}
                   </h3>
-                  <p className="mt-6 font-light leading-none text-cream text-6xl md:text-7xl">
+                  <p className="mt-6 font-body text-[64px] font-normal leading-[110%] text-cream md:text-[96px] lg:text-[124.687px]">
                     {stat.value}
                   </p>
-                  <p className="mt-auto max-w-[16rem] pt-8 text-sm leading-snug text-cream/80">
+                  <p className="mt-auto max-w-[20rem] pt-8 font-body text-[26px] font-normal leading-[140%] text-cream">
                     {stat.desc}
                   </p>
                 </div>
@@ -181,7 +175,7 @@ export default function ResultsSection() {
             <br />
             <span className="text-[#d592f3]">We handle the hard part.</span>
           </h2>
-          <p className="reveal reveal-up mx-auto mt-5 max-w-xl text-center text-sm leading-relaxed text-cream/70 md:text-base" style={{ "--reveal-delay": "0.08s" } as React.CSSProperties}>
+          <p className="reveal reveal-up font-body mx-auto mt-5 max-w-xl text-center text-sm leading-relaxed text-cream/70 md:text-base" style={{ "--reveal-delay": "0.08s" } as React.CSSProperties}>
             We take care of the setup, the training and the ongoing improvements
             so your team can stay focused on running the restaurant.
           </p>

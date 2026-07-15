@@ -97,7 +97,7 @@ export default function Contact() {
               Let&rsquo;s unlock your{" "}
               <span className="text-[#d592f3]">missed revenue.</span>
             </h2>
-            <p className="mt-6 max-w-md text-base leading-relaxed text-cream/70 md:text-lg">
+            <p className="font-body mt-6 max-w-md text-base leading-relaxed text-cream/70 md:text-lg">
               Enter your details to schedule a free consultation and see how much
               in sales you&rsquo;re leaving on the table.
             </p>

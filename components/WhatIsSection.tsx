@@ -10,6 +10,18 @@ const STATEMENTS = [
   "Not replacing your host.",
 ];
 
+// Per-pill hover gradient (empty string = keep the solid #4c4749 fill). The
+// second (border-box) layer keeps the same top-lit gradient stroke as the base
+// so only the fill swaps on hover. Full literal strings so Tailwind detects them.
+const HOVER_BG = [
+  "hover:[background:linear-gradient(180deg,#654027_0%,#61485f_100%)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]",
+  "hover:[background:linear-gradient(180deg,#594666_0%,#334061_100%)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]",
+  "hover:[background:linear-gradient(180deg,#5c391d_0%,#2b2222_100%)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]",
+];
+
+// Positive statement revealed on hover (empty string = no text swap).
+const REVEAL = ["A service.", "Fully managed.", "Freeing them."];
+
 export default function WhatIsSection() {
   const pillsRef = useRef<HTMLDivElement>(null);
   const [struck, setStruck] = useState(false);
@@ -55,21 +67,25 @@ export default function WhatIsSection() {
         />
       </div>
 
-      <div className="relative mx-auto flex max-w-[1280px] flex-col items-center px-6 md:px-10">
-        <p className="reveal reveal-up text-xs uppercase tracking-[0.2em] text-cream/70">
+      <div className="relative mx-auto flex max-w-[1440px] flex-col items-center px-6 md:px-10">
+        <p className="reveal reveal-up text-center font-body text-[20px] font-normal uppercase leading-[110%] text-cream">
           What is Hey Truffle?
         </p>
 
         <div
           ref={pillsRef}
-          className="mt-10 flex w-full max-w-[620px] flex-col gap-5"
+          className="mt-10 flex w-full max-w-[941px] flex-col gap-5"
         >
           {STATEMENTS.map((text, i) => (
             <div
               key={text}
-              className="flex h-[76px] items-center justify-center rounded-full border border-white/40 bg-[#f6f3ec]/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg"
+              className={`group relative flex h-[119px] items-center justify-center rounded-full border border-transparent [background:linear-gradient(#4c4749,#4c4749)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg transition-all duration-300 ${HOVER_BG[i]}`}
             >
-              <span className="relative inline-block font-serif text-2xl text-cream md:text-3xl">
+              <span
+                className={`relative inline-block font-serif text-[32px] font-bold leading-[110%] text-cream transition-opacity duration-300 sm:text-[44px] lg:text-[64px] ${
+                  REVEAL[i] ? "group-hover:opacity-0" : ""
+                }`}
+              >
                 {text}
                 {/* Same word with a real strikethrough, overlaid exactly on
                     top and wiped in left-to-right — so the line always tracks
@@ -87,11 +103,17 @@ export default function WhatIsSection() {
                   {text}
                 </span>
               </span>
+              {/* Positive statement revealed on hover (no strikethrough). */}
+              {REVEAL[i] && (
+                <span className="pointer-events-none absolute inset-0 flex items-center justify-center font-serif text-[32px] font-bold leading-[110%] text-cream opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:text-[44px] lg:text-[64px]">
+                  {REVEAL[i]}
+                </span>
+              )}
             </div>
           ))}
         </div>
 
-        <p className="reveal reveal-up mt-12 max-w-xl text-center text-base leading-relaxed text-cream/85 md:text-lg">
+        <p className="reveal reveal-up font-body mt-12 max-w-3xl text-center text-[26px] font-normal leading-[140%] text-cream">
           Most voice AI hands you software to set up and maintain.
           <br />
           We run it for you, so you get the result, not the homework.

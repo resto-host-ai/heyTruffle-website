@@ -147,7 +147,7 @@ export default function Header() {
           : "h-[80px] bg-black/35"
       }`}
     >
-      <div className="relative z-20 mx-auto flex h-full max-w-[1280px] items-center justify-between gap-6 px-6 md:px-10">
+      <div className="relative z-20 mx-auto flex h-full max-w-[1440px] items-center justify-between gap-6 px-6 md:px-10">
         {/* Logo */}
         <Link
           href="/"

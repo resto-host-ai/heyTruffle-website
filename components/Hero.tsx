@@ -34,22 +34,22 @@ export default function Hero() {
         />
 
         {/* Headline */}
-        <h1 className="font-serif text-5xl font-normal leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
+        <h1 className="max-w-[1100px] font-serif text-[52px] font-bold! leading-[110%] tracking-tight text-cream sm:text-[72px] lg:text-[92px]">
           You operate the restaurant.
           <br />
           We operate the phones.
         </h1>
 
         {/* Subtitle */}
-        <p className="max-w-2xl text-base leading-relaxed text-cream/85 sm:text-lg">
+        <p className="font-body w-full max-w-[1000px] text-xl font-normal leading-[140%] text-cream/85 sm:h-[100px] sm:text-[26px]">
           A fully managed service that answers every call for your restaurants:
           every reservation booked, every order taken, every catering inquiry
-          closed.
+          handled.
         </p>
 
         {/* Search + primary CTA */}
         <form
-          className="mt-2 flex h-[56px] w-full max-w-[559px] items-center overflow-hidden rounded-full border border-white/40 bg-[#f6f3ec]/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg sm:h-[64px]"
+          className="mt-2 flex h-[64px] w-full max-w-[559px] items-center overflow-hidden rounded-[73.26px] border border-white/40 bg-[#f6f3ec]/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg sm:h-[74px]"
           onSubmit={(e) => {
             e.preventDefault();
             setDemoOpen(true);
@@ -61,13 +61,13 @@ export default function Hero() {
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search for your restaurant"
             aria-label="Search for your restaurant"
-            className="h-full min-w-0 flex-1 bg-transparent pl-6 pr-3 text-base leading-[1.1] text-[#251f21] outline-none placeholder:text-[#251f21] sm:pl-[38px] sm:pr-4 sm:text-[20px]"
+            className="h-full min-w-0 flex-1 bg-transparent pl-6 pr-3 font-body text-[20px] font-normal leading-[110%] text-[#251f21] outline-none placeholder:text-[#251f21] sm:pl-[38px] sm:pr-4"
           />
           <button
             type="submit"
-            className="flex h-full shrink-0 items-center justify-center gap-2 rounded-full bg-brand-orange px-6 text-base font-bold leading-[1.1] text-[#f6f3ec] transition-colors hover:bg-[#d96700] sm:gap-4 sm:px-[44px] sm:text-[20px]"
+            className="flex h-full shrink-0 items-center justify-center gap-2 rounded-full bg-brand-orange px-6 font-body text-[20px] font-bold leading-[110%] text-[#f6f3ec] transition-all duration-300 hover:bg-[linear-gradient(180deg,#f5a24a_0%,#e07a12_45%,#b85400_100%)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(239,114,0,0.55)] sm:gap-4 sm:px-[44px]"
           >
-            Try HeyTruffle
+            Live Demo
             <svg
               width="13"
               height="27"
@@ -88,7 +88,7 @@ export default function Hero() {
         {/* Secondary CTA */}
         <a
           href="mailto:info@heytruffle.com"
-          className="mt-6 flex h-[64px] items-center justify-center rounded-full bg-[#1c1917]/85 px-9 text-[20px] font-semibold text-cream shadow-lg backdrop-blur-md transition-colors hover:bg-[#1c1917]"
+          className="mt-6 flex h-[64px] items-center justify-center rounded-full bg-[#1c1917]/85 px-9 text-[20px] font-semibold text-cream shadow-lg backdrop-blur-md transition-all duration-300 hover:bg-[linear-gradient(180deg,#8b9cd6_0%,#6076bd_50%,#3f5490_100%)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(79,84,144,0.55)]"
         >
           Talk to our team
         </a>

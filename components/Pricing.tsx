@@ -60,7 +60,7 @@ const TIERS: readonly Tier[] = [
 export default function Pricing() {
   return (
     <section id="pricing" className="scroll-mt-24 bg-[#251f21] py-24 md:py-32">
-      <div className="mx-auto max-w-[1280px] px-6 md:px-10">
+      <div className="mx-auto max-w-[1440px] px-6 md:px-10">
         <div className="mx-auto mb-14 max-w-[680px] text-center">
           <p className="text-xs uppercase tracking-[0.2em] text-cream/60">
             Our pricing
@@ -69,7 +69,7 @@ export default function Pricing() {
             Choose the right plan{" "}
             <span className="text-[#d592f3]">for you.</span>
           </h2>
-          <p className="mx-auto mt-5 max-w-md text-base leading-relaxed text-cream/70 md:text-lg">
+          <p className="font-body mx-auto mt-5 max-w-md text-base leading-relaxed text-cream/70 md:text-lg">
             No matter your restaurant type or size, there&rsquo;s a plan for you.
           </p>
         </div>

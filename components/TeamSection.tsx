@@ -18,7 +18,7 @@ export default function TeamSection() {
         style={{ backgroundImage: NOISE }}
       />
 
-      <div className="relative mx-auto max-w-[1280px] px-6 md:px-10">
+      <div className="relative mx-auto max-w-[1440px] px-6 md:px-10">
         <div className="grid grid-cols-1 items-center gap-14 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
           {/* Copy */}
           <div className="reveal reveal-up">
