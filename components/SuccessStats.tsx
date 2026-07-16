@@ -2,7 +2,9 @@
 
 import { useEffect, useRef } from "react";
 
-const RESULTS = [
+type Stat = { value: string; title: string; desc: string };
+
+const DEFAULT_RESULTS: Stat[] = [
   {
     value: "5.513",
     title: "Calls recovered",
@@ -27,11 +29,19 @@ const RESULTS = [
   { value: "5.823", title: "Calls handled", desc: "Zero escalations." },
 ];
 
-const ROWS = [RESULTS.slice(0, 3), RESULTS.slice(3)];
+const DEFAULT_INTRO =
+  "Here's what changed after Rreal Tacos stopped letting calls go unanswered. Every metric below comes directly from their operations during May 2026.";
 
-export default function SuccessStats() {
+export default function SuccessStats({
+  intro = DEFAULT_INTRO,
+  results = DEFAULT_RESULTS,
+}: {
+  intro?: string;
+  results?: Stat[];
+} = {}) {
   const pinRef = useRef<HTMLDivElement>(null);
   const rowRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const rows = [results.slice(0, 3), results.slice(3)];
 
   // Desktop: the section pins while scrolling; the first row of stats rises
   // from below into place, then the second row rises. Mobile: normal flow.
@@ -40,16 +50,19 @@ export default function SuccessStats() {
     if (!pin) return;
 
     const OFFSET = 150; // px each row rises into place
-    const seg = 1 / ROWS.length; // ordered slice of progress per row
     const clamp = (n: number, lo = 0, hi = 1) => Math.min(hi, Math.max(lo, n));
     const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
 
     let raf = 0;
     const update = () => {
       raf = 0;
+      const refs = rowRefs.current;
+      const n = refs.length || 1;
+      const seg = 1 / n; // ordered slice of progress per row
+
       const isDesktop = window.innerWidth >= 768;
       if (!isDesktop) {
-        rowRefs.current.forEach((el) => {
+        refs.forEach((el) => {
           if (el) {
             el.style.transform = "";
             el.style.opacity = "";
@@ -63,8 +76,7 @@ export default function SuccessStats() {
       const p = total > 0 ? clamp(-rect.top / total) : 0;
       const rp = clamp(p / 0.85); // finish before release
 
-      ROWS.forEach((_, i) => {
-        const el = rowRefs.current[i];
+      refs.forEach((el, i) => {
         if (!el) return;
         const localP = clamp((rp - i * seg) / seg);
         el.style.transform = `translateY(${OFFSET * (1 - easeOut(localP))}px)`;
@@ -109,21 +121,19 @@ export default function SuccessStats() {
               className="hero-blob hero-b3 absolute right-[-6%] top-[16%] h-[580px] w-[580px] rounded-full blur-[140px]"
               style={{ backgroundColor: "#3773d7", opacity: 0.28 }}
             />
+            {/* Fade the blobs back into cream at the bottom edge */}
+            <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-b from-transparent to-cream" />
           </div>
 
           <h2 className="text-center font-serif text-[40px] font-bold! leading-[110%] md:text-[52px] lg:text-[64px]">
             Success you can measure.
           </h2>
           <p className="mx-auto mt-6 max-w-[980px] text-center font-body text-[20px] font-normal leading-[140%] md:text-[26px]">
-            Here&apos;s what changed after Rreal Tacos stopped letting calls go
-            unanswered.
-            <br />
-            Every metric below comes directly from their operations during May
-            2026.
+            {intro}
           </p>
 
           <div className="mx-auto mt-16 max-w-[1120px] space-y-16">
-            {ROWS.map((row, i) => (
+            {rows.map((row, i) => (
               <div
                 key={i}
                 ref={(el) => {

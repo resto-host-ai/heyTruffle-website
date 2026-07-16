@@ -55,17 +55,19 @@ const CASES: CaseCard[] = [
       "radial-gradient(120% 110% at 50% 125%, #a5487c 0%, #52293f 34%, #241d20 68%)",
   },
   {
-    name: "Lima",
+    name: "Mango's Tropical Cafe",
     stat: "00",
+    slug: "mangos-tropical-cafe",
     cuisine: "Latin",
     location: "Miami",
-    operational: ["Reservations", "Large Parties"],
+    operational: ["After-hours", "Reservations"],
     gradient:
       "radial-gradient(120% 110% at 50% 125%, #322a2d 0%, #241e20 44%, #1e1a1c 100%)",
   },
   {
     name: "Baires Grill",
     stat: "00",
+    slug: "baires-grill",
     cuisine: "Steakhouse",
     location: "Miami",
     operational: ["Reservations", "Large Parties"],
@@ -73,20 +75,22 @@ const CASES: CaseCard[] = [
       "radial-gradient(120% 110% at 50% 125%, #302a2c 0%, #241e20 44%, #1e1a1c 100%)",
   },
   {
-    name: "Palm Tree Club",
+    name: "Kyochon",
     stat: "00",
-    cuisine: "Mediterranean/EU",
-    location: "Miami",
-    operational: ["After-hours", "Reservations"],
+    slug: "kyochon",
+    cuisine: "Asian",
+    location: "Multi-state",
+    operational: ["Pickup & Delivery", "After-hours"],
     gradient:
       "radial-gradient(120% 115% at 50% 125%, #ef7200 0%, #8a4a17 36%, #241d20 70%)",
   },
   {
-    name: "Esmé",
+    name: "Aplós",
     stat: "00",
-    cuisine: "Multi-concept",
+    slug: "aplos",
+    cuisine: "Mediterranean/EU",
     location: "Multi-state",
-    operational: ["Reservations", "Catering"],
+    operational: ["Pickup & Delivery", "Catering"],
     gradient:
       "radial-gradient(120% 115% at 50% 125%, #7a4620 0%, #35251d 40%, #211a1c 74%)",
   },
@@ -102,6 +106,7 @@ const CASES: CaseCard[] = [
   {
     name: "La Cañita",
     stat: "00",
+    slug: "la-canita",
     cuisine: "Latin",
     location: "Miami",
     operational: ["Reservations", "Catering"],
@@ -111,6 +116,7 @@ const CASES: CaseCard[] = [
   {
     name: "KYU",
     stat: "00",
+    slug: "kyu",
     cuisine: "Asian",
     location: "Miami",
     operational: ["Reservations", "Large Parties"],

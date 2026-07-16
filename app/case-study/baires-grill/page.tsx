@@ -8,25 +8,54 @@ import CaseStudies from "@/components/CaseStudies";
 import DemoSearchBar from "@/components/DemoSearchBar";
 
 export const metadata: Metadata = {
-  title: "Rreal Tacos — Case Study — heytruffle",
+  title: "Baires Grill — Case Study — heytruffle",
   description:
-    "How Rreal Tacos captured 100% of demand across 12 Atlanta locations with HeyTruffle — every reservation, order and catering call answered.",
-  alternates: { canonical: "/case-study/rreal-tacos/" },
+    "How Baires Grill answered every reservation, private-event and support call across its Miami rooms with HeyTruffle — a record month, every call answered.",
+  alternates: { canonical: "/case-study/baires-grill/" },
 };
 
-const HERO_TAGS = ["Latin", "Large Parties", "Atlanta", "12 locations"];
+const HERO_TAGS = ["Latin", "Steakhouse", "Miami, Florida", "9 locations"];
+
+const SUCCESS_STATS = [
+  {
+    value: "7.520",
+    title: "Calls handled",
+    desc: "Reservations, orders and event inquiries answered in a single month.",
+  },
+  {
+    value: "~104",
+    title: "Host hours saved",
+    desc: "Your team back on the floor, not the phone.",
+  },
+  {
+    value: "~1.050",
+    title: "Calls recovered",
+    desc: "14% of all calls, captured outside business hours.",
+  },
+  {
+    value: "590",
+    title: "Reservations booked",
+    desc: "Booked end to end by HeyTruffle's AI host.",
+  },
+  {
+    value: "996",
+    title: "SMS sent",
+    desc: "Confirmations and links, mainly for reservations.",
+  },
+  { value: "$87.720", title: "Sustained growth", desc: "Assisted revenue" },
+];
 
 const MEASURED = [
-  { value: "5.513", label: "Calls recovered", color: "#943e72" },
-  { value: "4.398", label: "SMS messages sent", color: "#3773d7" },
-  { value: "552", label: "Host hours saved", color: "#ef7200" },
-  { value: "54%", label: "Calls fully resolved", color: "#2f3d7c" },
+  { value: "7.520", label: "Calls handled", color: "#943e72" },
+  { value: "996", label: "SMS messages sent", color: "#3773d7" },
+  { value: "590", label: "Reservations booked by AI", color: "#ef7200" },
+  { value: "104", label: "Host hours saved", color: "#2f3d7c" },
 ];
 
 const IMPACT = [
-  { v: "~152", l: "Large-party bookings" },
-  { v: "11.6", l: "Average guests per booking" },
-  { v: "$30", l: "Average spend per guest" },
+  { v: "731", l: "SMS sent" },
+  { v: "80%", l: "Conversion" },
+  { v: "3x$50", l: "Average spend per party of three" },
 ];
 
 const CAPABILITIES = [
@@ -66,26 +95,26 @@ const CAPABILITIES = [
 
 const RELATED = [
   {
+    name: "Rreal tacos",
+    location: "Atlanta, 12 locations",
+    value: "5.513",
+    metric: "Calls recovered in one month.",
+    desc: "Reservations, orders and catering that would have gone unanswered.",
+    image: "/images/case-rreal.webp",
+    bg: "#f4efe3",
+    bgIdle: "#cfcabf",
+    accent: "#ef7200",
+  },
+  {
     name: "Mojitos",
     location: "Miami",
     value: "4.000",
     metric: "Calls recovered in one month.",
     desc: "Reservations, orders and catering that would have gone unanswered.",
     image: "/images/mojitos.webp",
-    bg: "#f4efe3",
-    bgIdle: "#cfcabf",
-    accent: "#ef7200",
-  },
-  {
-    name: "Baires Grill",
-    location: "Miami",
-    value: "4x",
-    metric: "A normal night, in a single evening.",
-    desc: "Every call answered while the team stayed on the floor.",
-    image: "/images/case-baires.webp",
     bg: "#eae6dc",
     bgIdle: "#c8c5bf",
-    accent: "#a05fc4",
+    accent: "#943e72",
   },
 ];
 
@@ -108,7 +137,7 @@ function ChevronLeft() {
   );
 }
 
-export default function RrealTacosCaseStudy() {
+export default function BairesGrillCaseStudy() {
   return (
     <main className="bg-cream">
       {/* ── Hero ─────────────────────────────────────────── */}
@@ -139,7 +168,7 @@ export default function RrealTacosCaseStudy() {
             className="inline-flex items-center gap-2 font-body text-[20px] font-normal leading-[110%] text-cream/90 transition-opacity hover:opacity-70"
           >
             <ChevronLeft />
-            Case studies <span className="text-cream/50">/</span> Rreal Tacos
+            Case studies <span className="text-cream/50">/</span> Baires Grill
           </Link>
 
           <div className="flex flex-1 flex-col items-center justify-center py-12">
@@ -159,8 +188,8 @@ export default function RrealTacosCaseStudy() {
 
             <div className="mt-8 flex flex-col items-center">
               <Image
-                src="/images/rreal_logo.png"
-                alt="Rreal Tacos"
+                src="/images/logobaires.png"
+                alt="Baires Grill"
                 width={237}
                 height={236}
                 className="h-[150px] w-auto md:h-[200px]"
@@ -168,25 +197,29 @@ export default function RrealTacosCaseStudy() {
             </div>
 
             <h1 className="mx-auto mt-10 max-w-[760px] text-center font-body text-[32px] font-normal! leading-[120%] md:text-[40px]">
-              From missed calls to{" "}
-              <span className="text-brand-orange">captured demand.</span>
+              A record month.{" "}
+              <span className="text-brand-orange">Every call answered.</span>
             </h1>
 
             <p className="mx-auto mt-6 max-w-[826px] text-center font-body text-[20px] font-normal leading-[140%] text-cream md:text-[26px]">
-              Rreal Tacos receives thousands of calls every month, from
-              reservations and pickup orders to catering inquiries and
-              large-party bookings.
+              Baires Grill takes a steady stream of reservation calls, private
+              event requests, and customer support questions across its Miami
+              area rooms.
             </p>
             <p className="mx-auto mt-6 max-w-[826px] text-center font-body text-[20px] font-normal leading-[140%] text-cream md:text-[26px]">
-              With HeyTruffle answering every call, their team stays focused on
-              the floor while demand gets captured automatically.
+              heytruffle answers every one, books the table, and sends the
+              confirmation, even on the busiest nights. The volume has grown five
+              months in a row; the calm has held.
             </p>
           </div>
         </div>
       </section>
 
       {/* ── Success you can measure ──────────────────────── */}
-      <SuccessStats />
+      <SuccessStats
+        results={SUCCESS_STATS}
+        intro="Here's what changed after Baires Grill stopped letting calls go unanswered. Every metric below comes directly from Baires Grill's operations during June 2026."
+      />
 
       {/* ── What capturing 100% of demand looks like ─────── */}
       <section className="relative bg-cream pb-24 pt-24 text-[#251f21] md:pb-32 md:pt-32">
@@ -201,7 +234,6 @@ export default function RrealTacosCaseStudy() {
                 key={c.title}
                 className="group relative min-h-[240px] overflow-hidden rounded-[25px] shadow-[0_18px_44px_rgba(0,0,0,0.06)] md:h-[308.1px] md:min-h-0"
               >
-                {/* Default background image */}
                 <Image
                   src={c.img}
                   alt=""
@@ -209,7 +241,6 @@ export default function RrealTacosCaseStudy() {
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover"
                 />
-                {/* Solid accent gradient revealed on hover */}
                 <div
                   aria-hidden
                   className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
@@ -217,19 +248,16 @@ export default function RrealTacosCaseStudy() {
                     backgroundImage: `linear-gradient(180deg, #f4f2ed 0%, ${c.accent} 66%)`,
                   }}
                 />
-                {/* Grain overlay */}
                 <div
                   aria-hidden
                   className="pointer-events-none absolute inset-0 opacity-[0.55] mix-blend-overlay"
                   style={{ backgroundImage: NOISE }}
                 />
 
-                {/* Default title */}
                 <p className="relative whitespace-pre-line p-8 font-body text-[40px] font-normal leading-[110%] text-[#251f21] transition-opacity duration-300 group-hover:opacity-0 md:p-10 md:text-[58px]">
                   {c.title}
                 </p>
 
-                {/* Hover content: small title + stat */}
                 <div className="absolute inset-0 flex flex-col justify-between p-8 opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:p-10">
                   <p className="font-body text-[28px] font-normal leading-[110%] text-[#251f21] md:text-[40px]">
                     {c.flat}
@@ -278,7 +306,7 @@ export default function RrealTacosCaseStudy() {
               </p>
               <p className="mt-4 max-w-[420px] font-body text-[20px] font-normal leading-[140%] md:text-[26px]">
                 These are the numbers we can stand behind. Every metric comes
-                directly from Rreal Tacos&apos; call data for May 2026.
+                directly from Baires Grill&apos;s call data for June 2026.
               </p>
             </div>
             {MEASURED.map((m) => (
@@ -347,11 +375,10 @@ export default function RrealTacosCaseStudy() {
                   style={{ backgroundImage: NOISE }}
                 />
                 <p className="relative font-body text-[52px] font-normal leading-[100%] md:text-[64px]">
-                  ~$52.900
+                  ~$87,720
                 </p>
                 <p className="relative max-w-[180px] font-body text-[18px] font-normal leading-[130%] text-cream/90">
-                  Estimated assisted revenue in May only from Large-Party
-                  reservations
+                  Estimated assisted revenue in June.
                 </p>
               </div>
             </div>
@@ -359,7 +386,7 @@ export default function RrealTacosCaseStudy() {
         </div>
       </section>
 
-      {/* ── Shared background across the closing three sections ── */}
+      {/* ── Shared background across the closing two sections ── */}
       <div className="relative overflow-hidden bg-[#251f21]">
         <Image
           src="/images/fondo_seccionfinal.webp"
@@ -371,112 +398,55 @@ export default function RrealTacosCaseStudy() {
         />
 
         <div className="relative">
-          {/* ── In their own words ───────────────────────────── */}
-          <section className="relative overflow-hidden py-24 text-cream md:py-32">
-        <div className="mx-auto max-w-[1536px] px-6 md:px-10">
-          <h2 className="text-center font-serif text-[40px] font-bold! leading-[110%] md:text-[52px] lg:text-[64px]">
-            In their own words.
-          </h2>
-          <p className="mx-auto mt-5 max-w-[974px] text-center font-body text-[20px] font-normal leading-[140%] text-cream md:text-[26px]">
-            The impact of HeyTruffle goes beyond answered calls.
-          </p>
-
-          <div className="mt-16 grid grid-cols-1 gap-10 lg:grid-cols-[1.15fr_1fr] lg:items-start">
-            {/* Portrait with a cream gradient rising from the bottom and the
-                name overlaid on top */}
-            <div className="relative min-h-[420px] overflow-hidden rounded-[25px] md:min-h-[600px]">
-              <Image
-                src="/images/rrealceo.png"
-                alt="Miguel Hernandez"
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
-              />
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(180deg, rgba(246,243,236,0) 45%, rgba(246,243,236,0.85) 78%, #f6f3ec 100%)",
-                }}
-              />
-              <div className="absolute inset-x-0 bottom-0 p-8 md:p-10">
-                <p className="font-body text-[28px] font-bold leading-[120%] text-[#251f21] md:text-[40px]">
-                  Miguel Hernandez
-                </p>
-                <p className="mt-1 font-body text-[20px] font-normal leading-[140%] text-[#251f21] md:text-[26px]">
-                  C.O.O &amp; Co-Owner at Rreal Tacos
-                </p>
-              </div>
-            </div>
-
-            <div>
-              <p className="font-serif text-[36px] font-bold! leading-[110%] md:text-[52px] lg:text-[64px]">
-                &ldquo;Our staff <span className="text-[#d592f3]">finally</span>{" "}
-                focuses on guests,
-              </p>
-              <p className="mt-6 font-body text-[20px] font-normal italic leading-[140%] text-cream md:text-[26px]">
-                before HeyTruffle, our hosts were constantly pulled away from the
-                floor to answer the phone. During busy shifts, that meant guests
-                waiting, missed calls, or both. Now every caller gets an answer,
-                and our team can stay focused on what matters most: delivering a
-                great experience in the restaurant. It has become part of our
-                daily operation.&rdquo;
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Related case studies (home carousel style) ───── */}
-      <CaseStudies
-        heading="Related case studies"
-        subtitle={null}
-        showCta={false}
-        cases={RELATED}
-        transparent
-      />
-
-      {/* ── Final CTA ────────────────────────────────────── */}
-      <section className="relative pb-28 text-cream">
-        <div className="mx-auto max-w-[1536px] px-6 md:px-10">
-        <div
-          className="relative flex w-full flex-col items-center overflow-hidden rounded-[40px] px-6 py-20 text-center md:rounded-[67px] md:px-10 md:py-28"
-          style={{
-            background: [
-              "radial-gradient(75% 95% at -8% 82%, rgba(239,114,0,0.5) 0%, rgba(239,114,0,0.12) 42%, transparent 68%)",
-              "linear-gradient(180deg, #1a1620 0%, #201a1e 100%)",
-            ].join(", "),
-          }}
-        >
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 opacity-40 mix-blend-overlay"
-            style={{ backgroundImage: NOISE }}
+          {/* ── Related case studies (home carousel style) ───── */}
+          <CaseStudies
+            heading="Related case studies"
+            subtitle={null}
+            showCta={false}
+            cases={RELATED}
+            transparent
           />
 
-          <div className="relative flex w-full flex-col items-center">
-            <h2 className="mx-auto max-w-[972px] font-serif text-[40px] font-bold! leading-[110%] md:text-[52px] lg:text-[64px]">
-              Hear what heytruffle would capture for your restaurant.
-            </h2>
+          {/* ── Final CTA ────────────────────────────────────── */}
+          <section className="relative pb-28 text-cream">
+            <div className="mx-auto max-w-[1536px] px-6 md:px-10">
+              <div
+                className="relative flex w-full flex-col items-center overflow-hidden rounded-[40px] px-6 py-20 text-center md:rounded-[67px] md:px-10 md:py-28"
+                style={{
+                  background: [
+                    "radial-gradient(75% 95% at -8% 82%, rgba(239,114,0,0.5) 0%, rgba(239,114,0,0.12) 42%, transparent 68%)",
+                    "linear-gradient(180deg, #1a1620 0%, #201a1e 100%)",
+                  ].join(", "),
+                }}
+              >
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 opacity-40 mix-blend-overlay"
+                  style={{ backgroundImage: NOISE }}
+                />
 
-            <div className="mt-10 flex w-full justify-center">
-              <DemoSearchBar />
+                <div className="relative flex w-full flex-col items-center">
+                  <h2 className="mx-auto max-w-[972px] font-serif text-[40px] font-bold! leading-[110%] md:text-[52px] lg:text-[64px]">
+                    Hear what heytruffle would capture for your restaurant.
+                  </h2>
+
+                  <div className="mt-10 flex w-full justify-center">
+                    <DemoSearchBar />
+                  </div>
+
+                  <a
+                    href="mailto:info@heytruffle.com"
+                    className="mt-10 inline-flex items-center justify-center rounded-full bg-cream px-9 py-5 font-body text-[20px] font-bold leading-[110%] text-[#251f21] transition-all duration-300 hover:bg-[linear-gradient(180deg,#8b9cd6_0%,#6076bd_50%,#3f5490_100%)] hover:text-cream hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(79,84,144,0.55)]"
+                  >
+                    Talk to our team
+                  </a>
+                  <p className="mt-6 font-body text-[20px] font-normal leading-[110%] text-cream/80">
+                    Backed by real people.
+                  </p>
+                </div>
+              </div>
             </div>
-
-            <a
-              href="mailto:info@heytruffle.com"
-              className="mt-10 inline-flex items-center justify-center rounded-full bg-cream px-9 py-5 font-body text-[20px] font-bold leading-[110%] text-[#251f21] transition-all duration-300 hover:bg-[linear-gradient(180deg,#8b9cd6_0%,#6076bd_50%,#3f5490_100%)] hover:text-cream hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(79,84,144,0.55)]"
-            >
-              Talk to our team
-            </a>
-            <p className="mt-6 font-body text-[20px] font-normal leading-[110%] text-cream/80">
-              Backed by real people.
-            </p>
-          </div>
-        </div>
-        </div>
-      </section>
+          </section>
         </div>
       </div>
     </main>

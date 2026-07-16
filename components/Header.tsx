@@ -79,10 +79,8 @@ function NavLink({ label, href }: { label: string; href: string }) {
     <Link
       href={href}
       onClick={(e) => smoothScrollToAnchor(href, e)}
-      className={`whitespace-nowrap text-center font-body text-[20px] leading-[110%] text-cream mix-blend-luminosity transition-opacity hover:opacity-70 ${
-        active
-          ? "rounded-full border-2 border-cream px-5 py-2 font-bold"
-          : "font-normal"
+      className={`whitespace-nowrap rounded-full border-2 px-5 py-2 text-center font-body text-[20px] leading-[110%] text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream ${
+        active ? "border-cream font-bold" : "border-transparent font-normal"
       }`}
     >
       {label}
@@ -144,7 +142,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop nav — centered relative to the page */}
-        <nav className="hidden items-center gap-6 lg:flex xl:gap-8">
+        <nav className="hidden items-center gap-1 lg:flex xl:gap-2">
           {NAV_BEFORE.map((link) => (
             <NavLink key={link.label} {...link} />
           ))}
@@ -155,7 +153,7 @@ export default function Header() {
           <div className="group">
             <button
               type="button"
-              className="flex items-center gap-1.5 whitespace-nowrap text-center font-body text-[20px] font-normal leading-[110%] text-cream mix-blend-luminosity transition-opacity hover:opacity-70"
+              className="flex items-center gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-5 py-2 text-center font-body text-[20px] font-normal leading-[110%] text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream"
             >
               Integrations
               <svg
@@ -214,7 +212,7 @@ export default function Header() {
           <button
             type="button"
             onClick={() => void openCalendly()}
-            className="whitespace-nowrap text-center font-body text-[20px] font-normal leading-[110%] text-cream mix-blend-luminosity transition-opacity hover:opacity-70"
+            className="whitespace-nowrap rounded-full border-2 border-transparent px-5 py-2 text-center font-body text-[20px] font-normal leading-[110%] text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream"
           >
             Book a demo
           </button>
