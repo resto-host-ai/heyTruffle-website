@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { NOISE } from "@/lib/noise";
-import SuccessStats from "@/components/SuccessStats";
 import HostsDemo from "@/components/HostsDemo";
 import CaseStudies from "@/components/CaseStudies";
 import DemoSearchBar from "@/components/DemoSearchBar";
@@ -27,33 +26,10 @@ const HERO_STATS = [
   { value: "131", label: "Simultaneous calls" },
 ];
 
-const SUCCESS_STATS = [
-  { value: "1.964", title: "Calls handled", desc: "Answered in March" },
-  {
-    value: "100%",
-    title: "Resolved by AI",
-    desc: "Every call closed by the AI.",
-  },
-  {
-    value: "131",
-    title: "Simultaneous calls",
-    desc: "Absorbed at once",
-  },
-  {
-    value: "41%",
-    title: "Reservations share",
-    desc: "Most frequent call type, handled by AI.",
-  },
-  {
-    value: "793",
-    title: "SMS sent",
-    desc: "Mostly support forms and reservations",
-  },
-  {
-    value: "88",
-    title: "Host hours saved",
-    desc: "Returned to the floor in March.",
-  },
+const STORY_POINTS = [
+  "At peak, KYU had 131 guests on the line at the very same moment.",
+  "No busy tone, no voicemail, no call left waiting for a host.",
+  "Every one answered and resolved.",
 ];
 
 const MEASURED = [
@@ -61,47 +37,6 @@ const MEASURED = [
   { value: "793", label: "SMS sent", color: "#3773d7" },
   { value: "100%", label: "Resolved by AI", color: "#ef7200" },
   { value: "88", label: "Host hours saved", color: "#2f3d7c" },
-];
-
-const IMPACT = [
-  { v: "200", l: "Reservation and large party links" },
-  { v: "70%", l: "Conversion" },
-  { v: "3x$80", l: "Average spend per party of three" },
-];
-
-const CAPABILITIES = [
-  {
-    title: "Revenue\nAutomation",
-    flat: "Revenue Automation",
-    img: "/images/card1.png",
-    accent: "#ef7200",
-    stat: "$33.600 Recovered",
-    statDesc: "Assisted reservation revenue.",
-  },
-  {
-    title: "Operational\nEfficiency",
-    flat: "Operational Efficiency",
-    img: "/images/card2.png",
-    accent: "#3773d7",
-    stat: "100% Resolution",
-    statDesc: "Every inbound call resolved end to end.",
-  },
-  {
-    title: "Buying\nback time",
-    flat: "Buying back time",
-    img: "/images/card3.png",
-    accent: "#2f3d7c",
-    stat: "393 Host hours",
-    statDesc: "Freed across four months.",
-  },
-  {
-    title: "Data &\nReporting",
-    flat: "Data & Reporting",
-    img: "/images/card4.png",
-    accent: "#d592f3",
-    stat: "88% of SMS",
-    statDesc: "For reservation modifications and changes.",
-  },
 ];
 
 const RELATED = [
@@ -238,64 +173,91 @@ export default function KyuCaseStudy() {
         </div>
       </section>
 
-      {/* ── Success you can measure ──────────────────────── */}
-      <SuccessStats
-        results={SUCCESS_STATS}
-        intro="Here's what changed after KYU stopped letting calls go unanswered. Every metric below comes directly from KYU's operations during March 2026."
-      />
-
-      {/* ── What capturing 100% of demand looks like ─────── */}
-      <section className="relative bg-cream pb-24 pt-24 text-[#251f21] md:pb-32 md:pt-32">
+      {/* ── Feature story · Peak performance ─────────────── */}
+      <section className="relative bg-cream pb-24 pt-24 md:pb-32 md:pt-32">
         <div className="mx-auto max-w-[1536px] px-6 md:px-10">
-          <h2 className="mx-auto max-w-[720px] text-center font-serif text-[40px] font-bold! leading-[110%] md:text-[52px] lg:text-[64px]">
-            What capturing 100% of demand looks like.
-          </h2>
+          <div
+            className="relative overflow-hidden rounded-[36px] px-8 py-12 md:rounded-[48px] md:px-16 md:py-16"
+            style={{
+              background: [
+                "radial-gradient(75% 130% at 100% 50%, rgba(239,114,0,0.55) 0%, rgba(239,114,0,0.14) 34%, transparent 66%)",
+                "linear-gradient(180deg, #221c1e 0%, #1a1517 100%)",
+              ].join(", "),
+            }}
+          >
+            {/* Grain overlay */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 opacity-40 mix-blend-overlay"
+              style={{ backgroundImage: NOISE }}
+            />
 
-          <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2">
-            {CAPABILITIES.map((c) => (
-              <div
-                key={c.title}
-                className="group relative min-h-[240px] overflow-hidden rounded-[25px] shadow-[0_18px_44px_rgba(0,0,0,0.06)] md:h-[308.1px] md:min-h-0"
-              >
-                <Image
-                  src={c.img}
-                  alt=""
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover"
-                />
-                <div
-                  aria-hidden
-                  className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                  style={{
-                    backgroundImage: `linear-gradient(180deg, #f4f2ed 0%, ${c.accent} 66%)`,
-                  }}
-                />
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 opacity-[0.55] mix-blend-overlay"
-                  style={{ backgroundImage: NOISE }}
-                />
-
-                <p className="relative whitespace-pre-line p-8 font-body text-[40px] font-normal leading-[110%] text-[#251f21] transition-opacity duration-300 group-hover:opacity-0 md:p-10 md:text-[58px]">
-                  {c.title}
+            <div className="relative grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
+              {/* Left — story */}
+              <div>
+                <p className="font-body text-[18px] font-normal uppercase leading-[140%] text-[#D592F3] md:text-[26px]">
+                  Feature story · Peak performance
+                </p>
+                <h2 className="mt-4 font-serif text-[44px] font-bold! leading-[110%] text-[#F9FAFB] md:text-[64px]">
+                  131 at once.
+                </h2>
+                <p className="mt-5 max-w-[560px] font-body text-[18px] font-normal leading-[140%] text-[#F9FAFB] md:text-[26px]">
+                  On a night like Valentine&apos;s, calls don&apos;t come one at a
+                  time.
+                  <br />
+                  They come all together.
                 </p>
 
-                <div className="absolute inset-0 flex flex-col justify-between p-8 opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:p-10">
-                  <p className="font-body text-[28px] font-normal leading-[110%] text-[#251f21] md:text-[40px]">
-                    {c.flat}
+                <ol className="mt-10 flex flex-col gap-6">
+                  {STORY_POINTS.map((point, i) => (
+                    <li key={point} className="flex items-start gap-4">
+                      <span className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-brand-orange/50 bg-brand-orange/10 font-body text-[18px] font-normal leading-none text-brand-orange">
+                        {i + 1}
+                      </span>
+                      <p className="font-body text-[18px] font-normal leading-[140%] text-[#F9FAFB] md:text-[26px]">
+                        {point}
+                      </p>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+
+              {/* Right — glass stat card */}
+              <div
+                className="relative flex flex-col items-center justify-center gap-6 overflow-hidden rounded-[32px] border border-white/15 bg-white/[0.05] px-8 py-14 text-center backdrop-blur-xl md:py-16"
+                style={{
+                  boxShadow:
+                    "inset 0 1px 1px rgba(255,255,255,0.18), 0 24px 60px rgba(0,0,0,0.35)",
+                }}
+              >
+                <div>
+                  <p
+                    className="font-body text-[120px] font-normal leading-[110%] md:text-[200px]"
+                    style={{
+                      backgroundImage:
+                        "linear-gradient(180deg, #D592F3 0%, #EF7200 100%)",
+                      WebkitBackgroundClip: "text",
+                      backgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                    }}
+                  >
+                    131
                   </p>
-                  <div>
-                    <p className="font-body text-[40px] font-normal leading-[110%] text-cream md:text-[58px]">
-                      {c.stat}
-                    </p>
-                    <p className="mt-2 font-body text-[18px] font-normal leading-[130%] text-cream/90 md:text-[20px]">
-                      {c.statDesc}
-                    </p>
-                  </div>
+                  <p className="font-body text-[18px] font-normal leading-[140%] text-[#F6F3EC] md:text-[26px]">
+                    simultaneous calls
+                  </p>
+                </div>
+
+                <div>
+                  <p className="font-body text-[64px] font-normal leading-[110%] text-[#F6F3EC] md:text-[100px]">
+                    100%
+                  </p>
+                  <p className="font-body text-[18px] font-normal leading-[140%] text-[#F6F3EC] md:text-[26px]">
+                    resolved
+                  </p>
                 </div>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
@@ -348,63 +310,6 @@ export default function KyuCaseStudy() {
                 </p>
               </div>
             ))}
-          </div>
-
-          {/* Estimated business impact */}
-          <div className="mt-16">
-            <p className="font-body text-[28px] font-normal! leading-[120%] md:text-[40px]">
-              Estimated business impact
-            </p>
-            <div className="mt-8 flex flex-col gap-6 lg:flex-row lg:items-stretch">
-              {/* Math card */}
-              <div className="flex flex-1 flex-wrap items-center gap-x-4 gap-y-8 rounded-[25px] border border-transparent [background:linear-gradient(#f1eee6,#f1eee6)_padding-box,linear-gradient(180deg,#ffffff_0%,rgba(37,31,33,0.06)_45%,rgba(37,31,33,0.28)_100%)_border-box] p-8 shadow-[0_10px_30px_rgba(0,0,0,0.04)] md:flex-nowrap md:justify-between md:p-12">
-                {IMPACT.map((item, i, arr) => (
-                  <div key={item.l} className="flex items-center gap-4">
-                    <div className="flex items-center gap-3">
-                      <p className="font-body text-[52px] font-normal leading-[100%] md:text-[64px]">
-                        {item.v}
-                      </p>
-                      <p className="max-w-[120px] font-body text-[18px] font-normal leading-[120%]">
-                        {item.l}
-                      </p>
-                    </div>
-                    {i < arr.length - 1 && (
-                      <span className="font-body text-[28px] font-normal leading-none md:text-[36px]">
-                        ×
-                      </span>
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              {/* Equals */}
-              <div className="hidden items-center justify-center lg:flex">
-                <span className="font-body text-[40px] font-normal leading-none">
-                  =
-                </span>
-              </div>
-
-              {/* Result card */}
-              <div
-                className="relative flex items-center gap-5 overflow-hidden rounded-[25px] p-8 text-cream shadow-[0_18px_44px_rgba(0,0,0,0.25)] md:p-10 lg:w-[34%]"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(180deg, #12162c 0%, #21306a 55%, #3454b0 100%)",
-                }}
-              >
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 opacity-40 mix-blend-overlay"
-                  style={{ backgroundImage: NOISE }}
-                />
-                <p className="relative font-body text-[52px] font-normal leading-[100%] md:text-[64px]">
-                  ~$33,600
-                </p>
-                <p className="relative max-w-[180px] font-body text-[18px] font-normal leading-[130%] text-cream/90">
-                  Estimated assisted revenue in May.
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
