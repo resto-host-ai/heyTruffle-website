@@ -386,8 +386,9 @@ button:not(:disabled),
 /* Blog article body — markdown rendered to HTML gets styled here, matching
    the home's warm/dark palette and serif headings. */
 .post-body {
+  font-family: var(--font-body);
   color: rgba(37, 31, 33, 0.8);
-  font-size: 1.0625rem;
+  font-size: 1.1875rem;
   line-height: 1.75;
 }
 .post-body > :first-child {
@@ -395,24 +396,29 @@ button:not(:disabled),
 }
 .post-body h2 {
   font-family: var(--font-serif, ui-serif, Georgia, serif);
+  font-weight: 700;
+  letter-spacing: -0.025em;
   color: #251f21;
-  font-size: 1.75rem;
-  line-height: 1.2;
-  margin-top: 2.75rem;
+  font-size: 2rem;
+  line-height: 1.15;
+  margin-top: 3rem;
   margin-bottom: 1rem;
 }
 .post-body h3 {
   font-family: var(--font-serif, ui-serif, Georgia, serif);
+  font-weight: 700;
+  letter-spacing: -0.025em;
   color: #251f21;
-  font-size: 1.35rem;
-  line-height: 1.25;
-  margin-top: 2rem;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  margin-top: 2.25rem;
   margin-bottom: 0.75rem;
 }
 .post-body h4 {
+  font-family: var(--font-body);
   color: #251f21;
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   margin-top: 1.75rem;
   margin-bottom: 0.5rem;
 }
