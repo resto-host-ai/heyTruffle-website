@@ -14,7 +14,13 @@ export const metadata: Metadata = {
   alternates: { canonical: "/case-study/aplos/" },
 };
 
-const HERO_TAGS = ["Mediterranean", "Fast fine", "Mississippi", "4 locations"];
+const HERO_TAGS = ["Mediterranean", "Phone orders", "Mississippi", "4 locations"];
+
+const HERO_STATS = [
+  { value: "3.2K+", label: "Calls handled" },
+  { value: "90%", label: "Calls resolved instantly" },
+  { value: "119", label: "Catering inquiries recovered" },
+];
 
 const SUCCESS_STATS = [
   { value: "3.886", title: "Calls handled", desc: "Answered in May" },
@@ -193,18 +199,32 @@ export default function AplosCaseStudy() {
             </div>
 
             <h1 className="mx-auto mt-10 max-w-[760px] text-center font-body text-[32px] font-normal! leading-[120%] md:text-[40px]">
-              Four dining rooms, answering as one.
+              Every kind of call,{" "}
+              <span className="text-brand-orange">handled</span>
             </h1>
 
             <p className="mx-auto mt-6 max-w-[826px] text-center font-body text-[20px] font-normal leading-[140%] text-cream md:text-[26px]">
-              Aplós fields pickup, waitlist, and catering calls across
-              Mississippi, often several at once.
+              From pickup and waitlist to catering and private events, Aplós gets
+              every kind of call, often several at once.
             </p>
             <p className="mx-auto mt-6 max-w-[826px] text-center font-body text-[20px] font-normal leading-[140%] text-cream md:text-[26px]">
-              Heytruffle answers across every location simultaneously, sends the
-              right link, and moves catering inquiries straight to the kitchen
-              team.
+              Heytruffle answers each one, sends the right link, and routes
+              catering straight to the kitchen.
             </p>
+          </div>
+
+          {/* Hero stats bar */}
+          <div className="mx-auto grid w-full max-w-[900px] grid-cols-3 divide-x divide-cream/25">
+            {HERO_STATS.map((s) => (
+              <div key={s.label} className="flex flex-col items-center px-4">
+                <p className="font-body text-[44px] font-normal leading-[110%] md:text-[64px]">
+                  {s.value}
+                </p>
+                <p className="mt-1 text-center font-body text-[16px] font-normal leading-[130%] text-cream/90 md:text-[20px]">
+                  {s.label}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>

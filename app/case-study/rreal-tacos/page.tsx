@@ -14,7 +14,13 @@ export const metadata: Metadata = {
   alternates: { canonical: "/case-study/rreal-tacos/" },
 };
 
-const HERO_TAGS = ["Latin", "Large Parties", "Atlanta", "12 locations"];
+const HERO_TAGS = ["Latin", "Reservations", "Atlanta", "12 locations"];
+
+const HERO_STATS = [
+  { value: "19K+", label: "Calls handled" },
+  { value: "520+", label: "Host hours saved" },
+  { value: "14K+", label: "Guest seated" },
+];
 
 const MEASURED = [
   { value: "5.513", label: "Calls recovered", color: "#943e72" },
@@ -178,9 +184,23 @@ export default function RrealTacosCaseStudy() {
               large-party bookings.
             </p>
             <p className="mx-auto mt-6 max-w-[826px] text-center font-body text-[20px] font-normal leading-[140%] text-cream md:text-[26px]">
-              With HeyTruffle answering every call, their team stays focused on
+              With heytruffle answering every call, their team stays focused on
               the floor while demand gets captured automatically.
             </p>
+          </div>
+
+          {/* Hero stats bar */}
+          <div className="mx-auto grid w-full max-w-[900px] grid-cols-3 divide-x divide-cream/25">
+            {HERO_STATS.map((s) => (
+              <div key={s.label} className="flex flex-col items-center px-4">
+                <p className="font-body text-[44px] font-normal leading-[110%] md:text-[64px]">
+                  {s.value}
+                </p>
+                <p className="mt-1 text-center font-body text-[16px] font-normal leading-[130%] text-cream/90 md:text-[20px]">
+                  {s.label}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>

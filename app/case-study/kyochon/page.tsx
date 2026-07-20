@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { NOISE } from "@/lib/noise";
-import SuccessStats from "@/components/SuccessStats";
 import HostsDemo from "@/components/HostsDemo";
 import CaseStudies from "@/components/CaseStudies";
 import DemoSearchBar from "@/components/DemoSearchBar";
@@ -14,39 +13,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "/case-study/kyochon/" },
 };
 
-const HERO_TAGS = ["Korean fried chicken", "Global Chain"];
+const HERO_TAGS = ["Korean Fried Chicken", "Phone Orders", "LA", "2 locations"];
 
-const SUCCESS_STATS = [
-  {
-    value: "1.164",
-    title: "Calls handled",
-    desc: "Answered in June",
-  },
-  {
-    value: "$6,000",
-    title: "Assisted revenue",
-    desc: "Closed without the team",
-  },
-  {
-    value: "81%",
-    title: "Takeout/Delivery",
-    desc: "Most frequent call type, handled by AI.",
-  },
-  {
-    value: "14%",
-    title: "Calls recovered",
-    desc: "Captured from outside business hours",
-  },
-  {
-    value: "312",
-    title: "SMS sent",
-    desc: "Mostly order link and Kyochon app.",
-  },
-  {
-    value: "27",
-    title: "Host hours saved",
-    desc: "Returned to the floor in June.",
-  },
+const HERO_STATS = [
+  { value: "81%", label: "Takeout & Delivery" },
+  { value: "312", label: "SMS links sent" },
+  { value: "59%", label: "Resolved by AI" },
 ];
 
 const MEASURED = [
@@ -54,41 +26,6 @@ const MEASURED = [
   { value: "312", label: "SMS sent", color: "#3773d7" },
   { value: "81%", label: "Takeout and delivery", color: "#ef7200" },
   { value: "27", label: "Host hours saved", color: "#2f3d7c" },
-];
-
-const CAPABILITIES = [
-  {
-    title: "Revenue\nAutomation",
-    flat: "Revenue Automation",
-    img: "/images/card1.png",
-    accent: "#ef7200",
-    stat: "$33.600 Recovered",
-    statDesc: "Assisted reservation revenue.",
-  },
-  {
-    title: "Operational\nEfficiency",
-    flat: "Operational Efficiency",
-    img: "/images/card2.png",
-    accent: "#3773d7",
-    stat: "100% Resolution",
-    statDesc: "Every inbound call resolved end to end.",
-  },
-  {
-    title: "Buying\nback time",
-    flat: "Buying back time",
-    img: "/images/card3.png",
-    accent: "#2f3d7c",
-    stat: "393 Host hours",
-    statDesc: "Freed across four months.",
-  },
-  {
-    title: "Data &\nReporting",
-    flat: "Data & Reporting",
-    img: "/images/card4.png",
-    accent: "#d592f3",
-    stat: "88% of SMS",
-    statDesc: "For reservation modifications and changes.",
-  },
 ];
 
 const RELATED = [
@@ -195,77 +132,32 @@ export default function KyochonCaseStudy() {
             </div>
 
             <h1 className="mx-auto mt-10 max-w-[860px] text-center font-body text-[32px] font-normal! leading-[120%] md:text-[40px]">
-              The kitchen keeps cooking. The order still gets taken.
+              The kitchen keeps cooking.{" "}
+              <span className="text-brand-orange">
+                The order still gets taken.
+              </span>
             </h1>
 
             <p className="mx-auto mt-6 max-w-[826px] text-center font-body text-[20px] font-normal leading-[140%] text-cream md:text-[26px]">
-              Kyochon&apos;s phone is mostly takeout and delivery orders, back to
-              back.
+              Kyochon&apos;s phone runs on takeout and delivery orders, in English
+              and Korean alike.
             </p>
             <p className="mx-auto mt-6 max-w-[826px] text-center font-body text-[20px] font-normal leading-[140%] text-cream md:text-[26px]">
-              Heytruffle answers, takes the order details, and sends the app and
-              order links, so the counter team can keep the kitchen moving.
+              Heytruffle answers, takes the order, and sends the app and order
+              links, so the counter stays on the food, not the phone.
             </p>
           </div>
-        </div>
-      </section>
 
-      {/* ── Success you can measure ──────────────────────── */}
-      <SuccessStats
-        results={SUCCESS_STATS}
-        intro="Here's what changed after Kyochon stopped letting calls go unanswered. Every metric below comes directly from Kyochon's operations during June 2026."
-      />
-
-      {/* ── What capturing 100% of demand looks like ─────── */}
-      <section className="relative bg-cream pb-24 pt-24 text-[#251f21] md:pb-32 md:pt-32">
-        <div className="mx-auto max-w-[1536px] px-6 md:px-10">
-          <h2 className="mx-auto max-w-[720px] text-center font-serif text-[40px] font-bold! leading-[110%] md:text-[52px] lg:text-[64px]">
-            What capturing 100% of demand looks like.
-          </h2>
-
-          <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2">
-            {CAPABILITIES.map((c) => (
-              <div
-                key={c.title}
-                className="group relative min-h-[240px] overflow-hidden rounded-[25px] shadow-[0_18px_44px_rgba(0,0,0,0.06)] md:h-[308.1px] md:min-h-0"
-              >
-                <Image
-                  src={c.img}
-                  alt=""
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover"
-                />
-                <div
-                  aria-hidden
-                  className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                  style={{
-                    backgroundImage: `linear-gradient(180deg, #f4f2ed 0%, ${c.accent} 66%)`,
-                  }}
-                />
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 opacity-[0.55] mix-blend-overlay"
-                  style={{ backgroundImage: NOISE }}
-                />
-
-                <p className="relative whitespace-pre-line p-8 font-body text-[40px] font-normal leading-[110%] text-[#251f21] transition-opacity duration-300 group-hover:opacity-0 md:p-10 md:text-[58px]">
-                  {c.title}
+          {/* Hero stats bar */}
+          <div className="mx-auto grid w-full max-w-[900px] grid-cols-3 divide-x divide-cream/25">
+            {HERO_STATS.map((s) => (
+              <div key={s.label} className="flex flex-col items-center px-4">
+                <p className="font-body text-[44px] font-normal leading-[110%] md:text-[64px]">
+                  {s.value}
                 </p>
-
-                <div className="absolute inset-0 flex flex-col justify-between p-8 opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:p-10">
-                  <p className="font-body text-[28px] font-normal leading-[110%] text-[#251f21] md:text-[40px]">
-                    {c.flat}
-                  </p>
-                  <div>
-                    <p className="font-body text-[40px] font-normal leading-[110%] text-cream md:text-[58px]">
-                      {c.stat}
-                    </p>
-                    <p className="mt-2 font-body text-[18px] font-normal leading-[130%] text-cream/90 md:text-[20px]">
-                      {c.statDesc}
-                    </p>
-                  </div>
-                </div>
+                <p className="mt-1 text-center font-body text-[16px] font-normal leading-[130%] text-cream/90 md:text-[20px]">
+                  {s.label}
+                </p>
               </div>
             ))}
           </div>

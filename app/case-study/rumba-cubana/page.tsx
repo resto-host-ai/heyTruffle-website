@@ -7,31 +7,25 @@ import CaseStudies from "@/components/CaseStudies";
 import DemoSearchBar from "@/components/DemoSearchBar";
 
 export const metadata: Metadata = {
-  title: "Baires Grill — Case Study — heytruffle",
+  title: "Rumba Cubana — Case Study — heytruffle",
   description:
-    "How Baires Grill answered every reservation, private-event and support call across its Miami rooms with HeyTruffle — a record month, every call answered.",
-  alternates: { canonical: "/case-study/baires-grill/" },
+    "How Rumba Cubana keeps six New Jersey kitchens covered with HeyTruffle — every call answered, the table booked and the link sent, with the same warm welcome at each.",
+  alternates: { canonical: "/case-study/rumba-cubana/" },
 };
 
-const HERO_TAGS = ["Latin", "Reservations", "Miami, Florida", "9 locations"];
+const HERO_TAGS = ["Cuban", "Reservations", "New Jersey", "6 locations"];
 
 const HERO_STATS = [
-  { value: "7.5K+", label: "Calls handled" },
-  { value: "100+", label: "Host hours saved" },
-  { value: "590+", label: "Reservations booked" },
+  { value: "4k", label: "Calls handled" },
+  { value: "153", label: "Reservations booked" },
+  { value: "885", label: "Links sent" },
 ];
 
 const MEASURED = [
-  { value: "7.520", label: "Calls handled", color: "#943e72" },
-  { value: "996", label: "SMS messages sent", color: "#3773d7" },
-  { value: "590", label: "Reservations booked by AI", color: "#ef7200" },
-  { value: "104", label: "Host hours saved", color: "#2f3d7c" },
-];
-
-const IMPACT = [
-  { v: "731", l: "SMS sent" },
-  { v: "80%", l: "Conversion" },
-  { v: "3x$50", l: "Average spend per party of three" },
+  { value: "4.042", label: "Calls handled", color: "#943e72" },
+  { value: "885", label: "SMS sent", color: "#3773d7" },
+  { value: "35%", label: "Recovered after hours", color: "#ef7200" },
+  { value: "55", label: "Host hours saved", color: "#2f3d7c" },
 ];
 
 const RELATED = [
@@ -47,15 +41,15 @@ const RELATED = [
     accent: "#ef7200",
   },
   {
-    name: "Mojitos",
-    location: "Miami",
-    value: "4.000",
-    metric: "Calls recovered in one month.",
-    desc: "Reservations, orders and catering that would have gone unanswered.",
-    image: "/images/mojitos.webp",
+    name: "Baires Grill",
+    location: "Miami, 9 locations",
+    value: "7.520",
+    metric: "Calls handled in one month.",
+    desc: "Every call answered while the team stayed on the floor.",
+    image: "/images/case-baires.webp",
     bg: "#eae6dc",
     bgIdle: "#c8c5bf",
-    accent: "#943e72",
+    accent: "#a05fc4",
   },
 ];
 
@@ -78,7 +72,7 @@ function ChevronLeft() {
   );
 }
 
-export default function BairesGrillCaseStudy() {
+export default function RumbaCubanaCaseStudy() {
   return (
     <main className="bg-cream">
       {/* ── Hero ─────────────────────────────────────────── */}
@@ -109,7 +103,7 @@ export default function BairesGrillCaseStudy() {
             className="inline-flex items-center gap-2 font-body text-[20px] font-normal leading-[110%] text-cream/90 transition-opacity hover:opacity-70"
           >
             <ChevronLeft />
-            Case studies <span className="text-cream/50">/</span> Baires Grill
+            Case studies <span className="text-cream/50">/</span> Rumba Cubana
           </Link>
 
           <div className="flex flex-1 flex-col items-center justify-center py-12">
@@ -129,8 +123,8 @@ export default function BairesGrillCaseStudy() {
 
             <div className="mt-8 flex flex-col items-center">
               <Image
-                src="/images/logobaires.png"
-                alt="Baires Grill"
+                src="/images/rumbalogo.png"
+                alt="Rumba Cubana"
                 width={237}
                 height={236}
                 className="h-[150px] w-auto md:h-[200px]"
@@ -138,19 +132,17 @@ export default function BairesGrillCaseStudy() {
             </div>
 
             <h1 className="mx-auto mt-10 max-w-[760px] text-center font-body text-[32px] font-normal! leading-[120%] md:text-[40px]">
-              A record month.{" "}
-              <span className="text-brand-orange">Every call answered.</span>
+              Six kitchens,{" "}
+              <span className="text-brand-orange">one warm welcome.</span>
             </h1>
 
             <p className="mx-auto mt-6 max-w-[826px] text-center font-body text-[20px] font-normal leading-[140%] text-cream md:text-[26px]">
-              Baires Grill takes a steady stream of reservation calls, private
-              event requests, and customer support questions across its Miami
-              area rooms.
+              Rumba Cubana fields thousands of calls a month across six New
+              Jersey locations, from reservations to pickup orders.
             </p>
             <p className="mx-auto mt-6 max-w-[826px] text-center font-body text-[20px] font-normal leading-[140%] text-cream md:text-[26px]">
-              heytruffle answers every one, books the table, and sends the
-              confirmation, even on the busiest nights. The volume has grown five
-              months in a row; the calm has held.
+              heytruffle answers every one, books the table, and sends the link,
+              with the same warm welcome at each.
             </p>
           </div>
 
@@ -182,13 +174,13 @@ export default function BairesGrillCaseStudy() {
         </div>
       </section>
 
-      {/* ── No assumptions. Just the math. ───────────────── */}
+      {/* ── No assumptions. Just the results. ────────────── */}
       <section className="relative bg-cream pb-24 text-[#251f21] md:pb-32">
         <div className="mx-auto max-w-[1536px] px-6 md:px-10">
           <h2 className="text-center font-serif text-[40px] font-bold! leading-[110%] md:text-[52px] lg:text-[64px]">
             No assumptions.
             <br />
-            Just the math.
+            Just the results.
           </h2>
 
           {/* Measured results — text on the left, four metric cards on the right */}
@@ -198,8 +190,8 @@ export default function BairesGrillCaseStudy() {
                 Measured results
               </p>
               <p className="mt-4 max-w-[420px] font-body text-[20px] font-normal leading-[140%] md:text-[26px]">
-                These are the numbers we can stand behind. Every metric comes
-                directly from Baires Grill&apos;s call data for June 2026.
+                Every metric comes directly from Rumba Cubana&apos;s call data
+                for a single month.
               </p>
             </div>
             {MEASURED.map((m) => (
@@ -218,63 +210,6 @@ export default function BairesGrillCaseStudy() {
                 </p>
               </div>
             ))}
-          </div>
-
-          {/* Estimated business impact */}
-          <div className="mt-16">
-            <p className="font-body text-[28px] font-normal! leading-[120%] md:text-[40px]">
-              Estimated business impact
-            </p>
-            <div className="mt-8 flex flex-col gap-6 lg:flex-row lg:items-stretch">
-              {/* Math card */}
-              <div className="flex flex-1 flex-wrap items-center gap-x-4 gap-y-8 rounded-[25px] border border-transparent [background:linear-gradient(#f1eee6,#f1eee6)_padding-box,linear-gradient(180deg,#ffffff_0%,rgba(37,31,33,0.06)_45%,rgba(37,31,33,0.28)_100%)_border-box] p-8 shadow-[0_10px_30px_rgba(0,0,0,0.04)] md:flex-nowrap md:justify-between md:p-12">
-                {IMPACT.map((item, i, arr) => (
-                  <div key={item.l} className="flex items-center gap-4">
-                    <div className="flex items-center gap-3">
-                      <p className="font-body text-[52px] font-normal leading-[100%] md:text-[64px]">
-                        {item.v}
-                      </p>
-                      <p className="max-w-[120px] font-body text-[18px] font-normal leading-[120%]">
-                        {item.l}
-                      </p>
-                    </div>
-                    {i < arr.length - 1 && (
-                      <span className="font-body text-[28px] font-normal leading-none md:text-[36px]">
-                        ×
-                      </span>
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              {/* Equals */}
-              <div className="hidden items-center justify-center lg:flex">
-                <span className="font-body text-[40px] font-normal leading-none">
-                  =
-                </span>
-              </div>
-
-              {/* Result card */}
-              <div
-                className="relative flex items-center gap-5 overflow-hidden rounded-[25px] p-8 text-cream shadow-[0_18px_44px_rgba(0,0,0,0.25)] md:p-10 lg:w-[34%]"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(180deg, #12162c 0%, #21306a 55%, #3454b0 100%)",
-                }}
-              >
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 opacity-40 mix-blend-overlay"
-                  style={{ backgroundImage: NOISE }}
-                />
-                <p className="relative font-body text-[52px] font-normal leading-[100%] md:text-[64px]">
-                  ~$87,720
-                </p>
-                <p className="relative max-w-[180px] font-body text-[18px] font-normal leading-[130%] text-cream/90">
-                  Estimated assisted revenue in June.
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </section>

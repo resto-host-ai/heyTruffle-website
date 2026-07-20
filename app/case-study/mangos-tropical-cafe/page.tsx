@@ -14,7 +14,13 @@ export const metadata: Metadata = {
   alternates: { canonical: "/case-study/mangos-tropical-cafe/" },
 };
 
-const HERO_TAGS = ["Latin", "Dinner and Show", "Orlando", "2 locations"];
+const HERO_TAGS = ["Latin/Caribbean", "Reservations", "Orlando", "1 location"];
+
+const HERO_STATS = [
+  { value: "54%", label: "Captured after-hours" },
+  { value: "68%", label: "Calls resolved by AI" },
+  { value: "109", label: "Reservations & experiences" },
+];
 
 const SUCCESS_STATS = [
   {
@@ -196,7 +202,8 @@ export default function MangosTropicalCafeCaseStudy() {
             </div>
 
             <h1 className="mx-auto mt-10 max-w-[860px] text-center font-body text-[32px] font-normal! leading-[120%] md:text-[40px]">
-              Dinner, show, nightclub. One line handles the whole night.
+              <span className="text-brand-orange">Dinner, show, nightclub.</span>{" "}
+              One line handles the whole night.
             </h1>
 
             <p className="mx-auto mt-6 max-w-[826px] text-center font-body text-[20px] font-normal leading-[140%] text-cream md:text-[26px]">
@@ -207,6 +214,20 @@ export default function MangosTropicalCafeCaseStudy() {
               More than half arrive after hours, and heytruffle answers them all,
               in season and out.
             </p>
+          </div>
+
+          {/* Hero stats bar */}
+          <div className="mx-auto grid w-full max-w-[900px] grid-cols-3 divide-x divide-cream/25">
+            {HERO_STATS.map((s) => (
+              <div key={s.label} className="flex flex-col items-center px-4">
+                <p className="font-body text-[44px] font-normal leading-[110%] md:text-[64px]">
+                  {s.value}
+                </p>
+                <p className="mt-1 text-center font-body text-[16px] font-normal leading-[130%] text-cream/90 md:text-[20px]">
+                  {s.label}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>

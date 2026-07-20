@@ -12,7 +12,9 @@ type CaseCard = {
   gradient: string;
   cuisine: string;
   location: string;
-  operational: [string, string];
+  operational: string;
+  /** Number of locations (display badge). */
+  locations: string;
   /** Detail-page slug (omit while the page doesn't exist yet). */
   slug?: string;
 };
@@ -21,105 +23,123 @@ const FILTER_GROUPS: { key: Category; label: string; options: string[] }[] = [
   {
     key: "operational",
     label: "Operational need",
-    options: [
-      "Reservations",
-      "Pickup & Delivery",
-      "Catering",
-      "Large Parties",
-      "After-hours",
-      "Multilingual",
-    ],
+    options: ["Reservations", "Phone Orders"],
   },
   {
     key: "cuisine",
     label: "Cuisine",
-    options: ["Latin", "Asian", "Mediterranean/EU", "Steakhouse", "Multi-concept"],
+    options: [
+      "Mexican",
+      "Mediterranean",
+      "Steakhouse",
+      "Latin/Caribbean",
+      "Korean Chicken",
+      "American",
+      "Cuban",
+      "Pan-Asian",
+    ],
   },
   {
     key: "location",
     label: "Location",
-    options: ["Atlanta", "Miami", "Las Vegas", "Multi-state"],
+    options: [
+      "Atlanta",
+      "Mississipi",
+      "Miami",
+      "Orlando",
+      "LA",
+      "Dallas",
+      "New Jersey",
+    ],
   },
 ];
 
-// NOTE: tags are placeholder data — swap for each restaurant's real attributes.
 const CASES: CaseCard[] = [
   {
     name: "Rreal Tacos",
-    stat: "00",
+    stat: "19k+",
     slug: "rreal-tacos",
-    cuisine: "Latin",
     location: "Atlanta",
-    operational: ["Reservations", "Catering"],
+    operational: "Reservations",
+    cuisine: "Mexican",
+    locations: "12",
     gradient:
       "radial-gradient(120% 110% at 50% 125%, #a5487c 0%, #52293f 34%, #241d20 68%)",
   },
   {
-    name: "Mango's Tropical Cafe",
-    stat: "00",
-    slug: "mangos-tropical-cafe",
-    cuisine: "Latin",
-    location: "Miami",
-    operational: ["After-hours", "Reservations"],
+    name: "Aplos",
+    stat: "3.2k+",
+    slug: "aplos",
+    location: "Mississipi",
+    operational: "Phone Orders",
+    cuisine: "Mediterranean",
+    locations: "4",
     gradient:
       "radial-gradient(120% 110% at 50% 125%, #322a2d 0%, #241e20 44%, #1e1a1c 100%)",
   },
   {
     name: "Baires Grill",
-    stat: "00",
+    stat: "7.5k+",
     slug: "baires-grill",
-    cuisine: "Steakhouse",
     location: "Miami",
-    operational: ["Reservations", "Large Parties"],
+    operational: "Reservations",
+    cuisine: "Steakhouse",
+    locations: "9",
     gradient:
       "radial-gradient(120% 110% at 50% 125%, #302a2c 0%, #241e20 44%, #1e1a1c 100%)",
   },
   {
-    name: "Kyochon",
-    stat: "00",
-    slug: "kyochon",
-    cuisine: "Asian",
-    location: "Multi-state",
-    operational: ["Pickup & Delivery", "After-hours"],
+    name: "Mangos",
+    stat: "1.7k+",
+    slug: "mangos-tropical-cafe",
+    location: "Orlando",
+    operational: "Reservations",
+    cuisine: "Latin/Caribbean",
+    locations: "1",
     gradient:
       "radial-gradient(120% 115% at 50% 125%, #ef7200 0%, #8a4a17 36%, #241d20 70%)",
   },
   {
-    name: "Aplós",
-    stat: "00",
-    slug: "aplos",
-    cuisine: "Mediterranean/EU",
-    location: "Multi-state",
-    operational: ["Pickup & Delivery", "Catering"],
+    name: "Kyochon",
+    stat: "1.2k+",
+    slug: "kyochon",
+    location: "LA",
+    operational: "Phone Orders",
+    cuisine: "Korean Chicken",
+    locations: "2",
     gradient:
-      "radial-gradient(120% 115% at 50% 125%, #7a4620 0%, #35251d 40%, #211a1c 74%)",
+      "radial-gradient(120% 115% at 50% 125%, #322a2d 0%, #241e20 44%, #1e1a1c 100%)",
   },
   {
-    name: "Mojitos",
-    stat: "00",
-    cuisine: "Latin",
-    location: "Miami",
-    operational: ["Pickup & Delivery", "After-hours"],
+    name: "Chelsea Corner",
+    stat: "2.2k+",
+    slug: "chelsea-corner",
+    location: "Dallas",
+    operational: "Reservations",
+    cuisine: "American",
+    locations: "1",
     gradient:
       "radial-gradient(120% 115% at 50% 125%, #3a2c22 0%, #271f1e 44%, #1e1a1c 100%)",
   },
   {
-    name: "La Cañita",
-    stat: "00",
-    slug: "la-canita",
-    cuisine: "Latin",
-    location: "Miami",
-    operational: ["Reservations", "Catering"],
+    name: "Rumba Cubana",
+    stat: "4k+",
+    slug: "rumba-cubana",
+    location: "New Jersey",
+    operational: "Reservations",
+    cuisine: "Cuban",
+    locations: "6",
     gradient:
       "radial-gradient(120% 115% at 50% 125%, #2f5bd7 0%, #223268 36%, #1c1a26 70%)",
   },
   {
     name: "KYU",
-    stat: "00",
+    stat: "1.2k+",
     slug: "kyu",
-    cuisine: "Asian",
     location: "Miami",
-    operational: ["Reservations", "Large Parties"],
+    operational: "Reservations",
+    cuisine: "Pan-Asian",
+    locations: "3",
     gradient:
       "radial-gradient(120% 110% at 50% 125%, #302a2c 0%, #241e20 44%, #1e1a1c 100%)",
   },
@@ -218,7 +238,7 @@ export default function CaseStudiesList() {
   const visible = CASES.filter((c) => {
     const okOp =
       selected.operational.length === 0 ||
-      selected.operational.some((o) => c.operational.includes(o));
+      selected.operational.includes(c.operational);
     const okCui =
       selected.cuisine.length === 0 || selected.cuisine.includes(c.cuisine);
     const okLoc =
@@ -295,7 +315,7 @@ export default function CaseStudiesList() {
         {/* Case grid */}
         <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {visible.map((c) => {
-            const tags = [c.cuisine, c.operational[0], c.operational[1], c.location];
+            const tags = [c.location, c.operational, c.cuisine, c.locations];
             return (
               <article
                 key={c.name}

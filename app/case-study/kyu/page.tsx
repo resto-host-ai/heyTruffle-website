@@ -16,9 +16,15 @@ export const metadata: Metadata = {
 
 const HERO_TAGS = [
   "Asian-inspired",
-  "Wood-fired",
+  "Reservations",
   "Miami, NYC & Las Vegas",
   "3 locations",
+];
+
+const HERO_STATS = [
+  { value: "100%", label: "Calls resolved" },
+  { value: "88+", label: "Host hours saved" },
+  { value: "131", label: "Simultaneous calls" },
 ];
 
 const SUCCESS_STATS = [
@@ -202,21 +208,32 @@ export default function KyuCaseStudy() {
             </div>
 
             <h1 className="mx-auto mt-10 max-w-[760px] text-center font-body text-[32px] font-normal! leading-[120%] md:text-[40px]">
-              1,964 calls.{" "}
-              <span className="text-brand-orange">
-                Every single one resolved.
-              </span>
+              <span className="text-brand-orange">131 calls at once.</span> Every
+              one resolved.
             </h1>
 
             <p className="mx-auto mt-6 max-w-[826px] text-center font-body text-[20px] font-normal leading-[140%] text-cream md:text-[26px]">
-              KYU&apos;s line is reservations, large parties, and guests running
-              late.
+              KYU runs on reservations, large parties, and guests calling right
+              at the rush.
             </p>
             <p className="mx-auto mt-6 max-w-[826px] text-center font-body text-[20px] font-normal leading-[140%] text-cream md:text-[26px]">
-              In March, heytruffle answered every call and resolved all of them
-              without passing one to the floor, even when 131 rang at the same
-              time.
+              Heytruffle answers every one and resolves it without passing a
+              single call to the floor, even when the phones all ring together.
             </p>
+          </div>
+
+          {/* Hero stats bar */}
+          <div className="mx-auto grid w-full max-w-[900px] grid-cols-3 divide-x divide-cream/25">
+            {HERO_STATS.map((s) => (
+              <div key={s.label} className="flex flex-col items-center px-4">
+                <p className="font-body text-[44px] font-normal leading-[110%] md:text-[64px]">
+                  {s.value}
+                </p>
+                <p className="mt-1 text-center font-body text-[16px] font-normal leading-[130%] text-cream/90 md:text-[20px]">
+                  {s.label}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
