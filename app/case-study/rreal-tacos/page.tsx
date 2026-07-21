@@ -24,9 +24,9 @@ const HERO_STATS = [
 ];
 
 const MEASURED = [
-  { value: "5.513", label: "Calls recovered", color: "#943e72" },
-  { value: "4.398", label: "SMS messages sent", color: "#3773d7" },
-  { value: "552", label: "Host hours saved", color: "#ef7200" },
+  { value: "19,362", label: "Calls handled", color: "#943e72" },
+  { value: "2,867", label: "SMS messages sent", color: "#3773d7" },
+  { value: "~520", label: "Host hours saved", color: "#ef7200" },
   { value: "54%", label: "Calls fully resolved", color: "#2f3d7c" },
 ];
 
@@ -55,9 +55,9 @@ const STORY_MATH = [
 ];
 
 const IMPACT = [
-  { v: "~152", l: "Large-party bookings" },
-  { v: "11.6", l: "Average guests per booking" },
-  { v: "$30", l: "Average spend per guest" },
+  { v: "303", l: "Booked reservations" },
+  { v: "80%", l: "Conversion" },
+  { v: "3x$30", l: "Average spend per party of three" },
 ];
 
 const RELATED = [
@@ -378,7 +378,7 @@ export default function RrealTacosCaseStudy() {
                 {IMPACT.map((item, i, arr) => (
                   <Fragment key={item.l}>
                     <div className="flex items-center gap-4">
-                      <p className="w-[104px] shrink-0 font-body text-[48px] font-normal leading-[100%] md:w-auto md:text-[64px]">
+                      <p className="shrink-0 whitespace-nowrap font-body text-[48px] font-normal leading-[100%] md:text-[64px]">
                         {item.v}
                       </p>
                       <p className="max-w-[150px] font-body text-[18px] font-normal leading-[120%] md:max-w-[120px]">
@@ -415,11 +415,10 @@ export default function RrealTacosCaseStudy() {
                   style={{ backgroundImage: NOISE }}
                 />
                 <p className="relative font-body text-[52px] font-normal leading-[100%] md:text-[64px]">
-                  ~$52.900
+                  ~$74,016
                 </p>
                 <p className="relative font-body text-[18px] font-normal leading-[130%] text-cream/90 md:max-w-[180px]">
-                  Estimated assisted revenue in May only from Large-Party
-                  reservations
+                  Estimated assisted revenue in June.
                 </p>
               </div>
             </div>

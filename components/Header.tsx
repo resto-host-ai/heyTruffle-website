@@ -79,7 +79,7 @@ function NavLink({ label, href }: { label: string; href: string }) {
     <Link
       href={href}
       onClick={(e) => smoothScrollToAnchor(href, e)}
-      className={`whitespace-nowrap rounded-full border-2 px-5 py-2 text-center font-body text-[20px] leading-[110%] text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream ${
+      className={`whitespace-nowrap rounded-full border-2 px-3.5 py-2 text-center font-body text-[17px] leading-[110%] text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream 2xl:px-5 2xl:text-[20px] ${
         active ? "border-cream font-bold" : "border-transparent font-normal"
       }`}
     >
@@ -153,7 +153,7 @@ export default function Header() {
           <div className="group">
             <button
               type="button"
-              className="flex items-center gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-5 py-2 text-center font-body text-[20px] font-normal leading-[110%] text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream"
+              className="flex items-center gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-3.5 py-2 text-center font-body text-[17px] font-normal leading-[110%] text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream 2xl:px-5 2xl:text-[20px]"
             >
               Integrations
               <svg
@@ -212,7 +212,7 @@ export default function Header() {
           <button
             type="button"
             onClick={() => void openCalendly()}
-            className="whitespace-nowrap rounded-full border-2 border-transparent px-5 py-2 text-center font-body text-[20px] font-normal leading-[110%] text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream"
+            className="whitespace-nowrap rounded-full border-2 border-transparent px-3.5 py-2 text-center font-body text-[17px] font-normal leading-[110%] text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream 2xl:px-5 2xl:text-[20px]"
           >
             Book a demo
           </button>

@@ -68,7 +68,7 @@ export default function WhatIsSection() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-[#251f21] pb-16 pt-8 md:pb-20 md:pt-10">
+    <section className="relative overflow-hidden bg-[#251f21] pb-16 pt-28 md:pb-20 md:pt-40">
       {/* background_gradient.webp, faded at the top so it blends into the
           #251F21 base instead of showing a hard cropped edge */}
       <div
@@ -105,7 +105,7 @@ export default function WhatIsSection() {
 
         <div
           ref={pillsRef}
-          className="mt-10 flex w-full max-w-[941px] flex-col gap-5"
+          className="mt-16 flex w-full max-w-[941px] flex-col gap-14"
         >
           {STATEMENTS.map((text, i) => {
             const canReveal = !!REVEAL[i];

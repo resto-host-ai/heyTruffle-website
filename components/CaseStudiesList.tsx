@@ -348,11 +348,11 @@ export default function CaseStudiesList() {
                     </Link>
                   </div>
 
-                  <div className="grid grid-cols-2 items-stretch gap-2.5">
+                  <div className="flex flex-wrap gap-2.5">
                     {tags.map((tag, i) => (
                       <span
                         key={`${tag}-${i}`}
-                        className="flex min-h-[38px] items-center justify-center rounded-full border border-cream/70 px-3 py-1.5 text-center font-body text-[15px] font-normal leading-[120%]"
+                        className="flex flex-auto min-h-[36px] items-center justify-center whitespace-nowrap rounded-full border border-cream px-3.5 py-1 text-center font-body text-[20px] font-normal leading-[110%] text-cream"
                       >
                         {tag}
                       </span>
