@@ -48,51 +48,63 @@ export default function Hero() {
           handled.
         </p>
 
-        {/* Search + primary CTA */}
-        <form
-          className="mt-2 flex h-[64px] w-full max-w-[559px] items-center overflow-hidden rounded-[73.26px] border border-white/40 bg-[#f6f3ec]/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg sm:h-[74px]"
-          onSubmit={(e) => {
-            e.preventDefault();
-            setDemoOpen(true);
-          }}
-        >
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search for your restaurant"
-            aria-label="Search for your restaurant"
-            className="h-full min-w-0 flex-1 bg-transparent pl-6 pr-3 font-body text-[20px] font-normal leading-[110%] text-[#251f21] outline-none placeholder:text-[#251f21] sm:pl-[38px] sm:pr-4"
-          />
+        {/* CTAs — desktop shows the search bar; mobile shows stacked buttons */}
+        <div className="mt-2 flex w-full max-w-[559px] flex-col items-stretch gap-3 sm:gap-6">
+          {/* Search + primary CTA (desktop only) */}
+          <form
+            className="hidden h-[64px] w-full items-center overflow-hidden rounded-[73.26px] border border-white/40 bg-[#f6f3ec]/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg sm:flex sm:h-[74px]"
+            onSubmit={(e) => {
+              e.preventDefault();
+              setDemoOpen(true);
+            }}
+          >
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search for your restaurant"
+              aria-label="Search for your restaurant"
+              className="h-full min-w-0 flex-1 bg-transparent pl-6 pr-3 font-body text-[20px] font-normal leading-[110%] text-[#251f21] outline-none placeholder:text-[#251f21] sm:pl-[38px] sm:pr-4"
+            />
+            <button
+              type="submit"
+              className="flex h-full shrink-0 items-center justify-center gap-2 rounded-full bg-brand-orange px-6 font-body text-[20px] font-bold leading-[110%] text-[#f6f3ec] transition-all duration-300 hover:bg-[linear-gradient(180deg,#f5a24a_0%,#e07a12_45%,#b85400_100%)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(239,114,0,0.55)] sm:gap-4 sm:px-[44px]"
+            >
+              Live Demo
+              <svg
+                width="13"
+                height="27"
+                viewBox="0 0 19 40"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden
+                className="shrink-0"
+              >
+                <path d="M3 4l13 16-13 16" />
+              </svg>
+            </button>
+          </form>
+
+          {/* Primary CTA (mobile only) */}
           <button
-            type="submit"
-            className="flex h-full shrink-0 items-center justify-center gap-2 rounded-full bg-brand-orange px-6 font-body text-[20px] font-bold leading-[110%] text-[#f6f3ec] transition-all duration-300 hover:bg-[linear-gradient(180deg,#f5a24a_0%,#e07a12_45%,#b85400_100%)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(239,114,0,0.55)] sm:gap-4 sm:px-[44px]"
+            type="button"
+            onClick={() => setDemoOpen(true)}
+            className="flex h-[64px] w-full items-center justify-center rounded-full bg-brand-orange font-body text-[20px] font-bold leading-[110%] text-cream transition-all duration-300 hover:bg-[linear-gradient(180deg,#f5a24a_0%,#e07a12_45%,#b85400_100%)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(239,114,0,0.55)] sm:hidden"
           >
             Live Demo
-            <svg
-              width="13"
-              height="27"
-              viewBox="0 0 19 40"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="3.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden
-              className="shrink-0"
-            >
-              <path d="M3 4l13 16-13 16" />
-            </svg>
           </button>
-        </form>
 
-        {/* Secondary CTA */}
-        <a
-          href="mailto:info@heytruffle.com"
-          className="mt-6 flex h-[64px] items-center justify-center rounded-full bg-[#1c1917]/85 px-9 text-[20px] font-semibold text-cream shadow-lg backdrop-blur-md transition-all duration-300 hover:bg-[linear-gradient(180deg,#8b9cd6_0%,#6076bd_50%,#3f5490_100%)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(79,84,144,0.55)]"
-        >
-          Talk to our team
-        </a>
+          {/* Secondary CTA */}
+          <a
+            href="mailto:info@heytruffle.com"
+            className="flex h-[64px] w-full items-center justify-center self-center rounded-full bg-[#1c1917]/85 px-9 text-[20px] font-semibold text-cream shadow-lg backdrop-blur-md transition-all duration-300 hover:bg-[linear-gradient(180deg,#8b9cd6_0%,#6076bd_50%,#3f5490_100%)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(79,84,144,0.55)] sm:w-auto"
+          >
+            Talk to our team
+          </a>
+        </div>
       </div>
 
       <DemoAssistant

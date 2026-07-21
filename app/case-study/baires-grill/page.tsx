@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { NOISE } from "@/lib/noise";
@@ -192,8 +193,8 @@ export default function BairesGrillCaseStudy() {
           </h2>
 
           {/* Measured results — text on the left, four metric cards on the right */}
-          <div className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.15fr)_repeat(4,minmax(0,1fr))] lg:items-center">
-            <div className="sm:col-span-2 lg:col-span-1">
+          <div className="mt-12 grid grid-cols-2 gap-4 sm:mt-16 sm:gap-5 lg:grid-cols-[minmax(0,1.15fr)_repeat(4,minmax(0,1fr))] lg:items-center">
+            <div className="col-span-2 lg:col-span-1">
               <p className="font-body text-[28px] font-normal! leading-[120%] md:text-[40px]">
                 Measured results
               </p>
@@ -205,15 +206,15 @@ export default function BairesGrillCaseStudy() {
             {MEASURED.map((m) => (
               <div
                 key={m.label}
-                className="flex h-[202px] flex-col justify-center rounded-[25px] border border-transparent [background:linear-gradient(#f6f3ec,#f6f3ec)_padding-box,linear-gradient(180deg,#ffffff_0%,rgba(37,31,33,0.06)_45%,rgba(37,31,33,0.28)_100%)_border-box] p-6 shadow-[0_14px_34px_rgba(0,0,0,0.06)] md:p-8"
+                className="flex h-[150px] flex-col justify-center rounded-[25px] border border-transparent [background:linear-gradient(#f6f3ec,#f6f3ec)_padding-box,linear-gradient(180deg,#ffffff_0%,rgba(37,31,33,0.06)_45%,rgba(37,31,33,0.28)_100%)_border-box] p-5 shadow-[0_14px_34px_rgba(0,0,0,0.06)] sm:h-[202px] md:p-8"
               >
                 <p
-                  className="font-body text-[56px] font-normal leading-[110%] md:text-[72px]"
+                  className="font-body text-[40px] font-normal leading-[110%] sm:text-[56px] md:text-[72px]"
                   style={{ color: m.color }}
                 >
                   {m.value}
                 </p>
-                <p className="mt-2 font-body text-[22px] font-normal leading-[130%] md:text-[26px]">
+                <p className="mt-1 font-body text-[15px] font-normal leading-[130%] sm:mt-2 sm:text-[22px] md:text-[26px]">
                   {m.label}
                 </p>
               </div>
@@ -227,23 +228,23 @@ export default function BairesGrillCaseStudy() {
             </p>
             <div className="mt-8 flex flex-col gap-6 lg:flex-row lg:items-stretch">
               {/* Math card */}
-              <div className="flex flex-1 flex-wrap items-center gap-x-4 gap-y-8 rounded-[25px] border border-transparent [background:linear-gradient(#f1eee6,#f1eee6)_padding-box,linear-gradient(180deg,#ffffff_0%,rgba(37,31,33,0.06)_45%,rgba(37,31,33,0.28)_100%)_border-box] p-8 shadow-[0_10px_30px_rgba(0,0,0,0.04)] md:flex-nowrap md:justify-between md:p-12">
+              <div className="flex flex-1 flex-col gap-4 rounded-[25px] border border-transparent [background:linear-gradient(#f1eee6,#f1eee6)_padding-box,linear-gradient(180deg,#ffffff_0%,rgba(37,31,33,0.06)_45%,rgba(37,31,33,0.28)_100%)_border-box] p-7 shadow-[0_10px_30px_rgba(0,0,0,0.04)] md:flex-row md:flex-nowrap md:items-center md:justify-between md:gap-4 md:p-12">
                 {IMPACT.map((item, i, arr) => (
-                  <div key={item.l} className="flex items-center gap-4">
-                    <div className="flex items-center gap-3">
-                      <p className="font-body text-[52px] font-normal leading-[100%] md:text-[64px]">
+                  <Fragment key={item.l}>
+                    <div className="flex items-center gap-4">
+                      <p className="w-[104px] shrink-0 font-body text-[48px] font-normal leading-[100%] md:w-auto md:text-[64px]">
                         {item.v}
                       </p>
-                      <p className="max-w-[120px] font-body text-[18px] font-normal leading-[120%]">
+                      <p className="max-w-[150px] font-body text-[18px] font-normal leading-[120%] md:max-w-[120px]">
                         {item.l}
                       </p>
                     </div>
                     {i < arr.length - 1 && (
-                      <span className="font-body text-[28px] font-normal leading-none md:text-[36px]">
+                      <span className="self-center font-body text-[28px] font-normal leading-none text-[#251f21]/50 md:self-auto md:text-[36px]">
                         ×
                       </span>
                     )}
-                  </div>
+                  </Fragment>
                 ))}
               </div>
 
@@ -256,7 +257,7 @@ export default function BairesGrillCaseStudy() {
 
               {/* Result card */}
               <div
-                className="relative flex items-center gap-5 overflow-hidden rounded-[25px] p-8 text-cream shadow-[0_18px_44px_rgba(0,0,0,0.25)] md:p-10 lg:w-[34%]"
+                className="relative flex flex-col items-start gap-3 overflow-hidden rounded-[25px] p-7 text-cream shadow-[0_18px_44px_rgba(0,0,0,0.25)] md:flex-row md:items-center md:gap-5 md:p-10 lg:w-[34%]"
                 style={{
                   backgroundImage:
                     "linear-gradient(180deg, #12162c 0%, #21306a 55%, #3454b0 100%)",
@@ -270,7 +271,7 @@ export default function BairesGrillCaseStudy() {
                 <p className="relative font-body text-[52px] font-normal leading-[100%] md:text-[64px]">
                   ~$87,720
                 </p>
-                <p className="relative max-w-[180px] font-body text-[18px] font-normal leading-[130%] text-cream/90">
+                <p className="relative font-body text-[18px] font-normal leading-[130%] text-cream/90 md:max-w-[180px]">
                   Estimated assisted revenue in June.
                 </p>
               </div>

@@ -141,7 +141,7 @@ export default function CaseStudies({
                 {/* Image (or an accent gradient when a photo isn't available),
                     pinned top-to-bottom so it always fills the card */}
                 {c.image ? (
-                  <div className="relative h-52 w-full overflow-hidden md:absolute md:inset-y-0 md:right-0 md:h-auto md:w-1/2 md:rounded-[28px] md:shadow-[-18px_0_36px_rgba(0,0,0,0.25)]">
+                  <div className="relative min-h-[208px] w-full flex-1 overflow-hidden md:absolute md:inset-y-0 md:right-0 md:h-auto md:w-1/2 md:flex-none md:rounded-[28px] md:shadow-[-18px_0_36px_rgba(0,0,0,0.25)]">
                     <Image
                       src={c.image}
                       alt={c.name}
@@ -153,7 +153,7 @@ export default function CaseStudies({
                   </div>
                 ) : (
                   <div
-                    className="relative h-52 w-full overflow-hidden md:absolute md:inset-y-0 md:right-0 md:h-auto md:w-1/2 md:rounded-[28px] md:shadow-[-18px_0_36px_rgba(0,0,0,0.25)]"
+                    className="relative min-h-[208px] w-full flex-1 overflow-hidden md:absolute md:inset-y-0 md:right-0 md:h-auto md:w-1/2 md:flex-none md:rounded-[28px] md:shadow-[-18px_0_36px_rgba(0,0,0,0.25)]"
                     style={{
                       backgroundImage: `radial-gradient(120% 120% at 65% 25%, ${c.accent} 0%, #2a2224 60%, #1e1a1c 100%)`,
                     }}

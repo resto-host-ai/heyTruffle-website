@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { NOISE } from "@/lib/noise";
 import { BookDemoButton } from "@/components/BookDemoButton";
@@ -248,12 +247,6 @@ export default async function IntegrationPage({
                 <BookDemoButton className="inline-flex items-center justify-center rounded-full bg-cream px-9 py-5 font-body text-[20px] font-bold leading-[110%] text-[#251f21] transition-all duration-300 hover:bg-[linear-gradient(180deg,#8b9cd6_0%,#6076bd_50%,#3f5490_100%)] hover:text-cream hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(79,84,144,0.55)]">
                   Get a Free Demo
                 </BookDemoButton>
-                <Link
-                  href="/roi-calculator"
-                  className="inline-flex items-center justify-center rounded-full border border-cream/30 px-9 py-5 font-body text-[20px] font-bold leading-[110%] text-cream transition-colors hover:bg-cream/10"
-                >
-                  Calculate your ROI
-                </Link>
               </div>
             </div>
           </div>

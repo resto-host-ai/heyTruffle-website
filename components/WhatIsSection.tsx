@@ -10,13 +10,22 @@ const STATEMENTS = [
   "Not replacing your host.",
 ];
 
-// Per-pill hover gradient (empty string = keep the solid #4c4749 fill). The
+// Per-pill active gradient (empty string = keep the solid #4c4749 fill). The
 // second (border-box) layer keeps the same top-lit gradient stroke as the base
-// so only the fill swaps on hover. Full literal strings so Tailwind detects them.
+// so only the fill swaps. Full literal strings so Tailwind detects them.
+// Desktop reveals on hover (md:hover); mobile toggles the same look on tap.
 const HOVER_BG = [
-  "hover:[background:linear-gradient(180deg,#654027_0%,#61485f_100%)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]",
-  "hover:[background:linear-gradient(180deg,#594666_0%,#334061_100%)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]",
-  "hover:[background:linear-gradient(180deg,#5c391d_0%,#2b2222_100%)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]",
+  "md:hover:[background:linear-gradient(180deg,#654027_0%,#61485f_100%)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] md:hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]",
+  "md:hover:[background:linear-gradient(180deg,#594666_0%,#334061_100%)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] md:hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]",
+  "md:hover:[background:linear-gradient(180deg,#5c391d_0%,#2b2222_100%)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] md:hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]",
+];
+
+// Same gradients without a variant prefix — applied on mobile when a pill is
+// tapped open.
+const ACTIVE_BG = [
+  "[background:linear-gradient(180deg,#654027_0%,#61485f_100%)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]",
+  "[background:linear-gradient(180deg,#594666_0%,#334061_100%)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]",
+  "[background:linear-gradient(180deg,#5c391d_0%,#2b2222_100%)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]",
 ];
 
 // Positive statement revealed on hover (empty string = no text swap).
@@ -25,6 +34,22 @@ const REVEAL = ["A service.", "Fully managed.", "Freeing them."];
 export default function WhatIsSection() {
   const pillsRef = useRef<HTMLDivElement>(null);
   const [struck, setStruck] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [revealed, setRevealed] = useState<number[]>([]);
+
+  // On mobile the positive phrase is revealed by tapping instead of hovering.
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const sync = () => setIsMobile(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  const toggle = (i: number) =>
+    setRevealed((prev) =>
+      prev.includes(i) ? prev.filter((x) => x !== i) : [...prev, i],
+    );
 
   useEffect(() => {
     const el = pillsRef.current;
@@ -82,14 +107,22 @@ export default function WhatIsSection() {
           ref={pillsRef}
           className="mt-10 flex w-full max-w-[941px] flex-col gap-5"
         >
-          {STATEMENTS.map((text, i) => (
+          {STATEMENTS.map((text, i) => {
+            const canReveal = !!REVEAL[i];
+            const open = canReveal && isMobile && revealed.includes(i);
+            return (
             <div
               key={text}
-              className={`group relative flex h-[119px] items-center justify-center rounded-full border border-transparent [background:linear-gradient(#4c4749,#4c4749)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg transition-all duration-300 ${HOVER_BG[i]}`}
+              onClick={canReveal && isMobile ? () => toggle(i) : undefined}
+              role={canReveal && isMobile ? "button" : undefined}
+              aria-pressed={canReveal && isMobile ? open : undefined}
+              className={`group relative flex h-[92px] items-center justify-center rounded-full border border-transparent [background:linear-gradient(#4c4749,#4c4749)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg transition-all duration-300 md:h-[119px] ${
+                canReveal && isMobile ? "cursor-pointer" : ""
+              } ${open ? ACTIVE_BG[i] : HOVER_BG[i]}`}
             >
               <span
-                className={`relative inline-block font-serif text-[32px] font-bold leading-[110%] text-cream transition-opacity duration-300 sm:text-[44px] lg:text-[64px] ${
-                  REVEAL[i] ? "group-hover:opacity-0" : ""
+                className={`relative inline-block whitespace-nowrap font-serif text-[26px] font-bold leading-[110%] text-cream transition-opacity duration-300 min-[480px]:text-[36px] sm:text-[44px] lg:text-[64px] ${
+                  canReveal ? (open ? "opacity-0" : "md:group-hover:opacity-0") : ""
                 }`}
               >
                 {text}
@@ -109,14 +142,19 @@ export default function WhatIsSection() {
                   {text}
                 </span>
               </span>
-              {/* Positive statement revealed on hover (no strikethrough). */}
+              {/* Positive statement revealed on hover (desktop) / tap (mobile). */}
               {REVEAL[i] && (
-                <span className="pointer-events-none absolute inset-0 flex items-center justify-center font-serif text-[32px] font-bold leading-[110%] text-cream opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:text-[44px] lg:text-[64px]">
+                <span
+                  className={`pointer-events-none absolute inset-0 flex items-center justify-center whitespace-nowrap font-serif text-[26px] font-bold leading-[110%] text-cream transition-opacity duration-300 min-[480px]:text-[36px] sm:text-[44px] lg:text-[64px] ${
+                    open ? "opacity-100" : "opacity-0 md:group-hover:opacity-100"
+                  }`}
+                >
                   {REVEAL[i]}
                 </span>
               )}
             </div>
-          ))}
+            );
+          })}
         </div>
 
         <p className="reveal reveal-up font-body mt-12 max-w-3xl text-center text-[26px] font-normal leading-[140%] text-cream">

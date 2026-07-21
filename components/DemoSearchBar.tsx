@@ -11,12 +11,13 @@ export default function DemoSearchBar() {
 
   return (
     <>
+      {/* Desktop: search field + Live Demo. Mobile: full-width Live Demo only. */}
       <form
         onSubmit={(e) => {
           e.preventDefault();
           setDemoOpen(true);
         }}
-        className="flex h-[64px] w-full max-w-[559px] items-center overflow-hidden rounded-[73.26px] border border-white/40 bg-[#f6f3ec]/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg sm:h-[74px]"
+        className="hidden h-[64px] w-full max-w-[559px] items-center overflow-hidden rounded-[73.26px] border border-white/40 bg-[#f6f3ec]/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg sm:flex sm:h-[74px]"
       >
         <input
           type="text"
@@ -47,6 +48,14 @@ export default function DemoSearchBar() {
           </svg>
         </button>
       </form>
+
+      <button
+        type="button"
+        onClick={() => setDemoOpen(true)}
+        className="flex h-[64px] w-full max-w-[559px] items-center justify-center rounded-full bg-brand-orange font-body text-[20px] font-bold leading-[110%] text-cream transition-all duration-300 hover:bg-[linear-gradient(180deg,#f5a24a_0%,#e07a12_45%,#b85400_100%)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(239,114,0,0.55)] sm:hidden"
+      >
+        Live Demo
+      </button>
 
       <DemoAssistant
         open={demoOpen}

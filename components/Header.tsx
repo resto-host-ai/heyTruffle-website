@@ -253,23 +253,26 @@ export default function Header() {
       </div>
     </header>
 
-      {/* Mobile full-screen overlay menu (sibling of <header> so it isn't
-          trapped by the header's backdrop-filter containing block) */}
+      {/* Mobile dropdown menu — a floating glass panel anchored to the
+          top-right, sibling of <header> so it isn't trapped by the header's
+          backdrop-filter containing block. */}
       {menuOpen && (
-        <nav className="fixed inset-0 z-40 overflow-y-auto lg:hidden">
-          {/* Dark base + brand-coloured gradient glows */}
-          <div aria-hidden className="absolute inset-0 bg-[#161215]" />
-          <div
-            aria-hidden
-            className="absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(120% 55% at 82% 6%, rgba(239,114,0,0.30) 0%, transparent 60%), radial-gradient(120% 55% at 8% 100%, rgba(181,63,196,0.32) 0%, transparent 62%), radial-gradient(90% 45% at 50% 48%, rgba(213,146,243,0.12) 0%, transparent 72%)",
-            }}
+        <div className="fixed inset-0 z-40 lg:hidden">
+          {/* Transparent click-catcher so the page stays visible behind. */}
+          <button
+            type="button"
+            aria-label="Close menu"
+            tabIndex={-1}
+            onClick={() => setMenuOpen(false)}
+            className="absolute inset-0 h-full w-full cursor-default"
           />
 
-          <div className="relative flex min-h-full flex-col px-6 pb-10 pt-28">
-            <div className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center">
+          <nav
+            className={`absolute right-4 max-h-[calc(100vh-96px)] w-[72%] max-w-[360px] overflow-y-auto rounded-[28px] border border-white/12 bg-[#221a29]/80 shadow-[0_24px_60px_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-all duration-200 ${
+              scrolled ? "top-[72px]" : "top-[92px]"
+            }`}
+          >
+            <div className="flex flex-col items-end gap-1 px-7 py-6 text-right">
               {NAV_BEFORE.map(({ label, href }) => (
                 <Link
                   key={label}
@@ -278,7 +281,7 @@ export default function Header() {
                     smoothScrollToAnchor(href, e);
                     setMenuOpen(false);
                   }}
-                  className="border-b border-white/10 py-4 text-center text-lg font-bold tracking-wide text-cream transition-opacity hover:opacity-70"
+                  className="py-2.5 font-body text-[26px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
                 >
                   {label}
                 </Link>
@@ -289,12 +292,12 @@ export default function Header() {
                 type="button"
                 aria-expanded={mobileIntegrationsOpen}
                 onClick={() => setMobileIntegrationsOpen((open) => !open)}
-                className="flex items-center justify-center gap-2 border-b border-white/10 py-4 text-lg font-bold tracking-wide text-cream transition-opacity hover:opacity-70"
+                className="flex items-center justify-end gap-2 py-2.5 font-body text-[26px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
               >
                 Integrations
                 <svg
-                  width="12"
-                  height="12"
+                  width="14"
+                  height="14"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -310,19 +313,19 @@ export default function Header() {
                 </svg>
               </button>
               {mobileIntegrationsOpen && (
-                <div className="grid grid-cols-2 gap-x-6 gap-y-6 border-b border-white/10 py-6 text-center">
+                <div className="flex w-full flex-col items-end gap-4 border-y border-white/10 py-4">
                   {INTEGRATIONS.map((group) => (
                     <div key={group.heading}>
                       <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-cream/45">
                         {group.heading}
                       </p>
-                      <ul className="mt-2.5 space-y-2">
+                      <ul className="mt-1.5 space-y-1.5">
                         {group.items.map((item) => (
                           <li key={item}>
                             <Link
                               href={itemHref(item)}
                               onClick={() => setMenuOpen(false)}
-                              className="text-[15px] text-cream/90 transition-opacity hover:opacity-70"
+                              className="font-body text-[17px] text-cream/90 transition-opacity hover:opacity-70"
                             >
                               {item}
                             </Link>
@@ -342,7 +345,7 @@ export default function Header() {
                     smoothScrollToAnchor(href, e);
                     setMenuOpen(false);
                   }}
-                  className="border-b border-white/10 py-4 text-center text-lg font-bold tracking-wide text-cream transition-opacity hover:opacity-70"
+                  className="py-2.5 font-body text-[26px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
                 >
                   {label}
                 </Link>
@@ -354,41 +357,13 @@ export default function Header() {
                   setMenuOpen(false);
                   void openCalendly();
                 }}
-                className="border-b border-white/10 py-4 text-center text-lg font-bold tracking-wide text-cream transition-opacity hover:opacity-70"
+                className="py-2.5 font-body text-[26px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
               >
                 Book a demo
               </button>
             </div>
-
-            {/* Social */}
-            <div className="mt-12 flex justify-center gap-4">
-              <a
-                href="https://www.linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="heytruffle on LinkedIn"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-cream/80 transition-colors hover:border-white/50 hover:text-cream"
-              >
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                  <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V24h-4V8zm7.5 0h3.8v2.2h.05c.53-1 1.83-2.2 3.77-2.2 4.03 0 4.78 2.65 4.78 6.1V24h-4v-8.5c0-2.03-.04-4.65-2.83-4.65-2.84 0-3.27 2.21-3.27 4.5V24H8V8z" />
-                </svg>
-              </a>
-              <a
-                href="https://www.instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="heytruffle on Instagram"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-cream/80 transition-colors hover:border-white/50 hover:text-cream"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                  <rect x="2" y="2" width="20" height="20" rx="5" />
-                  <circle cx="12" cy="12" r="4.5" />
-                  <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
-                </svg>
-              </a>
-            </div>
-          </div>
-        </nav>
+          </nav>
+        </div>
       )}
     </>
   );

@@ -11,8 +11,12 @@ const CARDS: {
   z: number;
   /** Progress window [start, end] over which the card animates to `final`. */
   range: [number, number];
+  /** Desktop fans the cards out horizontally. */
   enter: CardState;
   final: CardState;
+  /** Mobile stacks them straight on top of each other (no horizontal fan). */
+  mEnter: CardState;
+  mFinal: CardState;
 }[] = [
   {
     src: "/images/img1.webp",
@@ -21,6 +25,8 @@ const CARDS: {
     range: [0.1, 1],
     enter: { x: 0, y: 0, rot: 0, op: 1 },
     final: { x: -300, y: -49, rot: -10, op: 1 },
+    mEnter: { x: 0, y: -90, rot: 0, op: 1 },
+    mFinal: { x: 0, y: -124, rot: -5, op: 1 },
   },
   {
     src: "/images/img2.webp",
@@ -29,6 +35,8 @@ const CARDS: {
     range: [0.1, 0.55],
     enter: { x: 30, y: 560, rot: 10, op: 0 },
     final: { x: 0, y: -19, rot: -3, op: 1 },
+    mEnter: { x: 0, y: 330, rot: 8, op: 0 },
+    mFinal: { x: 0, y: -90, rot: 3, op: 1 },
   },
   {
     src: "/images/img3.webp",
@@ -37,6 +45,8 @@ const CARDS: {
     range: [0.5, 0.92],
     enter: { x: 90, y: 600, rot: 16, op: 0 },
     final: { x: 300, y: 3, rot: 8, op: 1 },
+    mEnter: { x: 0, y: 350, rot: 12, op: 0 },
+    mFinal: { x: 0, y: -56, rot: -4, op: 1 },
   },
 ];
 
@@ -56,7 +66,8 @@ export default function MomentSection() {
       const section = sectionRef.current;
       if (!section) return;
 
-      // Desktop only: pin + stack. On mobile the cards just stack in flow.
+      // Same pin + scroll-stack on every breakpoint; only the card
+      // trajectories differ (desktop fans out, mobile stacks straight up).
       const isDesktop = window.innerWidth >= 768;
 
       const rect = section.getBoundingClientRect();
@@ -66,17 +77,14 @@ export default function MomentSection() {
       CARDS.forEach((card, i) => {
         const el = cardRefs.current[i];
         if (!el) return;
-        if (!isDesktop) {
-          el.style.transform = "";
-          el.style.opacity = "";
-          return;
-        }
+        const enter = isDesktop ? card.enter : card.mEnter;
+        const final = isDesktop ? card.final : card.mFinal;
         const [r0, r1] = card.range;
         const t = easeOut(clamp((p - r0) / (r1 - r0)));
-        const x = lerp(card.enter.x, card.final.x, t);
-        const y = lerp(card.enter.y, card.final.y, t);
-        const rot = lerp(card.enter.rot, card.final.rot, t);
-        const op = lerp(card.enter.op, card.final.op, t);
+        const x = lerp(enter.x, final.x, t);
+        const y = lerp(enter.y, final.y, t);
+        const rot = lerp(enter.rot, final.rot, t);
+        const op = lerp(enter.op, final.op, t);
         el.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px) rotate(${rot}deg)`;
         el.style.opacity = String(op);
       });
@@ -98,10 +106,10 @@ export default function MomentSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative pb-8 pt-8 md:h-[320vh] md:pb-0 md:pt-0">
-      {/* Pinned viewport (desktop). Normal flow on mobile.
-          overflow-hidden clips the fanned cards + glows to the viewport. */}
-      <div className="relative md:sticky md:top-0 md:h-screen md:overflow-hidden">
+    <section ref={sectionRef} className="relative h-[280vh] md:h-[320vh]">
+      {/* Pinned viewport. overflow-hidden clips the fanned/stacked cards +
+          glows to the viewport. */}
+      <div className="relative sticky top-0 h-screen overflow-hidden">
         {/* Color glows: cream on the left, orange on the right */}
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <div className="absolute left-[-12%] top-[55%] h-[620px] w-[620px] -translate-y-1/2 rounded-full bg-[#f6f3ec] opacity-[0.12] blur-[130px]" />
@@ -116,7 +124,7 @@ export default function MomentSection() {
         />
 
         <div className="relative mx-auto flex h-full max-w-[1536px] flex-col px-6">
-          <div className="pt-4 md:pt-16">
+          <div className="pt-24 md:pt-16">
             <h2 className="reveal reveal-up text-center font-serif text-[40px] font-bold! leading-[110%] text-[#ef7200] md:text-[52px] lg:text-[64px]">
               You know this moment.
             </h2>
@@ -128,8 +136,8 @@ export default function MomentSection() {
             </p>
           </div>
 
-          {/* Cards: absolute + scroll-stacked on md; stacked in flow on mobile. */}
-          <div className="relative mt-12 flex flex-1 flex-col items-center gap-7 md:mt-0 md:block">
+          {/* Cards: absolute + scroll-stacked at every breakpoint. */}
+          <div className="relative flex-1">
             {CARDS.map((card, i) => (
               <div
                 key={card.src}
@@ -137,13 +145,13 @@ export default function MomentSection() {
                   cardRefs.current[i] = el;
                 }}
                 style={{ zIndex: card.z }}
-                className="aspect-[2784/2011] w-[90%] max-w-[480px] will-change-transform md:absolute md:left-1/2 md:top-1/2 md:w-[620px] md:max-w-none lg:w-[680px]"
+                className="absolute left-1/2 top-1/2 aspect-[2784/2011] w-full will-change-transform md:w-[620px] md:max-w-none lg:w-[680px]"
               >
                 <Image
                   src={card.src}
                   alt={card.alt}
                   fill
-                  sizes="(max-width: 768px) 90vw, 680px"
+                  sizes="(max-width: 768px) 100vw, 680px"
                   className="object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.45)]"
                 />
               </div>
@@ -152,9 +160,9 @@ export default function MomentSection() {
         </div>
       </div>
 
-      {/* Closing line — appears as the pinned scroll releases on desktop */}
-      <div className="relative mx-auto max-w-[1536px] px-6 pb-4 md:absolute md:inset-x-0 md:bottom-6">
-        <p className="reveal reveal-up mt-8 text-center font-body text-[26px] font-normal leading-[140%] text-cream md:mt-0">
+      {/* Closing line — appears as the pinned scroll releases */}
+      <div className="absolute inset-x-0 bottom-6 mx-auto max-w-[1536px] px-6">
+        <p className="reveal reveal-up text-center font-body text-[26px] font-normal leading-[140%] text-cream">
           Your host can be on the floor, or on the phone.{" "}
           <span className="font-bold text-cream">Not both.</span>
         </p>

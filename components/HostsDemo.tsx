@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { HOSTS, type Host } from "@/lib/hosts";
+import { NOISE } from "@/lib/noise";
 
 function formatTime(t: number) {
   if (!Number.isFinite(t) || t < 0) return "0:00";
@@ -89,6 +90,20 @@ export default function HostsDemo({
   const [needsTap, setNeedsTap] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
+
+  // Mobile "meet the hosts" carousel: one host per slide, bullet nav.
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [slide, setSlide] = useState(0);
+  const onTrackScroll = () => {
+    const el = trackRef.current;
+    if (!el || !el.clientWidth) return;
+    setSlide(Math.round(el.scrollLeft / el.clientWidth));
+  };
+  const goToSlide = (idx: number) => {
+    const el = trackRef.current;
+    if (!el) return;
+    el.scrollTo({ left: idx * el.clientWidth, behavior: "smooth" });
+  };
 
   const host = activeId ? HOSTS.find((h) => h.id === activeId) ?? null : null;
 
@@ -230,7 +245,9 @@ export default function HostsDemo({
       className={`w-full scroll-mt-28 ${
         soloHostId
           ? ""
-          : "mt-12 rounded-[36px] bg-[#f6f3ec] px-6 py-12 shadow-2xl md:px-16 md:py-16"
+          : host
+            ? "mt-12 rounded-[36px] bg-[#f6f3ec] p-2 shadow-2xl md:p-3"
+            : "mt-12 rounded-[36px] bg-[#f6f3ec] px-6 py-12 shadow-2xl md:px-16 md:py-16"
       }`}
     >
       {!host ? (
@@ -243,14 +260,18 @@ export default function HostsDemo({
             part of the team.
           </p>
 
-          <div className="mt-16 grid grid-cols-2 gap-x-4 gap-y-16 sm:grid-cols-4">
+          <div
+            ref={trackRef}
+            onScroll={onTrackScroll}
+            className="mt-16 flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden py-4 [-ms-overflow-style:none] [scrollbar-width:none] sm:grid sm:grid-cols-4 sm:gap-x-4 sm:gap-y-16 sm:overflow-visible sm:py-0 [&::-webkit-scrollbar]:hidden"
+          >
             {HOSTS.map((h) => (
               <button
                 key={h.id}
                 type="button"
                 onClick={() => openHost(h)}
                 aria-label={`Play a sample call with ${h.name}`}
-                className="group flex flex-col items-center text-center"
+                className="group flex min-w-full shrink-0 snap-center flex-col items-center text-center sm:min-w-0 sm:shrink"
               >
                 <span className="relative flex items-center justify-center">
                   {/* sonar rings rippling outward in the host's colour */}
@@ -293,6 +314,24 @@ export default function HostsDemo({
               </button>
             ))}
           </div>
+
+          {/* Carousel bullets (mobile only) */}
+          <div className="mt-8 flex justify-center gap-2.5 sm:hidden">
+            {HOSTS.map((h, idx) => (
+              <button
+                key={h.id}
+                type="button"
+                aria-label={`Show ${h.name}`}
+                aria-current={idx === slide}
+                onClick={() => goToSlide(idx)}
+                className={`h-2.5 rounded-full transition-all duration-300 ${
+                  idx === slide
+                    ? "w-6 bg-[#251f21]"
+                    : "w-2.5 bg-[#251f21]/25"
+                }`}
+              />
+            ))}
+          </div>
         </>
       ) : (
         <div className="relative">
@@ -302,7 +341,7 @@ export default function HostsDemo({
               type="button"
               onClick={closeHost}
               aria-label="Back to all hosts"
-              className="absolute -top-4 right-0 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-[#251f21]/15 text-[#251f21]/60 transition-colors hover:bg-[#251f21]/5 hover:text-[#251f21] md:-top-8 md:-right-8"
+              className="absolute right-5 top-5 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-[#251f21]/20 bg-white/50 text-[#251f21]/60 backdrop-blur-sm transition-colors hover:bg-white/80 hover:text-[#251f21] md:right-7 md:top-7"
             >
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
                 <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
@@ -310,208 +349,233 @@ export default function HostsDemo({
             </button>
           )}
 
-          <div className="grid gap-5 md:grid-cols-[250px_minmax(0,1fr)]">
-            {/* ---- Sidebar ---- */}
-            <aside className="flex flex-col gap-6 self-start rounded-3xl border border-[#251f21]/5 bg-[#fdfbf5] p-6 font-body shadow-sm md:min-h-[420px]">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#251f21]">
-                AI voice host
-              </p>
-              <div>
-                <p
-                  className="font-serif text-4xl font-bold md:text-5xl"
-                  style={{ color: host.color }}
-                >
-                  {host.name}
-                </p>
-                <div className="mt-2 text-sm leading-snug text-[#251f21]/80">
-                  {host.title.map((line) => (
-                    <p key={line}>{line}</p>
-                  ))}
-                </div>
-              </div>
+          {/* Tinted, grainy panel — each host colours its own background,
+              lighter at the top and settling into the host colour below. */}
+          <div
+            className="relative overflow-hidden rounded-[32px] p-6 md:p-10"
+            style={{
+              background: `linear-gradient(180deg, #f8f5ef 0%, ${host.color}14 42%, ${host.color}59 100%)`,
+            }}
+          >
+            {/* Grain overlay */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 opacity-[0.8] mix-blend-overlay"
+              style={{ backgroundImage: NOISE }}
+            />
 
-              <div>
-                <p className="text-sm font-semibold" style={{ color: host.color }}>
-                  Deployed at
-                </p>
-                <p className="mt-1 text-sm text-[#251f21]/80">{host.deployedAt}</p>
-              </div>
-
-              <div>
-                <p className="text-sm font-semibold" style={{ color: host.color }}>
-                  Voice
-                </p>
-                <p className="mt-1 max-w-[13rem] text-sm leading-snug text-[#251f21]/80">
-                  {host.voice}
-                </p>
-              </div>
-
-              <div>
-                <p className="text-sm font-semibold" style={{ color: host.color }}>
-                  Languages
-                </p>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {host.languages.map((lang, i) => (
-                    <span
-                      key={lang}
-                      className="rounded-full px-3 py-1 text-xs font-medium"
-                      style={
-                        i === 0
-                          ? { backgroundColor: host.color, color: "#f6f3ec" }
-                          : {
-                              border: "1px solid rgba(37,31,33,0.25)",
-                              color: "#251f21",
-                            }
-                      }
-                    >
-                      {lang}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <p className="text-sm font-semibold" style={{ color: host.color }}>
-                  Call outcome
-                </p>
-                <div className="mt-1 text-sm leading-relaxed text-[#251f21]/80">
-                  {host.outcome.map((line) => (
-                    <p key={line}>{line}</p>
-                  ))}
-                </div>
-                <p className="mt-3 font-mono text-[11px] tracking-wide text-[#251f21]/55">
-                  {host.callMeta}
-                </p>
-              </div>
-            </aside>
-
-            {/* ---- Call panel ---- */}
-            <div className="flex flex-col overflow-hidden rounded-3xl border border-[#251f21]/5 bg-[#fdfbf5] shadow-sm">
-              {/* Flower */}
-              <div className="relative flex justify-center pb-2 pt-8">
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute top-2 h-40 w-40 rounded-full opacity-50 blur-2xl"
-                  style={{
-                    background: `radial-gradient(circle, ${host.color} 0%, #d592f3 55%, transparent 75%)`,
-                  }}
-                />
-                <Image
-                  src={host.image}
-                  alt=""
-                  width={342}
-                  height={337}
-                  unoptimized
-                  className={`relative h-36 w-36 object-contain md:h-40 md:w-40 ${
-                    playing ? "host-breathe" : ""
-                  }`}
-                />
-              </div>
-
-              {/* Transcript */}
-              <div
-                ref={scrollerRef}
-                className="flex h-[300px] flex-col gap-5 overflow-y-auto px-6 py-6 font-body md:h-[320px] md:px-10"
-                style={{
-                  maskImage:
-                    "linear-gradient(180deg, transparent 0, #000 28px, #000 calc(100% - 12px), transparent 100%)",
-                  WebkitMaskImage:
-                    "linear-gradient(180deg, transparent 0, #000 28px, #000 calc(100% - 12px), transparent 100%)",
-                }}
-              >
-                {revealedCount === 0 && (
-                  <p className="m-auto text-center font-mono text-xs tracking-[0.1em] text-[#251f21]/50">
-                    {needsTap
-                      ? "PRESS PLAY TO HEAR THE CALL"
-                      : "CONNECTING THE CALL…"}
+            <div className="relative font-body">
+              {/* ---- Header ---- */}
+              <div className="flex items-end justify-between gap-4">
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#251f21]/60">
+                    AI voice host
                   </p>
-                )}
-
-                {host.conversation.slice(0, revealedCount).map((l, i) => {
-                  const isHost = l.who === "host";
-                  const isLast = i === revealedCount - 1;
-                  const lineDur = Math.max(0.001, l.end - l.start);
-                  const bias = host.karaokeBias ?? 0;
-                  const lineProgress =
-                    i === currentIdx
-                      ? Math.max(
-                          0,
-                          Math.min(1, (progress + bias - l.start) / lineDur)
-                        )
-                      : i < currentIdx
-                        ? 1
-                        : 0;
-
-                  return (
-                    <div
-                      key={`${host.id}-${i}`}
-                      data-msg-last={isLast ? "true" : "false"}
-                      className="msg-in flex"
-                      style={{
-                        justifyContent: isHost ? "flex-start" : "flex-end",
-                      }}
-                    >
-                      <p
-                        className="max-w-[85%] text-base leading-snug md:max-w-[75%] md:text-lg"
-                        style={{ textAlign: isHost ? "left" : "right" }}
-                      >
-                        <KaraokeText
-                          text={l.text}
-                          progress={lineProgress}
-                          lit={isHost ? host.color : "#251f21"}
-                          dim={
-                            isHost ? `${host.color}59` : "rgba(37,31,33,0.35)"
-                          }
-                        />
-                      </p>
-                    </div>
-                  );
-                })}
+                  <p
+                    className="mt-3 font-serif text-[44px] font-bold leading-[100%] md:text-[56px]"
+                    style={{ color: host.color }}
+                  >
+                    {host.name}
+                  </p>
+                  <div className="mt-2 text-[15px] leading-snug text-[#251f21]/75">
+                    {host.title.map((line) => (
+                      <p key={line}>{line}</p>
+                    ))}
+                  </div>
+                </div>
+                <div className="shrink-0 pb-0.5 text-right">
+                  <p className="text-[15px] font-semibold" style={{ color: host.color }}>
+                    Deployed at
+                  </p>
+                  <p className="mt-1 text-[15px] text-[#251f21]/75">
+                    {host.deployedAt}
+                  </p>
+                </div>
               </div>
 
-              {/* Player bar */}
-              <div className="flex items-center gap-4 border-t border-[#251f21]/10 px-6 py-4 md:px-8">
-                <button
-                  type="button"
-                  onClick={togglePlay}
-                  aria-label={playing ? "Pause" : "Play"}
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-transform hover:scale-105"
-                  style={{ backgroundColor: host.color }}
-                >
-                  {playing ? (
-                    <svg width="12" height="14" viewBox="0 0 12 14" fill="none" aria-hidden>
-                      <rect x="1" width="3.5" height="14" rx="1" fill="#f6f3ec" />
-                      <rect x="7.5" width="3.5" height="14" rx="1" fill="#f6f3ec" />
-                    </svg>
-                  ) : (
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
-                      <path d="M3.5 1.5l9 5.5-9 5.5v-11z" fill="#f6f3ec" />
-                    </svg>
-                  )}
-                </button>
-
-                <div
-                  role="slider"
-                  aria-label="Seek"
-                  aria-valuemin={0}
-                  aria-valuemax={Math.round(duration)}
-                  aria-valuenow={Math.round(progress)}
-                  onClick={seek}
-                  className="relative h-1.5 flex-1 cursor-pointer rounded-full bg-[#251f21]/10"
-                >
+              {/* ---- Call card (flower + transcript) ---- */}
+              <div className="mt-6 flex flex-col overflow-hidden rounded-[28px] bg-white/55 shadow-[0_16px_50px_rgba(37,31,33,0.08)] backdrop-blur-sm">
+                {/* Flower with a soft multi-colour halo */}
+                <div className="relative flex justify-center pb-4 pt-12">
                   <div
-                    className="absolute inset-y-0 left-0 rounded-full"
+                    aria-hidden
+                    className="pointer-events-none absolute top-6 h-56 w-56 rounded-full opacity-70 blur-[52px]"
                     style={{
-                      backgroundColor: host.color,
-                      width: `${duration ? Math.min(100, (progress / duration) * 100) : 0}%`,
+                      background: `radial-gradient(circle, ${host.color} 0%, transparent 68%)`,
                     }}
+                  />
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute top-8 h-40 w-40 rounded-full opacity-70 blur-[42px]"
+                    style={{
+                      background:
+                        "radial-gradient(circle, #d592f3 0%, transparent 70%)",
+                    }}
+                  />
+                  <Image
+                    src={host.image}
+                    alt=""
+                    width={342}
+                    height={337}
+                    unoptimized
+                    className={`relative h-40 w-40 object-contain md:h-44 md:w-44 ${
+                      playing ? "host-breathe" : ""
+                    }`}
                   />
                 </div>
 
-                <span className="shrink-0 font-mono text-xs text-[#251f21]/60">
-                  {formatTime(progress)} /{" "}
-                  {duration ? formatTime(duration) : host.durationLabel}
-                </span>
+                {/* Transcript */}
+                <div
+                  ref={scrollerRef}
+                  className="flex h-[360px] flex-col gap-5 overflow-y-auto px-7 py-6 md:h-[400px] md:px-10 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                  style={{
+                    maskImage:
+                      "linear-gradient(180deg, transparent 0, #000 28px, #000 calc(100% - 12px), transparent 100%)",
+                    WebkitMaskImage:
+                      "linear-gradient(180deg, transparent 0, #000 28px, #000 calc(100% - 12px), transparent 100%)",
+                  }}
+                >
+                  {revealedCount === 0 && (
+                    <p className="m-auto text-center font-mono text-xs tracking-[0.1em] text-[#251f21]/50">
+                      {needsTap
+                        ? "PRESS PLAY TO HEAR THE CALL"
+                        : "CONNECTING THE CALL…"}
+                    </p>
+                  )}
+
+                  {host.conversation.slice(0, revealedCount).map((l, i) => {
+                    const isHost = l.who === "host";
+                    const isLast = i === revealedCount - 1;
+                    const lineDur = Math.max(0.001, l.end - l.start);
+                    const bias = host.karaokeBias ?? 0;
+                    const lineProgress =
+                      i === currentIdx
+                        ? Math.max(
+                            0,
+                            Math.min(1, (progress + bias - l.start) / lineDur)
+                          )
+                        : i < currentIdx
+                          ? 1
+                          : 0;
+
+                    return (
+                      <div
+                        key={`${host.id}-${i}`}
+                        data-msg-last={isLast ? "true" : "false"}
+                        className="msg-in flex"
+                        style={{
+                          justifyContent: isHost ? "flex-start" : "flex-end",
+                        }}
+                      >
+                        <p
+                          className="max-w-[85%] text-base leading-snug md:max-w-[75%] md:text-lg"
+                          style={{ textAlign: isHost ? "left" : "right" }}
+                        >
+                          <KaraokeText
+                            text={l.text}
+                            progress={lineProgress}
+                            lit={isHost ? host.color : "#251f21"}
+                            dim={
+                              isHost ? `${host.color}59` : "rgba(37,31,33,0.35)"
+                            }
+                          />
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Player bar */}
+                <div className="flex items-center gap-4 px-7 pb-6 pt-2 md:px-10">
+                  <button
+                    type="button"
+                    onClick={togglePlay}
+                    aria-label={playing ? "Pause" : "Play"}
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-transform hover:scale-105"
+                    style={{ backgroundColor: host.color }}
+                  >
+                    {playing ? (
+                      <svg width="12" height="14" viewBox="0 0 12 14" fill="none" aria-hidden>
+                        <rect x="1" width="3.5" height="14" rx="1" fill="#f6f3ec" />
+                        <rect x="7.5" width="3.5" height="14" rx="1" fill="#f6f3ec" />
+                      </svg>
+                    ) : (
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
+                        <path d="M3.5 1.5l9 5.5-9 5.5v-11z" fill="#f6f3ec" />
+                      </svg>
+                    )}
+                  </button>
+
+                  <div
+                    role="slider"
+                    aria-label="Seek"
+                    aria-valuemin={0}
+                    aria-valuemax={Math.round(duration)}
+                    aria-valuenow={Math.round(progress)}
+                    onClick={seek}
+                    className="relative h-1.5 flex-1 cursor-pointer rounded-full bg-[#251f21]/10"
+                  >
+                    <div
+                      className="absolute inset-y-0 left-0 rounded-full"
+                      style={{
+                        backgroundColor: host.color,
+                        width: `${duration ? Math.min(100, (progress / duration) * 100) : 0}%`,
+                      }}
+                    />
+                  </div>
+
+                  <span className="shrink-0 font-mono text-xs text-[#251f21]/60">
+                    {formatTime(progress)} /{" "}
+                    {duration ? formatTime(duration) : host.durationLabel}
+                  </span>
+                </div>
+              </div>
+
+              {/* ---- Footer: Voice · Languages · Call outcome ---- */}
+              <div className="mt-5 grid grid-cols-3 gap-4 rounded-[24px] bg-white/35 p-6 backdrop-blur-sm">
+                <div>
+                  <p className="text-[13px] font-semibold" style={{ color: host.color }}>
+                    Voice
+                  </p>
+                  <p className="mt-1 text-[13px] leading-snug text-[#251f21]/80">
+                    {host.voice}
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-[13px] font-semibold" style={{ color: host.color }}>
+                    Languages
+                  </p>
+                  <div className="mt-2 flex flex-wrap gap-1.5">
+                    {host.languages.map((lang, i) => (
+                      <span
+                        key={lang}
+                        className="rounded-full px-2.5 py-0.5 text-xs font-medium"
+                        style={
+                          i === 0
+                            ? { backgroundColor: host.color, color: "#f6f3ec" }
+                            : {
+                                border: "1px solid rgba(37,31,33,0.25)",
+                                color: "#251f21",
+                              }
+                        }
+                      >
+                        {lang}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <p className="text-[13px] font-semibold" style={{ color: host.color }}>
+                    Call outcome
+                  </p>
+                  <div className="mt-1 text-[13px] leading-snug text-[#251f21]/80">
+                    {host.outcome.map((line) => (
+                      <p key={line}>{line}</p>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

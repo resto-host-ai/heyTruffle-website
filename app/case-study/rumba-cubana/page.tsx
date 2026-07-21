@@ -184,8 +184,8 @@ export default function RumbaCubanaCaseStudy() {
           </h2>
 
           {/* Measured results — text on the left, four metric cards on the right */}
-          <div className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.15fr)_repeat(4,minmax(0,1fr))] lg:items-center">
-            <div className="sm:col-span-2 lg:col-span-1">
+          <div className="mt-12 grid grid-cols-2 gap-4 sm:mt-16 sm:gap-5 lg:grid-cols-[minmax(0,1.15fr)_repeat(4,minmax(0,1fr))] lg:items-center">
+            <div className="col-span-2 lg:col-span-1">
               <p className="font-body text-[28px] font-normal! leading-[120%] md:text-[40px]">
                 Measured results
               </p>
@@ -197,15 +197,15 @@ export default function RumbaCubanaCaseStudy() {
             {MEASURED.map((m) => (
               <div
                 key={m.label}
-                className="flex h-[202px] flex-col justify-center rounded-[25px] border border-transparent [background:linear-gradient(#f6f3ec,#f6f3ec)_padding-box,linear-gradient(180deg,#ffffff_0%,rgba(37,31,33,0.06)_45%,rgba(37,31,33,0.28)_100%)_border-box] p-6 shadow-[0_14px_34px_rgba(0,0,0,0.06)] md:p-8"
+                className="flex h-[150px] flex-col justify-center rounded-[25px] border border-transparent [background:linear-gradient(#f6f3ec,#f6f3ec)_padding-box,linear-gradient(180deg,#ffffff_0%,rgba(37,31,33,0.06)_45%,rgba(37,31,33,0.28)_100%)_border-box] p-5 shadow-[0_14px_34px_rgba(0,0,0,0.06)] sm:h-[202px] md:p-8"
               >
                 <p
-                  className="font-body text-[56px] font-normal leading-[110%] md:text-[72px]"
+                  className="font-body text-[40px] font-normal leading-[110%] sm:text-[56px] md:text-[72px]"
                   style={{ color: m.color }}
                 >
                   {m.value}
                 </p>
-                <p className="mt-2 font-body text-[22px] font-normal leading-[130%] md:text-[26px]">
+                <p className="mt-1 font-body text-[15px] font-normal leading-[130%] sm:mt-2 sm:text-[22px] md:text-[26px]">
                   {m.label}
                 </p>
               </div>

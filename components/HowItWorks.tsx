@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const STEPS = [
   {
@@ -9,6 +9,7 @@ const STEPS = [
     desc: "We learn your menu, hours, policies, tone and integrations in English and Spanish.",
     titleColor: "#f6f3ec",
     circle: "linear-gradient(180deg, #9c5a2a 0%, #3d5c9c 100%)",
+    mobileBg: "#EF7300",
   },
   {
     n: "02",
@@ -16,6 +17,7 @@ const STEPS = [
     desc: "It books reservations, takes pickup and delivery orders directly into your POS, and handles catering, large parties and FAQs.",
     titleColor: "#d592f3",
     circle: "linear-gradient(180deg, #8f4a86 0%, #2f3d7c 100%)",
+    mobileBg: "#DB8DC3",
   },
   {
     n: "03",
@@ -23,12 +25,19 @@ const STEPS = [
     desc: "Some conversations need a human. Your AI host escalates those calls to your team, while we continuously monitor and improve performance every week.",
     titleColor: "#ef7200",
     circle: "linear-gradient(180deg, #bf6a2e 0%, #3d4a8c 100%)",
+    mobileBg: "#534E8B",
   },
 ];
 
 export default function HowItWorks() {
   const pinRef = useRef<HTMLDivElement>(null);
   const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
+  // Mobile: tap a step to expand its description (first open by default).
+  const [openSteps, setOpenSteps] = useState<number[]>([0]);
+  const toggleStep = (i: number) =>
+    setOpenSteps((prev) =>
+      prev.includes(i) ? prev.filter((x) => x !== i) : [...prev, i],
+    );
 
   // Desktop: the section pins while the three steps reveal one at a time
   // (fade + rise), each fully in before the next begins. Only once all three
@@ -107,7 +116,46 @@ export default function HowItWorks() {
             so your team can stay focused on running the restaurant.
           </p>
 
-          <div className="mt-16 grid grid-cols-1 gap-16 md:mt-20 md:grid-cols-3 md:items-start md:gap-10">
+          {/* Mobile: tap-to-expand coloured accordion */}
+          <div className="mt-12 flex flex-col gap-4 md:hidden">
+            {STEPS.map((step, i) => {
+              const open = openSteps.includes(i);
+              return (
+                <div
+                  key={step.n}
+                  className="overflow-hidden rounded-[28px]"
+                  style={{ backgroundColor: step.mobileBg }}
+                >
+                  <button
+                    type="button"
+                    aria-expanded={open}
+                    onClick={() => toggleStep(i)}
+                    className="flex w-full items-center gap-5 px-6 py-6 text-left"
+                  >
+                    <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-white/35 bg-white/10 font-body text-lg font-bold text-cream">
+                      {step.n}
+                    </span>
+                    <span className="font-body text-[28px] font-normal leading-[115%] text-cream">
+                      {step.title}
+                    </span>
+                  </button>
+                  <div
+                    className="grid transition-[grid-template-rows] duration-300 ease-out"
+                    style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
+                  >
+                    <div className="overflow-hidden">
+                      <p className="px-6 pb-7 pl-[76px] font-body text-[20px] font-normal leading-[145%] text-cream/90">
+                        {step.desc}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Desktop: pinned, one-at-a-time reveal in three columns */}
+          <div className="mt-16 hidden gap-16 md:mt-20 md:grid md:grid-cols-3 md:items-start md:gap-10">
             {STEPS.map((step, i) => (
               <div
                 key={step.n}
