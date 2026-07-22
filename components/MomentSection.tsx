@@ -54,12 +54,15 @@ const clamp = (n: number, lo = 0, hi = 1) => Math.min(hi, Math.max(lo, n));
 const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
-// Horizontal / vertical extent (px) the fanned-out cards occupy on desktop at
-// full size — leftmost card edge to rightmost, and top edge to bottom, plus a
-// little breathing room. Used to scale the whole fan down so it never spills
-// past the header's content width or climbs over the "Friday 7:48 pm" line.
+// Horizontal / vertical extent (px) the fanned-out cards need on desktop at
+// full size — leftmost card edge to rightmost, and top edge to bottom, plus
+// breathing room. Used to scale the whole fan down so it never spills past the
+// header's content width or climbs over the "Friday 7:48 pm" line. FAN_H is
+// deliberately larger than the raw fan height: on short viewports (MacBook 14",
+// zoomed-in laptops) it makes the fan shrink and drop sooner so it always
+// clears the headline instead of overlapping it. Tall screens stay at scale 1.
 const FAN_W = 1320;
-const FAN_H = 600;
+const FAN_H = 740;
 
 export default function MomentSection() {
   const sectionRef = useRef<HTMLElement>(null);
