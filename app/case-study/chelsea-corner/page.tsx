@@ -97,7 +97,7 @@ export default function ChelseaCornerCaseStudy() {
           />
         </div>
 
-        <div className="relative mx-auto flex w-full max-w-[1536px] flex-1 flex-col px-6 md:px-10">
+        <div className="relative mx-auto flex w-full w-full flex-1 flex-col px-6 lg:px-[73px]">
           <Link
             href="/case-study"
             className="inline-flex items-center gap-2 font-body text-[20px] font-normal leading-[110%] text-cream/90 transition-opacity hover:opacity-70"
@@ -164,7 +164,7 @@ export default function ChelseaCornerCaseStudy() {
 
       {/* ── Hear the conversations ───────────────────────── */}
       <section className="relative bg-cream py-24 text-[#251f21] md:py-32">
-        <div className="mx-auto max-w-[1536px] px-6 md:px-10">
+        <div className="mx-auto w-full px-6 lg:px-[73px]">
           <h2 className="mx-auto max-w-[840px] text-center font-serif text-[40px] font-bold! leading-[110%] text-brand-orange md:text-[52px] lg:text-[64px]">
             Hear the conversations behind the results.
           </h2>
@@ -176,7 +176,7 @@ export default function ChelseaCornerCaseStudy() {
 
       {/* ── No assumptions. Just the results. ────────────── */}
       <section className="relative bg-cream pb-24 text-[#251f21] md:pb-32">
-        <div className="mx-auto max-w-[1536px] px-6 md:px-10">
+        <div className="mx-auto w-full px-6 lg:px-[73px]">
           <h2 className="text-center font-serif text-[40px] font-bold! leading-[110%] md:text-[52px] lg:text-[64px]">
             No assumptions.
             <br />
@@ -237,7 +237,7 @@ export default function ChelseaCornerCaseStudy() {
 
           {/* ── Final CTA ────────────────────────────────────── */}
           <section className="relative pb-28 text-cream">
-            <div className="mx-auto max-w-[1536px] px-6 md:px-10">
+            <div className="mx-auto w-full px-6 lg:px-[73px]">
               <div
                 className="relative flex w-full flex-col items-center overflow-hidden rounded-[40px] px-6 py-20 text-center md:rounded-[67px] md:px-10 md:py-28"
                 style={{

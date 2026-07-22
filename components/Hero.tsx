@@ -10,7 +10,7 @@ export default function Hero() {
   const [demoOpen, setDemoOpen] = useState(false);
 
   return (
-    <section className="relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden py-28 sm:py-24">
+    <section className="relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden pb-20 pt-32 desk-tall:pb-16 desk-short:pt-[38px] desk-short:pb-28">
       {/* Animated gradient background (Figma living-gradient) */}
       <HeroBackground />
 
@@ -22,7 +22,7 @@ export default function Hero() {
 
 
       {/* Content */}
-      <div className="flex flex-col items-center gap-8 px-6 text-center text-cream">
+      <div className="flex flex-col items-center gap-8 px-6 text-center text-cream desk-short:gap-5">
         {/* Icon */}
         <Image
           src="/images/icono.svg"
@@ -42,14 +42,14 @@ export default function Hero() {
         </h1>
 
         {/* Subtitle */}
-        <p className="font-body w-full max-w-[1000px] text-xl font-normal leading-[140%] text-cream/85 sm:h-[100px] sm:text-[26px]">
+        <p className="font-body w-full max-w-[1000px] text-xl font-normal leading-[140%] text-cream/85 sm:text-[26px] desk-tall:h-[100px]">
           A fully managed service that answers every call for your restaurants:
           every reservation booked, every order taken, every catering inquiry
           handled.
         </p>
 
         {/* CTAs — desktop shows the search bar; mobile shows stacked buttons */}
-        <div className="mt-2 flex w-full max-w-[559px] flex-col items-stretch gap-3 sm:gap-6">
+        <div className="mt-2 flex w-full max-w-[559px] flex-col items-stretch gap-3 desk-tall:gap-6 desk-short:gap-5">
           {/* Search + primary CTA (desktop only) */}
           <form
             className="hidden h-[64px] w-full items-center overflow-hidden rounded-[73.26px] border border-white/40 bg-[#f6f3ec]/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg sm:flex sm:h-[74px]"

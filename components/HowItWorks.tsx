@@ -102,7 +102,7 @@ export default function HowItWorks() {
     <section id="how-it-works" className="relative scroll-mt-24 bg-[#251f21]">
       {/* Tall spacer drives the pinned reveal on desktop; auto height on mobile. */}
       <div ref={pinRef} className="md:relative md:h-[260vh]">
-        <div className="mx-auto flex max-w-[1536px] flex-col px-6 py-24 md:sticky md:top-0 md:h-screen md:justify-center md:overflow-hidden md:px-10 md:py-0">
+        <div className="mx-auto flex w-full flex-col px-6 py-24 md:sticky md:top-0 md:h-screen md:justify-center md:overflow-hidden lg:px-[73px] md:py-0">
           <h2 className="reveal reveal-up text-center font-serif text-[40px] font-bold! leading-[110%] md:text-[52px] lg:text-[64px]">
             <span className="text-cream">Getting started is simple.</span>
             <br />
@@ -155,17 +155,17 @@ export default function HowItWorks() {
           </div>
 
           {/* Desktop: pinned, one-at-a-time reveal in three columns */}
-          <div className="mt-16 hidden gap-16 md:mt-20 md:grid md:grid-cols-3 md:items-start md:gap-10">
+          <div className="mt-16 hidden gap-16 md:mt-20 md:grid md:grid-cols-3 md:items-start md:gap-8">
             {STEPS.map((step, i) => (
               <div
                 key={step.n}
                 ref={(el) => {
                   stepRefs.current[i] = el;
                 }}
-                className="flex max-w-md flex-col items-center text-center will-change-transform md:items-start md:text-left"
+                className="flex w-full flex-col items-center text-center will-change-transform md:items-start md:text-left"
               >
                 <div
-                  className="flex h-16 w-16 items-center justify-center rounded-full border border-white/25 text-lg font-bold text-cream shadow-[inset_0_2px_2px_rgba(255,255,255,0.5),inset_0_-3px_5px_rgba(0,0,0,0.4),0_5px_14px_rgba(0,0,0,0.35)]"
+                  className="flex h-20 w-20 items-center justify-center rounded-full border border-white/25 text-center text-xl font-bold leading-none text-cream shadow-[inset_0_2px_2px_rgba(255,255,255,0.5),inset_0_-3px_5px_rgba(0,0,0,0.4),0_5px_14px_rgba(0,0,0,0.35)]"
                   style={{ backgroundImage: step.circle }}
                 >
                   {step.n}

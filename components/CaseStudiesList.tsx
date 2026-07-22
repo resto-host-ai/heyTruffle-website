@@ -260,7 +260,7 @@ export default function CaseStudiesList() {
         }}
       />
 
-      <div className="relative mx-auto max-w-[1536px] px-6 md:px-10">
+      <div className="relative mx-auto w-full px-6 lg:px-[73px]">
         <h1 className="mx-auto max-w-[1085px] text-center font-serif text-[40px] font-bold! leading-[110%] text-[#251f21] md:text-[52px] lg:text-[64px]">
           Real restaurants. Real results.
         </h1>

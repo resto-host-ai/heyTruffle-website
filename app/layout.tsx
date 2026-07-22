@@ -27,10 +27,15 @@ const gowunBatang = Gowun_Batang({
   weight: ["400", "700"],
 });
 
-// Google Sans for section description / lead copy.
+// Google Sans for section description / lead copy. Google Sans isn't in
+// next/font's metric-override dataset, so the automatic size-adjusted fallback
+// can't be generated (hence the "Failed to find font override values" warning).
+// Disable that step and provide an explicit fallback stack instead.
 const googleSans = Google_Sans({
   variable: "--font-google-sans",
   subsets: ["latin"],
+  adjustFontFallback: false,
+  fallback: ["-apple-system", "BlinkMacSystemFont", "Segoe UI", "system-ui", "sans-serif"],
 });
 
 const montserrat = Montserrat({

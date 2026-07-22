@@ -98,7 +98,7 @@ export default function WhatIsSection() {
         className="pointer-events-none absolute inset-x-0 top-0 h-[420px] bg-gradient-to-b from-[#251f21] via-[#251f21]/70 to-transparent"
       />
 
-      <div className="relative mx-auto flex max-w-[1536px] flex-col items-center px-6 md:px-10">
+      <div className="relative mx-auto flex w-full flex-col items-center px-6 lg:px-[73px]">
         <p className="reveal reveal-up text-center font-body text-[20px] font-normal uppercase leading-[110%] text-cream">
           What is Hey Truffle?
         </p>

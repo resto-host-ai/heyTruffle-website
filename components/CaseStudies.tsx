@@ -80,7 +80,7 @@ export default function CaseStudies({
         />
       )}
 
-      <div className="relative mx-auto max-w-[1536px] px-6 md:px-10">
+      <div className="relative mx-auto w-full px-6 lg:px-[73px]">
         <h2 className="reveal reveal-up text-center font-serif text-[40px] font-bold! leading-[110%] text-cream md:text-[52px] lg:text-[64px]">
           {heading}
         </h2>

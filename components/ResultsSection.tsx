@@ -52,7 +52,7 @@ export default function ResultsSection() {
         />
       </div>
 
-      <div className="relative mx-auto max-w-[1536px] px-6 md:px-10">
+      <div className="relative mx-auto w-full px-6 lg:px-[73px]">
         {/* ---- The results speak for themselves ---- */}
         <h2 className="reveal reveal-up text-center font-serif text-[40px] font-bold! leading-[110%] text-cream md:text-[52px] lg:text-[64px]">
           The results speak for themselves.
@@ -62,7 +62,7 @@ export default function ResultsSection() {
           16 2026
         </p>
 
-        <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-[1fr_1fr_1.7fr]">
+        <div className="mt-20 grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.7fr)]">
           {STATS.map((stat) => (
             <div key={stat.title} className="relative">
               <div
@@ -81,7 +81,7 @@ export default function ResultsSection() {
                   <h3 className="font-body text-[28px] font-normal! leading-[120%] text-cream md:text-[40px]">
                     {stat.title}
                   </h3>
-                  <p className="mt-6 font-body text-[64px] font-normal leading-[110%] text-cream md:text-[96px] lg:text-[124.687px]">
+                  <p className="mt-6 font-body text-[64px] font-normal leading-[110%] text-cream md:text-[clamp(48px,6.6vw,124px)]">
                     {stat.value}
                   </p>
                   <p className="mt-auto max-w-[20rem] pt-8 font-body text-[26px] font-normal leading-[140%] text-cream">

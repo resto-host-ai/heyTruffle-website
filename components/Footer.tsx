@@ -21,7 +21,7 @@ const headingClass =
 export default function Footer() {
   return (
     <footer className="bg-cream text-[#251f21]">
-      <div className="mx-auto max-w-[1536px] px-6 py-16 md:px-10 md:py-20">
+      <div className="mx-auto w-full px-6 py-16 lg:px-[73px] md:py-20">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-[1.4fr_1fr_1.2fr]">
           {/* Brand */}
           <div>
@@ -89,7 +89,7 @@ export default function Footer() {
 
       {/* VS Digital Group bar */}
       <div className="w-full bg-white">
-        <div className="mx-auto flex max-w-[1536px] flex-col items-center gap-3 px-6 py-5 md:flex-row md:justify-between md:gap-0 md:px-10">
+        <div className="mx-auto flex w-full flex-col items-center gap-3 px-6 py-5 md:flex-row md:justify-between md:gap-0 lg:px-[73px]">
           <a
             href="https://vsdigitalgroup.com/"
             target="_blank"

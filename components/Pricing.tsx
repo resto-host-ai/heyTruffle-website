@@ -60,7 +60,7 @@ const TIERS: readonly Tier[] = [
 export default function Pricing() {
   return (
     <section id="pricing" className="scroll-mt-24 bg-[#251f21] py-24 md:py-32">
-      <div className="mx-auto max-w-[1536px] px-6 md:px-10">
+      <div className="mx-auto w-full px-6 lg:px-[73px]">
         <div className="mx-auto mb-14 max-w-[680px] text-center">
           <p className="text-xs uppercase tracking-[0.2em] text-cream/60">
             Our pricing

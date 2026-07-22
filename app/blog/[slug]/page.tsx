@@ -153,7 +153,7 @@ export default async function BlogPostPage({
       {/* ---- Related ---- */}
       {related.length > 0 && (
         <section className="bg-gradient-to-b from-cream to-[#ece8df]">
-          <div className="mx-auto max-w-[1536px] px-6 py-20 md:px-10 md:py-24">
+          <div className="mx-auto w-full px-6 py-20 lg:px-[73px] md:py-24">
             <h2 className="text-center font-serif text-[32px] font-bold! leading-[110%] text-[#251f21] md:text-[44px] lg:text-[52px]">
               Keep reading.
             </h2>
@@ -193,7 +193,7 @@ export default async function BlogPostPage({
 
       {/* ---- Final CTA — mirrors the case-study / integration closing card ---- */}
       <section className="relative overflow-hidden bg-[#ece8df] pb-24 pt-4 md:pb-28">
-        <div className="mx-auto max-w-[1536px] px-6 md:px-10">
+        <div className="mx-auto w-full px-6 lg:px-[73px]">
           <div
             className="relative flex w-full flex-col items-center overflow-hidden rounded-[40px] px-6 py-20 text-center text-cream md:rounded-[67px] md:px-10 md:py-24"
             style={{

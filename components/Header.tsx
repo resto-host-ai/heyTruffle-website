@@ -119,11 +119,11 @@ export default function Header() {
         overlayOpen ? "pointer-events-none opacity-0" : ""
       } ${
         scrolled
-          ? "h-[60px] bg-[#1c1917]/85 shadow-[0_8px_30px_rgba(0,0,0,0.25)]"
-          : "h-[80px] bg-black/35"
+          ? "h-[90px] bg-[#1c1917]/85 shadow-[0_8px_30px_rgba(0,0,0,0.25)]"
+          : "h-[90px] bg-black/35"
       }`}
     >
-      <div className="relative z-20 mx-auto flex h-full max-w-[1536px] items-center justify-between gap-6 px-6 md:px-10">
+      <div className="relative z-20 flex h-full w-full items-center justify-between gap-6 px-6 lg:px-[73px]">
         {/* Logo */}
         <Link
           href="/"
@@ -176,11 +176,11 @@ export default function Header() {
                 in the same dark/blurred style as the header. */}
             <div
               className={`invisible fixed inset-x-0 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 ${
-                scrolled ? "top-[60px]" : "top-[80px]"
+                scrolled ? "top-[90px]" : "top-[90px]"
               }`}
             >
               <div className="border-t border-white/10 bg-[#1c1917]/95 shadow-[0_24px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl">
-                <div className="mx-auto grid max-w-[1536px] grid-cols-2 gap-x-14 gap-y-8 px-6 py-10 md:grid-cols-4 md:px-10">
+                <div className="grid w-full grid-cols-2 gap-x-14 gap-y-8 px-6 py-10 md:grid-cols-4 lg:px-[73px]">
                   {INTEGRATIONS.map((group) => (
                     <div key={group.heading} className="min-w-[130px]">
                       <p className="border-b border-white/10 pb-2 font-body text-[13px] font-semibold uppercase tracking-[0.2em] text-cream/50">
@@ -269,7 +269,7 @@ export default function Header() {
 
           <nav
             className={`absolute right-4 max-h-[calc(100vh-96px)] w-[72%] max-w-[360px] overflow-y-auto rounded-[28px] border border-white/12 bg-[#221a29]/80 shadow-[0_24px_60px_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-all duration-200 ${
-              scrolled ? "top-[72px]" : "top-[92px]"
+              scrolled ? "top-[102px]" : "top-[102px]"
             }`}
           >
             <div className="flex flex-col items-end gap-1 px-7 py-6 text-right">

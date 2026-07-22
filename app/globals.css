@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+/* MacBook 14" (and other short desktops): the viewport is wide enough for the
+   full desktop layout but only ~982px tall, so the hero's generous vertical
+   spacing pushes the CTA below the fold. These two mutually-exclusive variants
+   let a component compact ONLY its spacing on short screens while tall desktops
+   (e.g. 1920×1080) keep the original layout. Font sizes never change — a
+   heading stays identical on a MacBook 14" and a 1920×1080 monitor.
+     desk-short → ≥640px wide AND ≤1000px tall  (MacBook 14" = 1512×982)
+     desk-tall  → ≥640px wide AND ≥1001px tall  (1920×1080, etc.) */
+@custom-variant desk-short (@media (min-width: 640px) and (max-height: 1000px));
+@custom-variant desk-tall (@media (min-width: 640px) and (min-height: 1001px));
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -83,14 +94,47 @@ html {
   }
 }
 
-/* Hero background — the Figma gradient blobs drift slowly (aurora-style).
-   Percentages resolve against each blob's own box (transform-box: fill-box). */
-.hero-blob {
+/* Hero background — the Figma gradient.
+   IMPORTANT: the blobs are NOT animated individually. Each blob lives inside a
+   heavy SVG blur filter (stdDeviation up to 200); animating a filtered element's
+   transform forces WebKit/Safari to re-run that blur every frame over huge
+   Retina-sized buffers. On memory-constrained GPUs (e.g. MacBook 14") the
+   compositor drops the layer for a frame → the hero flashes black.
+   Instead we keep the SVG completely static (the filter rasterises ONCE) and
+   drift the whole cached layer via the wrapper below. The compositor just moves
+   an already-rendered texture — no per-frame filter recompute, no flicker.
+   The overscan scale (>1.1) keeps the edges covered while it drifts. */
+.hero-bg-anim {
+  animation: hero-bg-drift 15s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+@keyframes hero-bg-drift {
+  0%,
+  100% {
+    transform: translate3d(-1.5%, -1%, 0) scale(1.12);
+  }
+  50% {
+    transform: translate3d(1.5%, 1%, 0) scale(1.16);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg-anim {
+    animation: none !important;
+    transform: scale(1.12);
+  }
+}
+
+/* Ambient blobs for SuccessStats — plain CSS-blur <div>s (not SVG filters), so
+   they're cheap enough to drift individually. Percentages resolve against each
+   blob's own box (transform-box: fill-box). */
+.stat-blob {
   transform-box: fill-box;
   transform-origin: center;
   will-change: transform;
 }
-@keyframes hero-drift-a {
+@keyframes stat-drift-a {
   0%,
   100% {
     transform: translate3d(0, 0, 0) scale(1);
@@ -99,7 +143,7 @@ html {
     transform: translate3d(12%, -9%, 0) scale(1.18);
   }
 }
-@keyframes hero-drift-b {
+@keyframes stat-drift-b {
   0%,
   100% {
     transform: translate3d(0, 0, 0) scale(1.12);
@@ -108,7 +152,7 @@ html {
     transform: translate3d(-14%, 11%, 0) scale(1);
   }
 }
-@keyframes hero-drift-c {
+@keyframes stat-drift-c {
   0%,
   100% {
     transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
@@ -120,17 +164,11 @@ html {
     transform: translate3d(-10%, -8%, 0) scale(0.9) rotate(-4deg);
   }
 }
-.hero-b1 { animation: hero-drift-a 19s ease-in-out infinite; }
-.hero-b2 { animation: hero-drift-b 23s ease-in-out infinite; }
-.hero-b3 { animation: hero-drift-c 21s ease-in-out infinite; }
-.hero-b4 { animation: hero-drift-a 25s ease-in-out infinite reverse; }
-.hero-b5 { animation: hero-drift-b 18s ease-in-out infinite; }
-.hero-b6 { animation: hero-drift-c 26s ease-in-out infinite reverse; }
-.hero-b7 { animation: hero-drift-a 22s ease-in-out infinite; }
-.hero-b8 { animation: hero-drift-b 20s ease-in-out infinite reverse; }
-.hero-b9 { animation: hero-drift-c 30s ease-in-out infinite; }
+.stat-b1 { animation: stat-drift-a 19s ease-in-out infinite; }
+.stat-b2 { animation: stat-drift-b 23s ease-in-out infinite; }
+.stat-b3 { animation: stat-drift-c 21s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) {
-  .hero-blob {
+  .stat-blob {
     animation: none !important;
   }
 }

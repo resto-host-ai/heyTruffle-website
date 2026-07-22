@@ -6,11 +6,14 @@
  */
 export default function HeroBackground() {
   return (
-    <svg
+    <div
       aria-hidden
+      className="hero-bg-anim pointer-events-none absolute inset-0 -z-10 overflow-hidden bg-[#251f21]"
+    >
+    <svg
       viewBox="0 0 1920 1270"
       preserveAspectRatio="xMidYMid slice"
-      className="pointer-events-none absolute inset-0 -z-10 h-full w-full"
+      className="h-full w-full"
     >
       <g filter="url(#filter0_n_220_4709)">
         <g clipPath="url(#clip0_220_4709)">
@@ -115,5 +118,6 @@ export default function HeroBackground() {
         </clipPath>
       </defs>
     </svg>
+    </div>
   );
 }

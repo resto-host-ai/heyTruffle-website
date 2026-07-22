@@ -83,7 +83,7 @@ export default function Integrations() {
 
   return (
     <section ref={sectionRef} id="integrations" className="bg-[#251f21] py-24 md:py-32">
-      <div className="mx-auto max-w-[1536px] px-6 md:px-10">
+      <div className="mx-auto w-full px-6 lg:px-[73px]">
         <div className="mx-auto mb-12 max-w-[760px] text-center">
           <p className="text-xs uppercase tracking-[0.2em] text-cream/60">
             Restaurant stack

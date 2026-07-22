@@ -155,7 +155,7 @@ export default async function IntegrationPage({
 
       {/* ---- Value prop ---- */}
       <section className="relative bg-cream pb-24 pt-24 text-[#251f21] md:pb-32 md:pt-28">
-        <div className="mx-auto max-w-[1536px] px-6 md:px-10">
+        <div className="mx-auto w-full px-6 lg:px-[73px]">
           <div className="grid grid-cols-1 items-start gap-12 md:grid-cols-[1.35fr_1fr]">
             <div>
               <p className="font-body text-[15px] font-semibold uppercase tracking-[0.18em] text-brand-orange">
@@ -220,7 +220,7 @@ export default async function IntegrationPage({
 
       {/* ---- Final CTA — mirrors the case-study closing card ---- */}
       <section className="relative overflow-hidden bg-cream pb-28 text-cream">
-        <div className="mx-auto max-w-[1536px] px-6 md:px-10">
+        <div className="mx-auto w-full px-6 lg:px-[73px]">
           <div
             className="relative flex w-full flex-col items-center overflow-hidden rounded-[40px] px-6 py-20 text-center md:rounded-[67px] md:px-10 md:py-28"
             style={{

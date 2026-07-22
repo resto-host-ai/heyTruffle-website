@@ -102,7 +102,7 @@ export default function SuccessStats({
   return (
     <section className="relative bg-cream text-[#251f21]">
       <div ref={pinRef} className="md:relative md:h-[220vh]">
-        <div className="relative mx-auto flex max-w-[1536px] flex-col px-6 py-24 md:sticky md:top-0 md:h-screen md:justify-center md:px-10 md:py-0">
+        <div className="relative mx-auto flex w-full flex-col px-6 py-24 md:sticky md:top-0 md:h-screen md:justify-center lg:px-[73px] md:py-0">
           {/* Animated living-gradient background: orange + magenta on the left,
               blue on the right, drifting constantly like the home hero. */}
           <div
@@ -110,15 +110,15 @@ export default function SuccessStats({
             className="pointer-events-none absolute left-1/2 top-0 -z-10 h-full w-screen -translate-x-1/2 overflow-hidden"
           >
             <div
-              className="hero-blob hero-b1 absolute left-[-6%] top-[6%] h-[540px] w-[540px] rounded-full blur-[130px]"
+              className="stat-blob stat-b1 absolute left-[-6%] top-[6%] h-[540px] w-[540px] rounded-full blur-[130px]"
               style={{ backgroundColor: "#ef7200", opacity: 0.3 }}
             />
             <div
-              className="hero-blob hero-b2 absolute left-[4%] top-[42%] h-[520px] w-[520px] rounded-full blur-[130px]"
+              className="stat-blob stat-b2 absolute left-[4%] top-[42%] h-[520px] w-[520px] rounded-full blur-[130px]"
               style={{ backgroundColor: "#d592f3", opacity: 0.28 }}
             />
             <div
-              className="hero-blob hero-b3 absolute right-[-6%] top-[16%] h-[580px] w-[580px] rounded-full blur-[140px]"
+              className="stat-blob stat-b3 absolute right-[-6%] top-[16%] h-[580px] w-[580px] rounded-full blur-[140px]"
               style={{ backgroundColor: "#3773d7", opacity: 0.28 }}
             />
             {/* Fade the blobs back into cream at the bottom edge */}

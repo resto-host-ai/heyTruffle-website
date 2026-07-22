@@ -263,7 +263,7 @@ export default function HostsDemo({
           <div
             ref={trackRef}
             onScroll={onTrackScroll}
-            className="mt-16 flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden py-4 [-ms-overflow-style:none] [scrollbar-width:none] sm:grid sm:grid-cols-4 sm:gap-x-4 sm:gap-y-16 sm:overflow-visible sm:py-0 [&::-webkit-scrollbar]:hidden"
+            className="mt-8 flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden py-4 [-ms-overflow-style:none] [scrollbar-width:none] sm:mt-10 sm:grid sm:grid-cols-4 sm:gap-x-4 sm:gap-y-16 sm:overflow-visible sm:py-0 [&::-webkit-scrollbar]:hidden"
           >
             {HOSTS.map((h) => (
               <button
@@ -273,7 +273,7 @@ export default function HostsDemo({
                 aria-label={`Play a sample call with ${h.name}`}
                 className="group flex min-w-full shrink-0 snap-center flex-col items-center text-center sm:min-w-0 sm:shrink"
               >
-                <span className="relative flex items-center justify-center">
+                <span className="relative flex items-center justify-center sm:w-full">
                   {/* sonar rings rippling outward in the host's colour */}
                   <span
                     aria-hidden
@@ -285,7 +285,7 @@ export default function HostsDemo({
                     className="host-ring pointer-events-none h-40 w-40 md:h-48 md:w-48"
                     style={{ borderColor: h.color, animationDelay: "1.5s" }}
                   />
-                  <span className="host-alive relative block">
+                  <span className="host-alive relative block sm:w-full">
                     {/* synchronized: no per-host delay */}
                     <Image
                       src={h.image}
@@ -293,7 +293,7 @@ export default function HostsDemo({
                       width={342}
                       height={337}
                       unoptimized
-                      className="h-44 w-44 object-contain transition-transform duration-300 group-hover:scale-105 md:h-52 md:w-52"
+                      className="mx-auto h-auto w-[62vw] max-w-[260px] object-contain transition-transform duration-300 group-hover:scale-105 sm:w-[80%] sm:max-w-none"
                     />
                   </span>
                 </span>

@@ -54,8 +54,16 @@ const clamp = (n: number, lo = 0, hi = 1) => Math.min(hi, Math.max(lo, n));
 const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
+// Horizontal / vertical extent (px) the fanned-out cards occupy on desktop at
+// full size — leftmost card edge to rightmost, and top edge to bottom, plus a
+// little breathing room. Used to scale the whole fan down so it never spills
+// past the header's content width or climbs over the "Friday 7:48 pm" line.
+const FAN_W = 1320;
+const FAN_H = 600;
+
 export default function MomentSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const cardsWrapRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
@@ -74,6 +82,19 @@ export default function MomentSection() {
       const total = section.offsetHeight - window.innerHeight;
       const p = total > 0 ? clamp(-rect.top / total) : 0;
 
+      // Scale the whole desktop fan so it fits within its container — both the
+      // header content width and the height of the space below the headline.
+      // Mobile cards are full-width by design, so they stay at scale 1.
+      const wrap = cardsWrapRef.current;
+      const s =
+        isDesktop && wrap
+          ? clamp(
+              Math.min(wrap.clientWidth / FAN_W, wrap.clientHeight / FAN_H),
+              0.5,
+              1,
+            )
+          : 1;
+
       CARDS.forEach((card, i) => {
         const el = cardRefs.current[i];
         if (!el) return;
@@ -81,11 +102,11 @@ export default function MomentSection() {
         const final = isDesktop ? card.final : card.mFinal;
         const [r0, r1] = card.range;
         const t = easeOut(clamp((p - r0) / (r1 - r0)));
-        const x = lerp(enter.x, final.x, t);
-        const y = lerp(enter.y, final.y, t);
+        const x = lerp(enter.x, final.x, t) * s;
+        const y = lerp(enter.y, final.y, t) * s;
         const rot = lerp(enter.rot, final.rot, t);
         const op = lerp(enter.op, final.op, t);
-        el.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px) rotate(${rot}deg)`;
+        el.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px) rotate(${rot}deg) scale(${s})`;
         el.style.opacity = String(op);
       });
     };
@@ -123,8 +144,8 @@ export default function MomentSection() {
           className="pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-gradient-to-b from-transparent to-[#251f21]"
         />
 
-        <div className="relative mx-auto flex h-full max-w-[1536px] flex-col px-6">
-          <div className="pt-24 md:pt-16">
+        <div className="relative mx-auto flex h-full w-full flex-col px-6 lg:px-[73px]">
+          <div className="pt-28 md:pt-28">
             <h2 className="reveal reveal-up text-center font-serif text-[40px] font-bold! leading-[110%] text-[#ef7200] md:text-[52px] lg:text-[64px]">
               You know this moment.
             </h2>
@@ -136,8 +157,10 @@ export default function MomentSection() {
             </p>
           </div>
 
-          {/* Cards: absolute + scroll-stacked at every breakpoint. */}
-          <div className="relative flex-1">
+          {/* Cards: absolute + scroll-stacked at every breakpoint. The fan is
+              scaled in JS to fit this box, so it never exceeds the header
+              content width or overlaps the headline above. */}
+          <div ref={cardsWrapRef} className="relative flex-1">
             {CARDS.map((card, i) => (
               <div
                 key={card.src}
@@ -161,7 +184,7 @@ export default function MomentSection() {
       </div>
 
       {/* Closing line — appears as the pinned scroll releases */}
-      <div className="absolute inset-x-0 bottom-6 mx-auto max-w-[1536px] px-6">
+      <div className="absolute inset-x-0 bottom-6 mx-auto w-full px-6 lg:px-[73px]">
         <p className="reveal reveal-up text-center font-body text-[26px] font-normal leading-[140%] text-cream">
           Your host can be on the floor, or on the phone.{" "}
           <span className="font-bold text-cream">Not both.</span>
