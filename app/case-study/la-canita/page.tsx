@@ -60,7 +60,7 @@ const CAPABILITIES = [
   {
     title: "Revenue\nAutomation",
     flat: "Revenue Automation",
-    img: "/images/card1.png",
+    img: "/images/card1.webp",
     accent: "#ef7200",
     stat: "$33.600 Recovered",
     statDesc: "Assisted reservation revenue.",
@@ -68,7 +68,7 @@ const CAPABILITIES = [
   {
     title: "Operational\nEfficiency",
     flat: "Operational Efficiency",
-    img: "/images/card2.png",
+    img: "/images/card2.webp",
     accent: "#3773d7",
     stat: "100% Resolution",
     statDesc: "Every inbound call resolved end to end.",
@@ -76,7 +76,7 @@ const CAPABILITIES = [
   {
     title: "Buying\nback time",
     flat: "Buying back time",
-    img: "/images/card3.png",
+    img: "/images/card3.webp",
     accent: "#2f3d7c",
     stat: "393 Host hours",
     statDesc: "Freed across four months.",
@@ -84,7 +84,7 @@ const CAPABILITIES = [
   {
     title: "Data &\nReporting",
     flat: "Data & Reporting",
-    img: "/images/card4.png",
+    img: "/images/card4.webp",
     accent: "#d592f3",
     stat: "88% of SMS",
     statDesc: "For reservation modifications and changes.",

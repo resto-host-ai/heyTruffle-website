@@ -315,7 +315,12 @@ export default function CaseStudiesList() {
         {/* Case grid */}
         <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {visible.map((c) => {
-            const tags = [c.location, c.operational, c.cuisine, c.locations];
+            // Always render two rows of two so the location count never ends
+            // up stranded on its own line: [location, need] / [cuisine, count].
+            const tagRows = [
+              [c.location, c.operational],
+              [c.cuisine, c.locations],
+            ];
             return (
               <article
                 key={c.name}
@@ -348,14 +353,18 @@ export default function CaseStudiesList() {
                     </Link>
                   </div>
 
-                  <div className="flex flex-wrap gap-2.5">
-                    {tags.map((tag, i) => (
-                      <span
-                        key={`${tag}-${i}`}
-                        className="flex flex-auto min-h-[36px] items-center justify-center whitespace-nowrap rounded-full border border-cream px-3.5 py-1 text-center font-body text-[20px] font-normal leading-[110%] text-cream"
-                      >
-                        {tag}
-                      </span>
+                  <div className="flex flex-col gap-2.5">
+                    {tagRows.map((row, r) => (
+                      <div key={r} className="flex gap-2.5">
+                        {row.map((tag, i) => (
+                          <span
+                            key={`${tag}-${i}`}
+                            className="flex flex-auto min-w-0 min-h-[36px] items-center justify-center whitespace-nowrap rounded-full border border-cream px-3.5 py-1 text-center font-body text-[20px] font-normal leading-[110%] text-cream"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
                     ))}
                   </div>
                 </div>

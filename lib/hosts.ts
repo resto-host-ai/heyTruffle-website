@@ -43,7 +43,7 @@ export const HOSTS: Host[] = [
   {
     id: "jeff",
     name: "Jeff",
-    image: "/images/jeff.svg",
+    image: "/images/jeff.webp",
     color: "#251f21",
     desc: ["Crisp, polished,", "late-night ready"],
     title: ["Polished maître d'"],
@@ -76,7 +76,7 @@ export const HOSTS: Host[] = [
   {
     id: "nacho",
     name: "Nacho",
-    image: "/images/nacho.svg",
+    image: "/images/nacho.webp",
     color: "#ef7200",
     desc: ["Warm, energetic,", "knows the menu cold"],
     title: ["Bilingual", "Switches ES↔EN naturally"],
@@ -106,7 +106,7 @@ export const HOSTS: Host[] = [
   {
     id: "margarita",
     name: "Margarita",
-    image: "/images/margarita.svg",
+    image: "/images/margarita.webp",
     color: "#c0559e",
     desc: ["Cheerful, anticipatory,", "party energy"],
     title: ["Bubbly bilingual host"],
@@ -136,7 +136,7 @@ export const HOSTS: Host[] = [
   {
     id: "mary",
     name: "Mary",
-    image: "/images/mary.svg",
+    image: "/images/mary.webp",
     color: "#3773d7",
     desc: ["Soft, welcoming,", "wine-savvy"],
     title: ["Refined multilingual host"],

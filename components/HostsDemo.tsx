@@ -292,7 +292,8 @@ export default function HostsDemo({
                       alt={h.name}
                       width={342}
                       height={337}
-                      unoptimized
+                      quality={90}
+                      sizes="(max-width: 640px) 62vw, 340px"
                       className="mx-auto h-auto w-[62vw] max-w-[260px] object-contain transition-transform duration-300 group-hover:scale-105 sm:w-[80%] sm:max-w-none"
                     />
                   </span>
@@ -417,7 +418,8 @@ export default function HostsDemo({
                     alt=""
                     width={342}
                     height={337}
-                    unoptimized
+                    quality={90}
+                    sizes="176px"
                     className={`relative h-40 w-40 object-contain md:h-44 md:w-44 ${
                       playing ? "host-breathe" : ""
                     }`}

@@ -453,7 +453,7 @@ export default function RrealTacosCaseStudy() {
                 name overlaid on top */}
             <div className="relative min-h-[420px] overflow-hidden rounded-[25px] md:min-h-[600px]">
               <Image
-                src="/images/rrealceo.png"
+                src="/images/rrealceo.webp"
                 alt="Miguel Hernandez"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
