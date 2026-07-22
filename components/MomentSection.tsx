@@ -62,7 +62,7 @@ const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 // zoomed-in laptops) it makes the fan shrink and drop sooner so it always
 // clears the headline instead of overlapping it. Tall screens stay at scale 1.
 const FAN_W = 1320;
-const FAN_H = 740;
+const FAN_H = 660;
 
 export default function MomentSection() {
   const sectionRef = useRef<HTMLElement>(null);

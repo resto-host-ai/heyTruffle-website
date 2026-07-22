@@ -10,7 +10,7 @@ export default function Hero() {
   const [demoOpen, setDemoOpen] = useState(false);
 
   return (
-    <section className="relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden pb-20 pt-32 desk-tall:pb-16 desk-short:items-start desk-short:pt-40 desk-short:pb-12">
+    <section className="relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden pb-20 pt-32 desk-tall:pb-16 desk-short:items-center-safe desk-short:pt-28 desk-short:pb-12">
       {/* Animated gradient background (Figma living-gradient) */}
       <HeroBackground />
 

@@ -2,10 +2,9 @@
 
 import { useCallback } from "react";
 
-// heytruffle demo booking link. Swap this for a heytruffle-branded Calendly
-// event whenever one exists — everything else stays the same.
+// heytruffle demo booking link (heytruffle-branded Calendly event).
 const CALENDLY_URL =
-  "https://calendly.com/lucas-restohost-vk1k/discover-restohost-ai";
+  "https://calendly.com/lucas-restohost-vk1k/discover-heytruffle-ai";
 const CALENDLY_SCRIPT =
   "https://assets.calendly.com/assets/external/widget.js";
 const CALENDLY_CSS = "https://assets.calendly.com/assets/external/widget.css";

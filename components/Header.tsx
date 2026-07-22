@@ -6,14 +6,17 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { openCalendly } from "@/components/BookDemoButton";
 
-/** Nav links, in the order shown in the reference design. */
-const NAV_BEFORE = [
+/** Nav links, in the order shown in the reference design. `demo: true` opens
+ *  the Calendly booking popup instead of navigating (same as "Book a demo"). */
+type NavItem = { label: string; href: string; demo?: boolean };
+
+const NAV_BEFORE: NavItem[] = [
   { label: "Case Studies", href: "/case-study" },
-  { label: "How It Works", href: "/#how-it-works" },
-  { label: "About", href: "/#about" },
+  { label: "How It Works", href: "/#how-it-works", demo: true },
+  { label: "About", href: "/#about", demo: true },
 ];
 
-const NAV_AFTER = [{ label: "Contact", href: "/#contact" }];
+const NAV_AFTER: NavItem[] = [{ label: "Contact", href: "/#contact", demo: true }];
 
 /** Integrations dropdown, grouped like the design. */
 const INTEGRATIONS = [
@@ -69,19 +72,30 @@ function smoothScrollToAnchor(
 
 const stripSlash = (s: string) => s.replace(/\/+$/, "") || "/";
 
-function NavLink({ label, href }: { label: string; href: string }) {
+function NavLink({ label, href, demo }: NavItem) {
   const pathname = usePathname();
   const path = href.split("#")[0] || "/";
   // Only page-level links (not home-section anchors) get the active pill.
-  const active = path !== "/" && stripSlash(pathname) === stripSlash(path);
+  const active = !demo && path !== "/" && stripSlash(pathname) === stripSlash(path);
+
+  const className = `whitespace-nowrap rounded-full border-2 px-3.5 py-2 text-center font-body text-[17px] leading-[110%] text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream 2xl:px-5 2xl:text-[20px] ${
+    active ? "border-cream font-bold" : "border-transparent font-normal"
+  }`;
+
+  // Demo items open the Calendly popup instead of navigating.
+  if (demo) {
+    return (
+      <button type="button" onClick={() => void openCalendly()} className={className}>
+        {label}
+      </button>
+    );
+  }
 
   return (
     <Link
       href={href}
       onClick={(e) => smoothScrollToAnchor(href, e)}
-      className={`whitespace-nowrap rounded-full border-2 px-3.5 py-2 text-center font-body text-[17px] leading-[110%] text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream 2xl:px-5 2xl:text-[20px] ${
-        active ? "border-cream font-bold" : "border-transparent font-normal"
-      }`}
+      className={className}
     >
       {label}
     </Link>
@@ -273,19 +287,33 @@ export default function Header() {
             }`}
           >
             <div className="flex flex-col items-end gap-1 px-7 py-6 text-right">
-              {NAV_BEFORE.map(({ label, href }) => (
-                <Link
-                  key={label}
-                  href={href}
-                  onClick={(e) => {
-                    smoothScrollToAnchor(href, e);
-                    setMenuOpen(false);
-                  }}
-                  className="py-2.5 font-body text-[26px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
-                >
-                  {label}
-                </Link>
-              ))}
+              {NAV_BEFORE.map(({ label, href, demo }) =>
+                demo ? (
+                  <button
+                    key={label}
+                    type="button"
+                    onClick={() => {
+                      setMenuOpen(false);
+                      void openCalendly();
+                    }}
+                    className="py-2.5 font-body text-[26px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
+                  >
+                    {label}
+                  </button>
+                ) : (
+                  <Link
+                    key={label}
+                    href={href}
+                    onClick={(e) => {
+                      smoothScrollToAnchor(href, e);
+                      setMenuOpen(false);
+                    }}
+                    className="py-2.5 font-body text-[26px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
+                  >
+                    {label}
+                  </Link>
+                ),
+              )}
 
               {/* Integrations accordion */}
               <button
@@ -337,19 +365,33 @@ export default function Header() {
                 </div>
               )}
 
-              {NAV_AFTER.map(({ label, href }) => (
-                <Link
-                  key={label}
-                  href={href}
-                  onClick={(e) => {
-                    smoothScrollToAnchor(href, e);
-                    setMenuOpen(false);
-                  }}
-                  className="py-2.5 font-body text-[26px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
-                >
-                  {label}
-                </Link>
-              ))}
+              {NAV_AFTER.map(({ label, href, demo }) =>
+                demo ? (
+                  <button
+                    key={label}
+                    type="button"
+                    onClick={() => {
+                      setMenuOpen(false);
+                      void openCalendly();
+                    }}
+                    className="py-2.5 font-body text-[26px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
+                  >
+                    {label}
+                  </button>
+                ) : (
+                  <Link
+                    key={label}
+                    href={href}
+                    onClick={(e) => {
+                      smoothScrollToAnchor(href, e);
+                      setMenuOpen(false);
+                    }}
+                    className="py-2.5 font-body text-[26px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
+                  >
+                    {label}
+                  </Link>
+                ),
+              )}
 
               <button
                 type="button"
