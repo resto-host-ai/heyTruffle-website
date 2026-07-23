@@ -246,8 +246,8 @@ export default function HostsDemo({
         soloHostId
           ? ""
           : host
-            ? "mt-48 rounded-[36px] bg-[#f6f3ec] p-2 shadow-2xl md:mt-64 md:p-3"
-            : "mt-48 rounded-[36px] bg-[#f6f3ec] px-6 py-12 shadow-2xl md:mt-64 md:px-16 md:py-16"
+            ? "mt-48 rounded-[67.677px] bg-[#f6f3ec] p-2 shadow-2xl md:mt-64 md:p-3"
+            : "mt-48 rounded-[67.677px] bg-[#f6f3ec] px-6 py-12 shadow-2xl md:mt-64 md:px-16 md:py-16"
       }`}
     >
       {!host ? (
@@ -256,8 +256,9 @@ export default function HostsDemo({
             Meet the hosts
           </h3>
           <p className="font-body mx-auto mt-5 max-w-2xl text-center text-[26px] font-normal leading-[140%] text-[#251f21]">
-            Trained for the restaurant. Tuned every week. Built to feel like
-            part of the team.
+            Trained for the restaurant. Tuned every{" "}
+            <br className="hidden sm:inline" />
+            week. Built to feel like part of the team.
           </p>
 
           <div

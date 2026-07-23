@@ -151,12 +151,12 @@ export default function Header() {
             height={40}
             priority
             unoptimized
-            className="h-8 w-auto"
+            className="h-11 w-auto"
           />
         </Link>
 
         {/* Desktop nav — centered relative to the page */}
-        <nav className="hidden items-center gap-1 lg:flex xl:gap-2">
+        <nav className="hidden items-center gap-8 lg:flex xl:gap-14">
           {NAV_BEFORE.map((link) => (
             <NavLink key={link.label} {...link} />
           ))}

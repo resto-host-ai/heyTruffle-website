@@ -38,7 +38,7 @@ export default function TeamSection() {
               service that takes care of you.
             </p>
             <BookDemoButton
-              className="mt-9 inline-flex items-center justify-center gap-2.5 rounded-full border border-transparent bg-[#1c1917] px-[44px] py-[26px] font-body text-[20px] font-bold leading-[110%] text-cream transition-all duration-300 hover:border-[#7a7d9a] hover:bg-[linear-gradient(180deg,#a5b3d1_0%,#7a7d9a_100%)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]"
+              className="mt-9 inline-flex items-center justify-center gap-2.5 rounded-full border border-transparent bg-[#1c1917] px-[44px] py-[26px] font-body text-[20px] font-bold leading-[110%] text-cream transition-all duration-300 hover:border-[#7a7d9a] btn-grad btn-grad-steel hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]"
             >
               Talk to our team
             </BookDemoButton>

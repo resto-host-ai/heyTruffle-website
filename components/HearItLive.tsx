@@ -46,7 +46,7 @@ export default function HearItLive({
         type="button"
         onClick={toggle}
         aria-label={playing ? "Pause the recording" : label}
-        className="flex w-full items-center justify-center gap-3 rounded-full bg-brand-orange px-7 py-4 font-body text-[18px] font-bold leading-[110%] text-cream transition-all duration-300 hover:bg-[linear-gradient(180deg,#f5a24a_0%,#e07a12_45%,#b85400_100%)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(239,114,0,0.55)] md:text-[20px] lg:inline-flex lg:w-auto"
+        className="flex w-full items-center justify-center gap-3 rounded-full bg-brand-orange px-7 py-4 font-body text-[18px] font-bold leading-[110%] text-cream transition-all duration-300 btn-grad btn-grad-orange hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(239,114,0,0.55)] md:text-[20px] lg:inline-flex lg:w-auto"
       >
         {label}
         <span className="flex h-7 w-7 items-center justify-center rounded-full border border-cream/70">

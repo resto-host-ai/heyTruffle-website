@@ -57,16 +57,16 @@ export default function ResultsSection() {
         <h2 className="reveal reveal-up text-center font-serif text-[40px] font-bold! leading-[110%] text-cream md:text-[52px] lg:text-[64px]">
           The results speak for themselves.
         </h2>
-        <p className="mt-4 text-center font-body text-[26px] font-normal leading-[140%] text-cream">
-          Rreal Tacos&nbsp;&nbsp;•&nbsp;&nbsp;12 locations&nbsp;&nbsp;•&nbsp;&nbsp;May
-          16 2026
+        <p className="mt-8 text-center font-body text-[26px] font-normal leading-[140%] text-cream">
+          Rreal Tacos&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;12
+          locations&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;May 16 2026
         </p>
 
         <div className="mt-20 grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.7fr)]">
           {STATS.map((stat) => (
             <div key={stat.title} className="relative">
               <div
-                className="relative flex h-full min-h-[240px] flex-col overflow-hidden rounded-3xl p-7 md:min-h-[300px] md:p-8"
+                className="relative flex h-full min-h-[240px] flex-col overflow-hidden rounded-3xl p-7 md:h-[470px] md:p-8"
                 style={{
                   backgroundImage: `linear-gradient(180deg, #251f21 4%, ${stat.color} 115%)`,
                 }}
@@ -81,7 +81,7 @@ export default function ResultsSection() {
                   <h3 className="font-body text-[28px] font-normal! leading-[120%] text-cream md:text-[40px]">
                     {stat.title}
                   </h3>
-                  <p className="mt-6 font-body text-[64px] font-normal leading-[110%] text-cream md:text-[clamp(48px,6.6vw,124px)]">
+                  <p className="mt-6 font-body text-[64px] font-normal leading-[110%] text-cream md:mt-auto md:text-[clamp(48px,6.6vw,124px)]">
                     {stat.value}
                   </p>
                   <p className="mt-auto max-w-[20rem] pt-8 font-body text-[26px] font-normal leading-[140%] text-cream">

@@ -188,6 +188,70 @@ html {
   animation: ht-pop 0.28s cubic-bezier(0.2, 0.8, 0.3, 1);
 }
 
+/* Smooth gradient-hover buttons.
+   CSS can't interpolate background-image, so a `hover:bg-[linear-gradient…]`
+   class always snaps no matter what transition is set. Instead the gradient is
+   built from @property-registered color stops that start fully transparent
+   (the button's own bg-* shows through) and animate to the hover colors — the
+   gradient genuinely fades in. Browsers without @property (pre-2023) simply
+   snap like before.
+     .btn-grad         — base: transparent gradient + transitions
+     .btn-grad-blue    — indigo hover (secondary CTAs)
+     .btn-grad-orange  — brand-orange hover (primary CTAs)
+     .btn-grad-steel   — steel-blue hover (team section) */
+@property --btn-g1 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: rgb(0 0 0 / 0);
+}
+@property --btn-g2 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: rgb(0 0 0 / 0);
+}
+@property --btn-g3 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: rgb(0 0 0 / 0);
+}
+.btn-grad {
+  background-image: linear-gradient(
+    180deg,
+    var(--btn-g1) 0%,
+    var(--btn-g2) 50%,
+    var(--btn-g3) 100%
+  );
+  transition-property: --btn-g1, --btn-g2, --btn-g3, color, background-color,
+    border-color, box-shadow, transform, opacity;
+  transition-duration: 0.45s;
+  transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.btn-grad-blue:hover {
+  --btn-g1: #8b9cd6;
+  --btn-g2: #6076bd;
+  --btn-g3: #3f5490;
+}
+.btn-grad-orange:hover {
+  --btn-g1: #f5a24a;
+  --btn-g2: #e07a12;
+  --btn-g3: #b85400;
+}
+.btn-grad-steel:hover {
+  --btn-g1: #a5b3d1;
+  --btn-g2: #9098b6;
+  --btn-g3: #7a7d9a;
+}
+
+/* Google Sans rasterises a touch heavier in browsers than in Figma. Shave the
+   stroke via the GRAD (grade) axis — thickness only, metrics/layout unchanged.
+   Applies to every element in the Google Sans family: the `font-body` utility
+   and the blog post body (same var(--font-body) family). The axis is loaded in
+   app/layout.tsx (`axes: ["GRAD"]`); fonts without a GRAD axis ignore this. */
+.font-body,
+.post-body {
+  font-variation-settings: "GRAD" -25;
+}
+
 /* Monospace accent (KPI labels, dashboard captions) */
 .mono {
   font-family: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
@@ -400,9 +464,8 @@ h4,
 h5,
 h6 {
   text-wrap: balance;
-  /* Match the RestoHost display treatment: heavier, tighter headings. */
+  /* Match the RestoHost display treatment: heavier headings. */
   font-weight: 600;
-  letter-spacing: -0.025em;
 }
 p,
 li,

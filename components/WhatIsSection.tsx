@@ -116,7 +116,7 @@ export default function WhatIsSection() {
               onClick={canReveal && isMobile ? () => toggle(i) : undefined}
               role={canReveal && isMobile ? "button" : undefined}
               aria-pressed={canReveal && isMobile ? open : undefined}
-              className={`group relative flex h-[92px] items-center justify-center rounded-full border border-transparent [background:linear-gradient(#4c4749,#4c4749)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg transition-all duration-300 md:h-[119px] ${
+              className={`group relative flex h-[92px] items-center justify-center rounded-full border border-white/40 [background:linear-gradient(180deg,rgba(255,255,255,0.05)_0%,rgba(255,255,255,0.04)_50%,rgba(255,255,255,0.05)_100%)] shadow-[0_10px_30px_rgba(0,0,0,0.22)] backdrop-blur-lg transition-all duration-300 md:h-[119px] ${
                 canReveal && isMobile ? "cursor-pointer" : ""
               } ${open ? ACTIVE_BG[i] : HOVER_BG[i]}`}
             >

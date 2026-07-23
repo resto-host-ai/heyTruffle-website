@@ -112,7 +112,8 @@ export default function HowItWorks() {
             className="reveal reveal-up font-body mx-auto mt-5 max-w-[980px] text-center text-[26px] font-normal leading-[140%] text-cream"
             style={{ "--reveal-delay": "0.08s" } as React.CSSProperties}
           >
-            We take care of the setup, the training and the ongoing improvements
+            We take care of the setup, the training and the ongoing improvements{" "}
+            <br className="hidden md:inline" />
             so your team can stay focused on running the restaurant.
           </p>
 

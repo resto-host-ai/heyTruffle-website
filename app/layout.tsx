@@ -35,6 +35,10 @@ const googleSans = Google_Sans({
   variable: "--font-google-sans",
   subsets: ["latin"],
   adjustFontFallback: false,
+  // Include the GRAD (grade) axis so components can shave a hair off the stroke
+  // weight to match Figma's lighter rasterisation — grade changes thickness
+  // WITHOUT altering the font's metrics, so size/layout stay identical.
+  axes: ["GRAD"],
   fallback: ["-apple-system", "BlinkMacSystemFont", "Segoe UI", "system-ui", "sans-serif"],
 });
 
