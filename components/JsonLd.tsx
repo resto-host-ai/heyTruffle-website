@@ -41,10 +41,8 @@ export default function SiteJsonLd() {
           name: "Resto Experience",
           url: "https://restoexperience.com",
         },
-        sameAs: [
-          "https://www.linkedin.com/company/heytruffle/",
-          "https://www.instagram.com/heytruffle/",
-        ],
+        // No `sameAs` — heytruffle has no public social profiles wired into the
+        // site yet. Add verified profile URLs here once they exist.
       },
       {
         "@type": "WebSite",
