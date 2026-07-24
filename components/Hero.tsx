@@ -23,23 +23,27 @@ export default function Hero() {
 
       {/* Content */}
       <div className="flex flex-col items-center gap-8 px-6 text-center text-cream desk-short:gap-5">
-        {/* Icon */}
-        <Image
-          src="/images/icono.svg"
-          alt="heytruffle"
-          width={105}
-          height={96}
-          priority
-          unoptimized
-          className="h-16 w-auto sm:h-[72px]"
-        />
+        {/* Logo — the page's single H1. Its accessible name (the image alt)
+            carries the brand + primary keyword. */}
+        <h1 className="m-0 leading-none">
+          <Image
+            src="/images/icono.svg"
+            alt="heytruffle — voice AI for restaurants"
+            width={105}
+            height={96}
+            priority
+            unoptimized
+            className="h-16 w-auto sm:h-[72px]"
+          />
+        </h1>
 
-        {/* Headline */}
-        <h1 className="max-w-[1100px] font-serif text-[52px] font-bold! leading-[110%] tracking-tight text-cream sm:text-[72px] lg:text-[92px]">
+        {/* Headline — demoted from <h1> to <p> so the logo stays the only H1.
+            Visual styling is unchanged. */}
+        <p className="max-w-[1100px] font-serif text-[52px] font-bold! leading-[110%] tracking-tight text-cream sm:text-[72px] lg:text-[92px]">
           You operate the restaurant.
           <br />
           We operate the phones.
-        </h1>
+        </p>
 
         {/* Subtitle */}
         <p className="font-body w-full max-w-[1000px] text-xl font-normal leading-[140%] text-cream/85 sm:text-[26px] desk-tall:h-[100px]">

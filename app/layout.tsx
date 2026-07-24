@@ -12,6 +12,7 @@ import Footer from "@/components/Footer";
 import RebrandModal from "@/components/RebrandModal";
 import ScrollReveal from "@/components/ScrollReveal";
 import Clarity from "@/components/Clarity";
+import SiteJsonLd from "@/components/JsonLd";
 
 // Same type families as the RestoHost site: Inter for body/UI, Montserrat
 // for the Resto Experience footer bar, and Geist Mono for mono accents.
@@ -55,10 +56,29 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://heytruffle.com"),
-  title: "heytruffle — We operate the phones for your restaurant",
+  metadataBase: new URL("https://heytruffle.ai"),
+  // Plain-string default title: it covers the home page and any route that
+  // sets no title of its own. Existing pages already append "— heytruffle" to
+  // their own titles, so no template is used (it would double the suffix).
+  title: "heytruffle — Voice AI That Answers Every Restaurant Call",
   description:
-    "A fully managed voice AI service that answers every call for your restaurants: every reservation booked, every order taken, every catering inquiry closed.",
+    "heytruffle is the fully managed voice AI service for U.S. restaurants. We answer 100% of calls 24/7 in English & Spanish — every reservation booked, every order taken, every catering inquiry closed.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "heytruffle",
+    title: "heytruffle — Voice AI That Answers Every Restaurant Call",
+    description:
+      "The fully managed voice AI service that answers every call for your restaurants — reservations, orders and catering, 24/7 in English & Spanish.",
+    url: "https://heytruffle.ai/",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "heytruffle — Voice AI That Answers Every Restaurant Call",
+    description:
+      "The fully managed voice AI service that answers every restaurant call — reservations, orders and catering, 24/7.",
+  },
 };
 
 export default function RootLayout({
@@ -79,6 +99,7 @@ export default function RootLayout({
         <RebrandModal />
         <ScrollReveal />
         <Clarity />
+        <SiteJsonLd />
       </body>
     </html>
   );
