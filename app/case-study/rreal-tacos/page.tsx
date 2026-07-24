@@ -372,13 +372,13 @@ export default function RrealTacosCaseStudy() {
             <p className="font-body text-[28px] font-normal! leading-[120%] md:text-[40px]">
               Estimated business impact
             </p>
-            <div className="mt-8 flex flex-col gap-6 lg:flex-row lg:items-stretch">
+            <div className="mt-8 flex flex-col gap-6 xl:flex-row xl:items-stretch">
               {/* Math card */}
-              <div className="flex flex-1 flex-col gap-4 rounded-[25px] border border-transparent [background:linear-gradient(#f1eee6,#f1eee6)_padding-box,linear-gradient(180deg,#ffffff_0%,rgba(37,31,33,0.06)_45%,rgba(37,31,33,0.28)_100%)_border-box] p-7 shadow-[0_10px_30px_rgba(0,0,0,0.04)] md:flex-row md:flex-nowrap md:items-center md:justify-between md:gap-4 md:p-12">
+              <div className="flex flex-1 flex-col gap-4 rounded-[25px] border border-transparent [background:linear-gradient(#f1eee6,#f1eee6)_padding-box,linear-gradient(180deg,#ffffff_0%,rgba(37,31,33,0.06)_45%,rgba(37,31,33,0.28)_100%)_border-box] p-7 shadow-[0_10px_30px_rgba(0,0,0,0.04)] md:h-[202.34px] md:flex-row md:flex-nowrap md:items-center md:justify-between md:gap-4 md:p-12">
                 {IMPACT.map((item, i, arr) => (
                   <Fragment key={item.l}>
                     <div className="flex items-center gap-4">
-                      <p className="shrink-0 whitespace-nowrap font-body text-[48px] font-normal leading-[100%] md:text-[64px]">
+                      <p className="shrink-0 whitespace-nowrap text-right font-body text-[48px] font-normal leading-[110%] text-[#251F21] min-[1280px]:max-[1899px]:text-[52px] min-[1900px]:text-[72px]">
                         {item.v}
                       </p>
                       <p className="max-w-[150px] font-body text-[18px] font-normal leading-[120%] md:max-w-[120px]">
@@ -395,7 +395,7 @@ export default function RrealTacosCaseStudy() {
               </div>
 
               {/* Equals */}
-              <div className="hidden items-center justify-center lg:flex">
+              <div className="hidden items-center justify-center xl:flex">
                 <span className="font-body text-[40px] font-normal leading-none">
                   =
                 </span>
@@ -403,7 +403,7 @@ export default function RrealTacosCaseStudy() {
 
               {/* Result card */}
               <div
-                className="relative flex flex-col items-start gap-3 overflow-hidden rounded-[25px] p-7 text-cream shadow-[0_18px_44px_rgba(0,0,0,0.25)] md:flex-row md:items-center md:gap-5 md:p-10 lg:w-[34%]"
+                className="relative flex flex-col items-start gap-3 overflow-hidden rounded-[25px] p-7 text-cream shadow-[0_18px_44px_rgba(0,0,0,0.25)] md:h-[202.34px] md:flex-row md:items-center md:gap-5 md:p-10 min-[1280px]:max-[1899px]:w-[38%] min-[1900px]:w-[34%]"
                 style={{
                   backgroundImage:
                     "linear-gradient(180deg, #12162c 0%, #21306a 55%, #3454b0 100%)",
@@ -414,7 +414,7 @@ export default function RrealTacosCaseStudy() {
                   className="pointer-events-none absolute inset-0 opacity-40 mix-blend-overlay"
                   style={{ backgroundImage: NOISE }}
                 />
-                <p className="relative font-body text-[52px] font-normal leading-[100%] md:text-[64px]">
+                <p className="relative font-body text-[52px] font-normal leading-[110%] min-[1280px]:max-[1899px]:text-[52px] min-[1900px]:text-[72px]">
                   ~$74,016
                 </p>
                 <p className="relative font-body text-[18px] font-normal leading-[130%] text-cream/90 md:max-w-[180px]">

@@ -11,6 +11,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import RebrandModal from "@/components/RebrandModal";
 import ScrollReveal from "@/components/ScrollReveal";
+import Clarity from "@/components/Clarity";
 
 // Same type families as the RestoHost site: Inter for body/UI, Montserrat
 // for the Resto Experience footer bar, and Geist Mono for mono accents.
@@ -77,6 +78,7 @@ export default function RootLayout({
         <Footer />
         <RebrandModal />
         <ScrollReveal />
+        <Clarity />
       </body>
     </html>
   );
