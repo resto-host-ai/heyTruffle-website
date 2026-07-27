@@ -31,16 +31,16 @@ export default function MaintenancePage() {
         <p className="font-body max-w-[720px] text-xl font-normal leading-[140%] text-cream/85 sm:text-[26px]">
           heytruffle is getting things ready. For anything urgent, reach us at{" "}
           <a
-            href="mailto:info@heytruffle.com"
+            href="mailto:info@heytruffle.ai"
             className="font-semibold underline decoration-cream/40 underline-offset-4 transition-colors hover:text-cream"
           >
-            info@heytruffle.com
+            info@heytruffle.ai
           </a>
           .
         </p>
 
         <a
-          href="mailto:info@heytruffle.com"
+          href="mailto:info@heytruffle.ai"
           className="mt-2 flex h-[64px] items-center justify-center rounded-full bg-[#1c1917]/85 px-9 font-body text-[20px] font-semibold text-cream shadow-lg backdrop-blur-md transition-colors hover:bg-[#1c1917]"
         >
           Talk to our team

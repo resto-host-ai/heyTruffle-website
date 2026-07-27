@@ -105,10 +105,10 @@ export default function RootLayout({
                 Terms of Service
               </Link>
               <a
-                href="mailto:info@heytruffle.com"
+                href="mailto:info@heytruffle.ai"
                 className="transition-colors hover:text-cream"
               >
-                info@heytruffle.com
+                info@heytruffle.ai
               </a>
             </nav>
           </div>
