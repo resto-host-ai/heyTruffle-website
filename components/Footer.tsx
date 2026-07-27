@@ -3,12 +3,13 @@ import Image from "next/image";
 import { INTEGRATIONS } from "@/lib/integrations";
 import { BookDemoButton } from "@/components/BookDemoButton";
 
-/** Primary nav, mirroring the header (plus the Blog). */
+/** Primary nav, mirroring the header (plus the Blog and FAQ). */
 const NAV = [
   { label: "Case Studies", href: "/case-study" },
   { label: "How It Works", href: "/#how-it-works" },
   { label: "About", href: "/#about" },
   { label: "Blog", href: "/blog" },
+  { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/#contact" },
 ];
 
