@@ -19,8 +19,7 @@ const API_KEY =
   "5cdccda1d4a1c08770f7469f6b2bfc71fec670a240fc661de3f3232ec1edb692";
 
 const DEMO_APP_URL = (
-  process.env.NEXT_PUBLIC_DEMO_APP_URL ??
-  "https://landing-demo-assistant-frontend.onrender.com"
+  process.env.NEXT_PUBLIC_DEMO_APP_URL ?? "https://demo.heytruffle.ai"
 ).replace(/\/+$/, "");
 
 export type PlaceSuggestion = {

@@ -147,11 +147,11 @@ export default function Header() {
           <Image
             src="/images/heytruffle-logo.svg"
             alt="heytruffle"
-            width={177}
+            width={160}
             height={40}
             priority
             unoptimized
-            className="h-11 w-auto"
+            className="h-9 w-auto"
           />
         </Link>
 

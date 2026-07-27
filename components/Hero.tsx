@@ -104,7 +104,7 @@ export default function Hero() {
           {/* Secondary CTA */}
           <a
             href="mailto:info@heytruffle.com"
-            className="flex h-[64px] w-full items-center justify-center self-center rounded-full bg-[#1c1917]/85 px-9 text-[20px] font-semibold text-cream shadow-lg backdrop-blur-md transition-all duration-300 btn-grad btn-grad-blue hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(79,84,144,0.55)] sm:w-auto"
+            className="flex h-[64px] mt-6 w-full items-center justify-center self-center rounded-full bg-[#1c1917]/85 px-9 text-[20px] font-semibold text-cream shadow-lg backdrop-blur-md transition-all duration-300 btn-grad btn-grad-blue hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(79,84,144,0.55)] sm:w-auto"
           >
             Talk to our team
           </a>
