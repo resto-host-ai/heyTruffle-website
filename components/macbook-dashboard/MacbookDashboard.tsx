@@ -1,6 +1,7 @@
 "use client";
 
 import { useInView, useEntryCountUp } from "./hooks";
+import { formatCount } from "@/lib/format";
 import { C } from "./constants";
 import { KpiTile } from "./KpiTile";
 import { ChartCard } from "./ChartCard";
@@ -19,7 +20,7 @@ export function MacbookDashboard() {
   const booked    = useEntryCountUp(86,    1500, inView);
   const err       = useEntryCountUp(14650, 2000, inView);
 
-  const fmt = (n: number) => n.toLocaleString();
+  const fmt = formatCount;
 
   return (
     <div ref={rootRef} className="relative mx-auto w-full max-w-[1080px]">
