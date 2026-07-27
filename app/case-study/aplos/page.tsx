@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { BookDemoButton } from "@/components/BookDemoButton";
 import { NOISE } from "@/lib/noise";
 import HostsDemo from "@/components/HostsDemo";
 import CaseStudies from "@/components/CaseStudies";
@@ -344,12 +345,11 @@ export default function AplosCaseStudy() {
                     <DemoSearchBar />
                   </div>
 
-                  <a
-                    href="mailto:info@heytruffle.com"
+                  <BookDemoButton
                     className="mt-10 inline-flex items-center justify-center rounded-full bg-cream px-9 py-5 font-body text-[20px] font-bold leading-[110%] text-[#251f21] transition-all duration-300 btn-grad btn-grad-blue hover:text-cream hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(79,84,144,0.55)]"
                   >
                     Talk to our team
-                  </a>
+                  </BookDemoButton>
                   <p className="mt-6 font-body text-[20px] font-normal leading-[110%] text-cream/80">
                     Backed by real people.
                   </p>
