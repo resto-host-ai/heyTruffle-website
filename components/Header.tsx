@@ -12,11 +12,11 @@ type NavItem = { label: string; href: string; demo?: boolean };
 
 const NAV_BEFORE: NavItem[] = [
   { label: "Case Studies", href: "/case-study" },
-  { label: "How It Works", href: "/#how-it-works", demo: true },
-  { label: "About", href: "/#about", demo: true },
+  { label: "How It Works", href: "/#how-it-works" },
+  { label: "About", href: "/#about" },
 ];
 
-const NAV_AFTER: NavItem[] = [{ label: "Contact", href: "/#contact", demo: true }];
+const NAV_AFTER: NavItem[] = [{ label: "Contact", href: "/#contact" }];
 
 /** Integrations dropdown, grouped like the design. */
 const INTEGRATIONS = [
@@ -222,14 +222,6 @@ export default function Header() {
           {NAV_AFTER.map((link) => (
             <NavLink key={link.label} {...link} />
           ))}
-
-          <button
-            type="button"
-            onClick={() => void openCalendly()}
-            className="whitespace-nowrap rounded-full border-2 border-transparent px-3.5 py-2 text-center font-body text-[17px] font-normal leading-[110%] text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream 2xl:px-5 2xl:text-[20px]"
-          >
-            Book a demo
-          </button>
         </nav>
 
         {/* Mobile menu button */}
@@ -392,17 +384,6 @@ export default function Header() {
                   </Link>
                 ),
               )}
-
-              <button
-                type="button"
-                onClick={() => {
-                  setMenuOpen(false);
-                  void openCalendly();
-                }}
-                className="py-2.5 font-body text-[26px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
-              >
-                Book a demo
-              </button>
             </div>
           </nav>
         </div>

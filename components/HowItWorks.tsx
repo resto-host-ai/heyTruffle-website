@@ -172,12 +172,12 @@ export default function HowItWorks() {
                   {step.n}
                 </div>
                 <h3
-                  className="mt-6 font-body text-[28px] font-normal! leading-[120%] md:text-[40px]"
+                  className="mt-6 flex mb-2 items-start font-body text-[28px] font-normal! leading-[120%] md:text-[32px]"
                   style={{ color: step.titleColor }}
                 >
                   {step.title}
                 </h3>
-                <p className="mt-3 font-body text-[26px] font-normal leading-[140%] text-cream">
+                <p className=" font-body text-[22px] font-normal leading-[140%] text-cream">
                   {step.desc}
                 </p>
               </div>

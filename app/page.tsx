@@ -6,6 +6,7 @@ import ResultsSection from "@/components/ResultsSection";
 import HowItWorks from "@/components/HowItWorks";
 import CaseStudies from "@/components/CaseStudies";
 import TeamSection from "@/components/TeamSection";
+import Contact from "@/components/Contact";
 // Temporarily hidden from the home — re-enable when ready:
 // import Features from "@/components/Features";
 // import Partner from "@/components/Partner";
@@ -27,6 +28,7 @@ export default function Home() {
       <HowItWorks />
       <CaseStudies />
       <TeamSection />
+      <Contact />
       {/* Temporarily hidden — re-enable when ready:
       <Features />
       <Partner />
