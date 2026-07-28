@@ -34,7 +34,7 @@ export const rrealTacos: CaseStudy = {
   seo: {
     title: "Rreal Tacos — Case Study — heytruffle",
     description:
-      "How Rreal Tacos captured 100% of demand across 12 Atlanta locations with heytruffle — every reservation, order and catering call answered.",
+      "How Rreal Tacos' AI host answers every call across 12 Atlanta locations — 19K+ calls handled, ~520 host hours back on the floor.",
     canonical: "/case-study/rreal-tacos/",
   },
   logo: { src: "/images/rreal_logo.webp", alt: "Rreal Tacos" },
@@ -65,11 +65,11 @@ export const rrealTacos: CaseStudy = {
     ],
     supportingStats: [
       {
-        value: "+68%",
-        label: "of large parties were willing to relocate within a 10 minute radius.",
+        value: "68%",
+        label: "of large parties said yes to a sister location.",
       },
       {
-        value: "+200",
+        value: "~200",
         label: "large party reservations placed every month at nearby locations.",
       },
     ],
