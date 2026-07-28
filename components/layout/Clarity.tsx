@@ -1,22 +1,23 @@
-import Script from "next/script";
+"use client";
+
+import { useEffect } from "react";
+import Clarity from "@microsoft/clarity";
 
 // Microsoft Clarity — same account as the RestoHost site (project "resto-host").
-// Session recordings + heatmaps. Loaded once from the root layout so it runs on
-// every route.
-const CLARITY_ID = "umimfwu6lv";
+// Session recordings + heatmaps. Initialized once from the root layout so it
+// runs on every route, via the official @microsoft/clarity npm package
+// (https://www.npmjs.com/package/@microsoft/clarity) rather than the
+// hand-rolled inline snippet — the ID is supplied via env so it can be
+// rotated without a code change and verified against .env directly.
+const CLARITY_PROJECT_ID = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID;
 
-export default function Clarity() {
-  return (
-    /* lazyOnload: Clarity's tag (~35KB + continuous recording CPU) was
-       loading right in the hydration window on every route — on phones it
-       competed with the app's own chunks exactly when INP is measured.
-       Analytics can afford to start after the page is idle. */
-    <Script id="clarity-init" strategy="lazyOnload">{`
-      (function(c,l,a,r,i,t,y){
-          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-      })(window, document, "clarity", "script", "${CLARITY_ID}");
-    `}</Script>
-  );
+export default function ClarityInit() {
+  useEffect(() => {
+    // Without an ID Clarity.init would throw — skip it entirely rather than
+    // load a broken tracker.
+    if (!CLARITY_PROJECT_ID) return;
+    Clarity.init(CLARITY_PROJECT_ID);
+  }, []);
+
+  return null;
 }
