@@ -123,7 +123,7 @@ export default function WhatIsSection() {
                 alt=""
                 fill
                 loading="lazy"
-                quality={100}
+                quality={90}
                 sizes="100vw"
                 className="object-cover"
               />
