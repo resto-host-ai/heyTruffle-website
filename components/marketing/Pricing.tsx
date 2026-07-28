@@ -64,7 +64,7 @@ export default function Pricing() {
   return (
     <section id="pricing" className="scroll-mt-24 bg-transparent py-24 md:py-32">
       <div className="mx-auto w-full px-6 lg:px-[73px]">
-        <div className="mx-auto mb-14 max-w-[680px] text-center">
+        <div className="mx-auto mb-12 max-w-[680px] text-center">
           <p className="font-body text-[13px] font-bold uppercase tracking-[0.2em] text-brand-orange">
             Pricing
           </p>
@@ -126,9 +126,9 @@ function TierCard({ tier }: { tier: Tier }) {
       </ul>
 
       <BookDemoButton
-        className={ "mt-10!" +
+        className={
           tier.featured
-            ? "w-full rounded-[10px] bg-brand-orange py-3.5 font-body text-[15px] font-semibold text-white transition-colors hover:bg-[#c95f00]"
+            ? "w-full mt-10 rounded-[10px] bg-brand-orange py-3.5 font-body text-[15px] font-semibold text-white transition-colors hover:bg-[#c95f00]"
             : "w-full rounded-[10px] border-[1.5px] border-white/30 py-3.5 font-body text-[15px] font-semibold text-cream transition-colors hover:border-cream"
         }
       >

@@ -248,12 +248,12 @@ export default function HostsDemo({
   return (
     <div
       id="meet-the-hosts"
-      className={`w-full scroll-mt-28 ${
+      className={`m-8 w-[calc(100%-5rem)] scroll-mt-28 ${
         soloHostId
           ? ""
           : host
             ? "mt-24 rounded-[67.677px] bg-[#f6f3ec] p-2 shadow-2xl md:mt-64 md:p-3"
-            : "mt-24 rounded-[67.677px] bg-[#f6f3ec] px-6 py-12 shadow-2xl md:mt-64 md:px-16 md:py-16"
+            : "mt-24 rounded-[67.677px] bg-[#f6f3ec] py-12 shadow-2xl md:mt-64 md:px-6 md:py-16"
       }`}
     >
       {!host ? (

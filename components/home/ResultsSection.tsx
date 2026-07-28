@@ -29,7 +29,7 @@ const STATS = [
 
 export default function ResultsSection() {
   return (
-    <section className="relative overflow-hidden bg-[#251f21] pb-28 pt-24 md:pb-40 md:pt-28">
+    <section className="relative overflow-hidden bg-[#251f21] pb-28 pt-24  md:pt-28">
       {/* gradiante2.webp background */}
       <div
         aria-hidden

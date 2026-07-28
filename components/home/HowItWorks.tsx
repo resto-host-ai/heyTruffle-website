@@ -102,7 +102,7 @@ export default function HowItWorks() {
     <section id="how-it-works" className="relative scroll-mt-24 bg-[#251f21]">
       {/* Tall spacer drives the pinned reveal on desktop; auto height on mobile. */}
       <div ref={pinRef} className="md:relative md:h-[260vh]">
-        <div className="mx-auto flex w-full flex-col px-6 py-24 md:sticky md:top-0 md:h-screen md:justify-center md:overflow-hidden lg:px-[73px] md:py-0">
+        <div className=" mx-auto flex w-full flex-col px-6 py-24 md:sticky md:top-0 md:h-screen md:justify-center md:overflow-hidden lg:px-[73px] md:py-0">
           <h2 className="reveal reveal-up text-center font-serif text-[40px] font-bold! leading-[110%] md:text-[52px] lg:text-[64px]">
             <span className="text-cream">Getting started is simple.</span>
             <br />
@@ -156,7 +156,7 @@ export default function HowItWorks() {
           </div>
 
           {/* Desktop: pinned, one-at-a-time reveal in three columns */}
-          <div className="mt-16 hidden gap-16 md:mt-20 md:grid md:grid-cols-3 md:items-start md:gap-8">
+          <div className="mt-16 hidden gap-16 md:mt-20 md:grid md:grid-cols-3 md:items-start md:gap-2">
             {STEPS.map((step, i) => (
               <div
                 key={step.n}
