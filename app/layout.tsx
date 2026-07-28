@@ -6,8 +6,6 @@ import {
   Inter,
   Montserrat,
 } from "next/font/google";
-import Image from "next/image";
-import Link from "next/link";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -17,9 +15,9 @@ import Clarity from "@/components/layout/Clarity";
 import Graph8 from "@/components/layout/Graph8";
 import SiteJsonLd from "@/components/layout/JsonLd";
 
-// Same type families as the full site: Inter for body/UI, Montserrat for the
-// Resto Experience footer bar, Geist Mono for mono accents, Gowun Batang for
-// display headings and Google Sans for lead/body copy.
+// Same type families as the RestoHost site: Inter for body/UI, Montserrat
+// for the Resto Experience footer bar, and Geist Mono for mono accents.
+// Display headings use Gowun Batang (wired into --font-display in globals.css).
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -98,59 +96,11 @@ export default function RootLayout({
       className={`${inter.variable} ${montserrat.variable} ${geistMono.variable} ${gowunBatang.variable} ${googleSans.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="flex min-h-full flex-col overflow-x-clip bg-[#251f21]">
-        {/* Minimal maintenance header — logo only, no navigation */}
-        <header className="fixed inset-x-0 top-0 z-50 h-[80px] bg-black/35 backdrop-blur-xl">
-          <div className="mx-auto flex h-full max-w-[1440px] items-center px-6 md:px-10">
-            <Link
-              href="/"
-              aria-label="heytruffle home"
-              className="mix-blend-luminosity"
-            >
-              <Image
-                src="/images/heytruffle-logo.svg"
-                alt="heytruffle"
-                width={177}
-                height={40}
-                priority
-                unoptimized
-                className="h-8 w-auto"
-              />
-            </Link>
-          </div>
-        </header>
-
-        <main className="flex flex-1 flex-col">{children}</main>
-
-        {/* Minimal footer — only the legally required links stay reachable */}
-        <footer className="bg-[#1c1917] text-cream">
-          <div className="mx-auto flex max-w-[1440px] flex-col items-center gap-4 px-6 py-10 text-center md:flex-row md:justify-between md:gap-0 md:px-10 md:text-left">
-            <p className="font-body text-sm text-cream/70">
-              © 2026 HeyTruffle — a Resto Experience company.
-            </p>
-            <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-body text-sm text-cream/70">
-              <Link
-                href="/privacy-policy"
-                className="transition-colors hover:text-cream"
-              >
-                Privacy Policy
-              </Link>
-              <Link
-                href="/terms-of-service"
-                className="transition-colors hover:text-cream"
-              >
-                Terms of Service
-              </Link>
-              <a
-                href="mailto:info@heytruffle.com"
-                className="transition-colors hover:text-cream"
-              >
-                info@heytruffle.com
-              </a>
-            </nav>
-          </div>
-        </footer>
-
+      <body className="min-h-full flex flex-col overflow-x-clip">
+        <Header />
+        {children}
+        <Footer />
+        <RebrandModal />
         <ScrollReveal />
         <Clarity />
         <Graph8 />

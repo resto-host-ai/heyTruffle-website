@@ -136,7 +136,7 @@ export default function HowItWorks() {
                     <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/35 bg-white/10 font-body text-lg font-bold text-cream">
                       {step.n}
                     </span>
-                    <span className="font-body text-[20px] font-normal leading-[115%] text-cream">
+                    <span className="font-body text-[24px] font-normal leading-[115%] text-cream">
                       {step.title}
                     </span>
                   </button>
