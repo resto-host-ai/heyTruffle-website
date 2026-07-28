@@ -2,6 +2,7 @@ import Image from "next/image";
 import { NOISE } from "@/lib/noise";
 import TryDemoButton from "@/components/demo/TryDemoButton";
 import { BookDemoButton } from "@/components/ui/BookDemoButton";
+import Pricing from "@/components/marketing/Pricing";
 
 export default function TeamSection() {
   return (
@@ -77,6 +78,8 @@ export default function TeamSection() {
           </div>
         </div>
 
+        <Pricing />
+
         {/* ---- CTA card ---- */}
         <div className="mt-24 grid grid-cols-1 items-center gap-10 rounded-[40px] bg-[#f6f3ec] px-10 py-12 text-center shadow-[0_24px_60px_rgba(0,0,0,0.18)] md:mt-32 md:grid-cols-2 md:px-14 md:py-16 md:text-left">
           <h3 className="text-balance font-serif text-[40px] font-bold! leading-[110%] text-brand-orange md:text-wrap md:text-[52px] lg:text-[64px]">
@@ -85,7 +88,7 @@ export default function TeamSection() {
           </h3>
           <div className="flex w-full flex-col items-center md:items-start">
             <p className="font-body text-[26px] font-normal leading-[140%] text-[#251f21] md:font-bold">
-              We&apos;ll build one for your restaurant — your menu, your hours —
+              We&apos;ll build one for your restaurant, your menu, your hours 
               and call you with it live. Then decide if you want a 90-day
               pilot. No contract.
             </p>

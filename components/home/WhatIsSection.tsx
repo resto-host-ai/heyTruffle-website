@@ -101,7 +101,7 @@ export default function WhatIsSection() {
       <div className="relative mx-auto flex w-full flex-col items-center px-6 lg:px-[73px]">
         {/* Tall spacer drives the pinned scrub on desktop; auto height (no
             pin) on mobile, where the pills just render already resolved. */}
-        <div ref={pinRef} className="w-full md:relative md:h-[240vh]">
+        <div ref={pinRef} className="w-full md:relative md:h-[180vh]">
           <div className="relative flex w-full flex-col items-center md:sticky md:top-0 md:h-screen md:justify-center">
             {/* background_gradient.webp, sized to this pinned viewport-tall
                 area specifically — not the whole section, whose height is
@@ -140,7 +140,7 @@ export default function WhatIsSection() {
               What is Hey Truffle?
             </p>
 
-            <div className="mt-16 flex w-full max-w-[941px] flex-col gap-14">
+            <div className="mt-16 flex w-full max-w-[941px] flex-col gap-14 p-10">
               {STATEMENTS.map((text, i) => (
                 <div
                   key={text}
