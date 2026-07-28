@@ -29,7 +29,7 @@ export default function RoiCalculatorPage() {
             alt=""
             fill
             priority
-            quality={100}
+            quality={90}
             sizes="100vw"
             className="object-cover"
           />

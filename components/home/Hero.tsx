@@ -23,7 +23,7 @@ export default function Hero() {
 
 
       {/* Content */}
-      <div className="flex flex-col items-center gap-8 px-6 text-center text-cream desk-short:gap-5">
+      <div className="flex flex-col items-center gap-6 px-6 text-center text-cream desk-short:gap-4">
         {/* Logo — the page's single H1. Its accessible name (the image alt)
             carries the brand + primary keyword. */}
         <h1 className="m-0 leading-none">
@@ -34,30 +34,39 @@ export default function Hero() {
             height={96}
             priority
             unoptimized
-            className="h-16 w-auto sm:h-[72px]"
+            className="h-14 w-auto sm:h-[60px]"
           />
         </h1>
 
         {/* Headline — demoted from <h1> to <p> so the logo stays the only H1.
-            Visual styling is unchanged. */}
-        <p className="max-w-[1100px] font-serif text-[52px] font-bold! leading-[110%] tracking-tight text-cream sm:text-[72px] lg:text-[92px]">
+            Sized against the RestoHost scale (h1 caps at 88px there); Gowun
+            Batang reads heavier than a sans at the same px, so this sits a
+            step below it. */}
+        <p className="max-w-[1000px] font-serif text-[44px] font-bold! leading-[110%] tracking-tight text-cream sm:text-[60px] lg:text-[76px]">
           You operate the restaurant.
           <br />
           We operate the phones.
         </p>
 
-        {/* Subtitle */}
-        <p className="font-body w-full max-w-[1000px] text-xl font-normal leading-[140%] text-cream/85 sm:text-[26px] desk-tall:h-[100px]">
+        {/* Subtitle — RestoHost sets body copy at 18px max; 20px keeps a bit
+            more presence without the 26px that read as oversized. */}
+        <p className="font-body w-full max-w-[860px] text-[17px] font-normal leading-[145%] text-cream/85 sm:text-[20px] desk-tall:h-[80px]">
           A fully managed service that answers every call for your restaurants:
           every reservation booked, every order taken, every catering inquiry
           handled.
         </p>
 
         {/* CTAs — desktop shows the search bar; mobile shows stacked buttons */}
-        <div className="mt-2 flex w-full max-w-[559px] flex-col items-stretch gap-3 desk-tall:gap-6 desk-short:gap-5">
-          {/* Search + primary CTA (desktop only) */}
+        {/* Extra top margin on top of the parent gap sets the copy apart from
+            the CTAs, matching RestoHost's 36px mobile / 48px desktop. Uses the
+            desk-* variants rather than sm: so a short desktop (MacBook 14")
+            stays compressed instead of both rules matching at ≥640px. */}
+        <div className="mt-3 flex w-full max-w-[500px] flex-col items-stretch gap-3 desk-tall:mt-6 desk-tall:gap-5 desk-short:mt-4 desk-short:gap-4">
+          {/* Search + primary CTA. Shown at every width: the search box is the
+              hero's main gesture, so mobile keeps it rather than falling back
+              to a plain button. */}
           <form
-            className="hidden h-[64px] w-full items-center overflow-hidden rounded-[73.26px] border border-white/40 bg-[#f6f3ec]/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg sm:flex sm:h-[74px]"
+            className="flex h-[54px] w-full items-center overflow-hidden rounded-[73.26px] border border-white/40 bg-[#f6f3ec]/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg sm:h-[58px]"
             onSubmit={(e) => {
               e.preventDefault();
               setDemoOpen(true);
@@ -69,16 +78,16 @@ export default function Hero() {
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search for your restaurant"
               aria-label="Search for your restaurant"
-              className="h-full min-w-0 flex-1 bg-transparent pl-6 pr-3 font-body text-[20px] font-normal leading-[110%] text-[#251f21] outline-none placeholder:text-[#251f21] sm:pl-[38px] sm:pr-4"
+              className="h-full min-w-0 flex-1 bg-transparent pl-5 pr-2 font-body text-[15px] font-normal leading-[110%] text-[#251f21] outline-none placeholder:text-[#251f21] sm:pl-7 sm:pr-4 sm:text-[16px]"
             />
             <button
               type="submit"
-              className="flex h-full shrink-0 items-center justify-center gap-2 rounded-full bg-brand-orange px-6 font-body text-[20px] font-bold leading-[110%] text-[#f6f3ec] transition-all duration-300 btn-grad btn-grad-orange hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(239,114,0,0.55)] sm:gap-4 sm:px-[44px]"
+              className="flex h-full shrink-0 items-center justify-center gap-1.5 rounded-full bg-brand-orange px-4 font-body text-[15px] font-bold leading-[110%] text-[#f6f3ec] transition-all duration-300 btn-grad btn-grad-orange hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(239,114,0,0.55)] sm:gap-3 sm:px-8 sm:text-[16px]"
             >
               Live Demo
               <svg
-                width="13"
-                height="27"
+                width="8"
+                height="17"
                 viewBox="0 0 19 40"
                 fill="none"
                 stroke="currentColor"
@@ -86,24 +95,20 @@ export default function Hero() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 aria-hidden
-                className="shrink-0"
+                /* Optical nudge: "Live Demo" has no descenders, so its visual
+                   mass sits above the centre of the line box. From sm up the
+                   text box (17.6px) is taller than the chevron (17px) and
+                   centring it geometrically reads as ~1px low. */
+                className="shrink-0 sm:-translate-y-px"
               >
                 <path d="M3 4l13 16-13 16" />
               </svg>
             </button>
           </form>
 
-          {/* Primary CTA (mobile only) */}
-          <button
-            type="button"
-            onClick={() => setDemoOpen(true)}
-            className="flex h-[64px] w-full items-center justify-center rounded-full bg-brand-orange font-body text-[20px] font-bold leading-[110%] text-cream transition-all duration-300 btn-grad btn-grad-orange hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(239,114,0,0.55)] sm:hidden"
-          >
-            Live Demo
-          </button>
-
-          {/* Secondary CTA */}
-          <BookDemoButton className="flex h-[64px] mt-6 w-full items-center justify-center self-center rounded-full bg-[#1c1917]/85 px-9 text-[20px] font-semibold text-cream shadow-lg backdrop-blur-md transition-all duration-300 btn-grad btn-grad-blue hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(79,84,144,0.55)] sm:w-auto">
+          {/* Secondary CTA — auto width at every size so it reads as the
+              quieter of the two actions, the way it does on desktop. */}
+          <BookDemoButton className="mt-4 flex h-[50px] w-auto items-center justify-center self-center rounded-full bg-[#1c1917]/85 px-8 text-[16px] font-semibold text-cream shadow-lg backdrop-blur-md transition-all duration-300 btn-grad btn-grad-blue hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(79,84,144,0.55)]">
             Talk to our team
           </BookDemoButton>
         </div>

@@ -261,10 +261,10 @@ export default function CaseStudiesList() {
       />
 
       <div className="relative mx-auto w-full px-6 lg:px-[73px]">
-        <h1 className="mx-auto max-w-[1085px] text-center font-serif text-[40px] font-bold! leading-[110%] text-[#251f21] md:text-[52px] lg:text-[64px]">
+        <h1 className="mx-auto max-w-[1085px] text-center font-serif text-[34px] font-bold! leading-[110%] text-[#251f21] md:text-[44px] lg:text-[52px]">
           Real restaurants. Real results.
         </h1>
-        <p className="mx-auto mt-6 max-w-[1085px] text-center font-body text-[20px] font-normal leading-[140%] text-[#251f21] md:text-[26px]">
+        <p className="mx-auto mt-6 max-w-[1085px] text-center font-body text-[16px] font-normal leading-[145%] text-[#251f21] md:text-[18px]">
           Explore how restaurants are capturing more reservations, orders and
           catering with HeyTruffle. Filter by operational need, cuisine or
           location to find the case closest to your own.
@@ -282,7 +282,7 @@ export default function CaseStudiesList() {
                 onClick={() =>
                   setOpen((cur) => (cur === group.key ? null : group.key))
                 }
-                className="flex w-full items-center justify-between gap-4 whitespace-nowrap rounded-full bg-[#251f21]/60 px-8 py-5 font-body text-[20px] font-bold leading-none text-cream backdrop-blur-sm transition-colors hover:bg-[#251f21]/75"
+                className="flex w-full items-center justify-between gap-4 whitespace-nowrap rounded-full bg-[#251f21]/60 px-8 py-5 font-body text-[16px] font-bold leading-none text-cream backdrop-blur-sm transition-colors hover:bg-[#251f21]/75"
               >
                 {group.label}
                 <ChevronCircle open={open === group.key} />
@@ -297,7 +297,7 @@ export default function CaseStudiesList() {
                         key={option}
                         type="button"
                         onClick={() => toggleOption(group.key, option)}
-                        className="flex w-full items-center justify-between gap-3 rounded-xl px-4 py-2.5 text-left font-body text-[20px] leading-[140%] text-[#251f21] transition-colors hover:bg-[#251f21]/[0.06]"
+                        className="flex w-full items-center justify-between gap-3 rounded-xl px-4 py-2.5 text-left font-body text-[16px] leading-[145%] md:text-[18px] text-[#251f21] transition-colors hover:bg-[#251f21]/[0.06]"
                       >
                         <span className={isSelected ? "font-medium" : ""}>
                           {option}
@@ -346,7 +346,7 @@ export default function CaseStudiesList() {
 
                     <Link
                       href={c.slug ? `/case-study/${c.slug}` : "#"}
-                      className="mt-5 inline-flex items-center gap-2 self-start font-body text-[22px] font-normal leading-[140%] underline underline-offset-4 transition-opacity hover:opacity-80 md:text-[26px]"
+                      className="mt-5 inline-flex items-center gap-2 self-start font-body text-[16px] font-normal leading-[145%] md:text-[18px] underline underline-offset-4 transition-opacity hover:opacity-80 md:text-[26px]"
                     >
                       Read more
                       <ArrowUpRight />
@@ -359,7 +359,7 @@ export default function CaseStudiesList() {
                         {row.map((tag, i) => (
                           <span
                             key={`${tag}-${i}`}
-                            className="flex flex-auto min-w-0 min-h-[36px] items-center justify-center whitespace-nowrap rounded-full border border-cream px-3.5 py-1 text-center font-body text-[20px] font-normal leading-[110%] text-cream"
+                            className="flex flex-auto min-w-0 min-h-[36px] items-center justify-center whitespace-nowrap rounded-full border border-cream px-3.5 py-1 text-center font-body text-[15px] font-normal leading-[110%] md:text-[16px] text-cream"
                           >
                             {tag}
                           </span>

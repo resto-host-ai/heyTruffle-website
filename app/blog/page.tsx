@@ -52,10 +52,10 @@ export default function BlogPage() {
         />
 
         <div className="relative mx-auto w-full px-6 lg:px-[73px]">
-          <h1 className="mx-auto max-w-[1085px] text-center font-serif text-[40px] font-bold! leading-[110%] text-[#251f21] md:text-[52px] lg:text-[64px]">
+          <h1 className="mx-auto max-w-[1085px] text-center font-serif text-[34px] font-bold! leading-[110%] text-[#251f21] md:text-[44px] lg:text-[52px]">
             Ideas from the <span className="text-brand-orange">floor.</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-[820px] text-center font-body text-[20px] font-normal leading-[140%] text-[#251f21] md:text-[26px]">
+          <p className="mx-auto mt-6 max-w-[820px] text-center font-body text-[16px] font-normal leading-[145%] text-[#251f21] md:text-[18px]">
             Insights on AI voice hosts, recovered revenue, and the operations
             behind restaurants that never miss a call.
           </p>
@@ -85,10 +85,10 @@ export default function BlogPage() {
                     {featured.readTime} read
                   </span>
                 </div>
-                <h2 className="mt-6 font-serif text-[28px] font-bold! leading-[120%] text-[#251f21] transition-colors group-hover:text-brand-orange md:text-[40px]">
+                <h2 className="mt-6 font-serif text-[22px] font-bold! leading-[120%] text-[#251f21] transition-colors group-hover:text-brand-orange md:text-[26px]">
                   {featured.title}
                 </h2>
-                <p className="mt-5 line-clamp-3 font-body text-[18px] font-normal leading-[140%] text-[#251f21]/70 md:text-[20px]">
+                <p className="mt-5 line-clamp-3 font-body text-[16px] font-normal leading-[140%] text-[#251f21]/70 md:text-[18px]">
                   {featured.description}
                 </p>
                 <div className="mt-7 flex items-center justify-between">

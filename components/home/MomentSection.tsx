@@ -5,9 +5,22 @@ import { useEffect, useRef } from "react";
 
 type CardState = { x: number; y: number; rot: number; op: number };
 
+/* Card geometry from Figma (node 1:363 and siblings): a 663x452 frame with a
+   36px radius, the photo sitting at 60% opacity behind the copy. The photos
+   ship pre-cropped to this exact ratio, so object-cover has nothing left to
+   trim. Copy is real text rather than baked into the export — the cards are
+   rotated and scaled at runtime, and rasterised type resamples badly through
+   a transform (which is what made the previous exports look soft). */
+const CARD_W = 663;
+const CARD_H = 452;
+
 const CARDS: {
   src: string;
+  /** Rendered as real text over the photo; also serves as the image's alt. */
+  copy: React.ReactNode;
   alt: string;
+  /** Text column width, as a share of the card — matches the Figma text box. */
+  textWidth: string;
   z: number;
   /** Progress window [start, end] over which the card animates to `final`. */
   range: [number, number];
@@ -19,8 +32,15 @@ const CARDS: {
   mFinal: CardState;
 }[] = [
   {
-    src: "/images/img1.webp",
-    alt: "A party of six just walked in, no reservation.",
+    src: "/images/moment-1.webp",
+    alt: "A busy restaurant dining room at peak service",
+    copy: (
+      <>
+        A party of six just walked in,{" "}
+        <span className="font-bold">no reservation.</span>
+      </>
+    ),
+    textWidth: "74.7%",
     z: 10,
     range: [0.1, 1],
     enter: { x: 0, y: 0, rot: 0, op: 1 },
@@ -29,8 +49,14 @@ const CARDS: {
     mFinal: { x: 0, y: -124, rot: -5, op: 1 },
   },
   {
-    src: "/images/img2.webp",
-    alt: "The kitchen is calling for table 12.",
+    src: "/images/moment-2.webp",
+    alt: "Kitchen staff working through a dinner rush",
+    copy: (
+      <>
+        The <span className="font-bold">kitchen is calling</span> for table 12.
+      </>
+    ),
+    textWidth: "61.2%",
     z: 20,
     range: [0.1, 0.55],
     enter: { x: 30, y: 560, rot: 10, op: 0 },
@@ -39,8 +65,16 @@ const CARDS: {
     mFinal: { x: 0, y: -90, rot: 3, op: 1 },
   },
   {
-    src: "/images/img3.webp",
-    alt: "And the phone is ringing. Again.",
+    src: "/images/moment-3.webp",
+    alt: "Guests at a candlelit table while a phone rings",
+    copy: (
+      <>
+        And the phone is ringing.
+        <br />
+        <span className="font-bold">Again.</span>
+      </>
+    ),
+    textWidth: "74.7%",
     z: 30,
     range: [0.5, 0.92],
     enter: { x: 90, y: 600, rot: 16, op: 0 },
@@ -149,11 +183,11 @@ export default function MomentSection() {
 
         <div className="relative mx-auto flex h-full w-full flex-col px-6 lg:px-[73px]">
           <div className="pt-28 md:pt-28">
-            <h2 className="reveal reveal-up text-center font-serif text-[40px] font-bold! leading-[110%] text-[#ef7200] md:text-[52px] lg:text-[64px]">
+            <h2 className="reveal reveal-up text-center font-serif text-[30px] font-bold! leading-[110%] text-[#ef7200] md:text-[38px] lg:text-[44px]">
               You know this moment.
             </h2>
             <p
-              className="reveal reveal-up mt-3 text-center font-body text-[26px] font-normal leading-[140%] text-cream"
+              className="reveal reveal-up mt-3 text-center font-body text-[16px] font-normal leading-[145%] md:text-[18px] text-cream"
               style={{ "--reveal-delay": "0.08s" } as React.CSSProperties}
             >
               Friday 7:48 pm
@@ -170,16 +204,31 @@ export default function MomentSection() {
                 ref={(el) => {
                   cardRefs.current[i] = el;
                 }}
-                style={{ zIndex: card.z }}
-                className="absolute left-1/2 top-1/2 aspect-[2784/2011] w-full will-change-transform md:w-[620px] md:max-w-none lg:w-[680px]"
+                style={{
+                  zIndex: card.z,
+                  aspectRatio: `${CARD_W} / ${CARD_H}`,
+                }}
+                /* @container so the copy can be sized in cqw and stay in
+                   proportion to the card at every breakpoint, the way it is in
+                   Figma (40px of type on a 663px card). */
+                className="@container absolute left-1/2 top-1/2 w-full overflow-hidden rounded-[36px] bg-[#251f21] shadow-[0_30px_60px_rgba(0,0,0,0.45)] will-change-transform md:w-[620px] md:max-w-none lg:w-[680px]"
               >
                 <Image
                   src={card.src}
                   alt={card.alt}
                   fill
                   sizes="(max-width: 768px) 100vw, 680px"
-                  className="object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.45)]"
+                  className="object-cover opacity-60 blur-[1px]"
                 />
+
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <p
+                    style={{ maxWidth: card.textWidth }}
+                    className="text-center font-body text-[6.03cqw] leading-[1.2] text-cream [text-shadow:0_2px_4px_rgba(0,0,0,0.4)]"
+                  >
+                    {card.copy}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
@@ -188,7 +237,7 @@ export default function MomentSection() {
 
       {/* Closing line — appears as the pinned scroll releases */}
       <div className="absolute inset-x-0 bottom-6 mx-auto w-full px-6 lg:px-[73px]">
-        <p className="reveal reveal-up text-center font-body text-[26px] font-normal leading-[140%] text-cream">
+        <p className="reveal reveal-up text-center font-body text-[22px] font-normal leading-[130%] md:text-[28px] text-cream">
           Your host can be on the floor, or on the phone.{" "}
           <span className="font-bold text-cream">Not both.</span>
         </p>
