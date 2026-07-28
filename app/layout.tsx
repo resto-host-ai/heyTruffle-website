@@ -4,7 +4,6 @@ import {
   Google_Sans,
   Gowun_Batang,
   Inter,
-  Montserrat,
 } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
@@ -14,9 +13,10 @@ import ScrollReveal from "@/components/layout/ScrollReveal";
 import Clarity from "@/components/layout/Clarity";
 import SiteJsonLd from "@/components/layout/JsonLd";
 
-// Same type families as the RestoHost site: Inter for body/UI, Montserrat
-// for the Resto Experience footer bar, and Geist Mono for mono accents.
-// Display headings use Gowun Batang (wired into --font-display in globals.css).
+// Same type families as the RestoHost site: Inter for body/UI and Geist Mono
+// for mono accents. Display headings use Gowun Batang (wired into
+// --font-display in globals.css). Montserrat was dropped: declared for the
+// Resto Experience footer bar, but nothing in the codebase ever used it.
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -27,6 +27,12 @@ const gowunBatang = Gowun_Batang({
   variable: "--font-gowun-batang",
   subsets: ["latin"],
   weight: ["400", "700"],
+  // Gowun Batang is a Korean font that Google ships as ~190 unicode-range
+  // slices; with preload on, Next emitted 94 <link rel=preload> = 1.48MB of
+  // woff2 on EVERY page (measured — it was 55% of the mobile page weight).
+  // Without preload the browser fetches only the latin slices it actually
+  // renders (~2 files) once the CSS lands. Do not re-enable.
+  preload: false,
 });
 
 // Google Sans for section description / lead copy. Google Sans isn't in
@@ -42,12 +48,6 @@ const googleSans = Google_Sans({
   // WITHOUT altering the font's metrics, so size/layout stay identical.
   axes: ["GRAD"],
   fallback: ["-apple-system", "BlinkMacSystemFont", "Segoe UI", "system-ui", "sans-serif"],
-});
-
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
 });
 
 const geistMono = Geist_Mono({
@@ -92,7 +92,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${montserrat.variable} ${geistMono.variable} ${gowunBatang.variable} ${googleSans.variable} h-full antialiased`}
+      className={`${inter.variable} ${geistMono.variable} ${gowunBatang.variable} ${googleSans.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col overflow-x-clip">
