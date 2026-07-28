@@ -16,7 +16,8 @@ export default function NotFound() {
           src="/images/hero-gradiants2.webp"
           alt=""
           fill
-          priority
+          loading="eager"
+          fetchPriority="low"
           quality={90}
           sizes="100vw"
           className="object-cover"

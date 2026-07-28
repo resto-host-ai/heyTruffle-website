@@ -59,6 +59,9 @@ const nextConfig: NextConfig = {
        1920px) and is deliberately not allowed: anything not listed here is
        rejected, so `?q=100` can't be forced through the optimizer by hand. */
     qualities: [75, 90],
+    /* AVIF first: 30-50% smaller than webp on the 100vw gradient backgrounds
+       (the site's heaviest image class). Next's default is webp-only. */
+    formats: ["image/avif", "image/webp"],
   },
   /* NOTE: no Content-Security-Policy yet — it's the one header here that can
      break the site (Calendly, Clarity, Vimeo and the demo backend all load

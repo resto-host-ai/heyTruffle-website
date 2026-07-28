@@ -230,7 +230,7 @@ export default function CaseStudies({
                           src={c.posterUrl ?? c.image!}
                           alt=""
                           fill
-                          quality={90}
+                          quality={75}
                           sizes="(max-width: 768px) 90vw, 45vw"
                           className="object-cover object-left"
                         />
@@ -260,7 +260,7 @@ export default function CaseStudies({
                       src={c.image}
                       alt={c.name}
                       fill
-                      quality={90}
+                      quality={75}
                       sizes="(max-width: 768px) 90vw, 45vw"
                       className="object-cover"
                     />
@@ -345,7 +345,7 @@ export default function CaseStudies({
         {showCta && (
           <div className="mt-12 flex justify-center">
             <Link
-              href="/case-study"
+              href="/case-study/"
               className="inline-flex h-[50px] items-center justify-center gap-2.5 rounded-full border border-transparent bg-brand-orange px-8 font-body text-[16px] font-bold leading-[110%] text-cream transition-all duration-300 hover:[background:linear-gradient(180deg,#ae6a31_0%,#8f501e_100%)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]"
             >
               See all case studies

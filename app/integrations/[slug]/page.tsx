@@ -9,6 +9,9 @@ export function generateStaticParams() {
   return INTEGRATIONS.map((i) => ({ slug: i.slug }));
 }
 
+// Unknown integration slugs 404 without an on-demand render.
+export const dynamicParams = false;
+
 export async function generateMetadata({
   params,
 }: {
@@ -66,7 +69,8 @@ export default async function IntegrationPage({
             src="/images/fondo_casestudy.webp"
             alt=""
             fill
-            priority
+            loading="eager"
+            fetchPriority="low"
             sizes="100vw"
             className="object-cover"
           />

@@ -16,6 +16,10 @@ export function generateStaticParams() {
   return getPostSlugs().map((slug) => ({ slug }));
 }
 
+// Unknown slugs 404 at the edge instead of triggering an on-demand render
+// (filesystem reads per request) before 404ing anyway.
+export const dynamicParams = false;
+
 export async function generateMetadata({
   params,
 }: {
@@ -62,7 +66,8 @@ export default async function BlogPostPage({
             src="/images/fondo_casestudy.webp"
             alt=""
             fill
-            priority
+            loading="eager"
+            fetchPriority="low"
             sizes="100vw"
             className="object-cover"
           />
@@ -166,7 +171,7 @@ export default async function BlogPostPage({
               {related.map((p) => (
                 <Link
                   key={p.slug}
-                  href={`/blog/${p.slug}`}
+                  href={`/blog/${p.slug}/`}
                   className="group flex flex-col overflow-hidden rounded-[25px] bg-white shadow-[0_14px_34px_rgba(0,0,0,0.06)] transition-shadow duration-300 hover:shadow-[0_22px_54px_rgba(0,0,0,0.12)]"
                 >
                   <div className="relative aspect-[16/10] overflow-hidden">

@@ -109,16 +109,20 @@ export default function SuccessStats({
             aria-hidden
             className="pointer-events-none absolute left-1/2 top-0 -z-10 h-full w-screen -translate-x-1/2 overflow-hidden"
           >
+            {/* md+ only: the drift animations scale these filtered layers,
+                which forces WebKit to re-rasterize a 500px 130px-blur per
+                frame — measured as the top scroll-jank source on iPhones.
+                Phones keep the plain cream background. */}
             <div
-              className="stat-blob stat-b1 absolute left-[-6%] top-[6%] h-[540px] w-[540px] rounded-full blur-[130px]"
+              className="stat-blob stat-b1 absolute left-[-6%] top-[6%] hidden h-[540px] w-[540px] rounded-full blur-[130px] md:block"
               style={{ backgroundColor: "#ef7200", opacity: 0.3 }}
             />
             <div
-              className="stat-blob stat-b2 absolute left-[4%] top-[42%] h-[520px] w-[520px] rounded-full blur-[130px]"
+              className="stat-blob stat-b2 absolute left-[4%] top-[42%] hidden h-[520px] w-[520px] rounded-full blur-[130px] md:block"
               style={{ backgroundColor: "#d592f3", opacity: 0.28 }}
             />
             <div
-              className="stat-blob stat-b3 absolute right-[-6%] top-[16%] h-[580px] w-[580px] rounded-full blur-[140px]"
+              className="stat-blob stat-b3 absolute right-[-6%] top-[16%] hidden h-[580px] w-[580px] rounded-full blur-[140px] md:block"
               style={{ backgroundColor: "#3773d7", opacity: 0.28 }}
             />
             {/* Fade the blobs back into cream at the bottom edge */}
