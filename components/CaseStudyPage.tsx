@@ -443,7 +443,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
             Hear the conversations behind the results.
           </h2>
           <div className="mt-14">
-            <HostsDemo soloHostId="nacho" />
+            <HostsDemo soloHostId="nacho" sampleLabel={cs.hostSampleLabel} />
           </div>
         </div>
       </section>

@@ -97,7 +97,9 @@ export type CaseStudy = {
   successStats?: { intro: string; items: SuccessStat[] }; // la-canita only
   capabilities?: { heading: string; items: Capability[] }; // la-canita only
 
-  hostSampleLabel: string;
+  /** Absent on rreal-tacos: that page's audio genuinely is Rreal Tacos, so
+   *  HostsDemo shows the real "Deployed at" instead of a sample-call label. */
+  hostSampleLabel?: string;
 
   measured: {
     heading: [string, string]; // ["No assumptions.", "Just the math." | "Just the results."]

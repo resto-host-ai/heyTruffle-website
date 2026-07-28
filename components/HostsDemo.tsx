@@ -76,9 +76,15 @@ function KaraokeText({
 
 export default function HostsDemo({
   soloHostId,
+  sampleLabel,
 }: {
   /** Show a single host's call panel directly (no grid), paused and ready. */
   soloHostId?: Host["id"];
+  /** Every case study page plays the same Nacho/Rreal-Tacos recording, so
+   *  anywhere except Rreal Tacos' own page needs to say this is a sample
+   *  call instead of asserting a deployment that isn't true for that
+   *  restaurant. Overrides the "Deployed at" line when set. */
+  sampleLabel?: string;
 } = {}) {
   const [activeId, setActiveId] = useState<Host["id"] | null>(
     soloHostId ?? null,
@@ -386,12 +392,20 @@ export default function HostsDemo({
                   </div>
                 </div>
                 <div className="shrink-0 pb-0.5 text-right">
-                  <p className="text-[15px] font-semibold" style={{ color: host.color }}>
-                    Deployed at
-                  </p>
-                  <p className="mt-1 text-[15px] text-[#251f21]/75">
-                    {host.deployedAt}
-                  </p>
+                  {sampleLabel ? (
+                    <p className="text-[15px] font-semibold" style={{ color: host.color }}>
+                      {sampleLabel}
+                    </p>
+                  ) : (
+                    <>
+                      <p className="text-[15px] font-semibold" style={{ color: host.color }}>
+                        Deployed at
+                      </p>
+                      <p className="mt-1 text-[15px] text-[#251f21]/75">
+                        {host.deployedAt}
+                      </p>
+                    </>
+                  )}
                 </div>
               </div>
 

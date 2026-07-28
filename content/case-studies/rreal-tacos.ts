@@ -88,8 +88,6 @@ export const rrealTacos: CaseStudy = {
     },
   },
 
-  hostSampleLabel: "Sample call",
-
   measured: {
     heading: ["No assumptions.", "Just the math."],
     intro:
