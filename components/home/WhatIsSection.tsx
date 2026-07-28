@@ -140,7 +140,9 @@ export default function WhatIsSection() {
               What is Hey Truffle?
             </p>
 
-            <div className="mt-8 flex w-full max-w-[820px] flex-col gap-6 p-0 md:gap-7">
+            {/* 868 = 820 of pill + the 24px site gutter each side, so the
+                gutter never eats into the desktop pill width. */}
+            <div className="mt-8 flex w-full max-w-[868px] flex-col gap-6 px-6 md:gap-7">
               {STATEMENTS.map((text, i) => (
                 <div
                   key={text}
@@ -202,7 +204,7 @@ export default function WhatIsSection() {
           </div>
         </div>
 
-        <p className="reveal reveal-up font-body mt-9 max-w-2xl text-center text-[16px] font-normal leading-[145%] text-cream md:text-[18px]">
+        <p className="reveal reveal-up font-body mt-9 max-w-2xl px-6 text-center text-[16px] font-normal leading-[145%] text-cream md:text-[18px]">
           Most voice AI hands you software to set up and maintain.
           <br />
           We run it for you, so you get the result, not the homework.
