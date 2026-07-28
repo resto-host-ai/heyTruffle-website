@@ -10,8 +10,11 @@ export default function Hero() {
   const [query, setQuery] = useState("");
   const [demoOpen, setDemoOpen] = useState(false);
 
+  // Mobile paddings/type are compressed so the whole stack (logo →
+  // "Talk to our team") fits a ~660px svh phone viewport with browser
+  // chrome visible — the secondary CTA was falling below the fold.
   return (
-    <section className="relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden pb-20 pt-32 desk-tall:pb-16 desk-short:items-center-safe desk-short:pt-28 desk-short:pb-12">
+    <section className="relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden pb-12 pt-24 desk-tall:pt-32 desk-tall:pb-16 desk-short:items-center-safe desk-short:pt-28 desk-short:pb-12">
       {/* Animated gradient background (Figma living-gradient) */}
       <HeroBackground />
 
@@ -23,7 +26,7 @@ export default function Hero() {
 
 
       {/* Content */}
-      <div className="flex flex-col items-center gap-6 px-6 text-center text-cream desk-short:gap-4">
+      <div className="flex flex-col items-center gap-5 px-6 text-center text-cream desk-tall:gap-6 desk-short:gap-4">
         {/* Logo — the page's single H1. Its accessible name (the image alt)
             carries the brand + primary keyword. */}
         <h1 className="m-0 leading-none">
@@ -34,7 +37,7 @@ export default function Hero() {
             height={96}
             priority
             unoptimized
-            className="h-14 w-auto sm:h-[60px]"
+            className="h-12 w-auto sm:h-[60px]"
           />
         </h1>
 
@@ -42,7 +45,7 @@ export default function Hero() {
             Sized against the RestoHost scale (h1 caps at 88px there); Gowun
             Batang reads heavier than a sans at the same px, so this sits a
             step below it. */}
-        <p className="max-w-[1000px] font-serif text-[44px] font-bold! leading-[110%] tracking-tight text-cream sm:text-[60px] lg:text-[76px]">
+        <p className="max-w-[1000px] font-serif text-[38px] font-bold! leading-[110%] tracking-tight text-cream sm:text-[60px] lg:text-[76px]">
           You operate the restaurant.
           <br />
           We operate the phones.
@@ -50,7 +53,7 @@ export default function Hero() {
 
         {/* Subtitle — RestoHost sets body copy at 18px max; 20px keeps a bit
             more presence without the 26px that read as oversized. */}
-        <p className="font-body w-full max-w-[860px] text-[17px] font-normal leading-[145%] text-cream/85 sm:text-[20px] desk-tall:h-[80px]">
+        <p className="font-body w-full max-w-[860px] text-[16px] font-normal leading-[145%] text-cream/85 sm:text-[20px] desk-tall:h-[80px]">
           A fully managed service that answers every call for your restaurants:
           every reservation booked, every order taken, every catering inquiry
           handled.
@@ -108,7 +111,7 @@ export default function Hero() {
 
           {/* Secondary CTA — auto width at every size so it reads as the
               quieter of the two actions, the way it does on desktop. */}
-          <BookDemoButton className="mt-4 flex h-[50px] w-auto items-center justify-center self-center rounded-full bg-[#1c1917]/85 px-8 text-[16px] font-semibold text-cream shadow-lg backdrop-blur-md transition-all duration-300 btn-grad btn-grad-blue hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(79,84,144,0.55)]">
+          <BookDemoButton className="mt-1 flex h-[50px] w-auto items-center justify-center self-center rounded-full bg-[#1c1917]/85 px-8 text-[16px] font-semibold text-cream shadow-lg backdrop-blur-md transition-all duration-300 btn-grad btn-grad-blue sm:mt-4 hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(79,84,144,0.55)]">
             Talk to our team
           </BookDemoButton>
         </div>

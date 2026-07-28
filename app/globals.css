@@ -66,6 +66,22 @@ html {
     transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) var(--reveal-delay, 0s),
     filter 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) var(--reveal-delay, 0s);
   will-change: opacity, transform;
+  /* Hydration safety valve: on a slow connection the JS bundle lands seconds
+     after first paint, and until ScrollReveal runs every .reveal is opacity 0
+     — whole sections render blank. If `.js-ready` hasn't been stamped on
+     <html> 2.5s after this element paints, force it visible. ScrollReveal
+     cancels this the moment the real observer takes over. */
+  animation: reveal-fallback 0s linear 2.5s forwards;
+}
+html.js-ready .reveal {
+  animation: none;
+}
+@keyframes reveal-fallback {
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
 }
 .reveal.is-visible {
   opacity: 1;
