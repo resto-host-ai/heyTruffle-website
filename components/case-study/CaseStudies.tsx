@@ -35,11 +35,15 @@ const CASES: Case[] = [
     accent: "#ef7200",
   },
   {
-    name: "Baires Grill",
+    name: "Mojitos",
     value: "4x",
     metric: "A normal night, in a single evening.",
     desc: "Every call answered while the team stayed on the floor.",
-    image: "/images/case-baires.webp",
+    image: "/images/mojitos.webp",
+    vimeoId: "1163755952",
+    // Luis Fernandez's Mojitos still — the "lima" in the filename is a
+    // historical misnomer, the asset itself is the Mojitos testimonial.
+    posterUrl: "/testimonials/lima-poster.webp",
     bg: "#eae6dc",
     bgIdle: "#c8c5bf",
     accent: "#a05fc4",
