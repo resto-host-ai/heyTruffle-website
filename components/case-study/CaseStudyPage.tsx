@@ -45,7 +45,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
   return (
     <main className="bg-cream">
       {/* ── Hero ─────────────────────────────────────────── */}
-      <section className="relative flex min-h-[100svh] flex-col overflow-hidden bg-[#251f21] pb-24 pt-28 text-cream md:pb-32 md:pt-32">
+      <section className="relative flex min-h-[100svh] flex-col overflow-hidden bg-[#251f21] pb-16 pt-28 text-cream md:pt-32">
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <Image
             src="/images/fondo_casestudy.webp"
@@ -436,7 +436,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
       )}
 
       {/* ── No assumptions. Just the math/results. ───────── */}
-      <section className="relative bg-cream pb-24 text-[#251f21] md:pb-32">
+      <section className="relative bg-cream pb-24 pt-24 text-[#251f21] md:pb-32 md:pt-32">
         <div className="mx-auto w-full px-6 lg:px-[73px]">
           <h2 className="text-center font-serif text-[30px] font-bold! leading-[110%] md:text-[38px] lg:text-[44px]">
             {cs.measured.heading[0]}
