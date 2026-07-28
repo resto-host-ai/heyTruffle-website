@@ -254,7 +254,7 @@ const SECTIONS: LegalSection[] = [
       {
         type: "ul",
         items: [
-          "Email: info@heytruffle.com",
+          "Email: info@heytruffle.ai",
           "Phone: +1 (404) 482-2738",
         ],
       },

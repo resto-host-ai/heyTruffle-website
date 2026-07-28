@@ -26,11 +26,11 @@ export default function SiteJsonLd() {
           url: ORG_LOGO,
           contentUrl: ORG_LOGO,
         },
-        email: "info@heytruffle.com",
+        email: "info@heytruffle.ai",
         contactPoint: [
           {
             "@type": "ContactPoint",
-            email: "info@heytruffle.com",
+            email: "info@heytruffle.ai",
             contactType: "sales",
             areaServed: "US",
             availableLanguage: ["English", "Spanish"],

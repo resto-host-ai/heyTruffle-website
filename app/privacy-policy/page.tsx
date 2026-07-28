@@ -251,7 +251,7 @@ const SECTIONS: LegalSection[] = [
     blocks: [
       {
         type: "p",
-        text: "To submit a privacy request, email info@heytruffle.com and include your name, the phone number or email associated with the interaction (if applicable), your state of residence, and the nature of your request. We may need to verify your identity before responding.",
+        text: "To submit a privacy request, email info@heytruffle.ai and include your name, the phone number or email associated with the interaction (if applicable), your state of residence, and the nature of your request. We may need to verify your identity before responding.",
       },
     ],
   },
@@ -296,7 +296,7 @@ const SECTIONS: LegalSection[] = [
       {
         type: "ul",
         items: [
-          "Email: info@heytruffle.com",
+          "Email: info@heytruffle.ai",
           "Phone: +1 (404) 482-2738",
         ],
       },
