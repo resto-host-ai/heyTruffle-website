@@ -49,7 +49,7 @@ export const rrealTacos: CaseStudy = {
   heroStats: [
     { value: "19K+", label: "Calls handled" },
     { value: "520+", label: "Host hours saved" },
-    { value: "14K+", label: "Guest seated" },
+    { value: "14K+", label: "Guests seated" },
   ],
 
   featureStory: {

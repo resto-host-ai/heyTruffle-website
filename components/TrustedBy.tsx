@@ -46,7 +46,7 @@ export default function TrustedBy() {
       </div>
 
       <p className="mt-12 text-center font-body text-[20px] font-normal leading-[110%] text-cream">
-        Trusted by leading U.S restaurants
+        Trusted by leading U.S. restaurants
       </p>
     </section>
   );

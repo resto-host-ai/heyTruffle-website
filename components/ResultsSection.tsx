@@ -21,7 +21,7 @@ const STATS = [
   {
     title: "Assisted revenue",
     value: "~$52,900",
-    desc: "Generate in May from large parties reservations.",
+    desc: "Generated in May from large-party reservations.",
     color: "#ef7200",
     wide: true,
   },
