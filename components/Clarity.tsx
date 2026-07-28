@@ -1,9 +1,10 @@
 import Script from "next/script";
 
-// Microsoft Clarity — same account as the RestoHost site (project "resto-host").
-// Session recordings + heatmaps. Loaded once from the root layout so it runs on
+// Microsoft Clarity — dedicated project for heytruffle, so recordings and
+// heatmaps stay separate from the RestoHost site (which shares the same account
+// but uses its own project). Loaded once from the root layout so it runs on
 // every route.
-const CLARITY_ID = "umimfwu6lv";
+const CLARITY_ID = "xtjkj1o17u";
 
 export default function Clarity() {
   return (
