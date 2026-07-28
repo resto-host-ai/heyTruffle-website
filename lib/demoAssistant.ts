@@ -13,10 +13,9 @@ const BASE = (
 ).replace(/\/+$/, "");
 
 // Issued per client by the demo-assistant backend; required on every
-// autocomplete request or it responds 401.
-const API_KEY =
-  process.env.NEXT_PUBLIC_DEMO_ASSISTANT_API_KEY ??
-  "5cdccda1d4a1c08770f7469f6b2bfc71fec670a240fc661de3f3232ec1edb692";
+// autocomplete request or it responds 401. Supplied only via env — no
+// hardcoded fallback, so the key never lands in source/git.
+const API_KEY = process.env.NEXT_PUBLIC_DEMO_ASSISTANT_API_KEY ?? "";
 
 const DEMO_APP_URL = (
   process.env.NEXT_PUBLIC_DEMO_APP_URL ?? "https://demo.heytruffle.ai"

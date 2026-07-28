@@ -12,6 +12,7 @@ import Footer from "@/components/layout/Footer";
 import RebrandModal from "@/components/layout/RebrandModal";
 import ScrollReveal from "@/components/layout/ScrollReveal";
 import Clarity from "@/components/layout/Clarity";
+import Graph8 from "@/components/layout/Graph8";
 import SiteJsonLd from "@/components/layout/JsonLd";
 
 // Same type families as the RestoHost site: Inter for body/UI, Montserrat
@@ -102,6 +103,7 @@ export default function RootLayout({
         <RebrandModal />
         <ScrollReveal />
         <Clarity />
+        <Graph8 />
         <SiteJsonLd />
       </body>
     </html>
