@@ -110,6 +110,7 @@ export const rrealTacos: CaseStudy = {
     ],
     total: "~$74,016",
     caption: "Estimated assisted revenue in June.",
+    valueWidth: "nowrap",
   },
 
   testimonial: {

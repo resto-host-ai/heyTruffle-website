@@ -4,6 +4,7 @@ import { RREAL_TACOS, MOJITOS } from "./related-cards";
 export const mangosTropicalCafe: CaseStudy = {
   slug: "mangos-tropical-cafe",
   name: "Mango's Tropical Cafe",
+  breadcrumbNoLeadingSpace: true,
   seo: {
     title: "Mango's Tropical Cafe — Case Study — heytruffle",
     description:

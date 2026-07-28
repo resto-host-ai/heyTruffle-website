@@ -51,6 +51,11 @@ export type ImpactMath = {
   factors: { value: string; label: string }[];
   total: string;
   caption: string;
+  /** Cosmetic delta between the two pages that use this section today:
+   *  baires-grill wraps its factor value at a fixed width on small screens,
+   *  rreal-tacos never wraps it. Preserved so the template stays pixel-exact
+   *  for both instead of picking one and silently changing the other. */
+  valueWidth: "fixed" | "nowrap";
 };
 
 export type Capability = {
@@ -67,6 +72,11 @@ export type SuccessStat = { value: string; title: string; desc: string };
 export type CaseStudy = {
   slug: string;
   name: string;
+  /** mangos-tropical-cafe's original breadcrumb text wrapped across two
+   *  source lines, which happened to drop the space before the name (the
+   *  flex `gap-2` on the breadcrumb makes this invisible either way — kept
+   *  only so the template reproduces the original byte-for-byte). */
+  breadcrumbNoLeadingSpace?: boolean;
   seo: { title: string; description: string; canonical: string };
   logo: { src: string; alt: string };
 

@@ -1,21 +1,9 @@
 import type { MetadataRoute } from "next";
 import { INTEGRATIONS } from "@/lib/integrations";
 import { getAllPostMeta } from "@/lib/blog";
+import { CASE_STUDY_SLUGS } from "@/content/case-studies";
 
 const SITE = "https://heytruffle.ai";
-
-// Case-study detail slugs (one page each under /case-study/).
-const CASE_STUDY_SLUGS = [
-  "aplos",
-  "baires-grill",
-  "chelsea-corner",
-  "kyochon",
-  "kyu",
-  "la-canita",
-  "mangos-tropical-cafe",
-  "rreal-tacos",
-  "rumba-cubana",
-];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

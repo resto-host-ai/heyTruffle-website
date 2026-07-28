@@ -47,6 +47,7 @@ export const bairesGrill: CaseStudy = {
     ],
     total: "~$87,720",
     caption: "Estimated assisted revenue in June.",
+    valueWidth: "fixed",
   },
 
   related: [RREAL_TACOS, MOJITOS],
