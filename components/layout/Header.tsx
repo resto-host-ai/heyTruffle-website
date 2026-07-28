@@ -12,7 +12,6 @@ type NavItem = { label: string; href: string; demo?: boolean };
 
 const NAV_BEFORE: NavItem[] = [
   { label: "Case Studies", href: "/case-study" },
-  { label: "How It Works", href: "/#how-it-works" },
   { label: "About", href: "/#about" },
   { label: "Pricing", href: "/#pricing" },
 ];
