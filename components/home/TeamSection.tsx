@@ -62,7 +62,7 @@ export default function TeamSection() {
               {/* Renamed when the client's real office photos replaced the stock
                   portraits — same path with new content kept serving the old
                   files from browser caches. */}
-              {["/images/team-office-1.webp", "/images/team-office-2.webp"].map((src) => (
+              {["/images/team1.webp", "/images/team2.webp"].map((src) => (
                 <div key={src} className="relative aspect-[478/545]">
                   <Image
                     src={src}

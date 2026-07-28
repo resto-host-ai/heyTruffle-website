@@ -79,7 +79,7 @@ export function getPostSlugs(): string[] {
 }
 
 /** Every post, newest first. */
-export function getAllPosts(): Post[] {
+function getAllPosts(): Post[] {
   return getPostSlugs()
     .map(readPost)
     .sort((a, b) => (a.date < b.date ? 1 : -1));

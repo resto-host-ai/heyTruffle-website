@@ -10,7 +10,7 @@ export const aplos: CaseStudy = {
       "How Aplós answered pickup, waitlist and catering calls across four Mississippi dining rooms as one with HeyTruffle.",
     canonical: "/case-study/aplos/",
   },
-  logo: { src: "/images/aploslogo.png", alt: "Aplós" },
+  logo: { src: "/images/aploslogo.webp", alt: "Aplós" },
 
   heroTags: ["Mediterranean", "Phone orders", "Mississippi", "4 locations"],
   heroWidth: "narrow",

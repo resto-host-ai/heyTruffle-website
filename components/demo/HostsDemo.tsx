@@ -96,15 +96,8 @@ function KaraokeText({
   );
 }
 
-export default function HostsDemo({
-  soloHostId,
-}: {
-  /** Show a single host's call panel directly (no grid), paused and ready. */
-  soloHostId?: Host["id"];
-} = {}) {
-  const [activeId, setActiveId] = useState<Host["id"] | null>(
-    soloHostId ?? null,
-  );
+export default function HostsDemo() {
+  const [activeId, setActiveId] = useState<Host["id"] | null>(null);
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [maxProgress, setMaxProgress] = useState(0);
@@ -129,18 +122,6 @@ export default function HostsDemo({
   };
 
   const host = activeId ? HOSTS.find((h) => h.id === activeId) ?? null : null;
-
-  // Solo mode: preload the host's clip without auto-playing, so the visitor
-  // presses play to start it.
-  useEffect(() => {
-    if (!soloHostId) return;
-    const a = audioRef.current;
-    const h = HOSTS.find((x) => x.id === soloHostId);
-    if (!a || !h) return;
-    a.src = h.audio;
-    a.currentTime = 0;
-    setNeedsTap(true);
-  }, [soloHostId]);
 
   useEffect(() => {
     const a = audioRef.current;
@@ -206,7 +187,7 @@ export default function HostsDemo({
      aimed at a stale offset. Two rAFs let layout settle, then we scroll to a
      fixed 16px below the sticky header. */
   useEffect(() => {
-    if (!activeId || soloHostId) return;
+    if (!activeId) return;
     const HEADER_H = 80;
     const GAP = 16;
     let inner = 0;
@@ -223,7 +204,7 @@ export default function HostsDemo({
       cancelAnimationFrame(outer);
       cancelAnimationFrame(inner);
     };
-  }, [activeId, soloHostId]);
+  }, [activeId]);
 
   const closeHost = () => {
     audioRef.current?.pause();
@@ -301,11 +282,9 @@ export default function HostsDemo({
       id="meet-the-hosts"
       ref={rootRef}
       className={`w-full scroll-mt-28 ${
-        soloHostId
-          ? ""
-          : host
-            ? "mt-20 rounded-[32px] bg-[#f6f3ec] p-2 shadow-2xl md:mt-32 md:p-3"
-            : "mt-20 rounded-[32px] bg-[#f6f3ec] px-6 py-10 shadow-2xl md:mt-32 md:px-16 md:py-12"
+        host
+          ? "mt-20 rounded-[32px] bg-[#f6f3ec] p-2 shadow-2xl md:mt-32 md:p-3"
+          : "mt-20 rounded-[32px] bg-[#f6f3ec] px-6 py-10 shadow-2xl md:mt-32 md:px-16 md:py-12"
       }`}
     >
       {/* key on the active host so the animation replays on every swap, both
@@ -397,19 +376,17 @@ export default function HostsDemo({
         </div>
       ) : (
         <div key={host.id} className="host-view-in relative">
-          {/* Back to the grid (hidden in solo mode) */}
-          {!soloHostId && (
-            <button
-              type="button"
-              onClick={closeHost}
-              aria-label="Back to all hosts"
-              className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-[#251f21]/20 bg-white/50 text-[#251f21]/60 backdrop-blur-sm transition-colors hover:bg-white/80 hover:text-[#251f21] md:right-6 md:top-6"
-            >
-              <svg width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden>
-                <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-              </svg>
-            </button>
-          )}
+          {/* Back to the grid */}
+          <button
+            type="button"
+            onClick={closeHost}
+            aria-label="Back to all hosts"
+            className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-[#251f21]/20 bg-white/50 text-[#251f21]/60 backdrop-blur-sm transition-colors hover:bg-white/80 hover:text-[#251f21] md:right-6 md:top-6"
+          >
+            <svg width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden>
+              <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+            </svg>
+          </button>
 
           {/* Tinted, grainy panel — each host colours its own background,
               lighter at the top and settling into the host colour below. */}

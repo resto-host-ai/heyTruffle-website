@@ -37,7 +37,7 @@ export const rrealTacos: CaseStudy = {
       "How Rreal Tacos captured 100% of demand across 12 Atlanta locations with HeyTruffle — every reservation, order and catering call answered.",
     canonical: "/case-study/rreal-tacos/",
   },
-  logo: { src: "/images/rreal_logo.png", alt: "Rreal Tacos" },
+  logo: { src: "/images/rreal_logo.webp", alt: "Rreal Tacos" },
 
   heroTags: ["Latin", "Reservations", "Atlanta", "12 locations"],
   heroWidth: "narrow",
