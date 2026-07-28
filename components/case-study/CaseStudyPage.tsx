@@ -51,7 +51,8 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
             src="/images/fondo_casestudy.webp"
             alt=""
             fill
-            priority
+            loading="eager"
+            fetchPriority="low"
             sizes="100vw"
             className="object-cover"
           />
@@ -67,7 +68,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
 
         <div className="relative mx-auto flex w-full w-full flex-1 flex-col px-6 lg:px-[73px]">
           <Link
-            href="/case-study"
+            href="/case-study/"
             className="inline-flex items-center gap-2 font-body text-[15px] font-normal leading-[110%] md:text-[16px] text-cream/90 transition-opacity hover:opacity-70"
           >
             <ChevronLeft />

@@ -31,7 +31,8 @@ export default function TestimonialsPage() {
             src="/images/background_gradient.webp"
             alt=""
             fill
-            priority
+            loading="eager"
+            fetchPriority="low"
             quality={90}
             sizes="100vw"
             className="object-cover"

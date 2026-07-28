@@ -7,7 +7,11 @@ const CLARITY_ID = "umimfwu6lv";
 
 export default function Clarity() {
   return (
-    <Script id="clarity-init" strategy="afterInteractive">{`
+    /* lazyOnload: Clarity's tag (~35KB + continuous recording CPU) was
+       loading right in the hydration window on every route — on phones it
+       competed with the app's own chunks exactly when INP is measured.
+       Analytics can afford to start after the page is idle. */
+    <Script id="clarity-init" strategy="lazyOnload">{`
       (function(c,l,a,r,i,t,y){
           c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
           t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
