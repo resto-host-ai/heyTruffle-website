@@ -348,9 +348,7 @@ export default function HostsDemo() {
                   {h.name}
                 </p>
                 <p className="mt-1.5 text-center font-body text-[16px] font-normal leading-[145%] text-[#251f21]/60 md:text-[18px]">
-                  {h.desc[0]}
-                  <br />
-                  {h.desc[1]}
+                  {h.deployedAt}
                 </p>
               </button>
             ))}
