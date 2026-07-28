@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 /**
  * Brand-film section — the produced spot (public/videos/moment.mp4,
- * 960x720 H.264, subtitles baked in) replaced the scroll-pinned card fan.
+ * 720x540 H.264, subtitles baked in) replaced the scroll-pinned card fan.
  * The video autoplays muted while the section is on screen (browsers block
  * audible autoplay, so sound is opt-in via the volume button), pauses when
  * scrolled away, and exposes just play/pause + mute — no native controls.
@@ -78,7 +78,11 @@ export default function MomentSection() {
               poster="/images/moment-poster.webp"
               muted
               playsInline
-              preload="metadata"
+              /* "none": the page loads zero video bytes until the section
+                 scrolls into view and the observer calls play() — the client
+                 reported the clip dragging down initial page load. The poster
+                 is a separate 26KB webp, so the card never looks empty. */
+              preload="none"
               onPlay={() => {
                 setPlaying(true);
                 setEnded(false);
