@@ -435,8 +435,16 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
         </section>
       )}
 
-      {/* ── No assumptions. Just the math/results. ───────── */}
-      <section className="relative bg-cream pb-24 pt-24 text-[#251f21] md:pb-32 md:pt-32">
+      {/* ── No assumptions. Just the math/results. ─────────
+          Top padding only applies when this section follows the hero
+          directly (no featureStory in between) — the featureStory
+          section above already carries its own pb-24/md:pb-32, so
+          stacking this section's pt on top of that doubles the gap. */}
+      <section
+        className={`relative bg-cream pb-24 text-[#251f21] md:pb-32 ${
+          cs.featureStory ? "" : "pt-16 md:pt-24"
+        }`}
+      >
         <div className="mx-auto w-full px-6 lg:px-[73px]">
           <h2 className="text-center font-serif text-[30px] font-bold! leading-[110%] md:text-[38px] lg:text-[44px]">
             {cs.measured.heading[0]}
