@@ -433,6 +433,165 @@ export const INTEGRATIONS: readonly Integration[] = [
         "heytruffle moves phone customers to your commission-free ChowNow store automatically — explains the benefits of ordering direct and sends an SMS link mid-call.",
     },
   },
+  {
+    slug: "square",
+    brand: "Square",
+    // Placeholder text wordmark — Square's own logo is black/white and
+    // hasn't been confirmed via an official brand kit yet; swap this file
+    // for the real SVG before launch. Using heytruffle orange as the
+    // accent instead of Square's black so the highlight reads on the
+    // dark hero (see the Postmates entry above for the same pattern).
+    logoFile: "square.svg",
+    accent: "#ef7200",
+    category: "POS",
+    h1: "Voice AI for Square POS",
+    valueProp:
+      "heytruffle connects to your Square POS so every phone order lines up with the register you already run. When a customer calls, the AI pulls your live menu and sends the order straight through.",
+    hook: "Answer every call without adding a screen to your Square counter.",
+    syncSurface: [
+      "Live menu + item availability",
+      "Guest identified by phone number",
+      "Direct-to-register order dispatch",
+      "POS-grade order accuracy",
+    ],
+    capabilities: [
+      {
+        title: "Phone → Square POS",
+        body: "Calls land straight in your Square order flow. The AI identifies the guest by phone number and confirms the order against your live menu.",
+      },
+      {
+        title: "Live menu sync",
+        body: "The AI mirrors your Square menu in real time — when an item runs out, it stops selling it on the phone immediately.",
+      },
+      {
+        title: "Zero manual entry",
+        body: "Orders flow guest → AI → POS without a staff member retyping a single line. Tickets keep moving 24/7.",
+      },
+    ],
+    meta: {
+      title: "Voice AI for Square POS — heytruffle",
+      description:
+        "heytruffle plugs into Square, pulls your live menu, and pushes phone orders straight to your register. 24/7 phone answering, zero manual entry.",
+    },
+  },
+  {
+    slug: "spoton",
+    brand: "SpotOn",
+    // Placeholder text wordmark — SpotOn's official brand assets haven't
+    // been confirmed yet; swap this file for the real SVG before launch.
+    // Accent uses a heytruffle brand color as a placeholder since SpotOn's
+    // exact brand hex hasn't been verified.
+    logoFile: "spoton.svg",
+    accent: "#a05fc4",
+    category: "POS",
+    h1: "Voice AI for SpotOn Restaurants",
+    valueProp:
+      "Built for restaurants running SpotOn. Our AI answers the phone, checks your live SpotOn menu, and sends orders straight to your terminal.",
+    hook: "Turn your SpotOn system into an automated order-taking station.",
+    syncSurface: [
+      "SpotOn menu + reporting sync",
+      "Phone orders routed to the terminal",
+      "Counter staff focused on walk-ins",
+      "Peak-hour volume handled hands-free",
+    ],
+    capabilities: [
+      {
+        title: "Terminal sync",
+        body: "Orders taken by phone show up directly in your SpotOn terminal and reporting tools — no double entry.",
+      },
+      {
+        title: "Phone-order handler",
+        body: "The AI fields phone-order traffic so your counter staff stays focused on customers in front of them.",
+      },
+      {
+        title: "Peak-hour relief",
+        body: "Built to handle the call spike during rush hours without dropping a single ticket or skipping a beat.",
+      },
+    ],
+    meta: {
+      title: "Voice AI for SpotOn Restaurants — heytruffle",
+      description:
+        "heytruffle plugs into SpotOn to take phone-order traffic, sync orders to your terminal, and free your counter staff during the rush.",
+    },
+  },
+  {
+    slug: "aloha",
+    brand: "Aloha",
+    // Placeholder text wordmark — Aloha (by NCR Voyix) brand assets
+    // haven't been confirmed via an official brand kit yet; swap this
+    // file for the real SVG before launch.
+    logoFile: "aloha.svg",
+    accent: "#3773d7",
+    category: "POS",
+    h1: "Voice AI for Aloha POS",
+    valueProp:
+      "Built for restaurants and chains running Aloha POS by NCR. Our AI answers the phone, checks live availability, and sends orders straight to the ticket line.",
+    hook: "Keep Aloha tickets moving without adding staff to the phone.",
+    syncSurface: [
+      "Live menu + 86 list",
+      "Guest identified by phone number",
+      "Direct-to-ticket order dispatch",
+      "POS-grade order accuracy",
+    ],
+    capabilities: [
+      {
+        title: "Phone → Aloha POS",
+        body: "Calls land straight in your Aloha ticket line. The AI identifies the guest by phone number and confirms against your live menu.",
+      },
+      {
+        title: "Live menu sync",
+        body: "The AI mirrors your Aloha menu in real time — when you 86 an item, it stops selling it on the phone immediately.",
+      },
+      {
+        title: "Zero manual entry",
+        body: "Orders flow guest → AI → POS without a staff member retyping a single line. Tickets keep moving 24/7.",
+      },
+    ],
+    meta: {
+      title: "Voice AI for Aloha POS — heytruffle",
+      description:
+        "heytruffle plugs into Aloha POS, pulls live menus, and pushes phone orders straight to your ticket line. 24/7 phone answering, zero manual entry.",
+    },
+  },
+  {
+    slug: "olo",
+    brand: "Olo",
+    // Placeholder text wordmark — Olo's official brand assets haven't
+    // been confirmed via a brand kit yet; swap this file for the real
+    // SVG before launch.
+    logoFile: "olo.svg",
+    accent: "#ef7200",
+    category: "Direct Ordering",
+    h1: "Olo Direct Ordering with Voice AI",
+    valueProp:
+      "Support your Olo ordering channel. Our AI answers the phone, explains what's on the menu, and sends an Olo ordering link so callers can finish on their own.",
+    hook: "Turn every answered call into a confirmed Olo order.",
+    syncSurface: [
+      "Direct-ordering link on every call",
+      "Menu + hours Q&A handled hands-free",
+      "SMS deep-links to your Olo storefront",
+      "Customer kept in your branded channel",
+    ],
+    capabilities: [
+      {
+        title: "24/7 storefront host",
+        body: "Acts as the always-on phone host for your Olo storefront — day, night, weekends, holidays.",
+      },
+      {
+        title: "Menu + hours Q&A",
+        body: "Answers what's on the menu and whether you're open, in seconds, without pulling staff off the line.",
+      },
+      {
+        title: "Phone → ordering link",
+        body: "Captures every phone inquiry and funnels callers into a confirmed order via your Olo ordering link.",
+      },
+    ],
+    meta: {
+      title: "Olo Direct Ordering with Voice AI — heytruffle",
+      description:
+        "heytruffle hosts your Olo phone traffic 24/7, answers menu and hours questions, and sends an ordering link so callers can finish on their own.",
+    },
+  },
 ] as const;
 
 export function getIntegration(slug: string): Integration | undefined {

@@ -20,10 +20,10 @@ const NAV_AFTER: NavItem[] = [{ label: "Contact", href: "/#contact" }];
 
 /** Integrations dropdown, grouped like the design. */
 const INTEGRATIONS = [
-  { heading: "POS", items: ["Toast", "Clover"] },
+  { heading: "POS", items: ["Toast", "Clover", "Square", "SpotOn", "Aloha"] },
   { heading: "Reservations", items: ["Resy", "OpenTable", "SevenRooms"] },
   { heading: "Delivery", items: ["Grubhub", "DoorDash", "Uber Eats", "Postmates"] },
-  { heading: "Direct Ordering", items: ["Flipdish", "ChowNow"] },
+  { heading: "Direct Ordering", items: ["Flipdish", "ChowNow", "Olo"] },
 ];
 
 const slug = (s: string) => s.toLowerCase().replace(/\s+/g, "-");
@@ -32,6 +32,9 @@ const slug = (s: string) => s.toLowerCase().replace(/\s+/g, "-");
 const INTEGRATION_PAGES = new Set([
   "Toast",
   "Clover",
+  "Square",
+  "SpotOn",
+  "Aloha",
   "Resy",
   "OpenTable",
   "SevenRooms",
@@ -41,6 +44,7 @@ const INTEGRATION_PAGES = new Set([
   "Postmates",
   "Flipdish",
   "ChowNow",
+  "Olo",
 ]);
 const itemHref = (item: string) =>
   INTEGRATION_PAGES.has(item) ? `/integrations/${slug(item)}` : `#${slug(item)}`;
@@ -215,6 +219,14 @@ export default function Header() {
                     </div>
                   ))}
                 </div>
+                <div className="border-t border-white/10 px-6 py-5 lg:px-[73px]">
+                  <Link
+                    href="/integrations"
+                    className="font-body text-[15px] font-semibold text-cream/70 transition-colors hover:text-brand-orange"
+                  >
+                    View all integrations →
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -354,6 +366,13 @@ export default function Header() {
                       </ul>
                     </div>
                   ))}
+                  <Link
+                    href="/integrations"
+                    onClick={() => setMenuOpen(false)}
+                    className="font-body text-[15px] font-semibold text-cream/70 transition-opacity hover:opacity-70"
+                  >
+                    View all integrations →
+                  </Link>
                 </div>
               )}
 
