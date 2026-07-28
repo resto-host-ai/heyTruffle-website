@@ -14,10 +14,10 @@ export default function TeamSection() {
         backgroundImage: "linear-gradient(180deg, #f6f3ec 21%, #ef7200 100%)",
       }}
     >
-      {/* grain (Figma "Ruido" effect) */}
+      {/* grain (Figma "Ruido" effect) — blend md+ only, see iOS notes */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-30 mix-blend-overlay"
+        className="pointer-events-none absolute inset-0 opacity-20 md:opacity-30 md:mix-blend-overlay"
         style={{ backgroundImage: NOISE }}
       />
 

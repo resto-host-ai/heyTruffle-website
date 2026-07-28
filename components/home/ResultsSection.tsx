@@ -25,16 +25,11 @@ const STATS = [
 export default function ResultsSection() {
   return (
     <section className="relative overflow-hidden bg-[#251f21] pb-10 pt-10 md:pb-16 md:pt-18">
-      {/* gradiante2.webp background */}
+      {/* gradiante2.webp background. Mask only from md (offscreen composite
+          on iOS — see WhatIsSection); phones use plain gradient fades. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0"
-        style={{
-          maskImage:
-            "linear-gradient(to bottom, transparent 0%, #000 8%, #000 78%, transparent 100%)",
-          WebkitMaskImage:
-            "linear-gradient(to bottom, transparent 0%, #000 8%, #000 78%, transparent 100%)",
-        }}
+        className="pointer-events-none absolute inset-0 md:[mask-image:linear-gradient(to_bottom,transparent_0%,#000_8%,#000_78%,transparent_100%)] md:[-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,#000_8%,#000_78%,transparent_100%)]"
       >
         <Image
           src="/images/gradiante2.webp"
@@ -45,6 +40,8 @@ export default function ResultsSection() {
           sizes="100vw"
           className="object-cover"
         />
+        <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#251f21] to-transparent md:hidden" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-[#251f21] md:hidden" />
       </div>
 
       <div className="relative mx-auto w-full px-6 lg:px-[73px]">
@@ -74,7 +71,7 @@ export default function ResultsSection() {
                 {/* grain */}
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute inset-0 opacity-40 mix-blend-overlay"
+                  className="pointer-events-none absolute inset-0 opacity-25 md:opacity-40 md:mix-blend-overlay"
                   style={{ backgroundImage: NOISE }}
                 />
                 <div className="relative flex h-full flex-col items-center text-center md:items-start md:text-left">

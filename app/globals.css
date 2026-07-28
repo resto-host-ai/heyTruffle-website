@@ -67,19 +67,33 @@ html {
    everything below the hero sat blank for ~3s. ScrollReveal adds `js-ready`
    and marks the in-view elements `.is-visible` in the same synchronous pass,
    so nothing that's on screen ever flashes out. */
-.reveal {
-  transition:
-    opacity 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) var(--reveal-delay, 0s),
-    transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) var(--reveal-delay, 0s),
-    filter 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) var(--reveal-delay, 0s);
-  will-change: opacity, transform;
+/* DESKTOP-ONLY, deliberately. On phones a .reveal is plain static content:
+   no hidden state, no transition, no will-change. Two reasons, both measured
+   on iPhone 15 / 17 Pro Max:
+   1. iOS kinetic scrolling outruns IntersectionObserver delivery — content
+      gated on the observer appears seconds late during a fast flick.
+   2. A page full of `will-change` elements retains one compositor layer
+      each; WebKit's tile rasterizer can't keep up during kinetic scroll and
+      paints black checkerboard surfaces where the layers should be.
+   The `will-change` hint also only lives while an element is still hidden —
+   once revealed, the layer is released instead of held forever. */
+@media (min-width: 768px) {
+  .reveal {
+    transition:
+      opacity 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) var(--reveal-delay, 0s),
+      transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) var(--reveal-delay, 0s),
+      filter 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) var(--reveal-delay, 0s);
+  }
+  html.js-ready .reveal:not(.is-visible) {
+    opacity: 0;
+    will-change: opacity, transform;
+  }
+  html.js-ready .reveal-up:not(.is-visible) { transform: translateY(24px); }
+  html.js-ready .reveal-left:not(.is-visible) { transform: translateX(-18px); }
+  html.js-ready .reveal-right:not(.is-visible) { transform: translateX(18px); }
+  html.js-ready .reveal-zoom:not(.is-visible) { transform: scale(0.96); }
+  html.js-ready .reveal-blur:not(.is-visible) { filter: blur(8px); transform: translateY(10px); }
 }
-html.js-ready .reveal:not(.is-visible) { opacity: 0; }
-html.js-ready .reveal-up:not(.is-visible) { transform: translateY(24px); }
-html.js-ready .reveal-left:not(.is-visible) { transform: translateX(-18px); }
-html.js-ready .reveal-right:not(.is-visible) { transform: translateX(18px); }
-html.js-ready .reveal-zoom:not(.is-visible) { transform: scale(0.96); }
-html.js-ready .reveal-blur:not(.is-visible) { filter: blur(8px); transform: translateY(10px); }
 @media (prefers-reduced-motion: reduce) {
   .reveal,
   .reveal-up,
@@ -273,8 +287,13 @@ html.js-ready .reveal-blur:not(.is-visible) { filter: blur(8px); transform: tran
   }
 }
 
-.host-view-in {
-  animation: host-view-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+/* md+ only: `both` fill keeps the element bound to an animation after it
+   ends, which can hold a compositor layer on WebKit — on phones the swap
+   just cuts, and the card never risks an unpainted (black) first frame. */
+@media (min-width: 768px) {
+  .host-view-in {
+    animation: host-view-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -501,8 +520,14 @@ html.js-ready .reveal-blur:not(.is-visible) { filter: blur(8px); transform: tran
     transform: scale(1.055);
   }
 }
-.host-alive {
-  animation: host-alive 3.4s ease-in-out infinite;
+/* md+ only: 4 hosts x (1 pulse + 2 rings) = 12 infinite compositor
+   animations on phones, running even while offscreen — a major share of the
+   iOS tile-starvation (black surfaces during kinetic scroll). Phones show
+   the static avatars; desktop keeps the life. */
+@media (min-width: 768px) {
+  .host-alive {
+    animation: host-alive 3.4s ease-in-out infinite;
+  }
 }
 
 /* Sonar rings that ripple outward from each avatar. transform carries the
@@ -531,7 +556,15 @@ html.js-ready .reveal-blur:not(.is-visible) { filter: blur(8px); transform: tran
   border-radius: 9999px;
   border-width: 1.5px;
   border-style: solid;
-  animation: host-ring 3s ease-out infinite both;
+  /* Phones: no ring at all (see .host-alive note) — without its animation
+     the ring is a permanently invisible layer, so drop the element. */
+  display: none;
+}
+@media (min-width: 768px) {
+  .host-ring {
+    display: block;
+    animation: host-ring 3s ease-out infinite both;
+  }
 }
 
 @media (prefers-color-scheme: dark) {

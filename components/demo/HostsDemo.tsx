@@ -305,7 +305,7 @@ export default function HostsDemo() {
             onScroll={onTrackScroll}
             className="mt-4 flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden py-2 [-ms-overflow-style:none] [scrollbar-width:none] sm:mt-8 sm:grid sm:grid-cols-4 sm:gap-x-4 sm:gap-y-10 sm:overflow-visible sm:py-0 [&::-webkit-scrollbar]:hidden"
           >
-            {HOSTS.map((h) => (
+            {HOSTS.map((h, i) => (
               <button
                 key={h.id}
                 type="button"
@@ -334,6 +334,12 @@ export default function HostsDemo() {
                       height={337}
                       quality={75}
                       sizes="(max-width: 640px) 52vw, 200px"
+                      /* First slide only: on phones the carousel shows one
+                         host, and lazy left its avatar decoding right as fast
+                         scrolling arrived (blank card). Eager+low starts the
+                         download early without competing with the LCP. */
+                      loading={i === 0 ? "eager" : undefined}
+                      fetchPriority={i === 0 ? "low" : undefined}
                       className="mx-auto h-auto w-[46vw] max-w-[170px] object-contain transition-transform duration-300 group-hover:scale-105 sm:w-[62%] sm:max-w-none"
                     />
                   </span>
@@ -402,10 +408,11 @@ export default function HostsDemo() {
               background: `linear-gradient(180deg, #f8f5ef 0%, ${host.color}14 42%, ${host.color}59 100%)`,
             }}
           >
-            {/* Grain overlay */}
+            {/* Grain overlay — blend only from md (offscreen composite cost
+                on iOS); phones get the texture at plain low opacity. */}
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-0 opacity-[0.8] mix-blend-overlay"
+              className="pointer-events-none absolute inset-0 opacity-[0.35] md:opacity-[0.8] md:mix-blend-overlay"
               style={{ backgroundImage: NOISE }}
             />
 
