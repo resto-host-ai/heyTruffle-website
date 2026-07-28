@@ -1,15 +1,21 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { NOISE } from "@/lib/noise";
 
 type Category = "operational" | "cuisine" | "location";
 
 type CaseCard = {
   name: string;
+  /** Headline number, always paired with `statLabel` so it never reads as a
+   *  bare figure ("19K+ calls answered", not "19k+"). Values come from each
+   *  study's own hero/measured numbers — keep them in sync with
+   *  content/case-studies/<slug>.ts. */
   stat: string;
-  gradient: string;
+  statLabel: string;
+  /** Real photo of the restaurant (dining room when available). */
+  image: string;
   cuisine: string;
   location: string;
   operational: string;
@@ -44,7 +50,7 @@ const FILTER_GROUPS: { key: Category; label: string; options: string[] }[] = [
     label: "Location",
     options: [
       "Atlanta",
-      "Mississipi",
+      "Mississippi",
       "Miami",
       "Orlando",
       "LA",
@@ -57,91 +63,102 @@ const FILTER_GROUPS: { key: Category; label: string; options: string[] }[] = [
 const CASES: CaseCard[] = [
   {
     name: "Rreal Tacos",
-    stat: "19k+",
+    stat: "19K+",
+    statLabel: "calls handled",
+    image: "/images/case-rreal.webp",
     slug: "rreal-tacos",
     location: "Atlanta",
     operational: "Reservations",
     cuisine: "Mexican",
     locations: "12",
-    gradient:
-      "radial-gradient(120% 110% at 50% 125%, #a5487c 0%, #52293f 34%, #241d20 68%)",
   },
   {
-    name: "Aplos",
-    stat: "3.2k+",
+    name: "Aplós",
+    stat: "3.2K+",
+    statLabel: "calls handled",
+    image: "/images/case-covers/aplos.webp",
     slug: "aplos",
-    location: "Mississipi",
+    location: "Mississippi",
     operational: "Phone Orders",
     cuisine: "Mediterranean",
     locations: "4",
-    gradient:
-      "radial-gradient(120% 110% at 50% 125%, #322a2d 0%, #241e20 44%, #1e1a1c 100%)",
   },
   {
     name: "Baires Grill",
-    stat: "7.5k+",
+    stat: "7.5K+",
+    statLabel: "calls handled",
+    image: "/images/case-baires.webp",
     slug: "baires-grill",
     location: "Miami",
     operational: "Reservations",
     cuisine: "Steakhouse",
     locations: "9",
-    gradient:
-      "radial-gradient(120% 110% at 50% 125%, #302a2c 0%, #241e20 44%, #1e1a1c 100%)",
   },
   {
-    name: "Mangos",
-    stat: "1.7k+",
+    name: "Mango's",
+    stat: "2.2K+",
+    statLabel: "calls handled",
+    image: "/images/case-covers/mangos.webp",
     slug: "mangos-tropical-cafe",
     location: "Orlando",
     operational: "Reservations",
     cuisine: "Latin/Caribbean",
     locations: "1",
-    gradient:
-      "radial-gradient(120% 115% at 50% 125%, #ef7200 0%, #8a4a17 36%, #241d20 70%)",
   },
   {
     name: "Kyochon",
-    stat: "1.2k+",
+    stat: "1.1K+",
+    statLabel: "calls handled",
+    image: "/images/case-covers/kyochon.webp",
     slug: "kyochon",
     location: "LA",
     operational: "Phone Orders",
     cuisine: "Korean Chicken",
     locations: "2",
-    gradient:
-      "radial-gradient(120% 115% at 50% 125%, #322a2d 0%, #241e20 44%, #1e1a1c 100%)",
   },
   {
     name: "Chelsea Corner",
-    stat: "2.2k+",
+    stat: "2.2K+",
+    statLabel: "calls handled",
+    image: "/images/case-covers/chelsea-corner.webp",
     slug: "chelsea-corner",
     location: "Dallas",
     operational: "Reservations",
     cuisine: "American",
     locations: "1",
-    gradient:
-      "radial-gradient(120% 115% at 50% 125%, #3a2c22 0%, #271f1e 44%, #1e1a1c 100%)",
+  },
+  {
+    name: "La Cañita",
+    stat: "884",
+    statLabel: "calls handled",
+    image: "/images/case-covers/la-canita.webp",
+    slug: "la-canita",
+    location: "Miami",
+    operational: "Reservations",
+    cuisine: "Cuban",
+    locations: "2",
   },
   {
     name: "Rumba Cubana",
-    stat: "4k+",
+    stat: "4K+",
+    statLabel: "calls handled",
+    image: "/images/case-covers/rumba-cubana.webp",
     slug: "rumba-cubana",
     location: "New Jersey",
     operational: "Reservations",
     cuisine: "Cuban",
     locations: "6",
-    gradient:
-      "radial-gradient(120% 115% at 50% 125%, #2f5bd7 0%, #223268 36%, #1c1a26 70%)",
   },
   {
     name: "KYU",
-    stat: "1.2k+",
+    stat: "1.9K+",
+    statLabel: "calls handled",
+    image: "/images/case-covers/kyu.webp",
     slug: "kyu",
     location: "Miami",
     operational: "Reservations",
     cuisine: "Pan-Asian",
     locations: "3",
-    gradient:
-      "radial-gradient(120% 110% at 50% 125%, #302a2c 0%, #241e20 44%, #1e1a1c 100%)",
   },
 ];
 
@@ -161,25 +178,6 @@ function ChevronCircle({ open }: { open: boolean }) {
     >
       <circle cx="12" cy="12" r="10" />
       <path d="m8 11 4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function ArrowUpRight() {
-  return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-      className="shrink-0"
-    >
-      <path d="M7 17 17 7M8 7h9v9" />
     </svg>
   );
 }
@@ -312,65 +310,57 @@ export default function CaseStudiesList() {
           ))}
         </div>
 
-        {/* Case grid */}
-        <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {visible.map((c) => {
-            // Always render two rows of two so the location count never ends
-            // up stranded on its own line: [location, need] / [cuisine, count].
-            const tagRows = [
-              [c.location, c.operational],
-              [c.cuisine, c.locations],
-            ];
-            return (
-              <article
-                key={c.name}
-                className="relative flex min-h-[420px] flex-col overflow-hidden rounded-[25px] text-cream md:h-[459.605px] md:min-h-0"
-                style={{ backgroundImage: c.gradient }}
-              >
-                {/* Grain overlay */}
+        {/* Case grid — photo-first cards: real dining room on top (name and
+            operational-need chip over it), white body with the number tied to
+            its unit and an operational one-liner below. 3 columns so the 9
+            cards land as full rows and the photos keep enough width to read. */}
+        <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {visible.map((c) => (
+            <Link
+              key={c.name}
+              href={c.slug ? `/case-study/${c.slug}/` : "#"}
+              className="group relative flex flex-col overflow-hidden rounded-[25px] border border-[#251f21]/10 bg-white shadow-[0_14px_40px_rgba(37,31,33,0.10)] transition-shadow duration-300 hover:shadow-[0_22px_54px_rgba(37,31,33,0.18)]"
+            >
+              {/* Dark bg + a hair of scale: fill images round down to whole
+                  pixels, and on fractional card widths that leaves a white
+                  sliver of the card peeking at the photo's edges. */}
+              <div className="relative aspect-[16/10] overflow-hidden bg-[#251f21]">
+                <Image
+                  src={c.image}
+                  alt={`${c.name} — ${c.cuisine} restaurant in ${c.location}`}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="scale-[1.01] object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                />
+                {/* Legibility scrim behind the name */}
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute inset-0 opacity-40 mix-blend-overlay"
-                  style={{ backgroundImage: NOISE }}
+                  className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[#251f21]/60 to-transparent"
                 />
+                <p className="absolute right-4 top-4 max-w-[70%] text-right font-body text-[13px] font-bold uppercase leading-[120%] tracking-[0.08em] text-cream">
+                  {c.name}
+                </p>
+                <span className="absolute bottom-3.5 left-4 rounded-full bg-brand-orange px-3 py-1.5 font-body text-[12px] font-bold uppercase leading-none tracking-[0.06em] text-white">
+                  {c.operational}
+                </span>
+              </div>
 
-                <div className="relative flex flex-1 flex-col justify-between p-7">
-                  <h3 className="font-body text-[22px] font-normal! leading-[125%] md:text-[28px]">
-                    {c.name}
-                  </h3>
-
-                  <div>
-                    <p className="font-body text-[56px] font-normal leading-[110%] md:text-[72px]">
-                      {c.stat}
-                    </p>
-
-                    <Link
-                      href={c.slug ? `/case-study/${c.slug}` : "#"}
-                      className="mt-5 inline-flex items-center gap-2 self-start font-body text-[16px] font-normal leading-[145%] md:text-[16px] underline underline-offset-4 transition-opacity hover:opacity-80 md:text-[18px]"
-                    >
-                      Read more
-                      <ArrowUpRight />
-                    </Link>
-                  </div>
-
-                  <div className="flex flex-col gap-2.5">
-                    {tagRows.map((row, r) => (
-                      <div key={r} className="flex gap-2.5">
-                        {row.map((tag, i) => (
-                          <span
-                            key={`${tag}-${i}`}
-                            className="flex flex-auto min-w-0 min-h-[36px] items-center justify-center whitespace-nowrap rounded-full border border-cream px-3.5 py-1 text-center font-body text-[15px] font-normal leading-[110%] md:text-[16px] text-cream"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </article>
-            );
-          })}
+              <div className="flex flex-1 flex-col justify-center px-5 pb-5 pt-4">
+                <p>
+                  <span className="font-serif text-[32px] font-bold leading-[110%] text-[#251f21]">
+                    {c.stat}
+                  </span>{" "}
+                  <span className="font-body text-[16px] font-normal text-[#251f21]/70">
+                    {c.statLabel}
+                  </span>
+                </p>
+                <p className="mt-1 font-body text-[15px] font-normal leading-[145%] text-[#251f21]/70">
+                  {c.cuisine} · {c.locations}{" "}
+                  {c.locations === "1" ? "location" : "locations"} · {c.location}
+                </p>
+              </div>
+            </Link>
+          ))}
         </div>
 
         {visible.length === 0 && (
