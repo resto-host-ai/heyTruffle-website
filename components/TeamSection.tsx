@@ -80,28 +80,22 @@ export default function TeamSection() {
         {/* ---- CTA card ---- */}
         <div className="mt-24 grid grid-cols-1 items-center gap-10 rounded-[40px] bg-[#f6f3ec] px-10 py-12 text-center shadow-[0_24px_60px_rgba(0,0,0,0.18)] md:mt-32 md:grid-cols-2 md:px-14 md:py-16 md:text-left">
           <h3 className="text-balance font-serif text-[40px] font-bold! leading-[110%] text-brand-orange md:text-wrap md:text-[52px] lg:text-[64px]">
-            Hear what HeyTruffle
-            <br className="hidden md:inline" />
-            {" "}would capture for
-            <br className="hidden md:inline" />
-            {" "}your restaurant.
+            Your restaurant already has an AI host.
+            {" "}You just haven&apos;t heard it yet.
           </h3>
           <div className="flex w-full flex-col items-center md:items-start">
             <p className="font-body text-[26px] font-normal leading-[140%] text-[#251f21] md:font-bold">
-              Start with a 90-day pilot.
-              <br />
-              See it work in your own restaurant first.
+              We&apos;ll build one for your restaurant — your menu, your hours —
+              and call you with it live. Then decide if you want a 90-day
+              pilot. No contract.
             </p>
             <TryDemoButton
               className="mt-8 inline-flex w-full items-center justify-center gap-2.5 rounded-full border border-transparent bg-brand-orange px-[44px] py-[22px] font-body text-[20px] font-bold leading-[110%] text-cream transition-all duration-300 hover:text-[#251f21] hover:[background:linear-gradient(180deg,#eca766_0%,#cd8e53_100%)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)] md:mt-6 md:w-auto md:py-[26px]"
             >
-              <span className="md:hidden">Try HeyTruffle</span>
-              <span className="hidden md:inline">
-                Hear how your restaurant sounds
-              </span>
+              Hear your AI host
             </TryDemoButton>
             <p className="mt-3 hidden font-body text-[20px] font-normal leading-[110%] text-[#251f21] md:block md:pl-2">
-              30 seconds. We call you.
+              Takes 30 seconds. We call your phone.
             </p>
           </div>
         </div>
