@@ -97,7 +97,7 @@ export default function WhatIsSection() {
   }, []);
 
   return (
-    <section className="relative bg-[#251f21] pb-10 pt-14 md:pb-14 md:pt-20">
+    <section className="relative bg-[#251f21]">
       <div className="relative mx-auto flex w-full flex-col items-center">
         {/* Tall spacer drives the pinned scrub on desktop; auto height (no
             pin) on mobile, where the pills just render already resolved. */}
@@ -136,80 +136,77 @@ export default function WhatIsSection() {
               className="pointer-events-none absolute inset-x-0 top-0 h-[420px] bg-gradient-to-b from-[#251f21] via-[#251f21]/70 to-transparent"
             />
 
-            <p className="reveal reveal-up relative text-center font-body text-[15px] font-normal uppercase leading-[110%] tracking-[0.08em] text-cream/70">
-              What is heytruffle?
-            </p>
+            <div className="relative flex w-full flex-col items-center md:-translate-y-16">
+              <p className="reveal reveal-up relative text-center font-body text-[17px] font-normal uppercase leading-[110%] tracking-[0.08em] text-cream/70">
+                What is heytruffle?
+              </p>
 
-            {/* 868 = 820 of pill + the 24px site gutter each side, so the
-                gutter never eats into the desktop pill width. */}
-            <div className="mt-8 flex w-full max-w-[868px] flex-col gap-6 px-6 md:gap-7">
-              {STATEMENTS.map((text, i) => (
-                <div
-                  key={text}
-                  className="relative flex h-[62px] items-center justify-center overflow-hidden rounded-full border border-white/40 [background:linear-gradient(180deg,rgba(255,255,255,0.05)_0%,rgba(255,255,255,0.04)_50%,rgba(255,255,255,0.05)_100%)] shadow-[0_10px_30px_rgba(0,0,0,0.22)] backdrop-blur-lg md:h-[78px]"
-                >
-                  {/* Resolved-color overlay — crossfades in on top of the
-                      base fill as the scroll-derived progress advances, so
-                      the color change itself is what makes the resolve
-                      visible, not just the text swap. */}
+              {/* 868 = 820 of pill + the 24px site gutter each side, so the
+                  gutter never eats into the desktop pill width. */}
+              <div className="mt-10 flex w-full max-w-[868px] flex-col gap-7 px-6 md:gap-9">
+                {STATEMENTS.map((text, i) => (
                   <div
-                    ref={(el) => {
-                      bgRefs.current[i] = el;
-                    }}
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 rounded-full opacity-100 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)] md:opacity-0"
-                    style={{ backgroundImage: RESOLVED_BG[i] }}
-                  />
-
-                  {/* Negative statement — purely the transition, not the
-                      final meaning, so it's hidden from assistive tech. Only
-                      the positive statement below is announced. */}
-                  <span
-                    ref={(el) => {
-                      negRefs.current[i] = el;
-                    }}
-                    aria-hidden
-                    className="relative inline-block whitespace-nowrap font-serif text-[19px] font-bold leading-[110%] text-cream opacity-0 min-[480px]:text-[24px] sm:text-[30px] md:opacity-100 lg:text-[38px]"
+                    key={text}
+                    className="relative flex h-[70px] items-center justify-center overflow-hidden rounded-full border border-white/40 [background:linear-gradient(180deg,rgba(255,255,255,0.05)_0%,rgba(255,255,255,0.04)_50%,rgba(255,255,255,0.05)_100%)] shadow-[0_10px_30px_rgba(0,0,0,0.22)] backdrop-blur-lg md:h-[96px]"
                   >
-                    {text}
-                    {/* Same word with a real strikethrough, overlaid exactly
-                        on top and wiped in left-to-right, tied to scroll
-                        progress — so the line always tracks the glyphs and
-                        never overshoots into the pill. */}
-                    <span
+                    {/* Resolved-color overlay — crossfades in on top of the
+                        base fill as the scroll-derived progress advances, so
+                        the color change itself is what makes the resolve
+                        visible, not just the text swap. */}
+                    <div
                       ref={(el) => {
-                        strikeRefs.current[i] = el;
+                        bgRefs.current[i] = el;
                       }}
                       aria-hidden
-                      className="pointer-events-none absolute inset-0 line-through decoration-2 md:decoration-[3px]"
-                      style={{ clipPath: "inset(0 100% 0 0)" }}
+                      className="pointer-events-none absolute inset-0 rounded-full opacity-100 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)] md:opacity-0"
+                      style={{ backgroundImage: RESOLVED_BG[i] }}
+                    />
+
+                    {/* Negative statement — purely the transition, not the
+                        final meaning, so it's hidden from assistive tech. Only
+                        the positive statement below is announced. */}
+                    <span
+                      ref={(el) => {
+                        negRefs.current[i] = el;
+                      }}
+                      aria-hidden
+                      className="relative inline-block whitespace-nowrap font-serif text-[21px] font-bold leading-[110%] text-cream opacity-0 min-[480px]:text-[27px] sm:text-[33px] md:opacity-100 lg:text-[44px]"
                     >
                       {text}
+                      {/* Same word with a real strikethrough, overlaid exactly
+                          on top and wiped in left-to-right, tied to scroll
+                          progress — so the line always tracks the glyphs and
+                          never overshoots into the pill. */}
+                      <span
+                        ref={(el) => {
+                          strikeRefs.current[i] = el;
+                        }}
+                        aria-hidden
+                        className="pointer-events-none absolute inset-0 line-through decoration-2 md:decoration-[3px]"
+                        style={{ clipPath: "inset(0 100% 0 0)" }}
+                      >
+                        {text}
+                      </span>
                     </span>
-                  </span>
 
-                  {/* Positive statement the pill resolves into — the only
-                      copy a screen reader announces, and what's left
-                      showing once the section is fully scrolled past. */}
-                  <span
-                    ref={(el) => {
-                      posRefs.current[i] = el;
-                    }}
-                    className="pointer-events-none absolute inset-0 flex items-center justify-center whitespace-nowrap font-serif text-[19px] font-bold leading-[110%] text-cream opacity-100 min-[480px]:text-[24px] sm:text-[30px] md:opacity-0 lg:text-[38px]"
-                  >
-                    {REVEAL[i]}
-                  </span>
-                </div>
-              ))}
+                    {/* Positive statement the pill resolves into — the only
+                        copy a screen reader announces, and what's left
+                        showing once the section is fully scrolled past. */}
+                    <span
+                      ref={(el) => {
+                        posRefs.current[i] = el;
+                      }}
+                      className="pointer-events-none absolute inset-0 flex items-center justify-center whitespace-nowrap font-serif text-[21px] font-bold leading-[110%] text-cream opacity-100 min-[480px]:text-[27px] sm:text-[33px] md:opacity-0 lg:text-[44px]"
+                    >
+                      {REVEAL[i]}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-
-        <p className="reveal reveal-up font-body mt-9 max-w-2xl px-6 text-center text-[16px] font-normal leading-[145%] text-cream md:text-[18px]">
-          Most voice AI hands you software to set up and maintain.
-          <br />
-          We run it for you, so you get the result, not the homework.
-        </p>
+ 
 
         {/* Meet the hosts — interactive voice demo card. Kevin's rewritten
             wrapper has no horizontal padding (his HostsDemo carried an m-8 of
