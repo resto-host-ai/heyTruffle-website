@@ -10,46 +10,40 @@ const STATEMENTS = [
   "Not replacing your host.",
 ];
 
-// Per-pill active gradient (empty string = keep the solid #4c4749 fill). The
-// second (border-box) layer keeps the same top-lit gradient stroke as the base
-// so only the fill swaps. Full literal strings so Tailwind detects them.
-// Desktop reveals on hover (md:hover); mobile toggles the same look on tap.
-const HOVER_BG = [
-  "md:hover:[background:linear-gradient(180deg,#654027_0%,#61485f_100%)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] md:hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]",
-  "md:hover:[background:linear-gradient(180deg,#594666_0%,#334061_100%)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] md:hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]",
-  "md:hover:[background:linear-gradient(180deg,#5c391d_0%,#2b2222_100%)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] md:hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]",
-];
-
-// Same gradients without a variant prefix — applied on mobile when a pill is
-// tapped open.
-const ACTIVE_BG = [
+// Per-pill resolved-state gradient (the fill it settles into once the
+// positive statement takes over). Full literal strings so Tailwind detects
+// them.
+const RESOLVED_BG = [
   "[background:linear-gradient(180deg,#654027_0%,#61485f_100%)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]",
   "[background:linear-gradient(180deg,#594666_0%,#334061_100%)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]",
   "[background:linear-gradient(180deg,#5c391d_0%,#2b2222_100%)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.04)_100%)_border-box] shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]",
 ];
 
-// Positive statement revealed on hover (empty string = no text swap).
+// Positive statement each pill resolves into.
 const REVEAL = ["A service.", "Fully managed.", "Freeing them."];
+
+// Seconds between one pill starting to resolve and the next — same value
+// drives both the strike-through wipe and the text swap, so the whole
+// sequence reads at a steady pace regardless of viewport or input type.
+const STAGGER_S = 0.6;
+const STRIKE_DURATION_S = 0.55;
 
 export default function WhatIsSection() {
   const pillsRef = useRef<HTMLDivElement>(null);
-  const [struck, setStruck] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [revealed, setRevealed] = useState<number[]>([]);
+  // Fire once when the section enters the viewport — scroll-triggered, not
+  // hover-triggered, so it plays identically on touch, mouse and keyboard.
+  const [triggered, setTriggered] = useState(false);
+  // Starts false on both server and client so hydration always matches; the
+  // effect below corrects it client-side right after mount, same pattern as
+  // the isMobile sync this replaces.
+  const [reduceMotion, setReduceMotion] = useState(false);
 
-  // On mobile the positive phrase is revealed by tapping instead of hovering.
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 767px)");
-    const sync = () => setIsMobile(mq.matches);
-    sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
-  }, []);
-
-  const toggle = (i: number) =>
-    setRevealed((prev) =>
-      prev.includes(i) ? prev.filter((x) => x !== i) : [...prev, i],
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setReduceMotion(
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches,
     );
+  }, []);
 
   useEffect(() => {
     const el = pillsRef.current;
@@ -57,7 +51,7 @@ export default function WhatIsSection() {
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setStruck(true);
+          setTriggered(true);
           io.disconnect();
         }
       },
@@ -108,51 +102,65 @@ export default function WhatIsSection() {
           className="mt-16 flex w-full max-w-[941px] flex-col gap-14"
         >
           {STATEMENTS.map((text, i) => {
-            const canReveal = !!REVEAL[i];
-            const open = canReveal && isMobile && revealed.includes(i);
+            // Reduced motion: skip the wipe/stagger entirely and land on the
+            // final resolved state immediately.
+            const strikeDelay = reduceMotion ? 0 : i * STAGGER_S;
+            const revealDelay = reduceMotion ? 0 : i * STAGGER_S + STRIKE_DURATION_S;
+            const resolved = triggered;
+
             return (
-            <div
-              key={text}
-              onClick={canReveal && isMobile ? () => toggle(i) : undefined}
-              role={canReveal && isMobile ? "button" : undefined}
-              aria-pressed={canReveal && isMobile ? open : undefined}
-              className={`group relative flex h-[92px] items-center justify-center rounded-full border border-white/40 [background:linear-gradient(180deg,rgba(255,255,255,0.05)_0%,rgba(255,255,255,0.04)_50%,rgba(255,255,255,0.05)_100%)] shadow-[0_10px_30px_rgba(0,0,0,0.22)] backdrop-blur-lg transition-all duration-300 md:h-[119px] ${
-                canReveal && isMobile ? "cursor-pointer" : ""
-              } ${open ? ACTIVE_BG[i] : HOVER_BG[i]}`}
-            >
-              <span
-                className={`relative inline-block whitespace-nowrap font-serif text-[26px] font-bold leading-[110%] text-cream transition-opacity duration-300 min-[480px]:text-[36px] sm:text-[44px] lg:text-[64px] ${
-                  canReveal ? (open ? "opacity-0" : "md:group-hover:opacity-0") : ""
+              <div
+                key={text}
+                className={`relative flex h-[92px] items-center justify-center rounded-full border border-white/40 [background:linear-gradient(180deg,rgba(255,255,255,0.05)_0%,rgba(255,255,255,0.04)_50%,rgba(255,255,255,0.05)_100%)] shadow-[0_10px_30px_rgba(0,0,0,0.22)] backdrop-blur-lg transition-all duration-300 md:h-[119px] ${
+                  resolved ? RESOLVED_BG[i] : ""
                 }`}
+                style={
+                  resolved
+                    ? { transitionDelay: `${revealDelay}s` }
+                    : undefined
+                }
               >
-                {text}
-                {/* Same word with a real strikethrough, overlaid exactly on
-                    top and wiped in left-to-right — so the line always tracks
-                    the glyphs and never overshoots into the pill. */}
+                {/* Negative statement — purely the transition, not the
+                    final meaning, so it's hidden from assistive tech. Only
+                    the positive statement below is announced. */}
                 <span
                   aria-hidden
-                  className="pointer-events-none absolute inset-0 line-through decoration-2 md:decoration-[3px]"
-                  style={{
-                    clipPath: struck ? "inset(0 0 0 0)" : "inset(0 100% 0 0)",
-                    transition: `clip-path 0.55s cubic-bezier(0.65, 0, 0.35, 1) ${
-                      i * 0.18
-                    }s`,
-                  }}
+                  className="relative inline-block whitespace-nowrap font-serif text-[26px] font-bold leading-[110%] text-cream transition-opacity duration-300 min-[480px]:text-[36px] sm:text-[44px] lg:text-[64px]"
+                  style={
+                    resolved
+                      ? { opacity: 0, transitionDelay: `${revealDelay}s` }
+                      : undefined
+                  }
                 >
                   {text}
+                  {/* Same word with a real strikethrough, overlaid exactly on
+                      top and wiped in left-to-right — so the line always
+                      tracks the glyphs and never overshoots into the pill. */}
+                  <span
+                    className="pointer-events-none absolute inset-0 line-through decoration-2 md:decoration-[3px]"
+                    style={{
+                      clipPath: resolved ? "inset(0 0 0 0)" : "inset(0 100% 0 0)",
+                      transition: `clip-path ${STRIKE_DURATION_S}s cubic-bezier(0.65, 0, 0.35, 1) ${strikeDelay}s`,
+                    }}
+                  >
+                    {text}
+                  </span>
                 </span>
-              </span>
-              {/* Positive statement revealed on hover (desktop) / tap (mobile). */}
-              {REVEAL[i] && (
+
+                {/* Positive statement the pill resolves into — the only copy
+                    a screen reader announces, and the state that persists
+                    once the scroll-triggered animation finishes. */}
                 <span
-                  className={`pointer-events-none absolute inset-0 flex items-center justify-center whitespace-nowrap font-serif text-[26px] font-bold leading-[110%] text-cream transition-opacity duration-300 min-[480px]:text-[36px] sm:text-[44px] lg:text-[64px] ${
-                    open ? "opacity-100" : "opacity-0 md:group-hover:opacity-100"
-                  }`}
+                  className="pointer-events-none absolute inset-0 flex items-center justify-center whitespace-nowrap font-serif text-[26px] font-bold leading-[110%] text-cream opacity-0 transition-opacity duration-300 min-[480px]:text-[36px] sm:text-[44px] lg:text-[64px]"
+                  style={
+                    resolved
+                      ? { opacity: 1, transitionDelay: `${revealDelay}s` }
+                      : undefined
+                  }
                 >
                   {REVEAL[i]}
                 </span>
-              )}
-            </div>
+              </div>
             );
           })}
         </div>
