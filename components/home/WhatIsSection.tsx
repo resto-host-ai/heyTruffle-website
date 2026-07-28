@@ -208,8 +208,13 @@ export default function WhatIsSection() {
           We run it for you, so you get the result, not the homework.
         </p>
 
-        {/* Meet the hosts — interactive voice demo card */}
-        <HostsDemo />
+        {/* Meet the hosts — interactive voice demo card. Kevin's rewritten
+            wrapper has no horizontal padding (his HostsDemo carried an m-8 of
+            its own, dropped in the merge), so the card needs the standard
+            site gutter here to line up with every other section. */}
+        <div className="w-full px-6 lg:px-[73px]">
+          <HostsDemo />
+        </div>
       </div>
     </section>
   );
