@@ -186,7 +186,12 @@ export default function Header() {
         <Link
           href="/"
           aria-label="heytruffle home"
-          className="mix-blend-luminosity"
+          /* Blend only from md: a blend-mode child inside the fixed header
+             forces WebKit to composite everything beneath it offscreen on
+             every scroll frame — and it can delay the logo's own first paint
+             on iOS. The phone header has an opaque bg now, so the plain logo
+             reads the same. */
+          className="md:mix-blend-luminosity"
         >
           <Image
             src="/images/heytruffle-logo.svg"

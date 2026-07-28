@@ -111,15 +111,13 @@ export default function WhatIsSection() {
                 dominated by the tall scroll spacer above and would push the
                 mask's visible band away from the content it's meant to sit
                 behind. */}
+            {/* Mask only from md — a masked 100vw image layer forces an
+                offscreen composite that iOS repaints during scroll. Phones
+                fade the band with plain gradient overlays instead (top fade
+                already exists below; bottom fade added after the image). */}
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-0"
-              style={{
-                maskImage:
-                  "linear-gradient(to bottom, transparent 0%, #000 30%, #000 80%, transparent 100%)",
-                WebkitMaskImage:
-                  "linear-gradient(to bottom, transparent 0%, #000 30%, #000 80%, transparent 100%)",
-              }}
+              className="pointer-events-none absolute inset-0 md:[mask-image:linear-gradient(to_bottom,transparent_0%,#000_30%,#000_80%,transparent_100%)] md:[-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,#000_30%,#000_80%,transparent_100%)]"
             >
               <Image
                 src="/images/background_gradient.webp"
@@ -136,6 +134,8 @@ export default function WhatIsSection() {
                 sizes="100vw"
                 className="object-cover"
               />
+              {/* Phone-only bottom fade — replaces the md mask's lower stop */}
+              <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-[#251f21] md:hidden" />
             </div>
 
             {/* Top fade so the section blends smoothly into the #251F21

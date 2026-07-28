@@ -19,6 +19,12 @@ export default function ScrollReveal() {
     // .is-visible below happen in the same synchronous pass, so nothing on
     // screen ever flashes out. Without IntersectionObserver we bail before
     // this line and everything simply stays visible.
+    //
+    // Below 768px the CSS ignores js-ready/.is-visible entirely (reveals are
+    // a desktop-only enhancement — iOS kinetic scroll outruns observer
+    // delivery). The observer still runs on phones on purpose: classes keep
+    // accumulating, so rotating a phone past 768px mid-session behaves like
+    // desktop from that point on with no re-scan needed.
     document.documentElement.classList.add("js-ready");
 
     const els = document.querySelectorAll<HTMLElement>(

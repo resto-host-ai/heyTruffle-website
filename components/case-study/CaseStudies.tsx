@@ -114,7 +114,9 @@ export default function CaseStudies({
       {!transparent && (
         <div
           aria-hidden
-          className="pointer-events-none absolute -left-40 top-1/2 h-[520px] w-[520px] -translate-y-1/2 rounded-full opacity-70 blur-[120px]"
+          /* Already a radial gradient — the extra 120px blur on top only
+             costs (a big filtered layer); phones skip the blur, md+ keeps it. */
+          className="pointer-events-none absolute -left-40 top-1/2 h-[520px] w-[520px] -translate-y-1/2 rounded-full opacity-70 md:blur-[120px]"
           style={{
             background:
               "radial-gradient(circle, rgba(239,114,0,0.45) 0%, rgba(213,146,243,0.22) 45%, transparent 72%)",
@@ -141,7 +143,9 @@ export default function CaseStudies({
           {/* soft glow behind the active card, in its accent colour */}
           <div
             aria-hidden
-            className="pointer-events-none absolute -inset-4 rounded-[36px] opacity-30 blur-3xl transition-colors duration-500"
+            /* md+ only: a viewport-wide blurred layer that re-rasterizes on
+               every accent-colour transition is pure tile pressure on iOS. */
+            className="pointer-events-none absolute -inset-4 hidden rounded-[36px] opacity-30 blur-3xl transition-colors duration-500 md:block"
             style={{ backgroundColor: cases[index].accent }}
           />
           {/* No overflow-hidden here: the peeking neighbours must run past this
@@ -168,7 +172,7 @@ export default function CaseStudies({
                    also faded the drop shadow, which left a pale halo around the
                    peeking card. Dimming stays with bgIdle, and only the active
                    card casts a shadow. */
-                className={`relative flex w-full shrink-0 grow-0 transform-gpu basis-[var(--basis)] flex-col overflow-hidden rounded-[28px] transition-all duration-500 ease-out md:h-[clamp(330px,calc(28.93vw-42.2px),420px)] md:flex-row ${
+                className={`relative flex w-full shrink-0 grow-0 basis-[var(--basis)] flex-col overflow-hidden rounded-[28px] transition-all duration-500 ease-out md:h-[clamp(330px,calc(28.93vw-42.2px),420px)] md:flex-row md:transform-gpu ${
                   i === index ? "shadow-[0_18px_36px_-12px_rgba(0,0,0,0.55)]" : ""
                 }`}
                 style={{ backgroundColor: i === index ? c.bg : c.bgIdle }}

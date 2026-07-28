@@ -27,8 +27,11 @@ export default function TrustedBy() {
         </h2>
       </div>
 
-      {/* Infinite carousel */}
-      <div className="group relative mt-12 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+      {/* Infinite carousel. The edge fade is a mask only from md — masking a
+          container whose content translates every frame makes WebKit
+          re-composite the whole strip per frame; phones get two cheap gradient
+          overlays over the section bg instead. */}
+      <div className="group relative mt-12 overflow-hidden md:[mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
         <div className="marquee flex w-max items-center gap-9 pr-9 md:gap-12 md:pr-12">
           {TRACK.map((logo, i) => (
             <div className="marquee-item" key={i}>
@@ -42,6 +45,15 @@ export default function TrustedBy() {
             </div>
           ))}
         </div>
+        {/* Phone-only edge fades (see the mask note above) */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#251f21] to-transparent md:hidden"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#251f21] to-transparent md:hidden"
+        />
       </div>
 
       <p className="mt-12 text-center font-body text-[15px] font-normal leading-[110%] md:text-[16px] text-cream">

@@ -83,7 +83,7 @@ export default function Contact() {
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-30 mix-blend-overlay"
+        className="pointer-events-none absolute inset-0 opacity-20 md:opacity-30 md:mix-blend-overlay"
         style={{ backgroundImage: NOISE }}
       />
 
