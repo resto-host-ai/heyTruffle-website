@@ -180,6 +180,7 @@ export default function WhatIsSection() {
                       ref={(el) => {
                         strikeRefs.current[i] = el;
                       }}
+                      aria-hidden
                       className="pointer-events-none absolute inset-0 line-through decoration-2 md:decoration-[3px]"
                       style={{ clipPath: "inset(0 100% 0 0)" }}
                     >
