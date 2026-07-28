@@ -1,9 +1,9 @@
-import Image from "next/image";
+import TrustedByLogo from "@/components/TrustedByLogo";
 
 /** Restaurant logos for the infinite carousel — every `logo_*` asset. */
 const LOGOS = [
   { src: "/images/logo_kyu.svg", alt: "KYU", w: 108, h: 73 },
-  { src: "/images/logo_cañita.svg", alt: "La Cañita", w: 133, h: 73 },
+  { src: "/images/logo_canita.svg", alt: "La Cañita", w: 133, h: 73 },
   { src: "/images/logo_mojitos.svg", alt: "Mojitos", w: 104, h: 73 },
   { src: "/images/logo_lima.svg", alt: "Lima", w: 123, h: 57 },
   { src: "/images/logo_rreal.svg", alt: "Rreal Tacos", w: 74, h: 73 },
@@ -31,15 +31,13 @@ export default function TrustedBy() {
       <div className="group relative mt-12 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
         <div className="marquee flex w-max items-center gap-16 pr-16">
           {TRACK.map((logo, i) => (
-            <Image
+            <TrustedByLogo
               key={i}
               src={logo.src}
               alt={logo.alt}
               width={logo.w}
               height={logo.h}
-              unoptimized
-              aria-hidden={i >= LOGOS.length}
-              className="h-12 w-auto shrink-0 opacity-70 transition-opacity hover:opacity-100"
+              hidden={i >= LOGOS.length}
             />
           ))}
         </div>

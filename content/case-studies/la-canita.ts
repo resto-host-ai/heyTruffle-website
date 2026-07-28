@@ -10,7 +10,7 @@ export const laCanita: CaseStudy = {
       "How La Cañita answers every call in two languages across its Miami rooms with HeyTruffle — booked in English, reservado en español.",
     canonical: "/case-study/la-canita/",
   },
-  logo: { src: "/images/lacañitalogo.png", alt: "La Cañita" },
+  logo: { src: "/images/lacanitalogo.png", alt: "La Cañita" },
 
   heroTags: ["Latin", "Cuban & Caribbean", "Miami", "2 locations"],
   heroWidth: "narrow",
