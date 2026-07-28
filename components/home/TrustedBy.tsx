@@ -22,8 +22,8 @@ export default function TrustedBy() {
     <section id="trusted" className="bg-[#251f21] pb-6 pt-16 md:pt-20">
       <div className="mx-auto w-full px-6 lg:px-[73px]">
         <h2 className="reveal reveal-up font-body text-center text-[16px] font-normal! leading-[145%] md:text-[18px] text-cream/90">
-          Restaurants on heytruffle answer every call.{" "}
-          <span className="text-[#d592f3]">Yours can too.</span>
+          Restaurants powered by heytruffle answer every call.{" "}
+          <span className="text-[#d592f3]">Your restaurant can too.</span>
         </h2>
       </div>
 
