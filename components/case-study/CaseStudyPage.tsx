@@ -45,7 +45,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
   return (
     <main className="bg-cream">
       {/* ── Hero ─────────────────────────────────────────── */}
-      <section className="relative flex min-h-[100svh] flex-col overflow-hidden bg-[#251f21] pb-16 pt-28 text-cream md:pt-32">
+      <section className="relative flex min-h-[100svh] flex-col overflow-hidden bg-[#251f21] pb-24 pt-28 text-cream md:pb-32 md:pt-32">
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <Image
             src="/images/fondo_casestudy.webp"
