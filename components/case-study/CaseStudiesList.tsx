@@ -335,7 +335,7 @@ export default function CaseStudiesList() {
                 />
 
                 <div className="relative flex flex-1 flex-col justify-between p-7">
-                  <h3 className="font-body text-[40px] font-normal! leading-[120%]">
+                  <h3 className="font-body text-[22px] font-normal! leading-[125%] md:text-[28px]">
                     {c.name}
                   </h3>
 
@@ -346,7 +346,7 @@ export default function CaseStudiesList() {
 
                     <Link
                       href={c.slug ? `/case-study/${c.slug}` : "#"}
-                      className="mt-5 inline-flex items-center gap-2 self-start font-body text-[16px] font-normal leading-[145%] md:text-[18px] underline underline-offset-4 transition-opacity hover:opacity-80 md:text-[26px]"
+                      className="mt-5 inline-flex items-center gap-2 self-start font-body text-[16px] font-normal leading-[145%] md:text-[16px] underline underline-offset-4 transition-opacity hover:opacity-80 md:text-[18px]"
                     >
                       Read more
                       <ArrowUpRight />

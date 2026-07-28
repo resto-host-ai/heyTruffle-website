@@ -97,7 +97,7 @@ export default function WhatIsSection() {
   }, []);
 
   return (
-    <section className="relative bg-[#251f21] pb-16 pt-28 md:pb-20 md:pt-40">
+    <section className="relative bg-[#251f21] pb-10 pt-14 md:pb-14 md:pt-20">
       <div className="relative mx-auto flex w-full flex-col items-center">
         {/* Tall spacer drives the pinned scrub on desktop; auto height (no
             pin) on mobile, where the pills just render already resolved. */}
@@ -136,15 +136,15 @@ export default function WhatIsSection() {
               className="pointer-events-none absolute inset-x-0 top-0 h-[420px] bg-gradient-to-b from-[#251f21] via-[#251f21]/70 to-transparent"
             />
 
-            <p className="reveal reveal-up relative text-center font-body text-[20px] font-normal uppercase leading-[110%] text-cream">
+            <p className="reveal reveal-up relative text-center font-body text-[15px] font-normal uppercase leading-[110%] tracking-[0.08em] text-cream/70">
               What is Hey Truffle?
             </p>
 
-            <div className="mt-16 flex w-full max-w-[941px] flex-col gap-14 p-10">
+            <div className="mt-8 flex w-full max-w-[820px] flex-col gap-6 p-0 md:gap-7">
               {STATEMENTS.map((text, i) => (
                 <div
                   key={text}
-                  className="relative flex h-[92px] items-center justify-center overflow-hidden rounded-full border border-white/40 [background:linear-gradient(180deg,rgba(255,255,255,0.05)_0%,rgba(255,255,255,0.04)_50%,rgba(255,255,255,0.05)_100%)] shadow-[0_10px_30px_rgba(0,0,0,0.22)] backdrop-blur-lg md:h-[119px]"
+                  className="relative flex h-[62px] items-center justify-center overflow-hidden rounded-full border border-white/40 [background:linear-gradient(180deg,rgba(255,255,255,0.05)_0%,rgba(255,255,255,0.04)_50%,rgba(255,255,255,0.05)_100%)] shadow-[0_10px_30px_rgba(0,0,0,0.22)] backdrop-blur-lg md:h-[78px]"
                 >
                   {/* Resolved-color overlay — crossfades in on top of the
                       base fill as the scroll-derived progress advances, so
@@ -167,7 +167,7 @@ export default function WhatIsSection() {
                       negRefs.current[i] = el;
                     }}
                     aria-hidden
-                    className="relative inline-block whitespace-nowrap font-serif text-[26px] font-bold leading-[110%] text-cream opacity-0 min-[480px]:text-[36px] sm:text-[44px] md:opacity-100 lg:text-[64px]"
+                    className="relative inline-block whitespace-nowrap font-serif text-[19px] font-bold leading-[110%] text-cream opacity-0 min-[480px]:text-[24px] sm:text-[30px] md:opacity-100 lg:text-[38px]"
                   >
                     {text}
                     {/* Same word with a real strikethrough, overlaid exactly
@@ -192,7 +192,7 @@ export default function WhatIsSection() {
                     ref={(el) => {
                       posRefs.current[i] = el;
                     }}
-                    className="pointer-events-none absolute inset-0 flex items-center justify-center whitespace-nowrap font-serif text-[26px] font-bold leading-[110%] text-cream opacity-100 min-[480px]:text-[36px] sm:text-[44px] md:opacity-0 lg:text-[64px]"
+                    className="pointer-events-none absolute inset-0 flex items-center justify-center whitespace-nowrap font-serif text-[19px] font-bold leading-[110%] text-cream opacity-100 min-[480px]:text-[24px] sm:text-[30px] md:opacity-0 lg:text-[38px]"
                   >
                     {REVEAL[i]}
                   </span>
@@ -202,7 +202,7 @@ export default function WhatIsSection() {
           </div>
         </div>
 
-        <p className="reveal reveal-up font-body mt-12 max-w-3xl text-center text-[26px] font-normal leading-[140%] text-cream">
+        <p className="reveal reveal-up font-body mt-9 max-w-2xl text-center text-[16px] font-normal leading-[145%] text-cream md:text-[18px]">
           Most voice AI hands you software to set up and maintain.
           <br />
           We run it for you, so you get the result, not the homework.
