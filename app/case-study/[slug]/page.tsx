@@ -14,6 +14,7 @@ const MIGRATED = [
   "mangos-tropical-cafe",
   "kyu",
   "baires-grill",
+  "la-canita",
 ];
 
 export function generateStaticParams() {
