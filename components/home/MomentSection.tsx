@@ -207,6 +207,12 @@ export default function MomentSection() {
                 style={{
                   zIndex: card.z,
                   aspectRatio: `${CARD_W} / ${CARD_H}`,
+                  // Pre-hydration state, matching the JS enter state (op is the
+                  // same on both trajectories): without it the server render
+                  // shows all three cards uncentred and stacked askew until the
+                  // bundle arrives.
+                  transform: "translate(-50%, -50%)",
+                  opacity: card.mEnter.op,
                 }}
                 /* @container so the copy can be sized in cqw and stay in
                    proportion to the card at every breakpoint, the way it is in
