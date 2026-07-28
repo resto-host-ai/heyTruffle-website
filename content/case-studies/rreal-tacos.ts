@@ -83,7 +83,7 @@ export const rrealTacos: CaseStudy = {
       label: "recovered every month, from this feature alone",
     },
     audio: {
-      src: "/images/largeparties.mp3",
+      src: "/audio/largeparties.mp3",
       caption: "Listen to a real large-party booking.",
     },
   },
