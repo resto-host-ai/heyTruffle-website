@@ -1,5 +1,3 @@
-"use client";
-
 export function CardGrid({
   columns,
   children,

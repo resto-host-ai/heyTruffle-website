@@ -17,6 +17,9 @@ export function generateStaticParams() {
   }));
 }
 
+// Out-of-range page numbers 404 without an on-demand render.
+export const dynamicParams = false;
+
 export async function generateMetadata({
   params,
 }: {

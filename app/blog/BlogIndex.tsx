@@ -60,7 +60,7 @@ export default function BlogIndex({ page }: { page: number }) {
           {/* ---- Featured ---- */}
           {featured && (
             <Link
-              href={`/blog/${featured.slug}`}
+              href={`/blog/${featured.slug}/`}
               className="group mt-14 grid grid-cols-1 gap-0 overflow-hidden rounded-[25px] bg-white shadow-[0_18px_44px_rgba(0,0,0,0.08)] transition-shadow duration-300 hover:shadow-[0_28px_70px_rgba(0,0,0,0.14)] md:grid-cols-2"
             >
               <div className="relative aspect-[16/10] overflow-hidden md:aspect-auto">
@@ -106,7 +106,7 @@ export default function BlogIndex({ page }: { page: number }) {
             {pagePosts.map((post) => (
               <Link
                 key={post.slug}
-                href={`/blog/${post.slug}`}
+                href={`/blog/${post.slug}/`}
                 className="group flex flex-col overflow-hidden rounded-[25px] bg-white shadow-[0_14px_34px_rgba(0,0,0,0.06)] transition-shadow duration-300 hover:shadow-[0_22px_54px_rgba(0,0,0,0.12)]"
               >
                 <div className="relative aspect-[16/10] overflow-hidden">
