@@ -39,8 +39,7 @@ export default function Footer() {
             </Link>
 
             <p className="mt-8 max-w-[340px] font-body text-[16px] font-normal leading-[130%] text-[#251f21]">
-              AI-Driven Voice Restaurant Assistants for Seamless Customer
-              Interaction
+              AI concierge for restaurants. You operate the restaurant. We operate the phones.
             </p>
           </div>
 
