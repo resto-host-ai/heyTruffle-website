@@ -64,6 +64,9 @@ export const metadata: Metadata = {
   description:
     "heytruffle is the fully managed voice AI service for U.S. restaurants. We answer 100% of calls 24/7 in English & Spanish — every reservation booked, every order taken, every catering inquiry closed.",
   alternates: { canonical: "/" },
+  verification: {
+    google: "A7AGiI5P2uFC-8t5bwNa0gRWdbT5sI5WZpVVQCgZRW0",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
