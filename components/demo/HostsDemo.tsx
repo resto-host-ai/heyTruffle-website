@@ -284,7 +284,7 @@ export default function HostsDemo() {
       className={`w-full scroll-mt-28 ${
         host
           ? "mt-20 rounded-[32px] bg-[#f6f3ec] p-2 shadow-2xl md:mt-32 md:p-3"
-          : "mt-20 rounded-[32px] bg-[#f6f3ec] px-6 py-10 shadow-2xl md:mt-32 md:px-16 md:py-12"
+          : "mt-20 rounded-[32px] bg-[#f6f3ec] px-6 py-8 shadow-2xl md:mt-32 md:px-16 md:py-12"
       }`}
     >
       {/* key on the active host so the animation replays on every swap, both
@@ -303,7 +303,7 @@ export default function HostsDemo() {
           <div
             ref={trackRef}
             onScroll={onTrackScroll}
-            className="mt-6 flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden py-4 [-ms-overflow-style:none] [scrollbar-width:none] sm:mt-8 sm:grid sm:grid-cols-4 sm:gap-x-4 sm:gap-y-10 sm:overflow-visible sm:py-0 [&::-webkit-scrollbar]:hidden"
+            className="mt-4 flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden py-2 [-ms-overflow-style:none] [scrollbar-width:none] sm:mt-8 sm:grid sm:grid-cols-4 sm:gap-x-4 sm:gap-y-10 sm:overflow-visible sm:py-0 [&::-webkit-scrollbar]:hidden"
           >
             {HOSTS.map((h) => (
               <button
@@ -334,11 +334,11 @@ export default function HostsDemo() {
                       height={337}
                       quality={90}
                       sizes="(max-width: 640px) 52vw, 200px"
-                      className="mx-auto h-auto w-[52vw] max-w-[190px] object-contain transition-transform duration-300 group-hover:scale-105 sm:w-[62%] sm:max-w-none"
+                      className="mx-auto h-auto w-[46vw] max-w-[170px] object-contain transition-transform duration-300 group-hover:scale-105 sm:w-[62%] sm:max-w-none"
                     />
                   </span>
                 </span>
-                <span className="mt-3 transition-transform duration-300 group-hover:scale-110">
+                <span className="mt-2 transition-transform duration-300 group-hover:scale-110 sm:mt-3">
                   <PlayIcon color={h.color} />
                 </span>
                 <p
@@ -357,7 +357,7 @@ export default function HostsDemo() {
           </div>
 
           {/* Carousel bullets (mobile only) */}
-          <div className="mt-8 flex justify-center gap-2.5 sm:hidden">
+          <div className="mt-5 flex justify-center gap-2.5 sm:hidden">
             {HOSTS.map((h, idx) => (
               <button
                 key={h.id}
