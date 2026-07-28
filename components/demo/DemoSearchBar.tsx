@@ -3,8 +3,8 @@
 import { useState } from "react";
 import DemoAssistant from "@/components/demo/DemoAssistant";
 
-/** Search + "Live Demo" bar that opens the live demo assistant, mirroring the
- *  home hero's behaviour. */
+/** Search + "Hear it live" bar that opens the live demo assistant, mirroring
+ *  the home hero's behaviour. */
 export default function DemoSearchBar() {
   const [query, setQuery] = useState("");
   const [demoOpen, setDemoOpen] = useState(false);
@@ -35,7 +35,7 @@ export default function DemoSearchBar() {
           type="submit"
           className="flex h-full shrink-0 items-center justify-center gap-1.5 rounded-full bg-brand-orange px-4 font-body text-[15px] font-bold leading-[110%] text-[#f6f3ec] transition-all duration-300 btn-grad btn-grad-orange hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(239,114,0,0.55)] sm:gap-3 sm:px-8 sm:text-[16px]"
         >
-          Live Demo
+          Hear it live
           <svg
             width="8"
             height="17"
