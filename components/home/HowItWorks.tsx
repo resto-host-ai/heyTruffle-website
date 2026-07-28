@@ -33,11 +33,11 @@ export default function HowItWorks() {
   const pinRef = useRef<HTMLDivElement>(null);
   const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
   // Mobile: tap a step to expand its description (first open by default).
-  const [openSteps, setOpenSteps] = useState<number[]>([0]);
+  /* Single-open accordion: opening a step closes whichever was open.
+     Tapping the open one collapses it. */
+  const [openStep, setOpenStep] = useState<number | null>(0);
   const toggleStep = (i: number) =>
-    setOpenSteps((prev) =>
-      prev.includes(i) ? prev.filter((x) => x !== i) : [...prev, i],
-    );
+    setOpenStep((prev) => (prev === i ? null : i));
 
   // Desktop: the section pins while the three steps reveal one at a time
   // (fade + rise), each fully in before the next begins. Only once all three
@@ -101,15 +101,15 @@ export default function HowItWorks() {
   return (
     <section id="how-it-works" className="relative scroll-mt-24 bg-[#251f21]">
       {/* Tall spacer drives the pinned reveal on desktop; auto height on mobile. */}
-      <div ref={pinRef} className="md:relative md:h-[260vh]">
-        <div className=" mx-auto flex w-full flex-col px-6 py-24 md:sticky md:top-0 md:h-screen md:justify-center md:overflow-hidden lg:px-[73px] md:py-0">
-          <h2 className="reveal reveal-up text-center font-serif text-[40px] font-bold! leading-[110%] md:text-[52px] lg:text-[64px]">
+      <div ref={pinRef} className="md:relative md:h-[190vh]">
+        <div className="mx-auto flex w-full flex-col px-6 py-10 md:sticky md:top-0 md:overflow-hidden md:pb-[7vh] md:pt-[13vh] lg:px-[73px]">
+          <h2 className="reveal reveal-up text-center font-serif text-[30px] font-bold! leading-[110%] md:text-[38px] lg:text-[44px]">
             <span className="text-cream">Getting started is simple.</span>
             <br />
             <span className="text-[#d592f3]">We handle the hard part.</span>
           </h2>
           <p
-            className="reveal reveal-up font-body mx-auto mt-5 max-w-[980px] text-center text-[26px] font-normal leading-[140%] text-cream"
+            className="reveal reveal-up font-body mx-auto mt-4 max-w-[820px] text-center text-[16px] font-normal leading-[145%] text-cream md:text-[18px]"
             style={{ "--reveal-delay": "0.08s" } as React.CSSProperties}
           >
             We take care of the setup, the training and the ongoing improvements{" "}
@@ -118,9 +118,9 @@ export default function HowItWorks() {
           </p>
 
           {/* Mobile: tap-to-expand coloured accordion */}
-          <div className="mt-12 flex flex-col gap-4 md:hidden">
+          <div className="mt-10 flex flex-col gap-4 md:hidden">
             {STEPS.map((step, i) => {
-              const open = openSteps.includes(i);
+              const open = openStep === i;
               return (
                 <div
                   key={step.n}
@@ -133,10 +133,10 @@ export default function HowItWorks() {
                     onClick={() => toggleStep(i)}
                     className="flex w-full items-center gap-5 px-6 py-6 text-left"
                   >
-                    <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-white/35 bg-white/10 font-body text-lg font-bold text-cream">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/35 bg-white/10 font-body text-lg font-bold text-cream">
                       {step.n}
                     </span>
-                    <span className="font-body text-[28px] font-normal leading-[115%] text-cream">
+                    <span className="font-body text-[20px] font-normal leading-[115%] text-cream">
                       {step.title}
                     </span>
                   </button>
@@ -145,7 +145,7 @@ export default function HowItWorks() {
                     style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
                   >
                     <div className="overflow-hidden">
-                      <p className="px-6 pb-7 pl-[76px] font-body text-[20px] font-normal leading-[145%] text-cream/90">
+                      <p className="px-6 pb-6 pl-[76px] font-body text-[16px] font-normal leading-[145%] text-cream/90">
                         {step.desc}
                       </p>
                     </div>
@@ -156,7 +156,7 @@ export default function HowItWorks() {
           </div>
 
           {/* Desktop: pinned, one-at-a-time reveal in three columns */}
-          <div className="mt-16 hidden gap-16 md:mt-20 md:grid md:grid-cols-3 md:items-start md:gap-2">
+          <div className="mt-12 hidden gap-16 md:mt-14 md:grid md:grid-cols-3 md:items-start md:gap-2">
             {STEPS.map((step, i) => (
               <div
                 key={step.n}
@@ -166,18 +166,18 @@ export default function HowItWorks() {
                 className="flex w-full flex-col items-center text-center will-change-transform md:items-start md:text-left"
               >
                 <div
-                  className="flex h-20 w-20 items-center justify-center rounded-full border border-white/25 text-center text-xl font-bold leading-none text-cream shadow-[inset_0_2px_2px_rgba(255,255,255,0.5),inset_0_-3px_5px_rgba(0,0,0,0.4),0_5px_14px_rgba(0,0,0,0.35)]"
+                  className="flex h-16 w-16 items-center justify-center rounded-full border border-white/25 text-center text-xl font-bold leading-none text-cream shadow-[inset_0_2px_2px_rgba(255,255,255,0.5),inset_0_-3px_5px_rgba(0,0,0,0.4),0_5px_14px_rgba(0,0,0,0.35)]"
                   style={{ backgroundImage: step.circle }}
                 >
                   {step.n}
                 </div>
                 <h3
-                  className="mt-6 flex mb-2 items-start font-body text-[28px] font-normal! leading-[120%] md:text-[32px]"
+                  className="mt-5 mb-2 flex items-start font-body text-[16px] font-normal! leading-[120%] md:text-[18px]"
                   style={{ color: step.titleColor }}
                 >
                   {step.title}
                 </h3>
-                <p className=" font-body text-[22px] font-normal leading-[140%] text-cream">
+                <p className="font-body text-[16px] font-normal leading-[145%] text-cream md:text-[18px]">
                   {step.desc}
                 </p>
               </div>

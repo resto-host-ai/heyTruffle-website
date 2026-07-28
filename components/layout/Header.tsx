@@ -14,6 +14,7 @@ const NAV_BEFORE: NavItem[] = [
   { label: "Case Studies", href: "/case-study" },
   { label: "How It Works", href: "/#how-it-works" },
   { label: "About", href: "/#about" },
+  { label: "Pricing", href: "/#pricing" },
 ];
 
 const NAV_AFTER: NavItem[] = [{ label: "Contact", href: "/#contact" }];
@@ -70,7 +71,40 @@ function smoothScrollToAnchor(
   if (!el) return;
 
   e.preventDefault();
-  el.scrollIntoView({ behavior: "smooth" });
+
+  /* Manual maths instead of scrollIntoView: smooth scrollIntoView locks its
+     destination on the first frame, but on this page the layout shifts while
+     the scroll is in flight (pinned-section spacers sized in vh, collapsing
+     mobile browser chrome), so a long jump — e.g. Pricing from the top on a
+     phone — landed hundreds of px past the target. We aim at the same offset
+     scroll-mt-24 encodes (80px header + 16px air), then re-measure when the
+     scroll settles and correct any residual drift, up to three passes. */
+  const HEADER_H = 80;
+  const GAP = 16;
+  const scrollToTarget = () => {
+    const top = window.scrollY + el.getBoundingClientRect().top - HEADER_H - GAP;
+    window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+  };
+
+  let passes = 0;
+  const settle = () => {
+    const drift = el.getBoundingClientRect().top - (HEADER_H + GAP);
+    if (Math.abs(drift) > 4 && passes++ < 3) {
+      scrollToTarget();
+      arm();
+    }
+  };
+  const arm = () => {
+    if ("onscrollend" in window) {
+      window.addEventListener("scrollend", settle, { once: true });
+    } else {
+      // Safari < 17.4 has no scrollend; a generous timeout approximates it.
+      setTimeout(settle, 800);
+    }
+  };
+
+  scrollToTarget();
+  arm();
   window.history.pushState(null, "", href.slice(hashIndex));
 }
 
@@ -133,12 +167,12 @@ export default function Header() {
   return (
     <>
     <header
-      className={`fixed inset-x-0 top-0 z-50 backdrop-blur-xl transition-all duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 h-[80px] backdrop-blur-xl transition-all duration-300 ${
         overlayOpen ? "pointer-events-none opacity-0" : ""
       } ${
         scrolled
-          ? "h-[90px] bg-[#1c1917]/85 shadow-[0_8px_30px_rgba(0,0,0,0.25)]"
-          : "h-[90px] bg-black/35"
+          ? "bg-[#1c1917]/85 shadow-[0_8px_30px_rgba(0,0,0,0.25)]"
+          : "bg-black/35"
       }`}
     >
       <div className="relative z-20 flex h-full w-full items-center justify-between gap-6 px-6 lg:px-[73px]">
@@ -160,7 +194,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop nav — centered relative to the page */}
-        <nav className="hidden items-center gap-8 lg:flex xl:gap-14">
+        <nav className="hidden items-center gap-2 lg:flex xl:gap-4">
           {NAV_BEFORE.map((link) => (
             <NavLink key={link.label} {...link} />
           ))}
@@ -192,11 +226,7 @@ export default function Header() {
 
             {/* Panel — full-width bar flush against the header's bottom edge,
                 in the same dark/blurred style as the header. */}
-            <div
-              className={`invisible fixed inset-x-0 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 ${
-                scrolled ? "top-[90px]" : "top-[90px]"
-              }`}
-            >
+            <div className="invisible fixed inset-x-0 top-[80px] opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
               <div className="border-t border-white/10 bg-[#1c1917]/95 shadow-[0_24px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl">
                 <div className="grid w-full grid-cols-2 gap-x-14 gap-y-8 px-6 py-10 md:grid-cols-4 lg:px-[73px]">
                   {INTEGRATIONS.map((group) => (
@@ -209,7 +239,7 @@ export default function Header() {
                           <li key={item}>
                             <Link
                               href={itemHref(item)}
-                              className="font-body text-[20px] font-normal leading-[110%] text-cream transition-colors hover:text-brand-orange"
+                              className="font-body text-[16px] font-normal leading-[110%] text-cream transition-colors hover:text-brand-orange"
                             >
                               {item}
                             </Link>
@@ -236,61 +266,72 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* Mobile menu button */}
+        {/* Mobile menu button — three absolutely-positioned bars rather than a
+            swapped SVG, so the burger can morph into the X instead of cutting
+            between two icons. The outer bars rotate onto the centre line while
+            the middle one fades out. */}
         <button
           type="button"
           aria-label="Toggle menu"
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((open) => !open)}
-          className="flex h-10 w-10 items-center justify-center text-cream lg:hidden"
+          className="relative flex h-10 w-10 items-center justify-center text-cream lg:hidden"
         >
-          <svg
-            width="26"
-            height="26"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
+          <span
             aria-hidden
-          >
-            {menuOpen ? (
-              <>
-                <line x1="5" y1="5" x2="19" y2="19" />
-                <line x1="19" y1="5" x2="5" y2="19" />
-              </>
-            ) : (
-              <>
-                <line x1="3" y1="7" x2="21" y2="7" />
-                <line x1="3" y1="12" x2="21" y2="12" />
-                <line x1="3" y1="17" x2="21" y2="17" />
-              </>
-            )}
-          </svg>
+            className={`absolute h-[2px] w-[20px] rounded-full bg-current transition-transform duration-300 ease-out ${
+              menuOpen ? "rotate-45" : "-translate-y-[6px]"
+            }`}
+          />
+          <span
+            aria-hidden
+            className={`absolute h-[2px] w-[20px] rounded-full bg-current transition-all duration-200 ease-out ${
+              menuOpen ? "scale-x-0 opacity-0" : "scale-x-100 opacity-100"
+            }`}
+          />
+          <span
+            aria-hidden
+            className={`absolute h-[2px] w-[20px] rounded-full bg-current transition-transform duration-300 ease-out ${
+              menuOpen ? "-rotate-45" : "translate-y-[6px]"
+            }`}
+          />
         </button>
       </div>
     </header>
 
-      {/* Mobile dropdown menu — a floating glass panel anchored to the
-          top-right, sibling of <header> so it isn't trapped by the header's
-          backdrop-filter containing block. */}
-      {menuOpen && (
-        <div className="fixed inset-0 z-40 lg:hidden">
-          {/* Transparent click-catcher so the page stays visible behind. */}
-          <button
-            type="button"
-            aria-label="Close menu"
-            tabIndex={-1}
-            onClick={() => setMenuOpen(false)}
-            className="absolute inset-0 h-full w-full cursor-default"
-          />
+      {/* Mobile dropdown menu — a glass panel spanning the width of the header
+          gutter, sibling of <header> so it isn't trapped by the header's
+          backdrop-filter containing block.
 
-          <nav
-            className={`absolute right-4 max-h-[calc(100vh-96px)] w-[72%] max-w-[360px] overflow-y-auto rounded-[28px] border border-white/12 bg-[#221a29]/80 shadow-[0_24px_60px_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-all duration-200 ${
-              scrolled ? "top-[102px]" : "top-[102px]"
-            }`}
-          >
-            <div className="flex flex-col items-end gap-1 px-7 py-6 text-right">
+          Kept mounted (rather than conditionally rendered) so it can animate
+          both ways; `invisible` when closed takes it out of the tab order and
+          stops it swallowing clicks. */}
+      <div
+        className={`fixed inset-0 z-40 lg:hidden ${
+          menuOpen ? "" : "pointer-events-none"
+        }`}
+      >
+        {/* Transparent click-catcher so the page stays visible behind. */}
+        <button
+          type="button"
+          aria-label="Close menu"
+          tabIndex={-1}
+          onClick={() => setMenuOpen(false)}
+          className={`absolute inset-0 h-full w-full cursor-default ${
+            menuOpen ? "" : "hidden"
+          }`}
+        />
+
+        {/* Sits 12px below the 80px header, inset by the same 24px gutter the
+            header uses; max-height leaves the same gap at the bottom. */}
+        <nav
+          className={`absolute inset-x-6 top-[92px] max-h-[calc(100vh-104px)] origin-top overflow-y-auto rounded-[28px] border border-white/12 bg-[#221a29]/80 shadow-[0_24px_60px_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-all duration-300 ease-out ${
+            menuOpen
+              ? "visible translate-y-0 opacity-100"
+              : "invisible -translate-y-3 opacity-0"
+          }`}
+        >
+          <div className="flex flex-col items-start gap-1 px-6 py-5 text-left">
               {NAV_BEFORE.map(({ label, href, demo }) =>
                 demo ? (
                   <button
@@ -300,7 +341,7 @@ export default function Header() {
                       setMenuOpen(false);
                       void openCalendly();
                     }}
-                    className="py-2.5 font-body text-[26px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
+                    className="w-full py-2.5 text-left font-body text-[20px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
                   >
                     {label}
                   </button>
@@ -312,7 +353,7 @@ export default function Header() {
                       smoothScrollToAnchor(href, e);
                       setMenuOpen(false);
                     }}
-                    className="py-2.5 font-body text-[26px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
+                    className="w-full py-2.5 text-left font-body text-[20px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
                   >
                     {label}
                   </Link>
@@ -324,7 +365,7 @@ export default function Header() {
                 type="button"
                 aria-expanded={mobileIntegrationsOpen}
                 onClick={() => setMobileIntegrationsOpen((open) => !open)}
-                className="flex items-center justify-end gap-2 py-2.5 font-body text-[26px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
+                className="flex w-full items-center justify-between py-2.5 text-left font-body text-[20px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
               >
                 Integrations
                 <svg
@@ -345,7 +386,7 @@ export default function Header() {
                 </svg>
               </button>
               {mobileIntegrationsOpen && (
-                <div className="flex w-full flex-col items-end gap-4 border-y border-white/10 py-4">
+                <div className="flex w-full flex-col items-start gap-4 border-y border-white/10 py-4">
                   {INTEGRATIONS.map((group) => (
                     <div key={group.heading}>
                       <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-cream/45">
@@ -385,7 +426,7 @@ export default function Header() {
                       setMenuOpen(false);
                       void openCalendly();
                     }}
-                    className="py-2.5 font-body text-[26px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
+                    className="w-full py-2.5 text-left font-body text-[20px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
                   >
                     {label}
                   </button>
@@ -397,16 +438,15 @@ export default function Header() {
                       smoothScrollToAnchor(href, e);
                       setMenuOpen(false);
                     }}
-                    className="py-2.5 font-body text-[26px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
+                    className="w-full py-2.5 text-left font-body text-[20px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
                   >
                     {label}
                   </Link>
-                ),
-              )}
-            </div>
-          </nav>
-        </div>
-      )}
+              ),
+            )}
+          </div>
+        </nav>
+      </div>
     </>
   );
 }

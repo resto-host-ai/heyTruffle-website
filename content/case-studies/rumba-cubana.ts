@@ -10,7 +10,7 @@ export const rumbaCubana: CaseStudy = {
       "How Rumba Cubana keeps six New Jersey kitchens covered with HeyTruffle — every call answered, the table booked and the link sent, with the same warm welcome at each.",
     canonical: "/case-study/rumba-cubana/",
   },
-  logo: { src: "/images/rumbalogo.png", alt: "Rumba Cubana" },
+  logo: { src: "/images/rumbalogo.webp", alt: "Rumba Cubana" },
 
   heroTags: ["Cuban", "Reservations", "New Jersey", "6 locations"],
   heroWidth: "narrow",

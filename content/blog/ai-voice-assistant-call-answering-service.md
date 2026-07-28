@@ -31,7 +31,7 @@ This level of automation not only improves service but also frees up human staff
 
 Not all AI voice platforms are created equal. For restaurants looking to invest in long-term solutions, choosing the best AI voice assistant service is fundamental.
 
-Look for service reliability as a top priority. Your voice assistant needs to operate without downtime, especially during peak hours. heytruffle.com is built on robust infrastructure with failover protocols, so you can rest easy knowing your communication channel is always on.
+Look for service reliability as a top priority. Your voice assistant needs to operate without downtime, especially during peak hours. heytruffle.ai is built on robust infrastructure with failover protocols, so you can rest easy knowing your communication channel is always on.
 
 Equally important is integration with existing systems. A great AI assistant should plug seamlessly into your POS, online booking tools, or CRM. That way, reservations are updated in real time, and staff don't have to manually re-enter information.
 

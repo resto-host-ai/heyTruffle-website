@@ -10,7 +10,7 @@ export const kyu: CaseStudy = {
       "How KYU resolved 1,964 calls — every single one — across Miami, NYC and Las Vegas with HeyTruffle, without passing one to the floor.",
     canonical: "/case-study/kyu/",
   },
-  logo: { src: "/images/kyulogo.png", alt: "KYU" },
+  logo: { src: "/images/kyulogo.webp", alt: "KYU" },
 
   heroTags: ["Asian-inspired", "Reservations", "Miami, NYC & Las Vegas", "3 locations"],
   heroWidth: "narrow",

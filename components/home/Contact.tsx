@@ -70,7 +70,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative scroll-mt-24 overflow-hidden bg-[#251f21] py-24 md:py-32"
+      className="relative scroll-mt-24 overflow-hidden bg-[#251f21] py-10 md:py-16"
     >
       {/* Warm radial glow, echoing the brand gradient */}
       <div

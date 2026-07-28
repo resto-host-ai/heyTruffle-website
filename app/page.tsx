@@ -8,6 +8,7 @@ import CaseStudies from "@/components/case-study/CaseStudies";
 import TeamSection from "@/components/home/TeamSection";
 import Contact from "@/components/home/Contact";
 // Temporarily hidden from the home — re-enable when ready:
+// (Pricing now renders inside TeamSection, mirroring the client's dev build.)
 // import Features from "@/components/marketing/Features";
 // import Partner from "@/components/marketing/Partner";
 // import Integrations from "@/components/marketing/Integrations";

@@ -120,7 +120,7 @@ export default function LegalPage({
             alt=""
             fill
             priority
-            quality={100}
+            quality={90}
             sizes="100vw"
             className="object-cover"
           />

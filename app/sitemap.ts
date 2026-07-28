@@ -40,5 +40,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...caseStudies, ...integrations, ...posts];
+  // Paged blog index (page 1 is /blog/ itself; 9 grid cards per page).
+  const blogPages: MetadataRoute.Sitemap = Array.from(
+    { length: Math.max(0, Math.ceil((getAllPostMeta().length - 1) / 9) - 1) },
+    (_, i) => ({
+      url: `${SITE}/blog/page/${i + 2}/`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.5,
+    }),
+  );
+
+  return [...staticPages, ...caseStudies, ...integrations, ...posts, ...blogPages];
 }

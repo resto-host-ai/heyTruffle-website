@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { Marked } from "marked";
 
 export type PostMeta = {
   slug: string;
@@ -78,7 +79,7 @@ export function getPostSlugs(): string[] {
 }
 
 /** Every post, newest first. */
-export function getAllPosts(): Post[] {
+function getAllPosts(): Post[] {
   return getPostSlugs()
     .map(readPost)
     .sort((a, b) => (a.date < b.date ? 1 : -1));
@@ -100,6 +101,31 @@ export function getPost(slug: string): Post | null {
   } catch {
     return null;
   }
+}
+
+/* Rendered output goes straight into dangerouslySetInnerHTML, so raw HTML in a
+   post body is escaped rather than passed through. None of the 50 posts use
+   embedded HTML today; this keeps it that way, so a stray <script> pasted into
+   a .md file (or arriving with future content from a CMS) renders as visible
+   text instead of executing. Everything markdown itself produces — links,
+   images, tables — is unaffected.
+
+   Own Marked instance rather than the global `marked`: configuring the shared
+   singleton would silently change behaviour for any other call site. */
+const renderer = new Marked({
+  renderer: {
+    html({ text }) {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+    },
+  },
+});
+
+/** Render a post body to HTML. */
+export function renderMarkdown(markdown: string): string {
+  return renderer.parse(markdown, { async: false }) as string;
 }
 
 /** Format an ISO date as e.g. "July 9, 2026". */

@@ -4,7 +4,6 @@ import Link from "next/link";
 import { BookDemoButton } from "@/components/ui/BookDemoButton";
 import { NOISE } from "@/lib/noise";
 import HearItLive from "@/components/demo/HearItLive";
-import HostsDemo from "@/components/demo/HostsDemo";
 import CaseStudies from "@/components/case-study/CaseStudies";
 import DemoSearchBar from "@/components/demo/DemoSearchBar";
 import SuccessStats from "@/components/case-study/SuccessStats";
@@ -69,7 +68,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
         <div className="relative mx-auto flex w-full w-full flex-1 flex-col px-6 lg:px-[73px]">
           <Link
             href="/case-study"
-            className="inline-flex items-center gap-2 font-body text-[20px] font-normal leading-[110%] text-cream/90 transition-opacity hover:opacity-70"
+            className="inline-flex items-center gap-2 font-body text-[15px] font-normal leading-[110%] md:text-[16px] text-cream/90 transition-opacity hover:opacity-70"
           >
             <ChevronLeft />
             Case studies <span className="text-cream/50">/</span>
@@ -81,7 +80,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
               {cs.heroTags.map((tag, i) => (
                 <span
                   key={tag}
-                  className="flex items-center gap-6 font-body text-[20px] font-normal leading-[110%] text-cream"
+                  className="flex items-center gap-6 font-body text-[15px] font-normal leading-[110%] md:text-[16px] text-cream"
                 >
                   {tag}
                   {i < cs.heroTags.length - 1 && (
@@ -113,10 +112,10 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
               {cs.headline.trailing}
             </h1>
 
-            <p className="mx-auto mt-6 max-w-[826px] text-center font-body text-[20px] font-normal leading-[140%] text-cream md:text-[26px]">
+            <p className="mx-auto mt-6 max-w-[826px] text-center font-body text-[16px] font-normal leading-[145%] text-cream md:text-[18px]">
               {cs.paragraphs[0]}
             </p>
-            <p className="mx-auto mt-6 max-w-[826px] text-center font-body text-[20px] font-normal leading-[140%] text-cream md:text-[26px]">
+            <p className="mx-auto mt-6 max-w-[826px] text-center font-body text-[16px] font-normal leading-[145%] text-cream md:text-[18px]">
               {cs.paragraphs[1]}
             </p>
           </div>
@@ -128,7 +127,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
                   <p className="font-body text-[44px] font-normal leading-[110%] md:text-[64px]">
                     {formatValue(s.value)}
                   </p>
-                  <p className="mt-1 text-center font-body text-[16px] font-normal leading-[130%] text-cream/90 md:text-[20px]">
+                  <p className="mt-1 text-center font-body text-[15px] font-normal leading-[130%] text-cream/90 md:text-[16px]">
                     {s.label}
                   </p>
                 </div>
@@ -159,13 +158,13 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
 
               <div className="relative grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
                 <div>
-                  <p className="font-body text-[18px] font-normal uppercase leading-[140%] text-[#D592F3] md:text-[26px]">
+                  <p className="font-body text-[14px] font-normal uppercase tracking-[0.14em] leading-[140%] text-[#D592F3] md:text-[15px]">
                     {cs.featureStory.eyebrow}
                   </p>
-                  <h2 className="mt-4 font-serif text-[44px] font-bold! leading-[110%] text-[#F9FAFB] md:text-[64px]">
+                  <h2 className="mt-4 font-serif text-[34px] font-bold! leading-[110%] text-[#F9FAFB] md:text-[44px] lg:text-[52px]">
                     {cs.featureStory.title}
                   </h2>
-                  <p className="mt-5 max-w-[560px] font-body text-[18px] font-normal leading-[140%] text-[#F9FAFB] md:text-[26px]">
+                  <p className="mt-5 max-w-[560px] font-body text-[16px] font-normal leading-[145%] text-[#F9FAFB] md:text-[18px]">
                     {withLineBreaks(cs.featureStory.intro)}
                   </p>
 
@@ -175,7 +174,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
                         <span className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-brand-orange/50 bg-brand-orange/10 font-body text-[18px] font-normal leading-none text-brand-orange">
                           {i + 1}
                         </span>
-                        <p className="font-body text-[18px] font-normal leading-[140%] text-[#F9FAFB] md:text-[26px]">
+                        <p className="font-body text-[16px] font-normal leading-[145%] text-[#F9FAFB] md:text-[18px]">
                           {point}
                         </p>
                       </li>
@@ -203,7 +202,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
                     >
                       {cs.featureStory.highlights[0].value}
                     </p>
-                    <p className="font-body text-[18px] font-normal leading-[140%] text-[#F6F3EC] md:text-[26px]">
+                    <p className="font-body text-[16px] font-normal leading-[145%] text-[#F6F3EC] md:text-[18px]">
                       {cs.featureStory.highlights[0].label}
                     </p>
                   </div>
@@ -237,7 +236,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
                         >
                           {h.value}
                         </p>
-                        <p className="font-body text-[18px] font-normal leading-[140%] text-[#F6F3EC] md:text-[26px]">
+                        <p className="font-body text-[16px] font-normal leading-[145%] text-[#F6F3EC] md:text-[18px]">
                           {h.label}
                         </p>
                       </div>
@@ -270,13 +269,13 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
 
               <div className="relative grid grid-cols-1 items-start gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
                 <div>
-                  <p className="font-body text-[18px] font-normal uppercase leading-[140%] text-[#D592F3] md:text-[26px]">
+                  <p className="font-body text-[14px] font-normal uppercase tracking-[0.14em] leading-[140%] text-[#D592F3] md:text-[15px]">
                     {cs.featureStory.eyebrow}
                   </p>
-                  <h2 className="mt-4 font-serif text-[44px] font-bold! leading-[110%] text-[#F9FAFB] md:text-[64px]">
+                  <h2 className="mt-4 font-serif text-[34px] font-bold! leading-[110%] text-[#F9FAFB] md:text-[44px] lg:text-[52px]">
                     {cs.featureStory.title}
                   </h2>
-                  <p className="mt-5 max-w-[560px] font-body text-[18px] font-normal leading-[140%] text-[#F9FAFB] md:text-[26px]">
+                  <p className="mt-5 max-w-[560px] font-body text-[16px] font-normal leading-[145%] text-[#F9FAFB] md:text-[18px]">
                     {cs.featureStory.intro}
                   </p>
 
@@ -286,7 +285,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
                         <span className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-brand-orange/50 bg-brand-orange/10 font-body text-[18px] font-normal leading-none text-brand-orange">
                           {i + 1}
                         </span>
-                        <p className="max-w-[560px] font-body text-[18px] font-normal leading-[140%] text-[#F9FAFB] md:text-[26px]">
+                        <p className="max-w-[560px] font-body text-[16px] font-normal leading-[145%] text-[#F9FAFB] md:text-[18px]">
                           {point}
                         </p>
                       </li>
@@ -382,7 +381,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
       {cs.capabilities && (
         <section className="relative bg-cream pb-24 pt-24 text-[#251f21] md:pb-32 md:pt-32">
           <div className="mx-auto w-full px-6 lg:px-[73px]">
-            <h2 className="mx-auto max-w-[720px] text-center font-serif text-[40px] font-bold! leading-[110%] md:text-[52px] lg:text-[64px]">
+            <h2 className="mx-auto max-w-[720px] text-center font-serif text-[30px] font-bold! leading-[110%] md:text-[38px] lg:text-[44px]">
               {cs.capabilities.heading}
             </h2>
 
@@ -412,12 +411,12 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
                     style={{ backgroundImage: NOISE }}
                   />
 
-                  <p className="relative whitespace-pre-line p-8 font-body text-[40px] font-normal leading-[110%] text-[#251f21] transition-opacity duration-300 group-hover:opacity-0 md:p-10 md:text-[58px]">
+                  <p className="relative whitespace-pre-line p-8 font-body text-[22px] font-normal leading-[130%] text-[#251f21] md:text-[28px] transition-opacity duration-300 group-hover:opacity-0 md:p-10 md:text-[58px]">
                     {c.title}
                   </p>
 
                   <div className="absolute inset-0 flex flex-col justify-between p-8 opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:p-10">
-                    <p className="font-body text-[28px] font-normal leading-[110%] text-[#251f21] md:text-[40px]">
+                    <p className="font-body text-[22px] font-normal leading-[130%] text-[#251f21] md:text-[28px]">
                       {c.flat}
                     </p>
                     <div>
@@ -436,22 +435,10 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
         </section>
       )}
 
-      {/* ── Hear the conversations ───────────────────────── */}
-      <section className="relative bg-cream py-24 text-[#251f21] md:py-32">
-        <div className="mx-auto w-full px-6 lg:px-[73px]">
-          <h2 className="mx-auto max-w-[840px] text-center font-serif text-[40px] font-bold! leading-[110%] text-brand-orange md:text-[52px] lg:text-[64px]">
-            Hear the conversations behind the results.
-          </h2>
-          <div className="mt-14">
-            <HostsDemo soloHostId="nacho" sampleLabel={cs.hostSampleLabel} />
-          </div>
-        </div>
-      </section>
-
       {/* ── No assumptions. Just the math/results. ───────── */}
       <section className="relative bg-cream pb-24 text-[#251f21] md:pb-32">
         <div className="mx-auto w-full px-6 lg:px-[73px]">
-          <h2 className="text-center font-serif text-[40px] font-bold! leading-[110%] md:text-[52px] lg:text-[64px]">
+          <h2 className="text-center font-serif text-[30px] font-bold! leading-[110%] md:text-[38px] lg:text-[44px]">
             {cs.measured.heading[0]}
             <br />
             {cs.measured.heading[1]}
@@ -459,10 +446,10 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
 
           <div className="mt-12 grid grid-cols-2 gap-4 sm:mt-16 sm:gap-5 lg:grid-cols-[minmax(0,1.15fr)_repeat(4,minmax(0,1fr))] lg:items-center">
             <div className="col-span-2 lg:col-span-1">
-              <p className="font-body text-[28px] font-normal! leading-[120%] md:text-[40px]">
+              <p className="font-body text-[20px] font-normal! leading-[120%] md:text-[24px]">
                 Measured results
               </p>
-              <p className="mt-4 max-w-[420px] font-body text-[20px] font-normal leading-[140%] md:text-[26px]">
+              <p className="mt-4 max-w-[420px] font-body text-[16px] font-normal leading-[145%] md:text-[18px]">
                 {cs.measured.intro}
               </p>
             </div>
@@ -477,7 +464,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
                 >
                   {formatValue(m.value)}
                 </p>
-                <p className="mt-1 font-body text-[15px] font-normal leading-[130%] sm:mt-2 sm:text-[22px] md:text-[26px]">
+                <p className="mt-1 font-body text-[15px] font-normal leading-[130%] sm:mt-2 md:text-[16px]">
                   {m.label}
                 </p>
               </div>
@@ -486,7 +473,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
 
           {cs.impact && (
             <div className="mt-16">
-              <p className="font-body text-[28px] font-normal! leading-[120%] md:text-[40px]">
+              <p className="font-body text-[20px] font-normal! leading-[120%] md:text-[24px]">
                 Estimated business impact
               </p>
               <div className="mt-8 flex flex-col gap-6 xl:flex-row xl:items-stretch">
@@ -563,10 +550,10 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
           {cs.testimonial && (
             <section className="relative overflow-hidden py-24 text-cream md:py-32">
               <div className="mx-auto w-full px-6 lg:px-[73px]">
-                <h2 className="text-center font-serif text-[40px] font-bold! leading-[110%] md:text-[52px] lg:text-[64px]">
+                <h2 className="text-center font-serif text-[30px] font-bold! leading-[110%] md:text-[38px] lg:text-[44px]">
                   In their own words.
                 </h2>
-                <p className="mx-auto mt-5 max-w-[974px] text-center font-body text-[20px] font-normal leading-[140%] text-cream md:text-[26px]">
+                <p className="mx-auto mt-5 max-w-[974px] text-center font-body text-[16px] font-normal leading-[145%] text-cream md:text-[18px]">
                   The impact of HeyTruffle goes beyond answered calls.
                 </p>
 
@@ -588,24 +575,24 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
                       }}
                     />
                     <div className="absolute inset-x-0 bottom-0 p-8 md:p-10">
-                      <p className="font-body text-[28px] font-bold leading-[120%] text-[#251f21] md:text-[40px]">
+                      <p className="font-body text-[20px] font-bold leading-[125%] text-[#251f21] md:text-[24px]">
                         {cs.testimonial.person}
                       </p>
-                      <p className="mt-1 font-body text-[20px] font-normal leading-[140%] text-[#251f21] md:text-[26px]">
+                      <p className="mt-1 font-body text-[16px] font-normal leading-[145%] text-[#251f21] md:text-[18px]">
                         {cs.testimonial.role}
                       </p>
                     </div>
                   </div>
 
                   <div>
-                    <p className="font-serif text-[36px] font-bold! leading-[110%] md:text-[52px] lg:text-[64px]">
+                    <p className="font-serif text-[30px] font-bold! leading-[110%] md:text-[38px] lg:text-[44px]">
                       &ldquo;{cs.testimonial.quoteLead}
                       <span className="text-[#d592f3]">
                         {cs.testimonial.accentWord}
                       </span>
                       {cs.testimonial.quoteTrailing}
                     </p>
-                    <p className="mt-6 font-body text-[20px] font-normal italic leading-[140%] text-cream md:text-[26px]">
+                    <p className="mt-6 font-body text-[16px] font-normal italic leading-[145%] text-cream md:text-[18px]">
                       {cs.testimonial.body}&rdquo;
                     </p>
                   </div>
@@ -642,7 +629,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
                 />
 
                 <div className="relative flex w-full flex-col items-center">
-                  <h2 className="mx-auto max-w-[972px] font-serif text-[40px] font-bold! leading-[110%] md:text-[52px] lg:text-[64px]">
+                  <h2 className="mx-auto max-w-[972px] font-serif text-[30px] font-bold! leading-[110%] md:text-[38px] lg:text-[44px]">
                     Hear what heytruffle would capture for your restaurant.
                   </h2>
 
@@ -655,7 +642,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
                   >
                     Talk to our team
                   </BookDemoButton>
-                  <p className="mt-6 font-body text-[20px] font-normal leading-[110%] text-cream/80">
+                  <p className="mt-6 font-body text-[15px] font-normal leading-[110%] md:text-[16px] text-cream/80">
                     Backed by real people.
                   </p>
                 </div>

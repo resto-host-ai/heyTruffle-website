@@ -87,19 +87,19 @@ export default async function IntegrationPage({
 
         <div className="relative mx-auto max-w-[820px] px-6 text-center md:px-10">
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-            <span className="font-body text-[20px] font-normal leading-[110%] text-cream">
+            <span className="font-body text-[15px] font-normal leading-[110%] md:text-[16px] text-cream">
               Integration
             </span>
             <span className="h-1.5 w-1.5 rounded-full bg-cream/60" />
-            <span className="font-body text-[20px] font-normal leading-[110%] text-cream">
+            <span className="font-body text-[15px] font-normal leading-[110%] md:text-[16px] text-cream">
               {category}
             </span>
           </div>
 
-          <h1 className="mx-auto mt-8 max-w-[760px] font-serif text-[40px] font-bold! leading-[115%] text-cream md:text-[56px] lg:text-[64px]">
+          <h1 className="mx-auto mt-8 max-w-[760px] font-serif text-[30px] font-bold! leading-[115%] text-cream md:text-[38px] lg:text-[44px]">
             {renderH1(h1, brand, accent)}
           </h1>
-          <p className="mx-auto mt-6 max-w-[620px] font-body text-[20px] font-normal leading-[140%] text-cream md:text-[26px]">
+          <p className="mx-auto mt-6 max-w-[620px] font-body text-[16px] font-normal leading-[145%] text-cream md:text-[18px]">
             {hook}
           </p>
 
@@ -161,11 +161,11 @@ export default async function IntegrationPage({
               <p className="font-body text-[15px] font-semibold uppercase tracking-[0.18em] text-brand-orange">
                 What it does
               </p>
-              <h2 className="mt-5 font-serif text-[32px] font-bold! leading-[115%] text-[#251f21] md:text-[44px] lg:text-[52px]">
+              <h2 className="mt-5 font-serif text-[30px] font-bold! leading-[115%] text-[#251f21] md:text-[38px] lg:text-[44px]">
                 The phone line, finally in sync with{" "}
                 <span style={{ color: accent }}>{brand}</span>.
               </h2>
-              <p className="mt-6 font-body text-[20px] font-normal leading-[140%] text-[#251f21]/80 md:text-[24px]">
+              <p className="mt-6 font-body text-[16px] font-normal leading-[145%] text-[#251f21]/80 md:text-[18px]">
                 {valueProp}
               </p>
             </div>
@@ -206,7 +206,7 @@ export default async function IntegrationPage({
                 <span className="font-mono text-[13px] font-medium tracking-[0.14em] text-brand-purple">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className="mt-4 font-body text-[24px] font-normal! leading-[120%] text-[#251f21] md:text-[28px]">
+                <h3 className="mt-4 font-body text-[20px] font-normal! leading-[120%] text-[#251f21] md:text-[24px]">
                   {c.title}
                 </h3>
                 <p className="mt-3 font-body text-[17px] font-normal leading-[140%] text-[#251f21]/70">
@@ -236,15 +236,15 @@ export default async function IntegrationPage({
               style={{ backgroundImage: NOISE }}
             />
             <div className="relative flex w-full flex-col items-center">
-              <h2 className="mx-auto max-w-[972px] font-serif text-[36px] font-bold! leading-[110%] md:text-[52px] lg:text-[60px]">
+              <h2 className="mx-auto max-w-[972px] font-serif text-[30px] font-bold! leading-[110%] md:text-[38px] lg:text-[44px]">
                 Put heytruffle on every{" "}
                 <span style={{ color: accent }}>{brand}</span> call.
               </h2>
-              <p className="mx-auto mt-5 max-w-[560px] font-body text-[20px] font-normal leading-[140%] text-cream/80 md:text-[24px]">
+              <p className="mx-auto mt-5 max-w-[560px] font-body text-[16px] font-normal leading-[145%] text-cream/80 md:text-[18px]">
                 {hook}
               </p>
               <div className="mt-10 flex flex-wrap justify-center gap-4">
-                <BookDemoButton className="inline-flex items-center justify-center rounded-full bg-cream px-9 py-5 font-body text-[20px] font-bold leading-[110%] text-[#251f21] transition-all duration-300 btn-grad btn-grad-blue hover:text-cream hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(79,84,144,0.55)]">
+                <BookDemoButton className="inline-flex items-center justify-center h-[50px] rounded-full bg-cream px-8 font-body text-[16px] font-bold leading-[110%] text-[#251f21] transition-all duration-300 btn-grad btn-grad-blue hover:text-cream hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(79,84,144,0.55)]">
                   Get a Free Demo
                 </BookDemoButton>
               </div>

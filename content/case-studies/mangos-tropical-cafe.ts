@@ -11,7 +11,7 @@ export const mangosTropicalCafe: CaseStudy = {
       "How Mango's Tropical Cafe handles tables, experiences and after-hours calls across Orlando and Miami with HeyTruffle — one line for the whole night.",
     canonical: "/case-study/mangos-tropical-cafe/",
   },
-  logo: { src: "/images/mangotropicallogo.png", alt: "Mango's Tropical Cafe" },
+  logo: { src: "/images/mangotropicallogo.webp", alt: "Mango's Tropical Cafe" },
 
   heroTags: ["Latin/Caribbean", "Reservations", "Orlando", "1 location"],
   heroWidth: "wide",

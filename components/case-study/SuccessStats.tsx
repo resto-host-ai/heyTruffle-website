@@ -125,10 +125,10 @@ export default function SuccessStats({
             <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-b from-transparent to-cream" />
           </div>
 
-          <h2 className="text-center font-serif text-[40px] font-bold! leading-[110%] md:text-[52px] lg:text-[64px]">
+          <h2 className="text-center font-serif text-[30px] font-bold! leading-[110%] md:text-[38px] lg:text-[44px]">
             Success you can measure.
           </h2>
-          <p className="mx-auto mt-6 max-w-[980px] text-center font-body text-[20px] font-normal leading-[140%] md:text-[26px]">
+          <p className="mx-auto mt-6 max-w-[980px] text-center font-body text-[16px] font-normal leading-[145%] md:text-[18px]">
             {intro}
           </p>
 
@@ -143,7 +143,7 @@ export default function SuccessStats({
               >
                 {row.map((r) => (
                   <div key={r.title} className="text-left">
-                    <p className="border-b border-[#251f21]/25 pb-3 font-body text-[26px] font-bold leading-[140%]">
+                    <p className="border-b border-[#251f21]/25 pb-3 font-body text-[16px] font-bold leading-[145%] md:text-[18px]">
                       {r.title}
                     </p>
                     <p className="mt-6 font-body text-[64px] font-normal leading-[110%] md:text-[72px]">

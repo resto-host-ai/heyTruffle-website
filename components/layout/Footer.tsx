@@ -38,7 +38,7 @@ export default function Footer() {
               />
             </Link>
 
-            <p className="mt-8 max-w-[340px] font-body text-[20px] font-normal leading-[130%] text-[#251f21]">
+            <p className="mt-8 max-w-[340px] font-body text-[16px] font-normal leading-[130%] text-[#251f21]">
               AI-Driven Voice Restaurant Assistants for Seamless Customer
               Interaction
             </p>
@@ -83,7 +83,7 @@ export default function Footer() {
 
         <div className="mt-16 h-px w-full bg-[#251f21]/15" />
 
-        <p className="mt-6 font-body text-[20px] font-normal leading-[110%] text-[#251f21]">
+        <p className="mt-6 font-body text-[16px] font-normal leading-[110%] text-[#251f21]">
           © 2026 heytruffle. All rights reserved.
         </p>
       </div>

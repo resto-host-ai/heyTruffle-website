@@ -12,6 +12,28 @@ function formatTime(t: number) {
   return `${m}:${s.toString().padStart(2, "0")}`;
 }
 
+/** Lowercases only the first character, leaving acronyms like ES↔EN alone. */
+const lowerFirst = (s: string) => s.charAt(0).toLowerCase() + s.slice(1);
+
+/** Folds the outcome list into one phrase — "Resolved · Pickup + private
+ *  dining inquiry" — instead of stacking each item on its own line. The first
+ *  item leads, the rest join with "+" and drop their leading capital since
+ *  they read as a continuation rather than separate labels. */
+function formatOutcome(outcome: string[]) {
+  const [first, ...rest] = outcome;
+  if (!rest.length) return first;
+  const tail = rest.map((s, i) => (i === 0 ? s : lowerFirst(s))).join(" + ");
+  return `${first} · ${tail}`;
+}
+
+/** Same idea for the host's title: "Bilingual, switches ES↔EN naturally"
+ *  rather than two stacked lines. Hosts with a single line are unaffected. */
+function formatTitle(title: string[]) {
+  const [first, ...rest] = title;
+  if (!rest.length) return first;
+  return `${first}, ${rest.map(lowerFirst).join(", ")}`;
+}
+
 function PlayIcon({ color }: { color: string }) {
   return (
     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -74,21 +96,8 @@ function KaraokeText({
   );
 }
 
-export default function HostsDemo({
-  soloHostId,
-  sampleLabel,
-}: {
-  /** Show a single host's call panel directly (no grid), paused and ready. */
-  soloHostId?: Host["id"];
-  /** Every case study page plays the same Nacho/Rreal-Tacos recording, so
-   *  anywhere except Rreal Tacos' own page needs to say this is a sample
-   *  call instead of asserting a deployment that isn't true for that
-   *  restaurant. Overrides the "Deployed at" line when set. */
-  sampleLabel?: string;
-} = {}) {
-  const [activeId, setActiveId] = useState<Host["id"] | null>(
-    soloHostId ?? null,
-  );
+export default function HostsDemo() {
+  const [activeId, setActiveId] = useState<Host["id"] | null>(null);
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [maxProgress, setMaxProgress] = useState(0);
@@ -96,6 +105,7 @@ export default function HostsDemo({
   const [needsTap, setNeedsTap] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
 
   // Mobile "meet the hosts" carousel: one host per slide, bullet nav.
   const trackRef = useRef<HTMLDivElement>(null);
@@ -112,18 +122,6 @@ export default function HostsDemo({
   };
 
   const host = activeId ? HOSTS.find((h) => h.id === activeId) ?? null : null;
-
-  // Solo mode: preload the host's clip without auto-playing, so the visitor
-  // presses play to start it.
-  useEffect(() => {
-    if (!soloHostId) return;
-    const a = audioRef.current;
-    const h = HOSTS.find((x) => x.id === soloHostId);
-    if (!a || !h) return;
-    a.src = h.audio;
-    a.currentTime = 0;
-    setNeedsTap(true);
-  }, [soloHostId]);
 
   useEffect(() => {
     const a = audioRef.current;
@@ -166,6 +164,7 @@ export default function HostsDemo({
     setMaxProgress(0);
     setDuration(0);
     setNeedsTap(false);
+
     const a = audioRef.current;
     if (!a) return;
     a.src = h.audio;
@@ -173,6 +172,39 @@ export default function HostsDemo({
     // Called inside the click handler so browsers treat it as user-gesture play.
     a.play().catch(() => setNeedsTap(true));
   };
+
+  /* Bring the panel into view once it has actually replaced the grid.
+
+     Has to be an effect, not part of the click handler: at click time React
+     hasn't committed the new DOM, so any measurement still sees the (much
+     shorter) grid and the scroll lands short.
+
+     Positioned by hand instead of scrollIntoView({block:"center"}) for two
+     reasons: the panel is usually taller than a phone screen, so centring
+     pushes its header and close button above the fold; and smooth
+     scrollIntoView locks its target on the first frame, so anything that
+     settles afterwards (the host image decoding, fonts swapping) leaves it
+     aimed at a stale offset. Two rAFs let layout settle, then we scroll to a
+     fixed 16px below the sticky header. */
+  useEffect(() => {
+    if (!activeId) return;
+    const HEADER_H = 80;
+    const GAP = 16;
+    let inner = 0;
+    const outer = requestAnimationFrame(() => {
+      inner = requestAnimationFrame(() => {
+        const el = rootRef.current;
+        if (!el) return;
+        const top =
+          window.scrollY + el.getBoundingClientRect().top - HEADER_H - GAP;
+        window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+      });
+    });
+    return () => {
+      cancelAnimationFrame(outer);
+      cancelAnimationFrame(inner);
+    };
+  }, [activeId]);
 
   const closeHost = () => {
     audioRef.current?.pause();
@@ -248,20 +280,21 @@ export default function HostsDemo({
   return (
     <div
       id="meet-the-hosts"
-      className={`m-8 w-[calc(100%-5rem)] scroll-mt-28 ${
-        soloHostId
-          ? ""
-          : host
-            ? "mt-24 rounded-[67.677px] bg-[#f6f3ec] p-2 shadow-2xl md:mt-64 md:p-3"
-            : "mt-24 rounded-[67.677px] bg-[#f6f3ec] py-12 shadow-2xl md:mt-64 md:px-6 md:py-16"
+      ref={rootRef}
+      className={`w-full scroll-mt-28 ${
+        host
+          ? "mt-20 rounded-[32px] bg-[#f6f3ec] p-2 shadow-2xl md:mt-32 md:p-3"
+          : "mt-20 rounded-[32px] bg-[#f6f3ec] px-6 py-10 shadow-2xl md:mt-32 md:px-16 md:py-12"
       }`}
     >
+      {/* key on the active host so the animation replays on every swap, both
+          grid → player and player → grid. */}
       {!host ? (
-        <>
-          <h3 className="text-center font-serif text-[40px] font-bold! leading-[110%] text-[#251f21] md:text-[52px] lg:text-[64px]">
+        <div key="grid" className="host-view-in">
+          <h3 className="text-center font-serif text-[30px] font-bold! leading-[110%] text-[#251f21] md:text-[38px] lg:text-[44px]">
             Meet the hosts
           </h3>
-          <p className="font-body mx-auto mt-5 max-w-2xl text-center text-[26px] font-normal leading-[140%] text-[#251f21]">
+          <p className="font-body mx-auto mt-4 max-w-2xl text-center text-[16px] font-normal leading-[145%] text-[#251f21] md:text-[18px]">
             Trained for the restaurant. Tuned every{" "}
             <br className="hidden sm:inline" />
             week. Built to feel like part of the team.
@@ -270,7 +303,7 @@ export default function HostsDemo({
           <div
             ref={trackRef}
             onScroll={onTrackScroll}
-            className="mt-8 flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden py-4 [-ms-overflow-style:none] [scrollbar-width:none] sm:mt-10 sm:grid sm:grid-cols-4 sm:gap-x-4 sm:gap-y-16 sm:overflow-visible sm:py-0 [&::-webkit-scrollbar]:hidden"
+            className="mt-6 flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden py-4 [-ms-overflow-style:none] [scrollbar-width:none] sm:mt-8 sm:grid sm:grid-cols-4 sm:gap-x-4 sm:gap-y-10 sm:overflow-visible sm:py-0 [&::-webkit-scrollbar]:hidden"
           >
             {HOSTS.map((h) => (
               <button
@@ -284,12 +317,12 @@ export default function HostsDemo({
                   {/* sonar rings rippling outward in the host's colour */}
                   <span
                     aria-hidden
-                    className="host-ring pointer-events-none h-40 w-40 md:h-48 md:w-48"
+                    className="host-ring pointer-events-none h-32 w-32 md:h-36 md:w-36"
                     style={{ borderColor: h.color, animationDelay: "0s" }}
                   />
                   <span
                     aria-hidden
-                    className="host-ring pointer-events-none h-40 w-40 md:h-48 md:w-48"
+                    className="host-ring pointer-events-none h-32 w-32 md:h-36 md:w-36"
                     style={{ borderColor: h.color, animationDelay: "1.5s" }}
                   />
                   <span className="host-alive relative block sm:w-full">
@@ -300,8 +333,8 @@ export default function HostsDemo({
                       width={342}
                       height={337}
                       quality={90}
-                      sizes="(max-width: 640px) 62vw, 340px"
-                      className="mx-auto h-auto w-[62vw] max-w-[260px] object-contain transition-transform duration-300 group-hover:scale-105 sm:w-[80%] sm:max-w-none"
+                      sizes="(max-width: 640px) 52vw, 200px"
+                      className="mx-auto h-auto w-[52vw] max-w-[190px] object-contain transition-transform duration-300 group-hover:scale-105 sm:w-[62%] sm:max-w-none"
                     />
                   </span>
                 </span>
@@ -309,12 +342,12 @@ export default function HostsDemo({
                   <PlayIcon color={h.color} />
                 </span>
                 <p
-                  className="mt-3 text-center font-serif text-[28px] font-bold leading-[110%] md:text-[40px]"
+                  className="mt-2 text-center font-serif text-[22px] font-bold leading-[110%] md:text-[26px]"
                   style={{ color: h.color }}
                 >
                   {h.name}
                 </p>
-                <p className="mt-2 text-center font-body text-[26px] font-normal leading-[140%] text-[#251f21]/60">
+                <p className="mt-1.5 text-center font-body text-[16px] font-normal leading-[145%] text-[#251f21]/60 md:text-[18px]">
                   {h.desc[0]}
                   <br />
                   {h.desc[1]}
@@ -340,27 +373,33 @@ export default function HostsDemo({
               />
             ))}
           </div>
-        </>
+        </div>
       ) : (
-        <div className="relative">
-          {/* Back to the grid (hidden in solo mode) */}
-          {!soloHostId && (
-            <button
-              type="button"
-              onClick={closeHost}
-              aria-label="Back to all hosts"
-              className="absolute right-5 top-5 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-[#251f21]/20 bg-white/50 text-[#251f21]/60 backdrop-blur-sm transition-colors hover:bg-white/80 hover:text-[#251f21] md:right-7 md:top-7"
-            >
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
-                <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-              </svg>
-            </button>
-          )}
+        <div key={host.id} className="host-view-in relative">
+          {/* Back to the grid */}
+          <button
+            type="button"
+            onClick={closeHost}
+            aria-label="Back to all hosts"
+            className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-[#251f21]/20 bg-white/50 text-[#251f21]/60 backdrop-blur-sm transition-colors hover:bg-white/80 hover:text-[#251f21] md:right-6 md:top-6"
+          >
+            <svg width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden>
+              <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+            </svg>
+          </button>
 
           {/* Tinted, grainy panel — each host colours its own background,
               lighter at the top and settling into the host colour below. */}
           <div
-            className="relative overflow-hidden rounded-[32px] p-6 md:p-10"
+            /* Capped to the viewport (80px header + the card's own padding
+               and a little air) and laid out as a flex column, so the panel can
+               never grow past the fold no matter how long the transcript is.
+
+               The radius tracks the breakpoint because the card's padding does:
+               8px on mobile and 12px from md. Concentric with a 32px card means
+               32−8=24 and 32−12=20 — a single fixed value is right on only one
+               of the two. */
+            className="relative flex max-h-[calc(100svh-132px)] flex-col overflow-hidden rounded-[24px] px-5 py-6 md:rounded-[20px] md:p-7"
             style={{
               background: `linear-gradient(180deg, #f8f5ef 0%, ${host.color}14 42%, ${host.color}59 100%)`,
             }}
@@ -372,85 +411,94 @@ export default function HostsDemo({
               style={{ backgroundImage: NOISE }}
             />
 
-            <div className="relative font-body">
+            <div className="relative flex min-h-0 flex-1 flex-col font-body">
               {/* ---- Header ---- */}
-              <div className="flex items-end justify-between gap-4">
+              <div className="flex shrink-0 items-end justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  {/* Host mark. It used to sit above the transcript, where it
+                      ate ~150px of the panel and pushed the conversation into a
+                      narrow strip; beside the name it identifies the host just
+                      as well and gives that height back to the transcript. */}
+                  <div className="relative flex shrink-0 items-center justify-center">
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute h-20 w-20 rounded-full opacity-70 blur-[26px]"
+                      style={{
+                        background: `radial-gradient(circle, ${host.color} 0%, transparent 68%)`,
+                      }}
+                    />
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute h-14 w-14 rounded-full opacity-70 blur-[22px]"
+                      style={{
+                        background:
+                          "radial-gradient(circle, #d592f3 0%, transparent 70%)",
+                      }}
+                    />
+                    <Image
+                      src={host.image}
+                      alt=""
+                      width={342}
+                      height={337}
+                      quality={90}
+                      sizes="80px"
+                      className={`relative h-[60px] w-[60px] object-contain md:h-[72px] md:w-[72px] ${
+                        playing ? "host-breathe" : ""
+                      }`}
+                    />
+                  </div>
+
                 <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#251f21]/60">
+                  {/* Hidden on phones: the panel is tight there and the label
+                      adds no information the rest of the header doesn't. */}
+                  <p className="hidden text-[11px] font-semibold uppercase tracking-[0.18em] text-[#251f21]/60 md:block">
                     AI voice host
                   </p>
                   <p
-                    className="mt-3 font-serif text-[44px] font-bold leading-[100%] md:text-[56px]"
+                    /* No top margin on phones — the eyebrow it was spacing away
+                       from isn't rendered there. */
+                    className="font-serif text-[34px] font-bold leading-[100%] md:mt-2 md:text-[42px]"
                     style={{ color: host.color }}
                   >
                     {host.name}
                   </p>
-                  <div className="mt-2 text-[15px] leading-snug text-[#251f21]/75">
-                    {host.title.map((line) => (
-                      <p key={line}>{line}</p>
-                    ))}
-                  </div>
+                  <p className="mt-2 text-[14px] leading-snug text-[#251f21]/75 md:text-[15px]">
+                    {/* Own line on mobile: joined with a middot the pair wraps
+                        mid-phrase in a narrow column. Desktop doesn't show it
+                        here at all — it has its own footer column. */}
+                    <span className="block md:hidden">{host.deployedAt}</span>
+                    {formatTitle(host.title)}
+                  </p>
                 </div>
-                <div className="shrink-0 pb-0.5 text-right">
-                  {sampleLabel ? (
-                    <p className="text-[15px] font-semibold" style={{ color: host.color }}>
-                      {sampleLabel}
-                    </p>
-                  ) : (
-                    <>
-                      <p className="text-[15px] font-semibold" style={{ color: host.color }}>
-                        Deployed at
-                      </p>
-                      <p className="mt-1 text-[15px] text-[#251f21]/75">
-                        {host.deployedAt}
-                      </p>
-                    </>
-                  )}
                 </div>
+                {/* "Deployed at" used to live here, but it crowded the close
+                    button in the corner. It sits with the rest of the call
+                    metadata in the footer now. */}
               </div>
 
               {/* ---- Call card (flower + transcript) ---- */}
-              <div className="mt-6 flex flex-col overflow-hidden rounded-[28px] bg-white/55 shadow-[0_16px_50px_rgba(37,31,33,0.08)] backdrop-blur-sm">
+              <div className="mt-5 flex min-h-0 flex-1 flex-col overflow-hidden rounded-[20px] bg-white/55 shadow-[0_16px_50px_rgba(37,31,33,0.08)] backdrop-blur-sm">
                 {/* Flower with a soft multi-colour halo */}
-                <div className="relative flex justify-center pb-4 pt-12">
-                  <div
-                    aria-hidden
-                    className="pointer-events-none absolute top-6 h-56 w-56 rounded-full opacity-70 blur-[52px]"
-                    style={{
-                      background: `radial-gradient(circle, ${host.color} 0%, transparent 68%)`,
-                    }}
-                  />
-                  <div
-                    aria-hidden
-                    className="pointer-events-none absolute top-8 h-40 w-40 rounded-full opacity-70 blur-[42px]"
-                    style={{
-                      background:
-                        "radial-gradient(circle, #d592f3 0%, transparent 70%)",
-                    }}
-                  />
-                  <Image
-                    src={host.image}
-                    alt=""
-                    width={342}
-                    height={337}
-                    quality={90}
-                    sizes="176px"
-                    className={`relative h-40 w-40 object-contain md:h-44 md:w-44 ${
-                      playing ? "host-breathe" : ""
-                    }`}
-                  />
-                </div>
 
                 {/* Transcript */}
                 <div
                   ref={scrollerRef}
-                  className="flex h-[360px] flex-col gap-5 overflow-y-auto px-7 py-6 md:h-[400px] md:px-10 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-                  style={{
-                    maskImage:
-                      "linear-gradient(180deg, transparent 0, #000 28px, #000 calc(100% - 12px), transparent 100%)",
-                    WebkitMaskImage:
-                      "linear-gradient(180deg, transparent 0, #000 28px, #000 calc(100% - 12px), transparent 100%)",
-                  }}
+                  /* Fixed height rather than flex-1: as flex-1 it grew line by line as
+                     the call played, so the panel kept resizing under the reader.
+                     34vh (floor 200px, ceiling 440px) always fits inside the
+                     panel's own max-height, verified from 780px to 1440px tall.
+                     It can still shrink if a viewport is shorter than expected —
+                     only the growing is pinned. */
+                  className="transcript-scroll flex h-[clamp(200px,34vh,440px)] flex-col gap-4 overflow-y-auto px-6 py-6 md:px-8 md:py-5"
+                  style={
+                    {
+                      maskImage:
+                        "linear-gradient(180deg, transparent 0, #000 28px, #000 calc(100% - 12px), transparent 100%)",
+                      WebkitMaskImage:
+                        "linear-gradient(180deg, transparent 0, #000 28px, #000 calc(100% - 12px), transparent 100%)",
+                      "--sb-color": host.color,
+                    } as React.CSSProperties
+                  }
                 >
                   {revealedCount === 0 && (
                     <p className="m-auto text-center font-mono text-xs tracking-[0.1em] text-[#251f21]/50">
@@ -502,8 +550,21 @@ export default function HostsDemo({
                   })}
                 </div>
 
+                {/* Call outcome — one line with a colour dot, right above the
+                    player, rather than a block competing in the footer grid. */}
+                <div className="flex shrink-0 items-center gap-2 px-6 pt-1 md:hidden">
+                  <span
+                    aria-hidden
+                    className="h-1.5 w-1.5 shrink-0 rounded-full"
+                    style={{ backgroundColor: host.color }}
+                  />
+                  <p className="text-[13px] leading-snug text-[#251f21]/70">
+                    {formatOutcome(host.outcome)}
+                  </p>
+                </div>
+
                 {/* Player bar */}
-                <div className="flex items-center gap-4 px-7 pb-6 pt-2 md:px-10">
+                <div className="flex shrink-0 items-center gap-4 px-6 pb-4 pt-2 md:px-8">
                   <button
                     type="button"
                     onClick={togglePlay}
@@ -548,8 +609,21 @@ export default function HostsDemo({
                 </div>
               </div>
 
-              {/* ---- Footer: Voice · Languages · Call outcome ---- */}
-              <div className="mt-5 grid grid-cols-3 gap-4 rounded-[24px] bg-white/35 p-6 backdrop-blur-sm">
+              {/* ---- Footer ----
+                   Desktop keeps all four columns. Mobile drops "Deployed at"
+                   and "Call outcome", which move into the header line and above
+                   the player respectively — four blocks stacked two-by-two ate
+                   most of a phone screen. */}
+              <div className="mt-4 grid shrink-0 grid-cols-2 items-start gap-4 rounded-[20px] bg-white/35 px-5 py-4 backdrop-blur-sm md:grid-cols-[repeat(4,auto)] md:justify-between md:gap-x-8">
+                <div className="hidden md:block">
+                  <p className="text-[13px] font-semibold" style={{ color: host.color }}>
+                    Deployed at
+                  </p>
+                  <p className="mt-1 text-[13px] leading-snug text-[#251f21]/80">
+                    {host.deployedAt}
+                  </p>
+                </div>
+
                 <div>
                   <p className="text-[13px] font-semibold" style={{ color: host.color }}>
                     Voice
@@ -563,19 +637,14 @@ export default function HostsDemo({
                   <p className="text-[13px] font-semibold" style={{ color: host.color }}>
                     Languages
                   </p>
+                  {/* Every language reads the same — the first one used to be
+                      filled with the host colour, which made it look like a
+                      selected state rather than one item in a list. */}
                   <div className="mt-2 flex flex-wrap gap-1.5">
-                    {host.languages.map((lang, i) => (
+                    {host.languages.map((lang) => (
                       <span
                         key={lang}
-                        className="rounded-full px-2.5 py-0.5 text-xs font-medium"
-                        style={
-                          i === 0
-                            ? { backgroundColor: host.color, color: "#f6f3ec" }
-                            : {
-                                border: "1px solid rgba(37,31,33,0.25)",
-                                color: "#251f21",
-                              }
-                        }
+                        className="rounded-full border border-[#251f21]/25 px-2.5 py-0.5 text-xs font-medium text-[#251f21]"
                       >
                         {lang}
                       </span>
@@ -583,15 +652,13 @@ export default function HostsDemo({
                   </div>
                 </div>
 
-                <div>
+                <div className="hidden md:block">
                   <p className="text-[13px] font-semibold" style={{ color: host.color }}>
                     Call outcome
                   </p>
-                  <div className="mt-1 text-[13px] leading-snug text-[#251f21]/80">
-                    {host.outcome.map((line) => (
-                      <p key={line}>{line}</p>
-                    ))}
-                  </div>
+                  <p className="mt-1 text-[13px] leading-snug text-[#251f21]/80">
+                    {formatOutcome(host.outcome)}
+                  </p>
                 </div>
               </div>
             </div>

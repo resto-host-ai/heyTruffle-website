@@ -10,7 +10,7 @@ export const bairesGrill: CaseStudy = {
       "How Baires Grill answered every reservation, private-event and support call across its Miami rooms with HeyTruffle — a record month, every call answered.",
     canonical: "/case-study/baires-grill/",
   },
-  logo: { src: "/images/logobaires.png", alt: "Baires Grill" },
+  logo: { src: "/images/logobaires.webp", alt: "Baires Grill" },
 
   heroTags: ["Latin", "Reservations", "Miami, Florida", "9 locations"],
   heroWidth: "narrow",

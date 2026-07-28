@@ -68,7 +68,7 @@ export default function Pricing() {
           <p className="font-body text-[13px] font-bold uppercase tracking-[0.2em] text-brand-orange">
             Pricing
           </p>
-          <h2 className="mt-4 font-serif text-4xl leading-tight text-[#251f21] md:text-5xl">
+          <h2 className="mt-4 font-serif text-[30px] leading-tight md:text-[38px] lg:text-[44px] text-[#251f21]">
             Pricing that scales with you.
           </h2>
         </div>

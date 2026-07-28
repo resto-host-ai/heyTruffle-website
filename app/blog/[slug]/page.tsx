@@ -2,10 +2,15 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { marked } from "marked";
 import { NOISE } from "@/lib/noise";
 import { BookDemoButton } from "@/components/ui/BookDemoButton";
-import { getPost, getPostSlugs, getAllPostMeta, formatDate } from "@/lib/blog";
+import {
+  getPost,
+  getPostSlugs,
+  getAllPostMeta,
+  formatDate,
+  renderMarkdown,
+} from "@/lib/blog";
 
 export function generateStaticParams() {
   return getPostSlugs().map((slug) => ({ slug }));
@@ -41,7 +46,7 @@ export default async function BlogPostPage({
   const post = getPost(slug);
   if (!post) notFound();
 
-  const html = marked.parse(post.content, { async: false }) as string;
+  const html = renderMarkdown(post.content);
 
   // A few more recent posts to show at the foot of the article.
   const related = getAllPostMeta()
@@ -79,7 +84,7 @@ export default async function BlogPostPage({
         <div className="relative mx-auto max-w-[820px] px-6 md:px-10">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 font-body text-[18px] font-normal leading-[110%] text-cream/80 transition-opacity hover:opacity-70"
+            className="inline-flex items-center gap-2 font-body text-[15px] font-normal leading-[110%] md:text-[16px] text-cream/80 transition-opacity hover:opacity-70"
           >
             <svg
               width="18"
@@ -113,11 +118,11 @@ export default async function BlogPostPage({
             </span>
           </div>
 
-          <h1 className="mt-6 font-serif text-[32px] font-bold! leading-[115%] text-cream md:text-[48px] lg:text-[56px]">
+          <h1 className="mt-6 font-serif text-[34px] font-bold! leading-[115%] text-cream md:text-[44px] lg:text-[52px]">
             {post.title}
           </h1>
           {post.description && (
-            <p className="mt-6 max-w-[680px] font-body text-[20px] font-normal leading-[140%] text-cream/80 md:text-[24px]">
+            <p className="mt-6 max-w-[680px] font-body text-[16px] font-normal leading-[145%] text-cream/80 md:text-[18px]">
               {post.description}
             </p>
           )}
@@ -154,7 +159,7 @@ export default async function BlogPostPage({
       {related.length > 0 && (
         <section className="bg-gradient-to-b from-cream to-[#ece8df]">
           <div className="mx-auto w-full px-6 py-20 lg:px-[73px] md:py-24">
-            <h2 className="text-center font-serif text-[32px] font-bold! leading-[110%] text-[#251f21] md:text-[44px] lg:text-[52px]">
+            <h2 className="text-center font-serif text-[30px] font-bold! leading-[110%] text-[#251f21] md:text-[38px] lg:text-[44px]">
               Keep reading.
             </h2>
             <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -209,17 +214,17 @@ export default async function BlogPostPage({
               style={{ backgroundImage: NOISE }}
             />
             <div className="relative flex w-full flex-col items-center">
-              <h2 className="mx-auto max-w-[972px] font-serif text-[32px] font-bold! leading-[110%] md:text-[48px] lg:text-[56px]">
+              <h2 className="mx-auto max-w-[972px] font-serif text-[30px] font-bold! leading-[110%] md:text-[38px] lg:text-[44px]">
                 Hear what heytruffle would capture for your restaurant.
               </h2>
-              <p className="mx-auto mt-5 max-w-[560px] font-body text-[20px] font-normal leading-[140%] text-cream/80">
+              <p className="mx-auto mt-5 max-w-[560px] font-body text-[16px] font-normal leading-[145%] md:text-[18px] text-cream/80">
                 Every reservation booked, every order taken, every catering
                 inquiry closed.
               </p>
-              <BookDemoButton className="mt-10 inline-flex items-center justify-center rounded-full bg-cream px-9 py-5 font-body text-[20px] font-bold leading-[110%] text-[#251f21] transition-all duration-300 btn-grad btn-grad-blue hover:text-cream hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(79,84,144,0.55)]">
+              <BookDemoButton className="mt-10 inline-flex items-center justify-center h-[50px] rounded-full bg-cream px-8 font-body text-[16px] font-bold leading-[110%] text-[#251f21] transition-all duration-300 btn-grad btn-grad-blue hover:text-cream hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(79,84,144,0.55)]">
                 Get a Free Demo
               </BookDemoButton>
-              <p className="mt-6 font-body text-[20px] font-normal leading-[110%] text-cream/80">
+              <p className="mt-6 font-body text-[15px] font-normal leading-[110%] md:text-[16px] text-cream/80">
                 Backed by real people.
               </p>
             </div>

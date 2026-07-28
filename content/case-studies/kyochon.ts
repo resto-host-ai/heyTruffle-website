@@ -10,7 +10,7 @@ export const kyochon: CaseStudy = {
       "How Kyochon keeps its takeout and delivery line moving with HeyTruffle — the kitchen keeps cooking, the order still gets taken.",
     canonical: "/case-study/kyochon/",
   },
-  logo: { src: "/images/kyochonlogo.png", alt: "Kyochon" },
+  logo: { src: "/images/kyochonlogo.webp", alt: "Kyochon" },
 
   heroTags: ["Korean Fried Chicken", "Phone Orders", "LA", "2 locations"],
   heroWidth: "wide",

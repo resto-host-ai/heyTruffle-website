@@ -21,29 +21,30 @@ export default function TrustedBy() {
   return (
     <section id="trusted" className="bg-[#251f21] pb-6 pt-16 md:pt-20">
       <div className="mx-auto w-full px-6 lg:px-[73px]">
-        <h2 className="reveal reveal-up font-body text-center text-[26px] font-normal! leading-[140%] text-cream/90">
+        <h2 className="reveal reveal-up font-body text-center text-[16px] font-normal! leading-[145%] md:text-[18px] text-cream/90">
           Restaurants on heytruffle answer every call.{" "}
           <span className="text-[#d592f3]">Yours can too.</span>
         </h2>
       </div>
 
       {/* Infinite carousel */}
-      <div className="group relative mt-12 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
-        <div className="marquee flex w-max items-center gap-16 pr-16">
+      <div className="group relative mt-12 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+        <div className="marquee flex w-max items-center gap-9 pr-9 md:gap-12 md:pr-12">
           {TRACK.map((logo, i) => (
-            <TrustedByLogo
-              key={i}
-              src={logo.src}
-              alt={logo.alt}
-              width={logo.w}
-              height={logo.h}
-              hidden={i >= LOGOS.length}
-            />
+            <div className="marquee-item" key={i}>
+              <TrustedByLogo
+                src={logo.src}
+                alt={logo.alt}
+                width={logo.w}
+                height={logo.h}
+                hidden={i >= LOGOS.length}
+              />
+            </div>
           ))}
         </div>
       </div>
 
-      <p className="mt-12 text-center font-body text-[20px] font-normal leading-[110%] text-cream">
+      <p className="mt-12 text-center font-body text-[15px] font-normal leading-[110%] md:text-[16px] text-cream">
         Trusted by leading U.S. restaurants
       </p>
     </section>
