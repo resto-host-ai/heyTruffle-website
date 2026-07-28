@@ -11,7 +11,7 @@ import { openCalendly } from "@/components/ui/BookDemoButton";
 type NavItem = { label: string; href: string; demo?: boolean };
 
 const NAV_BEFORE: NavItem[] = [
-  { label: "Case Studies", href: "/case-study" },
+  { label: "Case Studies", href: "/case-study/" },
   { label: "About", href: "/#about" },
   { label: "Pricing", href: "/#pricing" },
 ];
@@ -166,12 +166,19 @@ export default function Header() {
   return (
     <>
     <header
-      className={`fixed inset-x-0 top-0 z-50 h-[80px] backdrop-blur-xl transition-all duration-300 ${
-        overlayOpen ? "pointer-events-none opacity-0" : ""
+      /* backdrop-blur only from md: a permanent full-width backdrop-filter on
+         a fixed header is WebKit's most expensive per-scroll-frame effect —
+         it was a measurable chunk of the iOS scroll jank. Phones get a more
+         opaque solid bg instead so legibility holds without the blur.
+         `invisible` (on top of opacity-0) lets WebKit skip the layer entirely
+         while the Calendly overlay covers it; visibility transitions flip at
+         the END of the fade, so the fade-out still animates. */
+      className={`fixed inset-x-0 top-0 z-50 h-[80px] transition-all duration-300 md:backdrop-blur-xl ${
+        overlayOpen ? "pointer-events-none invisible opacity-0" : ""
       } ${
         scrolled
-          ? "bg-[#1c1917]/85 shadow-[0_8px_30px_rgba(0,0,0,0.25)]"
-          : "bg-black/35"
+          ? "bg-[#1c1917]/95 shadow-[0_8px_30px_rgba(0,0,0,0.25)] md:bg-[#1c1917]/85"
+          : "bg-black/50 md:bg-black/35"
       }`}
     >
       <div className="relative z-20 flex h-full w-full items-center justify-between gap-6 px-6 lg:px-[73px]">
