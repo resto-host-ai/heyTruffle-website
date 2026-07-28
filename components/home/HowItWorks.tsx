@@ -22,7 +22,7 @@ const STEPS = [
   {
     n: "03",
     title: "It knows when to step back.",
-    desc: "Some conversations need a human. Your AI host escalates those calls to your team, while we continuously monitor and improve performance every week.",
+    desc: "Some conversations need a human. Your AI host escalates those calls to your team, while we continuously monitor and improve performance every week. You'll never be handed a dashboard to manage.",
     titleColor: "#ef7200",
     circle: "linear-gradient(180deg, #bf6a2e 0%, #3d4a8c 100%)",
     mobileBg: "#534E8B",
@@ -104,15 +104,15 @@ export default function HowItWorks() {
       <div ref={pinRef} className="md:relative md:h-[190vh]">
         <div className="mx-auto flex w-full flex-col px-6 py-10 md:sticky md:top-0 md:overflow-hidden md:pb-[7vh] md:pt-[13vh] lg:px-[73px]">
           <h2 className="reveal reveal-up text-center font-serif text-[30px] font-bold! leading-[110%] md:text-[38px] lg:text-[44px]">
-            <span className="text-cream">Getting started is simple.</span>
+            <span className="text-cream">Your part takes one form.</span>
             <br />
-            <span className="text-[#d592f3]">We handle the hard part.</span>
+            <span className="text-[#d592f3]">Ours never stops.</span>
           </h2>
           <p
             className="reveal reveal-up font-body mx-auto mt-4 max-w-[820px] text-center text-[16px] font-normal leading-[145%] text-cream md:text-[18px]"
             style={{ "--reveal-delay": "0.08s" } as React.CSSProperties}
           >
-            We take care of the setup, the training and the ongoing improvements{" "}
+            You fill out one form with your menu, hours and policies{" "}
             <br className="hidden md:inline" />
             so your team can stay focused on running the restaurant.
           </p>
