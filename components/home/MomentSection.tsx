@@ -15,6 +15,19 @@ export default function MomentSection() {
   const [muted, setMuted] = useState(true);
   const [ended, setEnded] = useState(false);
 
+  // Two encodes of the same spot: phones keep the light 540p (5MB — they
+  // render it at ~345px wide, and cellular data is the constraint), while
+  // md+ swaps in the 720p (11MB, CRF 23) BEFORE anything plays — at the
+  // 900px retina card the 540p read visibly soft, especially in the dark
+  // scenes. preload="none" means neither file touches the initial page load.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (window.matchMedia("(min-width: 768px)").matches) {
+      video.src = "/videos/moment-hd.mp4";
+    }
+  }, []);
+
   useEffect(() => {
     const video = videoRef.current;
     if (!video || typeof IntersectionObserver === "undefined") return;
