@@ -17,7 +17,11 @@ export default function Graph8() {
       id="graph8-flow"
       src="https://events.flow.graph8.com/p.js"
       data-write-key={GRAPH8_WRITE_KEY}
-      strategy="afterInteractive"
+      // beforeInteractive is the only strategy Next.js renders into the
+      // server HTML itself (the others inject via client-side JS after
+      // hydration) — third-party script-verification tools that fetch the
+      // raw HTML without executing JS otherwise never see this tag at all.
+      strategy="beforeInteractive"
     />
   );
 }
