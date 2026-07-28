@@ -97,7 +97,10 @@ export default function WhatIsSection() {
   }, []);
 
   return (
-    <section className="relative bg-[#251f21]">
+    // Mobile keeps its own vertical rhythm (the desktop spacing comes from
+    // the 180vh pin + translate, which don't exist below md) — without this
+    // padding the eyebrow sits flush against the video section above.
+    <section className="relative bg-[#251f21] pb-10 pt-14 md:pb-0 md:pt-0">
       <div className="relative mx-auto flex w-full flex-col items-center">
         {/* Tall spacer drives the pinned scrub on desktop; auto height (no
             pin) on mobile, where the pills just render already resolved. */}

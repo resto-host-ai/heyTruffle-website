@@ -60,6 +60,9 @@ export default function MomentSection() {
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute left-[-12%] top-[55%] h-[620px] w-[620px] -translate-y-1/2 rounded-full bg-[#f6f3ec] opacity-[0.12] blur-[130px]" />
         <div className="absolute right-[-10%] top-[62%] h-[620px] w-[620px] -translate-y-1/2 rounded-full bg-[#ef7200] opacity-[0.28] blur-[130px]" />
+        {/* Bottom fade so the glows melt into #251f21 before the section
+            ends, instead of clipping in a hard seam against WhatIsSection. */}
+        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent to-[#251f21]" />
       </div>
 
       <div className="relative mx-auto w-full px-6 lg:px-[73px]">
