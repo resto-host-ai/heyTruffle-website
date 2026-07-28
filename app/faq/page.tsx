@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { BookDemoButton } from "@/components/BookDemoButton";
+import { BookDemoButton } from "@/components/ui/BookDemoButton";
 
 const META_DESCRIPTION =
   "Common questions about restaurant voice AI: features, integrations, ROI, reservations, multi-unit deployment, and how heytruffle automates phone operations 24/7.";

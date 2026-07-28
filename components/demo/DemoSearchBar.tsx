@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import DemoAssistant from "@/components/DemoAssistant";
+import DemoAssistant from "@/components/demo/DemoAssistant";
 
 /** Search + "Live Demo" bar that opens the live demo assistant, mirroring the
  *  home hero's behaviour. */

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import DemoAssistant from "@/components/DemoAssistant";
+import DemoAssistant from "@/components/demo/DemoAssistant";
 
 /** Button that opens the live demo assistant (the "Search for your restaurant"
  *  call flow). Lets server components trigger the demo without going client. */

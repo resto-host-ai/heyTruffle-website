@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { NOISE } from "@/lib/noise";
-import { BookDemoButton } from "@/components/BookDemoButton";
+import { BookDemoButton } from "@/components/ui/BookDemoButton";
 import { INTEGRATIONS, getIntegration } from "@/lib/integrations";
 
 export function generateStaticParams() {

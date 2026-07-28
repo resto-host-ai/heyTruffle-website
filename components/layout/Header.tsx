@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { openCalendly } from "@/components/BookDemoButton";
+import { openCalendly } from "@/components/ui/BookDemoButton";
 
 /** Nav links, in the order shown in the reference design. `demo: true` opens
  *  the Calendly booking popup instead of navigating (same as "Book a demo"). */

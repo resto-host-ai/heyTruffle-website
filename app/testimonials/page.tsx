@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Partner from "@/components/Partner";
-import Testimonials from "@/components/Testimonials";
+import Partner from "@/components/marketing/Partner";
+import Testimonials from "@/components/marketing/Testimonials";
 
 const DESCRIPTION =
   "See what restaurant operators say about heytruffle — the fully managed voice AI service that answers 100% of calls, recovers missed revenue, and runs 24/7 across your chain.";

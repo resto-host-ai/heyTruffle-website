@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LegalPage, {
   type LegalBlock,
   type LegalSection,
-} from "@/components/LegalPage";
+} from "@/components/layout/LegalPage";
 
 const DESCRIPTION =
   "How heytruffle collects, uses, discloses, and safeguards information when you use our AI-powered voice and messaging services for restaurants.";

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import CaseStudyPage from "@/components/CaseStudyPage";
+import CaseStudyPage from "@/components/case-study/CaseStudyPage";
 import { CASE_STUDY_SLUGS, getCaseStudy } from "@/content/case-studies";
 
 // Adding a restaurant is: create content/case-studies/<slug>.ts, add it to

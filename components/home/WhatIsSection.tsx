@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import HostsDemo from "./HostsDemo";
+import HostsDemo from "@/components/demo/HostsDemo";
 
 const STATEMENTS = [
   "Not a software.",

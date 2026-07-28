@@ -1,4 +1,4 @@
-import { BookDemoButton } from "@/components/BookDemoButton";
+import { BookDemoButton } from "@/components/ui/BookDemoButton";
 
 type Tier = {
   id: string;

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { INTEGRATIONS } from "@/lib/integrations";
-import { BookDemoButton } from "@/components/BookDemoButton";
+import { BookDemoButton } from "@/components/ui/BookDemoButton";
 
 /** Primary nav, mirroring the header (plus the Blog and FAQ). */
 const NAV = [

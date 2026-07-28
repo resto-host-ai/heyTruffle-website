@@ -1,18 +1,18 @@
-import Hero from "@/components/Hero";
-import TrustedBy from "@/components/TrustedBy";
-import MomentSection from "@/components/MomentSection";
-import WhatIsSection from "@/components/WhatIsSection";
-import ResultsSection from "@/components/ResultsSection";
-import HowItWorks from "@/components/HowItWorks";
-import CaseStudies from "@/components/CaseStudies";
-import TeamSection from "@/components/TeamSection";
-import Contact from "@/components/Contact";
+import Hero from "@/components/home/Hero";
+import TrustedBy from "@/components/home/TrustedBy";
+import MomentSection from "@/components/home/MomentSection";
+import WhatIsSection from "@/components/home/WhatIsSection";
+import ResultsSection from "@/components/home/ResultsSection";
+import HowItWorks from "@/components/home/HowItWorks";
+import CaseStudies from "@/components/case-study/CaseStudies";
+import TeamSection from "@/components/home/TeamSection";
+import Contact from "@/components/home/Contact";
 // Temporarily hidden from the home — re-enable when ready:
-// import Features from "@/components/Features";
-// import Partner from "@/components/Partner";
-// import Integrations from "@/components/Integrations";
-// import Testimonials from "@/components/Testimonials";
-// import Pricing from "@/components/Pricing";
+// import Features from "@/components/marketing/Features";
+// import Partner from "@/components/marketing/Partner";
+// import Integrations from "@/components/marketing/Integrations";
+// import Testimonials from "@/components/marketing/Testimonials";
+// import Pricing from "@/components/marketing/Pricing";
 
 export default function Home() {
   return (

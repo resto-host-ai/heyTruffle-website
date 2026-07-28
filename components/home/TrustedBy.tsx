@@ -1,4 +1,4 @@
-import TrustedByLogo from "@/components/TrustedByLogo";
+import TrustedByLogo from "@/components/home/TrustedByLogo";
 
 /** Restaurant logos for the infinite carousel — every `logo_*` asset. */
 const LOGOS = [

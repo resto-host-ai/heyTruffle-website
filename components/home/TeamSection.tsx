@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { NOISE } from "@/lib/noise";
-import TryDemoButton from "@/components/TryDemoButton";
-import { BookDemoButton } from "@/components/BookDemoButton";
+import TryDemoButton from "@/components/demo/TryDemoButton";
+import { BookDemoButton } from "@/components/ui/BookDemoButton";
 
 export default function TeamSection() {
   return (

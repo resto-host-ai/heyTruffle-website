@@ -7,12 +7,12 @@ import {
   Montserrat,
 } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import RebrandModal from "@/components/RebrandModal";
-import ScrollReveal from "@/components/ScrollReveal";
-import Clarity from "@/components/Clarity";
-import SiteJsonLd from "@/components/JsonLd";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import RebrandModal from "@/components/layout/RebrandModal";
+import ScrollReveal from "@/components/layout/ScrollReveal";
+import Clarity from "@/components/layout/Clarity";
+import SiteJsonLd from "@/components/layout/JsonLd";
 
 // Same type families as the RestoHost site: Inter for body/UI, Montserrat
 // for the Resto Experience footer bar, and Geist Mono for mono accents.

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LegalPage, {
   type LegalBlock,
   type LegalSection,
-} from "@/components/LegalPage";
+} from "@/components/layout/LegalPage";
 
 const DESCRIPTION =
   "The terms that govern access to and use of heytruffle's AI-powered voice and messaging services for restaurants and hospitality businesses.";

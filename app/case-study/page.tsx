@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import CaseStudiesList from "@/components/CaseStudiesList";
+import CaseStudiesList from "@/components/case-study/CaseStudiesList";
 
 export const metadata: Metadata = {
   title: "Case Studies — heytruffle",

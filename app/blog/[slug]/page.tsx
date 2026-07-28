@@ -4,7 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { marked } from "marked";
 import { NOISE } from "@/lib/noise";
-import { BookDemoButton } from "@/components/BookDemoButton";
+import { BookDemoButton } from "@/components/ui/BookDemoButton";
 import { getPost, getPostSlugs, getAllPostMeta, formatDate } from "@/lib/blog";
 
 export function generateStaticParams() {

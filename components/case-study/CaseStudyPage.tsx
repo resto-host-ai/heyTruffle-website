@@ -1,13 +1,13 @@
 import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { BookDemoButton } from "@/components/BookDemoButton";
+import { BookDemoButton } from "@/components/ui/BookDemoButton";
 import { NOISE } from "@/lib/noise";
-import HearItLive from "@/components/HearItLive";
-import HostsDemo from "@/components/HostsDemo";
-import CaseStudies from "@/components/CaseStudies";
-import DemoSearchBar from "@/components/DemoSearchBar";
-import SuccessStats from "@/components/SuccessStats";
+import HearItLive from "@/components/demo/HearItLive";
+import HostsDemo from "@/components/demo/HostsDemo";
+import CaseStudies from "@/components/case-study/CaseStudies";
+import DemoSearchBar from "@/components/demo/DemoSearchBar";
+import SuccessStats from "@/components/case-study/SuccessStats";
 import { formatValue } from "@/lib/format";
 import type { CaseStudy } from "@/content/case-studies/types";
 

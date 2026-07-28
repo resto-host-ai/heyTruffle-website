@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { BookDemoButton } from "@/components/BookDemoButton";
-import DemoAssistant from "@/components/DemoAssistant";
-import HeroBackground from "@/components/HeroBackground";
+import { BookDemoButton } from "@/components/ui/BookDemoButton";
+import DemoAssistant from "@/components/demo/DemoAssistant";
+import HeroBackground from "@/components/home/HeroBackground";
 
 export default function Hero() {
   const [query, setQuery] = useState("");
