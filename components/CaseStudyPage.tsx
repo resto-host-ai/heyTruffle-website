@@ -8,6 +8,7 @@ import HostsDemo from "@/components/HostsDemo";
 import CaseStudies from "@/components/CaseStudies";
 import DemoSearchBar from "@/components/DemoSearchBar";
 import SuccessStats from "@/components/SuccessStats";
+import { formatValue } from "@/lib/format";
 import type { CaseStudy } from "@/content/case-studies/types";
 
 function ChevronLeft() {
@@ -125,7 +126,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
               {cs.heroStats.map((s) => (
                 <div key={s.label} className="flex flex-col items-center px-4">
                   <p className="font-body text-[44px] font-normal leading-[110%] md:text-[64px]">
-                    {s.value}
+                    {formatValue(s.value)}
                   </p>
                   <p className="mt-1 text-center font-body text-[16px] font-normal leading-[130%] text-cream/90 md:text-[20px]">
                     {s.label}
@@ -474,7 +475,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
                   className="font-body text-[40px] font-normal leading-[110%] sm:text-[56px] md:text-[72px]"
                   style={{ color: m.color }}
                 >
-                  {m.value}
+                  {formatValue(m.value)}
                 </p>
                 <p className="mt-1 font-body text-[15px] font-normal leading-[130%] sm:mt-2 sm:text-[22px] md:text-[26px]">
                   {m.label}

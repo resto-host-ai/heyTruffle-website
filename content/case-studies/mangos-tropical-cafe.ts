@@ -51,7 +51,7 @@ export const mangosTropicalCafe: CaseStudy = {
     intro:
       "These are the numbers we can stand behind. Every metric comes directly from Mango's call data for May 2026.",
     cards: [
-      { value: "2.202", label: "Calls handled", color: "#943e72" },
+      { value: 2202, label: "Calls handled", color: "#943e72" },
       { value: "600", label: "SMS sent", color: "#3773d7" },
       { value: "145", label: "After-hours inquiries", color: "#ef7200" },
       { value: "47", label: "Host hours saved", color: "#2f3d7c" },

@@ -12,7 +12,7 @@ import type { RelatedCard } from "./types";
 export const RREAL_TACOS: RelatedCard = {
   name: "Rreal tacos",
   location: "Atlanta, 12 locations",
-  value: "5.513",
+  value: 5513,
   metric: "Calls recovered in one month.",
   desc: "Reservations, orders and catering that would have gone unanswered.",
   image: "/images/case-rreal.webp",
@@ -24,7 +24,7 @@ export const RREAL_TACOS: RelatedCard = {
 export const MOJITOS: RelatedCard = {
   name: "Mojitos",
   location: "Miami",
-  value: "4.000",
+  value: 4000,
   metric: "Calls recovered in one month.",
   desc: "Reservations, orders and catering that would have gone unanswered.",
   image: "/images/mojitos.webp",
@@ -36,7 +36,7 @@ export const MOJITOS: RelatedCard = {
 export const BAIRES_GRILL: RelatedCard = {
   name: "Baires Grill",
   location: "Miami, 9 locations",
-  value: "7.520",
+  value: 7520,
   metric: "Calls handled in one month.",
   desc: "Every call answered while the team stayed on the floor.",
   image: "/images/case-baires.webp",

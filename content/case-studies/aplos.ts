@@ -46,7 +46,7 @@ export const aplos: CaseStudy = {
     intro:
       "These are the numbers we can stand behind. Every metric comes directly from Aplós's call data for May 2026.",
     cards: [
-      { value: "3.886", label: "Calls handled", color: "#943e72" },
+      { value: 3886, label: "Calls handled", color: "#943e72" },
       { value: "393", label: "SMS sent", color: "#3773d7" },
       { value: "14%", label: "Recovered outside business hours", color: "#ef7200" },
       { value: "50", label: "Host hours saved", color: "#2f3d7c" },

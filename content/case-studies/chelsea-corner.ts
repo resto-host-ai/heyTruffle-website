@@ -32,7 +32,7 @@ export const chelseaCorner: CaseStudy = {
     intro:
       "Every metric comes directly from Chelsea Corner's call data for a single month.",
     cards: [
-      { value: "2.176", label: "Calls handled", color: "#943e72" },
+      { value: 2176, label: "Calls handled", color: "#943e72" },
       { value: "407", label: "SMS sent", color: "#3773d7" },
       { value: "56%", label: "Recovered after hours", color: "#ef7200" },
       { value: "22%", label: "Captured after-hours", color: "#2f3d7c" },

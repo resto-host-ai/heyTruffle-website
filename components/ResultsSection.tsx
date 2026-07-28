@@ -6,7 +6,7 @@ import { NOISE } from "@/lib/noise";
 const STATS = [
   {
     title: "Calls recovered",
-    value: "5.513",
+    value: "5,513",
     desc: "Reservations, orders and catering that would have gone unanswered.",
     color: "#943e72",
     wide: false,
@@ -20,7 +20,7 @@ const STATS = [
   },
   {
     title: "Assisted revenue",
-    value: "~$52.900",
+    value: "~$52,900",
     desc: "Generate in May from large parties reservations.",
     color: "#ef7200",
     wide: true,

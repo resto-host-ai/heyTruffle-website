@@ -55,7 +55,7 @@ export const laCanita: CaseStudy = {
         flat: "Revenue Automation",
         img: "/images/card1.webp",
         accent: "#ef7200",
-        stat: "$33.600 Recovered",
+        stat: "$33,600 Recovered",
         statDesc: "Assisted reservation revenue.",
       },
       {

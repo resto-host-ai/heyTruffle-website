@@ -7,7 +7,7 @@ import type { CaseStudy } from "./types";
 const MOJITOS_WARM = {
   name: "Mojitos",
   location: "Miami",
-  value: "4.000",
+  value: 4000,
   metric: "Calls recovered in one month.",
   desc: "Reservations, orders and catering that would have gone unanswered.",
   image: "/images/mojitos.webp",
@@ -95,8 +95,8 @@ export const rrealTacos: CaseStudy = {
     intro:
       "These are the numbers we can stand behind. Every metric comes directly from Rreal Tacos' call data for May 2026.",
     cards: [
-      { value: "19,362", label: "Calls handled", color: "#943e72" },
-      { value: "2,867", label: "SMS messages sent", color: "#3773d7" },
+      { value: 19362, label: "Calls handled", color: "#943e72" },
+      { value: 2867, label: "SMS messages sent", color: "#3773d7" },
       { value: "~520", label: "Host hours saved", color: "#ef7200" },
       { value: "54%", label: "Calls fully resolved", color: "#2f3d7c" },
     ],

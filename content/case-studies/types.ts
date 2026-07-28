@@ -10,14 +10,21 @@
  * restaurant) is what keeps the module honest without touching the audio.
  */
 
-export type HeroStat = { value: string; label: string };
+/**
+ * `value` is a raw number wherever the site actually claims a count (so it
+ * can only ever render as "5,513", never "5.513" — the en-US formatter is
+ * the only thing that turns it into text) and a string wherever the design
+ * uses a deliberate abbreviation ("3.2K+", "19K+", "4x") that a formatter
+ * would mangle.
+ */
+export type HeroStat = { value: string | number; label: string };
 
-export type MetricCard = { value: string; label: string; color: string };
+export type MetricCard = { value: string | number; label: string; color: string };
 
 export type RelatedCard = {
   name: string;
   location?: string;
-  value: string;
+  value: string | number;
   metric: string;
   desc: string;
   image?: string;

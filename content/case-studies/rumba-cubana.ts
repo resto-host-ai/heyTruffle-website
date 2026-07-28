@@ -32,7 +32,7 @@ export const rumbaCubana: CaseStudy = {
     intro:
       "Every metric comes directly from Rumba Cubana's call data for a single month.",
     cards: [
-      { value: "4.042", label: "Calls handled", color: "#943e72" },
+      { value: 4042, label: "Calls handled", color: "#943e72" },
       { value: "885", label: "SMS sent", color: "#3773d7" },
       { value: "35%", label: "Recovered after hours", color: "#ef7200" },
       { value: "55", label: "Host hours saved", color: "#2f3d7c" },

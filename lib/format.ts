@@ -23,3 +23,10 @@ export function formatCount(n: number): string {
 export function formatMoney(n: number): string {
   return MONEY.format(n);
 }
+
+/** For fields typed `string | number` — a number always goes through the
+ *  en-US formatter, a string (an intentional abbreviation like "3.2K+") is
+ *  rendered as-is. */
+export function formatValue(v: string | number): string {
+  return typeof v === "number" ? formatCount(v) : v;
+}

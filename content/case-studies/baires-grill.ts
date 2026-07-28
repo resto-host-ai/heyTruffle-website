@@ -32,7 +32,7 @@ export const bairesGrill: CaseStudy = {
     intro:
       "These are the numbers we can stand behind. Every metric comes directly from Baires Grill's call data for June 2026.",
     cards: [
-      { value: "7.520", label: "Calls handled", color: "#943e72" },
+      { value: 7520, label: "Calls handled", color: "#943e72" },
       { value: "996", label: "SMS messages sent", color: "#3773d7" },
       { value: "590", label: "Reservations booked by AI", color: "#ef7200" },
       { value: "104", label: "Host hours saved", color: "#2f3d7c" },

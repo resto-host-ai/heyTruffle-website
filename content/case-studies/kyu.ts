@@ -49,7 +49,7 @@ export const kyu: CaseStudy = {
     intro:
       "These are the numbers we can stand behind. Every metric comes directly from KYU's call data for March 2026.",
     cards: [
-      { value: "1.964", label: "Calls handled", color: "#943e72" },
+      { value: 1964, label: "Calls handled", color: "#943e72" },
       { value: "793", label: "SMS sent", color: "#3773d7" },
       { value: "100%", label: "Resolved by AI", color: "#ef7200" },
       { value: "88", label: "Host hours saved", color: "#2f3d7c" },

@@ -3,11 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { formatValue } from "@/lib/format";
 
 type Case = {
   name: string;
   location?: string;
-  value: string;
+  value: string | number;
   metric: string;
   desc: string;
   image?: string;
@@ -20,7 +21,7 @@ const CASES: Case[] = [
   {
     name: "Rreal tacos",
     location: "Atlanta, 12 locations",
-    value: "5.513",
+    value: 5513,
     metric: "Calls recovered in one month.",
     desc: "Reservations, orders and catering that would have gone unanswered.",
     image: "/images/case-rreal.webp",
@@ -125,7 +126,7 @@ export default function CaseStudies({
                     className="mt-8 font-body text-[64px] font-normal leading-[110%] md:mt-10 md:text-[96px] lg:text-[124.687px]"
                     style={{ color: c.accent }}
                   >
-                    {c.value}
+                    {formatValue(c.value)}
                   </p>
                   <p
                     className="mt-5 font-body text-[28px] font-normal leading-[120%] md:text-[40px]"

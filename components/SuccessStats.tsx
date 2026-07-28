@@ -6,7 +6,7 @@ type Stat = { value: string; title: string; desc: string };
 
 const DEFAULT_RESULTS: Stat[] = [
   {
-    value: "5.513",
+    value: "5,513",
     title: "Calls recovered",
     desc: "Reservations, orders and catering that would have gone unanswered.",
   },
@@ -26,7 +26,7 @@ const DEFAULT_RESULTS: Stat[] = [
     title: "Simultaneous calls",
     desc: "Simultaneous calls absorbed.",
   },
-  { value: "5.823", title: "Calls handled", desc: "Zero escalations." },
+  { value: "5,823", title: "Calls handled", desc: "Zero escalations." },
 ];
 
 const DEFAULT_INTRO =
