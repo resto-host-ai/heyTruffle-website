@@ -14,9 +14,11 @@ export default function ScrollReveal() {
   useEffect(() => {
     if (typeof IntersectionObserver === "undefined") return;
 
-    // Cancels the CSS reveal-fallback animation (globals.css) now that the
-    // real observer is in charge. Without IntersectionObserver we bail before
-    // this line, so the fallback still reveals everything at 2.5s.
+    // Reveals are VISIBLE until this class lands (globals.css) — content
+    // never waits on JS. Stamping it here and marking the in-view elements
+    // .is-visible below happen in the same synchronous pass, so nothing on
+    // screen ever flashes out. Without IntersectionObserver we bail before
+    // this line and everything simply stays visible.
     document.documentElement.classList.add("js-ready");
 
     const els = document.querySelectorAll<HTMLElement>(

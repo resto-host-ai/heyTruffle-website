@@ -58,44 +58,28 @@ html {
 
 /* Scroll-reveal system (ported from the implemented RestoHost design):
    elements fade + move in when they enter the viewport. ScrollReveal toggles
-   `.is-visible`. Stagger via inline `--reveal-delay`. */
+   `.is-visible`. Stagger via inline `--reveal-delay`.
+
+   VISIBLE BY DEFAULT: the hidden state only applies once ScrollReveal has
+   stamped `js-ready` on <html> — content never waits on JS. The previous
+   design (hidden by default + a 2.5s CSS fallback) meant that on slow
+   hydration — iPhones on real networks against Render's slow chunk serving —
+   everything below the hero sat blank for ~3s. ScrollReveal adds `js-ready`
+   and marks the in-view elements `.is-visible` in the same synchronous pass,
+   so nothing that's on screen ever flashes out. */
 .reveal {
-  opacity: 0;
   transition:
     opacity 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) var(--reveal-delay, 0s),
     transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) var(--reveal-delay, 0s),
     filter 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) var(--reveal-delay, 0s);
   will-change: opacity, transform;
-  /* Hydration safety valve: on a slow connection the JS bundle lands seconds
-     after first paint, and until ScrollReveal runs every .reveal is opacity 0
-     — whole sections render blank. If `.js-ready` hasn't been stamped on
-     <html> 2.5s after this element paints, force it visible. ScrollReveal
-     cancels this the moment the real observer takes over. */
-  animation: reveal-fallback 0s linear 2.5s forwards;
 }
-html.js-ready .reveal {
-  animation: none;
-}
-@keyframes reveal-fallback {
-  to {
-    opacity: 1;
-    transform: none;
-    filter: none;
-  }
-}
-.reveal.is-visible {
-  opacity: 1;
-}
-.reveal-up { transform: translateY(24px); }
-.reveal-up.is-visible { transform: translateY(0); }
-.reveal-left { transform: translateX(-18px); }
-.reveal-left.is-visible { transform: translateX(0); }
-.reveal-right { transform: translateX(18px); }
-.reveal-right.is-visible { transform: translateX(0); }
-.reveal-zoom { transform: scale(0.96); }
-.reveal-zoom.is-visible { transform: scale(1); }
-.reveal-blur { filter: blur(8px); transform: translateY(10px); }
-.reveal-blur.is-visible { filter: blur(0); transform: translateY(0); }
+html.js-ready .reveal:not(.is-visible) { opacity: 0; }
+html.js-ready .reveal-up:not(.is-visible) { transform: translateY(24px); }
+html.js-ready .reveal-left:not(.is-visible) { transform: translateX(-18px); }
+html.js-ready .reveal-right:not(.is-visible) { transform: translateX(18px); }
+html.js-ready .reveal-zoom:not(.is-visible) { transform: scale(0.96); }
+html.js-ready .reveal-blur:not(.is-visible) { filter: blur(8px); transform: translateY(10px); }
 @media (prefers-reduced-motion: reduce) {
   .reveal,
   .reveal-up,
