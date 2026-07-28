@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 const PREAMBLE: LegalBlock[] = [
   {
     type: "p",
-    text: 'This Privacy Policy explains how HeyTruffle ("heytruffle," "we," "us," or "our") collects, uses, discloses, and safeguards information when you visit our websites, use our services, or interact with our AI-powered voice and messaging technology (collectively, the "Services").',
+    text: 'This Privacy Policy explains how heytruffle ("we," "us," or "our") collects, uses, discloses, and safeguards information when you visit our websites, use our services, or interact with our AI-powered voice and messaging technology (collectively, the "Services").',
   },
   {
     type: "p",
@@ -291,7 +291,7 @@ const SECTIONS: LegalSection[] = [
     blocks: [
       {
         type: "p",
-        text: "HeyTruffle — a Resto Experience company. If you have questions about this Privacy Policy, reach us at:",
+        text: "heytruffle — a Resto Experience company. If you have questions about this Privacy Policy, reach us at:",
       },
       {
         type: "ul",

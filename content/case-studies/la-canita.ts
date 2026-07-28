@@ -7,7 +7,7 @@ export const laCanita: CaseStudy = {
   seo: {
     title: "La Cañita — Case Study — heytruffle",
     description:
-      "How La Cañita answers every call in two languages across its Miami rooms with HeyTruffle — booked in English, reservado en español.",
+      "How La Cañita answers every call in two languages across its Miami rooms with heytruffle — booked in English, reservado en español.",
     canonical: "/case-study/la-canita/",
   },
   logo: { src: "/images/lacanitalogo.webp", alt: "La Cañita" },

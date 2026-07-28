@@ -34,7 +34,7 @@ export const rrealTacos: CaseStudy = {
   seo: {
     title: "Rreal Tacos — Case Study — heytruffle",
     description:
-      "How Rreal Tacos captured 100% of demand across 12 Atlanta locations with HeyTruffle — every reservation, order and catering call answered.",
+      "How Rreal Tacos captured 100% of demand across 12 Atlanta locations with heytruffle — every reservation, order and catering call answered.",
     canonical: "/case-study/rreal-tacos/",
   },
   logo: { src: "/images/rreal_logo.webp", alt: "Rreal Tacos" },
@@ -91,12 +91,12 @@ export const rrealTacos: CaseStudy = {
   measured: {
     heading: ["No assumptions.", "Just the math."],
     intro:
-      "These are the numbers we can stand behind. Every metric comes directly from Rreal Tacos' call data for May 2026.",
+      "These are the numbers we can stand behind. Every metric comes directly from Rreal Tacos' call data for june 2026.",
     cards: [
       { value: 19362, label: "Calls handled", color: "#943e72" },
       { value: 2867, label: "SMS messages sent", color: "#3773d7" },
       { value: "~520", label: "Host hours saved", color: "#ef7200" },
-      { value: "54%", label: "Calls fully resolved", color: "#2f3d7c" },
+      { value: "88%", label: "Calls fully resolved", color: "#2f3d7c" },
     ],
   },
 
@@ -106,8 +106,8 @@ export const rrealTacos: CaseStudy = {
       { value: "80%", label: "Conversion" },
       { value: "3x$30", label: "Average spend per party of three" },
     ],
-    total: "~$74,016",
-    caption: "Estimated assisted revenue in June.",
+    total: "~$21,816",
+    caption: "Estimated assisted revenue in june.",
     valueWidth: "nowrap",
   },
 
@@ -116,7 +116,7 @@ export const rrealTacos: CaseStudy = {
     accentWord: "finally",
     quoteTrailing: " focuses on guests,",
     body:
-      "before HeyTruffle, our hosts were constantly pulled away from the floor to answer the phone. During busy shifts, that meant guests waiting, missed calls, or both. Now every caller gets an answer, and our team can stay focused on what matters most: delivering a great experience in the restaurant. It has become part of our daily operation.",
+      "before heytruffle, our hosts were constantly pulled away from the floor to answer the phone. During busy shifts, that meant guests waiting, missed calls, or both. Now every caller gets an answer, and our team can stay focused on what matters most: delivering a great experience in the restaurant. It has become part of our daily operation.",
     person: "Miguel Hernandez",
     role: "C.O.O & Co-Owner at Rreal Tacos",
     photo: "/images/rrealceo.webp",

@@ -7,7 +7,7 @@ export const aplos: CaseStudy = {
   seo: {
     title: "Aplós — Case Study — heytruffle",
     description:
-      "How Aplós answered pickup, waitlist and catering calls across four Mississippi dining rooms as one with HeyTruffle.",
+      "How Aplós answered pickup, waitlist and catering calls across four Mississippi dining rooms as one with heytruffle.",
     canonical: "/case-study/aplos/",
   },
   logo: { src: "/images/aploslogo.webp", alt: "Aplós" },

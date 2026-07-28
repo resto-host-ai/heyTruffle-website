@@ -66,7 +66,7 @@ export default function TeamSection() {
                 <div key={src} className="relative aspect-[478/545]">
                   <Image
                     src={src}
-                    alt="HeyTruffle team member"
+                    alt="heytruffle team member"
                     fill
                     loading="lazy"
                     sizes="(max-width: 768px) 45vw, 30vw"
@@ -92,7 +92,7 @@ export default function TeamSection() {
         {/* ---- CTA card ---- */}
         <div className="mt-8 grid grid-cols-1 items-center gap-10 rounded-[40px] bg-[#f6f3ec] px-10 py-12 text-center shadow-[0_24px_60px_rgba(0,0,0,0.18)] md:mt-12 md:grid-cols-2 md:px-14 md:py-16 md:text-left">
           <h3 className="text-balance font-serif text-[30px] font-bold! leading-[110%] text-brand-orange md:text-wrap md:text-[38px] lg:text-[44px]">
-            Your restaurant already has an AI host. You just haven&apos;t heard
+            Your restaurant already has an AI concierge. You just haven&apos;t heard
             it yet.
           </h3>
           <div className="flex w-full flex-col items-center md:items-start">

@@ -562,7 +562,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
                   In their own words.
                 </h2>
                 <p className="mx-auto mt-5 max-w-[974px] text-center font-body text-[16px] font-normal leading-[145%] text-cream md:text-[18px]">
-                  The impact of HeyTruffle goes beyond answered calls.
+                  The impact of heytruffle goes beyond answered calls.
                 </p>
 
                 <div className="mt-16 grid grid-cols-1 gap-10 lg:grid-cols-[1.15fr_1fr] lg:items-start">

@@ -16,9 +16,9 @@ const DEFAULT_RESULTS: Stat[] = [
     desc: "Your team back on the floor, not the phone.",
   },
   {
-    value: "54%",
+    value: "84%",
     title: "Calls resolved",
-    desc: "Of calls fully resolved by HeyTruffle's AI host.",
+    desc: "Of calls fully resolved by heytruffle's AI host.",
   },
   { value: "100%", title: "AI resolution", desc: "3 months sustained." },
   {

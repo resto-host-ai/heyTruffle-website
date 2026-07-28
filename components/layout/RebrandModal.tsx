@@ -107,7 +107,7 @@ export default function RebrandModal() {
           id="ht-rebrand-title"
           className="mb-4 font-serif text-[28px] font-normal leading-[1.18] tracking-normal text-[#251F21]"
         >
-          <span className="text-[#5E5754]">RestoHost</span> is now HeyTruffle
+          <span className="text-[#5E5754]">RestoHost</span> is now heytruffle
         </h2>
 
         <div className="mb-[18px] flex flex-wrap gap-[7px]">

@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 const PREAMBLE: LegalBlock[] = [
   {
     type: "p",
-    text: 'These Terms of Service ("Terms") govern access to and use of the AI-powered voice and messaging services provided by HeyTruffle ("heytruffle," "we," "us," or "our").',
+    text: 'These Terms of Service ("Terms") govern access to and use of the AI-powered voice and messaging services provided by heytruffle ("we," "us," or "our").',
   },
   {
     type: "p",
@@ -249,7 +249,7 @@ const SECTIONS: LegalSection[] = [
     blocks: [
       {
         type: "p",
-        text: "HeyTruffle — a Resto Experience company. If you have questions about these Terms, reach us at:",
+        text: "heytruffle — a Resto Experience company. If you have questions about these Terms, reach us at:",
       },
       {
         type: "ul",

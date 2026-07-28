@@ -7,7 +7,7 @@ export const chelseaCorner: CaseStudy = {
   seo: {
     title: "Chelsea Corner — Case Study — heytruffle",
     description:
-      "How Chelsea Corner keeps its weekend rush covered with HeyTruffle — every call answered, the waitlist held and the table booked, so the team stays with the room.",
+      "How Chelsea Corner keeps its weekend rush covered with heytruffle — every call answered, the waitlist held and the table booked, so the team stays with the room.",
     canonical: "/case-study/chelsea-corner/",
   },
   logo: { src: "/images/chelsealogo.webp", alt: "Chelsea Corner" },

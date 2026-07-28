@@ -137,7 +137,7 @@ export default function WhatIsSection() {
             />
 
             <p className="reveal reveal-up relative text-center font-body text-[15px] font-normal uppercase leading-[110%] tracking-[0.08em] text-cream/70">
-              What is Hey Truffle?
+              What is heytruffle?
             </p>
 
             <div className="mt-8 flex w-full max-w-[820px] flex-col gap-6 p-0 md:gap-7">

@@ -7,7 +7,7 @@ export const rumbaCubana: CaseStudy = {
   seo: {
     title: "Rumba Cubana — Case Study — heytruffle",
     description:
-      "How Rumba Cubana keeps six New Jersey kitchens covered with HeyTruffle — every call answered, the table booked and the link sent, with the same warm welcome at each.",
+      "How Rumba Cubana keeps six New Jersey kitchens covered with heytruffle — every call answered, the table booked and the link sent, with the same warm welcome at each.",
     canonical: "/case-study/rumba-cubana/",
   },
   logo: { src: "/images/rumbalogo.webp", alt: "Rumba Cubana" },

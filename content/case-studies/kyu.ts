@@ -7,7 +7,7 @@ export const kyu: CaseStudy = {
   seo: {
     title: "KYU — Case Study — heytruffle",
     description:
-      "How KYU resolved 1,964 calls — every single one — across Miami, NYC and Las Vegas with HeyTruffle, without passing one to the floor.",
+      "How KYU resolved 1,964 calls — every single one — across Miami, NYC and Las Vegas with heytruffle, without passing one to the floor.",
     canonical: "/case-study/kyu/",
   },
   logo: { src: "/images/kyulogo.webp", alt: "KYU" },

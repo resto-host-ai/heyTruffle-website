@@ -7,7 +7,7 @@ export const kyochon: CaseStudy = {
   seo: {
     title: "Kyochon — Case Study — heytruffle",
     description:
-      "How Kyochon keeps its takeout and delivery line moving with HeyTruffle — the kitchen keeps cooking, the order still gets taken.",
+      "How Kyochon keeps its takeout and delivery line moving with heytruffle — the kitchen keeps cooking, the order still gets taken.",
     canonical: "/case-study/kyochon/",
   },
   logo: { src: "/images/kyochonlogo.webp", alt: "Kyochon" },

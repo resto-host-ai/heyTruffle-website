@@ -266,7 +266,7 @@ export default function CaseStudiesList() {
         </h1>
         <p className="mx-auto mt-6 max-w-[1085px] text-center font-body text-[16px] font-normal leading-[145%] text-[#251f21] md:text-[18px]">
           Explore how restaurants are capturing more reservations, orders and
-          catering with HeyTruffle. Filter by operational need, cuisine or
+          catering with heytruffle. Filter by operational need, cuisine or
           location to find the case closest to your own.
         </p>
 

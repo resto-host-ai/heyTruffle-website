@@ -7,7 +7,7 @@ export const bairesGrill: CaseStudy = {
   seo: {
     title: "Baires Grill — Case Study — heytruffle",
     description:
-      "How Baires Grill answered every reservation, private-event and support call across its Miami rooms with HeyTruffle — a record month, every call answered.",
+      "How Baires Grill answered every reservation, private-event and support call across its Miami rooms with heytruffle — a record month, every call answered.",
     canonical: "/case-study/baires-grill/",
   },
   logo: { src: "/images/logobaires.webp", alt: "Baires Grill" },
@@ -41,9 +41,9 @@ export const bairesGrill: CaseStudy = {
 
   impact: {
     factors: [
-      { value: "731", label: "SMS sent" },
+      { value: "996", label: "Bookings" },
       { value: "80%", label: "Conversion" },
-      { value: "3x$50", label: "Average spend per party of three" },
+      { value: "3x$50", label: "Average spend" },
     ],
     total: "~$87,720",
     caption: "Estimated assisted revenue in June.",
