@@ -122,7 +122,13 @@ export default function WhatIsSection() {
                 src="/images/background_gradient.webp"
                 alt=""
                 fill
-                loading="lazy"
+                /* Eager at low priority: WebKit's lazy-load margin is much
+                   shorter than Chromium's, so lazy left this heavy background
+                   downloading+decoding right as iPhones scrolled into the
+                   section — the whole area painted visibly late on iOS.
+                   Eager+low fetches it early without competing with the LCP. */
+                loading="eager"
+                fetchPriority="low"
                 quality={90}
                 sizes="100vw"
                 className="object-cover"
@@ -147,7 +153,12 @@ export default function WhatIsSection() {
                 {STATEMENTS.map((text, i) => (
                   <div
                     key={text}
-                    className="relative flex h-[70px] items-center justify-center overflow-hidden rounded-full border border-white/40 [background:linear-gradient(180deg,rgba(255,255,255,0.05)_0%,rgba(255,255,255,0.04)_50%,rgba(255,255,255,0.05)_100%)] shadow-[0_10px_30px_rgba(0,0,0,0.22)] backdrop-blur-lg md:h-[96px]"
+                    /* backdrop-blur only from md: on phones the pills render
+                       already resolved, so the opaque gradient overlay fully
+                       covers the translucent base — the blur is invisible there,
+                       and backdrop-filter is Safari/iOS's most expensive effect
+                       (it was making this section land visibly late on iPhones). */
+                    className="relative flex h-[70px] items-center justify-center overflow-hidden rounded-full border border-white/40 [background:linear-gradient(180deg,rgba(255,255,255,0.05)_0%,rgba(255,255,255,0.04)_50%,rgba(255,255,255,0.05)_100%)] shadow-[0_10px_30px_rgba(0,0,0,0.22)] md:h-[96px] md:backdrop-blur-lg"
                   >
                     {/* Resolved-color overlay — crossfades in on top of the
                         base fill as the scroll-derived progress advances, so
