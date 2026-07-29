@@ -67,6 +67,48 @@ html {
    everything below the hero sat blank for ~3s. ScrollReveal adds `js-ready`
    and marks the in-view elements `.is-visible` in the same synchronous pass,
    so nothing that's on screen ever flashes out. */
+/* ── Motion tokens ────────────────────────────────────────────────────────
+   The site's movement vocabulary. Built-in CSS easings are too weak — these
+   are the strong curves every transition should reference (via
+   `ease-[var(--ease-out-strong)]` or `[transition-timing-function:...]`).
+   House rules: UI transitions stay under 300ms, animate ONLY transform and
+   opacity (compositor budget — see the reveal note below), exits snappier
+   than entries, and hover effects gated behind (hover:hover). */
+:root {
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1); /* entries, press feedback */
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1); /* on-screen morphs */
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1); /* panels/drawers (iOS-like) */
+}
+
+/* ── One-shot load entrance ───────────────────────────────────────────────
+   Fires exactly once, when the element is first inserted (page load) — via
+   @starting-style, so there is NO JavaScript, NO IntersectionObserver and NO
+   scroll gating involved: it cannot reproduce the iOS "content appears late"
+   bug by construction. Safe on phones. Stagger via inline --enter-delay.
+   Uses the native `translate` property (compositor-friendly, and it doesn't
+   collide with utilities that set `transform`). Browsers without
+   @starting-style support simply render the final state. */
+.enter {
+  transition:
+    opacity 0.36s var(--ease-out-strong) var(--enter-delay, 0s),
+    translate 0.36s var(--ease-out-strong) var(--enter-delay, 0s);
+
+  @starting-style {
+    /* Never hide the LCP or the primary actions. The entrance remains visible
+       even on a cold iPhone load where style/paint work lands late. */
+    opacity: 0.72;
+    translate: 0 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* Reduced motion means gentler, not dead: keep the opacity fade (no
+     vestibular trigger) and drop only the movement — the translate from
+     @starting-style then applies instantly, so nothing slides. */
+  .enter {
+    transition-property: opacity;
+  }
+}
+
 /* DESKTOP-ONLY, deliberately. On phones a .reveal is plain static content:
    no hidden state, no transition, no will-change. Two reasons, both measured
    on iPhone 15 / 17 Pro Max:

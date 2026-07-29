@@ -6,6 +6,23 @@ import { BookDemoButton } from "@/components/ui/BookDemoButton";
 import DemoAssistant from "@/components/demo/DemoAssistant";
 import HeroBackground from "@/components/home/HeroBackground";
 
+/* .btn-grad (globals.css) sits outside every @layer, so its transition-*
+   declarations outrank ANY transition utility on these buttons (utilities
+   live in @layer utilities) — the `transition-all duration-300` classes they
+   carried were dead code. Inline style is the one declaration that outranks
+   un-layered CSS, so the full list lives here: the existing gradient + shadow
+   hover (btn-grad's own curve, capped at 300ms) plus press feedback on the
+   native `scale` property (what Tailwind v4 scale-* utilities animate) at
+   160ms. Compositor-safe: gradient props + shadow already transitioned
+   before; `scale` is the only newly animated property. */
+const BTN_GRAD_PRESS_TRANSITION = [
+  "--btn-g1 300ms cubic-bezier(0.2, 0.8, 0.2, 1)",
+  "--btn-g2 300ms cubic-bezier(0.2, 0.8, 0.2, 1)",
+  "--btn-g3 300ms cubic-bezier(0.2, 0.8, 0.2, 1)",
+  "box-shadow 300ms cubic-bezier(0.2, 0.8, 0.2, 1)",
+  "scale 160ms var(--ease-out-strong)",
+].join(", ");
+
 export default function Hero() {
   const [query, setQuery] = useState("");
   const [demoOpen, setDemoOpen] = useState(false);
@@ -29,7 +46,10 @@ export default function Hero() {
       <div className="flex flex-col items-center gap-5 px-6 text-center text-cream desk-tall:gap-6 desk-short:gap-4">
         {/* Logo — the page's single H1. Its accessible name (the image alt)
             carries the brand + primary keyword. */}
-        <h1 className="m-0 leading-none">
+        {/* .enter = one-shot load entrance (@starting-style, no JS/observers)
+            with a soft 40ms stagger down the stack — the page's only "hello"
+            moment, safe on phones by construction. */}
+        <h1 className="enter m-0 leading-none">
           <Image
             src="/images/icono.svg"
             alt="heytruffle — voice AI for restaurants"
@@ -45,7 +65,10 @@ export default function Hero() {
             Sized against the RestoHost scale (h1 caps at 88px there); Gowun
             Batang reads heavier than a sans at the same px, so this sits a
             step below it. */}
-        <p className="max-w-[1000px] font-serif text-[38px] font-bold! leading-[110%] tracking-tight text-cream sm:text-[60px] lg:text-[76px]">
+        <p
+          className="enter max-w-[1000px] font-serif text-[38px] font-bold! leading-[110%] tracking-tight text-cream sm:text-[60px] lg:text-[76px]"
+          style={{ "--enter-delay": "0.04s" } as React.CSSProperties}
+        >
           You operate the restaurant.
           <br />
           We operate the phones.
@@ -53,7 +76,10 @@ export default function Hero() {
 
         {/* Subtitle — RestoHost sets body copy at 18px max; 20px keeps a bit
             more presence without the 26px that read as oversized. */}
-        <p className="font-body w-full max-w-[860px] text-[16px] font-normal leading-[145%] text-cream/85 sm:text-[20px] desk-tall:h-[80px]">
+        <p
+          className="enter font-body w-full max-w-[860px] text-[16px] font-normal leading-[145%] text-cream/85 sm:text-[20px] desk-tall:h-[80px]"
+          style={{ "--enter-delay": "0.08s" } as React.CSSProperties}
+        >
           A fully managed service that answers every call for your restaurants:
           every reservation booked, every order taken, every catering inquiry
           handled.
@@ -64,7 +90,10 @@ export default function Hero() {
             the CTAs, matching RestoHost's 36px mobile / 48px desktop. Uses the
             desk-* variants rather than sm: so a short desktop (MacBook 14")
             stays compressed instead of both rules matching at ≥640px. */}
-        <div className="mt-3 flex w-full max-w-[500px] flex-col items-stretch gap-3 desk-tall:mt-6 desk-tall:gap-5 desk-short:mt-4 desk-short:gap-4">
+        <div
+          className="enter mt-3 flex w-full max-w-[500px] flex-col items-stretch gap-3 desk-tall:mt-6 desk-tall:gap-5 desk-short:mt-4 desk-short:gap-4"
+          style={{ "--enter-delay": "0.12s" } as React.CSSProperties}
+        >
           {/* Search + primary CTA. Shown at every width: the search box is the
               hero's main gesture, so mobile keeps it rather than falling back
               to a plain button. */}
@@ -85,7 +114,8 @@ export default function Hero() {
             />
             <button
               type="submit"
-              className="flex h-full shrink-0 items-center justify-center gap-1.5 rounded-full bg-brand-orange px-4 font-body text-[15px] font-bold leading-[110%] text-[#f6f3ec] transition-all duration-300 btn-grad btn-grad-orange hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(239,114,0,0.55)] sm:gap-3 sm:px-8 sm:text-[16px]"
+              className="flex h-full shrink-0 items-center justify-center gap-1.5 rounded-full bg-brand-orange px-4 font-body text-[15px] font-bold leading-[110%] text-[#f6f3ec] btn-grad btn-grad-orange active:scale-[0.98] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(239,114,0,0.55)] sm:gap-3 sm:px-8 sm:text-[16px]"
+              style={{ transition: BTN_GRAD_PRESS_TRANSITION }}
             >
               Hear it live
               <svg
@@ -111,7 +141,10 @@ export default function Hero() {
 
           {/* Secondary CTA — auto width at every size so it reads as the
               quieter of the two actions, the way it does on desktop. */}
-          <BookDemoButton className="mt-1 flex h-[50px] w-auto items-center justify-center self-center rounded-full bg-[#1c1917]/85 px-8 text-[16px] font-semibold text-cream shadow-lg backdrop-blur-md transition-all duration-300 btn-grad btn-grad-blue sm:mt-4 hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(79,84,144,0.55)]">
+          <BookDemoButton
+            className="mt-1 flex h-[50px] w-auto items-center justify-center self-center rounded-full bg-[#1c1917]/85 px-8 text-[16px] font-semibold text-cream shadow-lg backdrop-blur-md btn-grad btn-grad-blue sm:mt-4 hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(79,84,144,0.55)]"
+            style={{ transition: BTN_GRAD_PRESS_TRANSITION }}
+          >
             Talk to our team
           </BookDemoButton>
         </div>
