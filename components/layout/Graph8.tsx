@@ -1,5 +1,3 @@
-import Script from "next/script";
-
 // graph8 flow tracking pixel. Loaded once from the root layout so it runs on
 // every route. The write-key identifies our account to events.flow.graph8.com
 // and is a public, client-side value by design — but it's still supplied via
@@ -12,16 +10,17 @@ export default function Graph8() {
   // rather than load a script that would only error.
   if (!GRAPH8_WRITE_KEY) return null;
 
+  // A plain <script> tag, not next/script's <Script>: every next/script
+  // strategy (including beforeInteractive) inserts the tag via a runtime
+  // bootstrap, never as literal markup, so external script-verification
+  // tools that fetch the raw HTML without executing JS can never see it.
+  // A native tag renders as real server HTML like any other element.
   return (
-    <Script
+    <script
+      async
       id="graph8-flow"
       src="https://events.flow.graph8.com/p.js"
       data-write-key={GRAPH8_WRITE_KEY}
-      // beforeInteractive is the only strategy Next.js renders into the
-      // server HTML itself (the others inject via client-side JS after
-      // hydration) — third-party script-verification tools that fetch the
-      // raw HTML without executing JS otherwise never see this tag at all.
-      strategy="beforeInteractive"
     />
   );
 }
