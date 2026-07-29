@@ -89,7 +89,7 @@ export default async function BlogPostPage({
         <div className="relative mx-auto max-w-[820px] px-6 md:px-10">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 font-body text-[15px] font-normal leading-[110%] md:text-[16px] text-cream/80 transition-opacity hover:opacity-70"
+            className="inline-flex items-center gap-2 font-body text-[15px] font-normal leading-[110%] md:text-[16px] text-cream/80 transition-opacity duration-150 ease-[var(--ease-out-strong)] hover:opacity-70"
           >
             <svg
               width="18"
@@ -168,33 +168,44 @@ export default async function BlogPostPage({
               Keep reading.
             </h2>
             <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {related.map((p) => (
-                <Link
+              {/* The reveal lives on a wrapper, not on the card: `.reveal` in
+                  globals.css declares an unlayered `transition` that would
+                  override the card's own (layered) hover-transition utilities
+                  on the same element. Three cards → one 60ms step each. */}
+              {related.map((p, i) => (
+                <div
                   key={p.slug}
-                  href={`/blog/${p.slug}/`}
-                  className="group flex flex-col overflow-hidden rounded-[25px] bg-white shadow-[0_14px_34px_rgba(0,0,0,0.06)] transition-shadow duration-300 hover:shadow-[0_22px_54px_rgba(0,0,0,0.12)]"
+                  className="reveal reveal-up flex"
+                  style={{ "--reveal-delay": `${i * 60}ms` } as React.CSSProperties}
                 >
-                  <div className="relative aspect-[16/10] overflow-hidden">
-                    <Image
-                      src={p.image}
-                      alt={p.title}
-                      fill
-                      sizes="(max-width: 640px) 100vw, 480px"
-                      className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                    />
-                  </div>
-                  <div className="flex flex-1 flex-col p-7">
-                    <span className="w-fit rounded-full bg-brand-orange/10 px-3.5 py-1.5 font-body text-[12px] font-semibold uppercase tracking-[0.14em] text-brand-orange">
-                      {p.category}
-                    </span>
-                    <h3 className="mt-4 font-serif text-[22px] font-bold! leading-[125%] text-[#251f21] transition-colors group-hover:text-brand-orange">
-                      {p.title}
-                    </h3>
-                    <p className="mt-auto pt-6 font-body text-[14px] text-[#251f21]/45">
-                      {formatDate(p.date)}
-                    </p>
-                  </div>
-                </Link>
+                  {/* Hover: entry 200ms, exit picks up the base 150ms — exits
+                      snappier than entries, per the house motion rules. */}
+                  <Link
+                    href={`/blog/${p.slug}/`}
+                    className="group flex w-full flex-col overflow-hidden rounded-[25px] bg-white shadow-[0_14px_34px_rgba(0,0,0,0.06)] transition-[translate,box-shadow] duration-150 ease-[var(--ease-out-strong)] hover:-translate-y-0.5 hover:shadow-[0_22px_54px_rgba(0,0,0,0.12)] hover:duration-200"
+                  >
+                    <div className="relative aspect-[16/10] overflow-hidden">
+                      <Image
+                        src={p.image}
+                        alt={p.title}
+                        fill
+                        sizes="(max-width: 640px) 100vw, 480px"
+                        className="object-cover transition-transform duration-[400ms] ease-[var(--ease-out-strong)] group-hover:scale-[1.04]"
+                      />
+                    </div>
+                    <div className="flex flex-1 flex-col p-7">
+                      <span className="w-fit rounded-full bg-brand-orange/10 px-3.5 py-1.5 font-body text-[12px] font-semibold uppercase tracking-[0.14em] text-brand-orange">
+                        {p.category}
+                      </span>
+                      <h3 className="mt-4 font-serif text-[22px] font-bold! leading-[125%] text-[#251f21] transition-colors duration-150 ease-[var(--ease-out-strong)] group-hover:text-brand-orange">
+                        {p.title}
+                      </h3>
+                      <p className="mt-auto pt-6 font-body text-[14px] text-[#251f21]/45">
+                        {formatDate(p.date)}
+                      </p>
+                    </div>
+                  </Link>
+                </div>
               ))}
             </div>
           </div>
@@ -226,7 +237,12 @@ export default async function BlogPostPage({
                 Every reservation booked, every order taken, every catering
                 inquiry closed.
               </p>
-              <BookDemoButton className="mt-10 inline-flex items-center justify-center h-[50px] rounded-full bg-cream px-8 font-body text-[16px] font-bold leading-[110%] text-[#251f21] transition-all duration-300 btn-grad btn-grad-blue hover:text-cream hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(79,84,144,0.55)]">
+              {/* No transition utility here on purpose: `.btn-grad` already
+                  declares the explicit property list (gradient stops, color,
+                  box-shadow, …) with its own curve, and being unlayered CSS it
+                  outranks any Tailwind `transition-*` — a `transition-all`
+                  alongside it is dead weight. */}
+              <BookDemoButton className="mt-10 inline-flex items-center justify-center h-[50px] rounded-full bg-cream px-8 font-body text-[16px] font-bold leading-[110%] text-[#251f21] btn-grad btn-grad-blue hover:text-cream hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(79,84,144,0.55)]">
                 Get a Free Demo
               </BookDemoButton>
               <p className="mt-6 font-body text-[15px] font-normal leading-[110%] md:text-[16px] text-cream/80">

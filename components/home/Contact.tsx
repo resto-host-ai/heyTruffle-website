@@ -167,7 +167,7 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={status === "submitting"}
-                  className="mt-7 w-full rounded-full bg-gradient-to-r from-[#b53fc4] to-[#ef7200] py-3.5 text-sm font-bold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70"
+                  className="mt-7 w-full rounded-full bg-gradient-to-r from-[#b53fc4] to-[#ef7200] py-3.5 text-sm font-bold text-white transition-[scale,opacity] duration-[160ms] ease-[var(--ease-out-strong)] hover:opacity-90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   {status === "submitting" ? "Sending…" : "Submit →"}
                 </button>

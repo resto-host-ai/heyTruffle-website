@@ -141,7 +141,7 @@ export default function MomentSection() {
                 type="button"
                 onClick={togglePlay}
                 aria-label={playing ? "Pause" : ended ? "Replay" : "Play"}
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-[#1c1917]/60 text-cream backdrop-blur-md transition-all duration-200 hover:scale-105 hover:bg-[#1c1917]/80"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-[#1c1917]/60 text-cream backdrop-blur-md transition-[scale,background-color] duration-[160ms] ease-[var(--ease-out-strong)] hover:scale-105 hover:bg-[#1c1917]/80 active:scale-95"
               >
                 {playing ? (
                   <svg width="13" height="15" viewBox="0 0 12 14" fill="none" aria-hidden>
@@ -159,7 +159,7 @@ export default function MomentSection() {
                 type="button"
                 onClick={toggleMuted}
                 aria-label={muted ? "Unmute" : "Mute"}
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-[#1c1917]/60 text-cream backdrop-blur-md transition-all duration-200 hover:scale-105 hover:bg-[#1c1917]/80"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-[#1c1917]/60 text-cream backdrop-blur-md transition-[scale,background-color] duration-[160ms] ease-[var(--ease-out-strong)] hover:scale-105 hover:bg-[#1c1917]/80 active:scale-95"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                   <path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none" />

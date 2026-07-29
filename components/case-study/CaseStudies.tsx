@@ -139,7 +139,10 @@ export default function CaseStudies({
             for 400px tall (4.4:1), which read as a stretched band rather than a
             card. 1200px puts it near 3:1 and leaves the video panel close to
             3:2. */}
-        <div className="relative mx-auto mt-10 max-w-[1450px]">
+        <div
+          data-mobile-motion="scale"
+          className="relative mx-auto mt-10 max-w-[1450px]"
+        >
           {/* soft glow behind the active card, in its accent colour */}
           <div
             aria-hidden
@@ -172,7 +175,7 @@ export default function CaseStudies({
                    also faded the drop shadow, which left a pale halo around the
                    peeking card. Dimming stays with bgIdle, and only the active
                    card casts a shadow. */
-                className={`relative flex w-full shrink-0 grow-0 basis-[var(--basis)] flex-col overflow-hidden rounded-[28px] transition-all duration-500 ease-out md:h-[clamp(330px,calc(28.93vw-42.2px),420px)] md:flex-row md:transform-gpu ${
+                className={`relative flex w-full shrink-0 grow-0 basis-[var(--basis)] flex-col overflow-hidden rounded-[28px] transition-[background-color,box-shadow] duration-500 ease-out md:h-[clamp(330px,calc(28.93vw-42.2px),420px)] md:flex-row md:transform-gpu ${
                   i === index ? "shadow-[0_18px_36px_-12px_rgba(0,0,0,0.55)]" : ""
                 }`}
                 style={{ backgroundColor: i === index ? c.bg : c.bgIdle }}
@@ -289,7 +292,7 @@ export default function CaseStudies({
             type="button"
             aria-label="Previous case study"
             onClick={prev}
-            className="hidden h-10 w-10 items-center justify-center rounded-full border border-cream/25 text-cream transition-colors hover:border-cream/50 hover:bg-cream/10 md:flex"
+            className="hidden h-10 w-10 items-center justify-center rounded-full border border-cream/25 text-cream transition-[border-color,background-color,scale] duration-[140ms] ease-[var(--ease-out-strong)] hover:border-cream/50 hover:bg-cream/10 active:scale-95 md:flex"
           >
             <svg
               width="18"
@@ -314,7 +317,7 @@ export default function CaseStudies({
                 aria-label={`Show ${c.name}`}
                 aria-current={i === index}
                 onClick={() => goTo(() => i)}
-                className={`h-2.5 w-2.5 rounded-full transition-all ${
+                className={`h-2.5 w-2.5 rounded-full transition-[background-color,scale] duration-[140ms] ease-[var(--ease-out-strong)] active:scale-95 ${
                   i === index
                     ? "bg-brand-orange"
                     : "bg-cream/25 hover:bg-cream/40"
@@ -327,7 +330,7 @@ export default function CaseStudies({
             type="button"
             aria-label="Next case study"
             onClick={next}
-            className="hidden h-10 w-10 items-center justify-center rounded-full border border-cream/25 text-cream transition-colors hover:border-cream/50 hover:bg-cream/10 md:flex"
+            className="hidden h-10 w-10 items-center justify-center rounded-full border border-cream/25 text-cream transition-[border-color,background-color,scale] duration-[140ms] ease-[var(--ease-out-strong)] hover:border-cream/50 hover:bg-cream/10 active:scale-95 md:flex"
           >
             <svg
               width="18"

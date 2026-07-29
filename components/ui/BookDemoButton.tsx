@@ -91,10 +91,19 @@ export function BookDemoButton({
     [onClick],
   );
 
+  // Press feedback for every usage, composed ahead of the caller's classes.
+  // Only the pressed *state* lives here: transition-property is a single
+  // declaration per element, so the eased press/release must come from the
+  // caller's transition list (include `scale` — Tailwind v4 scale-* utilities
+  // animate the native `scale` property, which `transform` does not cover).
+  const composedClassName = className
+    ? `active:scale-[0.98] ${className}`
+    : "active:scale-[0.98]";
+
   return (
     <button
       type="button"
-      className={className}
+      className={composedClassName}
       style={style}
       onClick={handleClick}
       aria-label={ariaLabel}

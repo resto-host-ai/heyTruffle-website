@@ -172,7 +172,7 @@ function ChevronCircle({ open }: { open: boolean }) {
       stroke="currentColor"
       strokeWidth="1.8"
       aria-hidden
-      className={`shrink-0 transition-transform duration-200 ${
+      className={`shrink-0 transition-transform duration-200 ease-[var(--ease-out-strong)] ${
         open ? "rotate-180" : ""
       }`}
     >
@@ -209,6 +209,12 @@ export default function CaseStudiesList() {
     location: [],
   });
   const filtersRef = useRef<HTMLDivElement>(null);
+  // The entry stagger only applies to the initial, unfiltered grid.
+  // ScrollReveal scans `.reveal` once per route, so a card remounted by a
+  // filter change would never receive `.is-visible` and would sit at
+  // opacity 0 on desktop. First filter interaction drops the classes for
+  // good (sticky — deselecting every filter must not re-add them either).
+  const [hasFiltered, setHasFiltered] = useState(false);
 
   // Close the open dropdown when clicking outside the filter row.
   useEffect(() => {
@@ -222,6 +228,7 @@ export default function CaseStudiesList() {
   }, []);
 
   const toggleOption = (key: Category, option: string) => {
+    setHasFiltered(true);
     setSelected((prev) => {
       const has = prev[key].includes(option);
       return {
@@ -280,7 +287,7 @@ export default function CaseStudiesList() {
                 onClick={() =>
                   setOpen((cur) => (cur === group.key ? null : group.key))
                 }
-                className="flex w-full items-center justify-between gap-4 whitespace-nowrap rounded-full bg-[#251f21]/60 px-8 py-5 font-body text-[16px] font-bold leading-none text-cream backdrop-blur-sm transition-colors hover:bg-[#251f21]/75"
+                className="flex w-full items-center justify-between gap-4 whitespace-nowrap rounded-full bg-[#251f21]/60 px-8 py-5 font-body text-[16px] font-bold leading-none text-cream backdrop-blur-sm transition-colors duration-150 ease-[var(--ease-out-strong)] hover:bg-[#251f21]/75"
               >
                 {group.label}
                 <ChevronCircle open={open === group.key} />
@@ -295,7 +302,7 @@ export default function CaseStudiesList() {
                         key={option}
                         type="button"
                         onClick={() => toggleOption(group.key, option)}
-                        className="flex w-full items-center justify-between gap-3 rounded-xl px-4 py-2.5 text-left font-body text-[16px] leading-[145%] md:text-[18px] text-[#251f21] transition-colors hover:bg-[#251f21]/[0.06]"
+                        className="flex w-full items-center justify-between gap-3 rounded-xl px-4 py-2.5 text-left font-body text-[16px] leading-[145%] md:text-[18px] text-[#251f21] transition-colors duration-150 ease-[var(--ease-out-strong)] hover:bg-[#251f21]/[0.06]"
                       >
                         <span className={isSelected ? "font-medium" : ""}>
                           {option}
@@ -315,51 +322,69 @@ export default function CaseStudiesList() {
             its unit and an operational one-liner below. 3 columns so the 9
             cards land as full rows and the photos keep enough width to read. */}
         <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {visible.map((c) => (
-            <Link
+          {/* The reveal lives on a wrapper, not on the card: `.reveal` in
+              globals.css declares an unlayered `transition` that would
+              override the card's own (layered) hover-transition utilities on
+              the same element. Stagger restarts per row (i % 3 · 60ms). */}
+          {visible.map((c, i) => (
+            <div
               key={c.name}
-              href={c.slug ? `/case-study/${c.slug}/` : "#"}
-              className="group relative flex flex-col overflow-hidden rounded-[25px] border border-[#251f21]/10 bg-white shadow-[0_14px_40px_rgba(37,31,33,0.10)] transition-shadow duration-300 hover:shadow-[0_22px_54px_rgba(37,31,33,0.18)]"
+              className={hasFiltered ? "flex" : "reveal reveal-up flex"}
+              style={
+                hasFiltered
+                  ? undefined
+                  : ({
+                      "--reveal-delay": `${(i % 3) * 60}ms`,
+                    } as React.CSSProperties)
+              }
             >
-              {/* Dark bg + a hair of scale: fill images round down to whole
-                  pixels, and on fractional card widths that leaves a white
-                  sliver of the card peeking at the photo's edges. */}
-              <div className="relative aspect-[16/10] overflow-hidden bg-[#251f21]">
-                <Image
-                  src={c.image}
-                  alt={`${c.name} — ${c.cuisine} restaurant in ${c.location}`}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="scale-[1.01] object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                />
-                {/* Legibility scrim behind the name */}
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[#251f21]/60 to-transparent"
-                />
-                <p className="absolute right-4 top-4 max-w-[70%] text-right font-body text-[13px] font-bold uppercase leading-[120%] tracking-[0.08em] text-cream">
-                  {c.name}
-                </p>
-                <span className="absolute bottom-3.5 left-4 rounded-full bg-brand-orange px-3 py-1.5 font-body text-[12px] font-bold uppercase leading-none tracking-[0.06em] text-white">
-                  {c.operational}
-                </span>
-              </div>
-
-              <div className="flex flex-1 flex-col justify-center px-5 pb-5 pt-4">
-                <p>
-                  <span className="font-serif text-[32px] font-bold leading-[110%] text-[#251f21]">
-                    {c.stat}
-                  </span>{" "}
-                  <span className="font-body text-[16px] font-normal text-[#251f21]/70">
-                    {c.statLabel}
+              {/* Hover: entry 200ms, exit picks up the base 150ms — exits
+                  snappier than entries, per the house motion rules. */}
+              <Link
+                href={c.slug ? `/case-study/${c.slug}/` : "#"}
+                className="group relative flex w-full flex-col overflow-hidden rounded-[25px] border border-[#251f21]/10 bg-white shadow-[0_14px_40px_rgba(37,31,33,0.10)] transition-[translate,box-shadow] duration-150 ease-[var(--ease-out-strong)] hover:-translate-y-0.5 hover:shadow-[0_22px_54px_rgba(37,31,33,0.18)] hover:duration-200"
+              >
+                {/* Dark bg + a hair of scale: fill images round down to whole
+                    pixels, and on fractional card widths that leaves a white
+                    sliver of the card peeking at the photo's edges. */}
+                <div className="relative aspect-[16/10] overflow-hidden bg-[#251f21]">
+                  <Image
+                    src={c.image}
+                    alt={`${c.name} — ${c.cuisine} restaurant in ${c.location}`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="scale-[1.01] object-cover transition-transform duration-[400ms] ease-[var(--ease-out-strong)] group-hover:scale-[1.04]"
+                  />
+                  {/* Legibility scrim behind the name */}
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[#251f21]/60 to-transparent"
+                  />
+                  <p className="absolute right-4 top-4 max-w-[70%] text-right font-body text-[13px] font-bold uppercase leading-[120%] tracking-[0.08em] text-cream">
+                    {c.name}
+                  </p>
+                  <span className="absolute bottom-3.5 left-4 rounded-full bg-brand-orange px-3 py-1.5 font-body text-[12px] font-bold uppercase leading-none tracking-[0.06em] text-white">
+                    {c.operational}
                   </span>
-                </p>
-                <p className="mt-1 font-body text-[15px] font-normal leading-[145%] text-[#251f21]/70">
-                  {c.cuisine} · {c.locations}{" "}
-                  {c.locations === "1" ? "location" : "locations"} · {c.location}
-                </p>
-              </div>
-            </Link>
+                </div>
+
+                <div className="flex flex-1 flex-col justify-center px-5 pb-5 pt-4">
+                  <p>
+                    <span className="font-serif text-[32px] font-bold leading-[110%] text-[#251f21]">
+                      {c.stat}
+                    </span>{" "}
+                    <span className="font-body text-[16px] font-normal text-[#251f21]/70">
+                      {c.statLabel}
+                    </span>
+                  </p>
+                  <p className="mt-1 font-body text-[15px] font-normal leading-[145%] text-[#251f21]/70">
+                    {c.cuisine} · {c.locations}{" "}
+                    {c.locations === "1" ? "location" : "locations"} ·{" "}
+                    {c.location}
+                  </p>
+                </div>
+              </Link>
+            </div>
           ))}
         </div>
 

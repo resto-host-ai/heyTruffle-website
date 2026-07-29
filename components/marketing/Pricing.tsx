@@ -64,7 +64,10 @@ export default function Pricing() {
   return (
     <section id="pricing" className="scroll-mt-24 bg-transparent py-24 md:py-32">
       <div className="mx-auto w-full px-6 lg:px-[73px]">
-        <div className="mx-auto mb-12 max-w-[680px] text-center">
+        <div
+          data-mobile-motion="rise"
+          className="mx-auto mb-12 max-w-[680px] text-center"
+        >
           <p className="font-body text-[13px] font-bold uppercase tracking-[0.2em] text-brand-orange">
             Pricing
           </p>
@@ -73,7 +76,10 @@ export default function Pricing() {
           </h2>
         </div>
 
-        <div className="grid  grid-cols-1 gap-9 md:grid-cols-3 md:items-stretch">
+        <div
+          data-mobile-motion="scale"
+          className="grid grid-cols-1 gap-9 md:grid-cols-3 md:items-stretch"
+        >
           {TIERS.map((tier) => (
             <TierCard key={tier.id} tier={tier} />
           ))}
@@ -91,7 +97,7 @@ export default function Pricing() {
 function TierCard({ tier }: { tier: Tier }) {
   return (
     <div
-      className={ +
+      className={
         tier.featured
           ? "relative flex h-full flex-col rounded-3xl border-2 border-brand-orange p-8 [background:linear-gradient(180deg,rgba(239,114,0,0.18)_0%,rgba(26,19,21,0)_60%),#241d1f]"
           : "flex h-full flex-col rounded-3xl border border-white/10 bg-[#241d1f] p-8"
@@ -128,8 +134,8 @@ function TierCard({ tier }: { tier: Tier }) {
       <BookDemoButton
         className={
           tier.featured
-            ? "w-full mt-10 rounded-[10px] bg-brand-orange py-3.5 font-body text-[15px] font-semibold text-white transition-colors hover:bg-[#c95f00]"
-            : "w-full rounded-[10px] border-[1.5px] border-white/30 py-3.5 font-body text-[15px] font-semibold text-cream transition-colors hover:border-cream"
+            ? "w-full mt-10 rounded-[10px] bg-brand-orange py-3.5 font-body text-[15px] font-semibold text-white transition-[scale,background-color] duration-[160ms] ease-[var(--ease-out-strong)] hover:bg-[#c95f00]"
+            : "w-full rounded-[10px] border-[1.5px] border-white/30 py-3.5 font-body text-[15px] font-semibold text-cream transition-[scale,border-color] duration-[160ms] ease-[var(--ease-out-strong)] hover:border-cream"
         }
       >
         {tier.cta}

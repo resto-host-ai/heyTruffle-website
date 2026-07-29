@@ -115,7 +115,7 @@ function NavLink({ label, href, demo }: NavItem) {
   // Only page-level links (not home-section anchors) get the active pill.
   const active = !demo && path !== "/" && stripSlash(pathname) === stripSlash(path);
 
-  const className = `whitespace-nowrap rounded-full border-2 px-3.5 py-2 text-center font-body text-[17px] leading-[110%] text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream 2xl:px-5 2xl:text-[20px] ${
+  const className = `whitespace-nowrap rounded-full border-2 px-3.5 py-2 text-center font-body text-[17px] leading-[110%] text-cream mix-blend-luminosity transition-[border-color] duration-150 ease-[var(--ease-out-strong)] hover:border-cream 2xl:px-5 2xl:text-[20px] ${
     active ? "border-cream font-bold" : "border-transparent font-normal"
   }`;
 
@@ -216,7 +216,7 @@ export default function Header() {
           <div className="group">
             <button
               type="button"
-              className="flex items-center gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-3.5 py-2 text-center font-body text-[17px] font-normal leading-[110%] text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream 2xl:px-5 2xl:text-[20px]"
+              className="flex items-center gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-3.5 py-2 text-center font-body text-[17px] font-normal leading-[110%] text-cream mix-blend-luminosity transition-[border-color] duration-150 ease-[var(--ease-out-strong)] hover:border-cream 2xl:px-5 2xl:text-[20px]"
             >
               Integrations
               <svg
@@ -237,7 +237,7 @@ export default function Header() {
 
             {/* Panel — full-width bar flush against the header's bottom edge,
                 in the same dark/blurred style as the header. */}
-            <div className="invisible fixed inset-x-0 top-[80px] opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
+            <div className="invisible fixed inset-x-0 top-[80px] opacity-0 transition-[opacity,visibility] duration-200 ease-[var(--ease-out-strong)] group-hover:visible group-hover:opacity-100">
               <div className="border-t border-white/10 bg-[#1c1917]/95 shadow-[0_24px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl">
                 <div className="grid w-full grid-cols-2 gap-x-14 gap-y-8 px-6 py-10 md:grid-cols-4 lg:px-[73px]">
                   {INTEGRATIONS.map((group) => (
@@ -290,19 +290,19 @@ export default function Header() {
         >
           <span
             aria-hidden
-            className={`absolute h-[2px] w-[20px] rounded-full bg-current transition-transform duration-300 ease-out ${
+            className={`absolute h-[2px] w-[20px] rounded-full bg-current transition-transform duration-300 ease-[var(--ease-in-out-strong)] ${
               menuOpen ? "rotate-45" : "-translate-y-[6px]"
             }`}
           />
           <span
             aria-hidden
-            className={`absolute h-[2px] w-[20px] rounded-full bg-current transition-all duration-200 ease-out ${
+            className={`absolute h-[2px] w-[20px] rounded-full bg-current transition-[transform,opacity] duration-200 ease-[var(--ease-in-out-strong)] ${
               menuOpen ? "scale-x-0 opacity-0" : "scale-x-100 opacity-100"
             }`}
           />
           <span
             aria-hidden
-            className={`absolute h-[2px] w-[20px] rounded-full bg-current transition-transform duration-300 ease-out ${
+            className={`absolute h-[2px] w-[20px] rounded-full bg-current transition-transform duration-300 ease-[var(--ease-in-out-strong)] ${
               menuOpen ? "-rotate-45" : "translate-y-[6px]"
             }`}
           />
@@ -336,10 +336,10 @@ export default function Header() {
         {/* Sits 12px below the 80px header, inset by the same 24px gutter the
             header uses; max-height leaves the same gap at the bottom. */}
         <nav
-          className={`absolute inset-x-6 top-[92px] max-h-[calc(100vh-104px)] origin-top overflow-y-auto rounded-[28px] border border-white/12 bg-[#221a29]/80 shadow-[0_24px_60px_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-all duration-300 ease-out ${
+          className={`absolute inset-x-6 top-[92px] max-h-[calc(100vh-104px)] origin-top overflow-y-auto rounded-[28px] border border-white/12 bg-[#221a29]/80 shadow-[0_24px_60px_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-[transform,opacity,visibility] ease-[var(--ease-drawer)] ${
             menuOpen
-              ? "visible translate-y-0 opacity-100"
-              : "invisible -translate-y-3 opacity-0"
+              ? "visible translate-y-0 opacity-100 duration-[280ms]"
+              : "invisible -translate-y-3 opacity-0 duration-200"
           }`}
         >
           <div className="flex flex-col items-start gap-1 px-6 py-5 text-left">
@@ -352,7 +352,7 @@ export default function Header() {
                       setMenuOpen(false);
                       void openCalendly();
                     }}
-                    className="w-full py-2.5 text-left font-body text-[20px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
+                    className="w-full py-2.5 text-left font-body text-[20px] font-normal leading-[110%] text-cream transition-[opacity,scale] duration-150 ease-[var(--ease-out-strong)] hover:opacity-70 active:scale-[0.98]"
                   >
                     {label}
                   </button>
@@ -364,7 +364,7 @@ export default function Header() {
                       smoothScrollToAnchor(href, e);
                       setMenuOpen(false);
                     }}
-                    className="w-full py-2.5 text-left font-body text-[20px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
+                    className="w-full py-2.5 text-left font-body text-[20px] font-normal leading-[110%] text-cream transition-[opacity,scale] duration-150 ease-[var(--ease-out-strong)] hover:opacity-70 active:scale-[0.98]"
                   >
                     {label}
                   </Link>
@@ -376,7 +376,7 @@ export default function Header() {
                 type="button"
                 aria-expanded={mobileIntegrationsOpen}
                 onClick={() => setMobileIntegrationsOpen((open) => !open)}
-                className="flex w-full items-center justify-between py-2.5 text-left font-body text-[20px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
+                className="flex w-full items-center justify-between py-2.5 text-left font-body text-[20px] font-normal leading-[110%] text-cream transition-[opacity,scale] duration-150 ease-[var(--ease-out-strong)] hover:opacity-70 active:scale-[0.98]"
               >
                 Integrations
                 <svg
@@ -409,7 +409,7 @@ export default function Header() {
                             <Link
                               href={itemHref(item)}
                               onClick={() => setMenuOpen(false)}
-                              className="font-body text-[17px] text-cream/90 transition-opacity hover:opacity-70"
+                              className="font-body text-[17px] text-cream/90 transition-[opacity,scale] duration-150 ease-[var(--ease-out-strong)] hover:opacity-70 active:scale-[0.98]"
                             >
                               {item}
                             </Link>
@@ -421,7 +421,7 @@ export default function Header() {
                   <Link
                     href="/integrations"
                     onClick={() => setMenuOpen(false)}
-                    className="font-body text-[15px] font-semibold text-cream/70 transition-opacity hover:opacity-70"
+                    className="font-body text-[15px] font-semibold text-cream/70 transition-[opacity,scale] duration-150 ease-[var(--ease-out-strong)] hover:opacity-70 active:scale-[0.98]"
                   >
                     View all integrations →
                   </Link>
@@ -437,7 +437,7 @@ export default function Header() {
                       setMenuOpen(false);
                       void openCalendly();
                     }}
-                    className="w-full py-2.5 text-left font-body text-[20px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
+                    className="w-full py-2.5 text-left font-body text-[20px] font-normal leading-[110%] text-cream transition-[opacity,scale] duration-150 ease-[var(--ease-out-strong)] hover:opacity-70 active:scale-[0.98]"
                   >
                     {label}
                   </button>
@@ -449,7 +449,7 @@ export default function Header() {
                       smoothScrollToAnchor(href, e);
                       setMenuOpen(false);
                     }}
-                    className="w-full py-2.5 text-left font-body text-[20px] font-normal leading-[110%] text-cream transition-opacity hover:opacity-70"
+                    className="w-full py-2.5 text-left font-body text-[20px] font-normal leading-[110%] text-cream transition-[opacity,scale] duration-150 ease-[var(--ease-out-strong)] hover:opacity-70 active:scale-[0.98]"
                   >
                     {label}
                   </Link>
