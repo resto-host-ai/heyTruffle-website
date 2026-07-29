@@ -12,6 +12,7 @@ import RebrandModal from "@/components/layout/RebrandModal";
 import ScrollReveal from "@/components/layout/ScrollReveal";
 import Clarity from "@/components/layout/Clarity";
 import Graph8 from "@/components/layout/Graph8";
+import Reb2b from "@/components/layout/Reb2b";
 import SiteJsonLd from "@/components/layout/JsonLd";
 
 // Same type families as the RestoHost site: Inter for body/UI and Geist Mono
@@ -104,6 +105,7 @@ export default function RootLayout({
         <ScrollReveal />
         <Clarity />
         <Graph8 />
+        <Reb2b />
         <SiteJsonLd />
       </body>
     </html>
