@@ -152,7 +152,10 @@ export default function WhatIsSection() {
 
               {/* 868 = 820 of pill + the 24px site gutter each side, so the
                   gutter never eats into the desktop pill width. */}
-              <div className="mt-10 flex w-full max-w-[868px] flex-col gap-7 px-6 md:gap-9">
+              <div
+                data-mobile-motion="rise"
+                className="mt-10 flex w-full max-w-[868px] flex-col gap-7 px-6 md:gap-9"
+              >
                 {STATEMENTS.map((text, i) => (
                   <div
                     key={text}

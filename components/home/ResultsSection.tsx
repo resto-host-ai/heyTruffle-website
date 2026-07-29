@@ -59,7 +59,10 @@ export default function ResultsSection() {
           <span>May 16 2026</span>
         </p>
 
-        <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.7fr)]">
+        <div
+          data-mobile-motion="rise"
+          className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.7fr)]"
+        >
           {STATS.map((stat) => (
             <div key={stat.title} className="relative">
               <div

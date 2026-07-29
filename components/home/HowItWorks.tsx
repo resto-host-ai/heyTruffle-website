@@ -118,7 +118,10 @@ export default function HowItWorks() {
           </p>
 
           {/* Mobile: tap-to-expand coloured accordion */}
-          <div className="mt-10 flex flex-col gap-4 md:hidden">
+          <div
+            data-mobile-motion="rise"
+            className="mt-10 flex flex-col gap-4 md:hidden"
+          >
             {STEPS.map((step, i) => {
               const open = openStep === i;
               return (

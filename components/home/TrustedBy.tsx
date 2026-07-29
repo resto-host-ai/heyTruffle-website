@@ -31,7 +31,10 @@ export default function TrustedBy() {
           container whose content translates every frame makes WebKit
           re-composite the whole strip per frame; phones get two cheap gradient
           overlays over the section bg instead. */}
-      <div className="group relative mt-12 overflow-hidden md:[mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+      <div
+        data-mobile-motion="fade"
+        className="group relative mt-12 overflow-hidden md:[mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]"
+      >
         <div className="marquee flex w-max items-center gap-9 pr-9 md:gap-12 md:pr-12">
           {TRACK.map((logo, i) => (
             <div className="marquee-item" key={i}>

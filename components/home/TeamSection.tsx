@@ -90,7 +90,10 @@ export default function TeamSection() {
 
       <div className="relative mx-auto w-full px-6 lg:px-[73px]">
         {/* ---- CTA card ---- */}
-        <div className="mt-8 grid grid-cols-1 items-center gap-10 rounded-[40px] bg-[#f6f3ec] px-10 py-12 text-center shadow-[0_24px_60px_rgba(0,0,0,0.18)] md:mt-12 md:grid-cols-2 md:px-14 md:py-16 md:text-left">
+        <div
+          data-mobile-motion="scale"
+          className="mt-8 grid grid-cols-1 items-center gap-10 rounded-[40px] bg-[#f6f3ec] px-10 py-12 text-center shadow-[0_24px_60px_rgba(0,0,0,0.18)] md:mt-12 md:grid-cols-2 md:px-14 md:py-16 md:text-left"
+        >
           <h3 className="text-balance font-serif text-[30px] font-bold! leading-[110%] text-brand-orange md:text-wrap md:text-[38px] lg:text-[44px]">
             Your restaurant already has an AI concierge. You just haven&apos;t heard
             it yet.

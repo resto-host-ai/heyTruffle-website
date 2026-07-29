@@ -281,6 +281,7 @@ export default function HostsDemo() {
     <div
       id="meet-the-hosts"
       ref={rootRef}
+      data-mobile-motion="scale"
       className={`w-full scroll-mt-28 ${
         host
           ? "mt-20 rounded-[32px] bg-[#f6f3ec] p-2 shadow-2xl md:mt-32 md:p-3"
