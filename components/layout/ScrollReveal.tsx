@@ -17,16 +17,16 @@ function parseDelay(value: string) {
 
 function mobileKeyframes(kind: string | undefined): Keyframe[] {
   if (kind === "fade") {
-    return [{ opacity: 0.78 }, { opacity: 1 }];
+    return [{ opacity: 0.55 }, { opacity: 1 }];
   }
   if (kind === "scale") {
     return [
-      { opacity: 0.84, transform: "scale(0.985)" },
-      { opacity: 1, transform: "scale(1)" },
+      { opacity: 0.62, transform: "translateY(10px) scale(0.965)" },
+      { opacity: 1, transform: "translateY(0) scale(1)" },
     ];
   }
   return [
-    { opacity: 0.84, transform: "translateY(12px)" },
+    { opacity: 0.58, transform: "translateY(24px)" },
     { opacity: 1, transform: "translateY(0)" },
   ];
 }
@@ -110,12 +110,13 @@ export default function ScrollReveal() {
             mobileObserver?.unobserve(el);
             el.dataset.mobileMotionDone = "true";
 
-            // WebKit may deliver observers after a fast flick has already
-            // carried the target deep into the viewport. In that case an
-            // entrance would visibly jump backwards, so keep the final state.
+            // WebKit can deliver observers late during a kinetic flick. Only
+            // skip once the target has reached the top chrome; skipping in the
+            // middle of the viewport made nearly every real iPhone entrance
+            // disappear during normal scrolling.
             if (
               entry.boundingClientRect.bottom <= 0 ||
-              entry.boundingClientRect.top < viewportHeight * 0.55
+              entry.boundingClientRect.top < viewportHeight * 0.12
             ) {
               continue;
             }
@@ -127,7 +128,7 @@ export default function ScrollReveal() {
             const animation = el.animate(
               mobileKeyframes(el.dataset.mobileMotion),
               {
-                duration: 440,
+                duration: 560,
                 delay: parseDelay(explicitDelay || cssDelay),
                 easing: MOTION_EASING,
                 fill: "none",
@@ -145,7 +146,10 @@ export default function ScrollReveal() {
               });
           }
         },
-        { threshold: 0.01, rootMargin: "0px 0px 10% 0px" },
+        // Trigger after the element is visibly inside the viewport. The old
+        // positive margin started the 440ms animation below the fold, so it
+        // was often finished before the user could see it.
+        { threshold: 0.01, rootMargin: "0px 0px -10% 0px" },
       );
 
       motionEls.forEach((el) => {
