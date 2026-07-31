@@ -8,7 +8,7 @@ export default function TeamSection() {
   return (
     <section
       id="about"
-      className="relative scroll-mt-24 overflow-hidden pb-10 pt-10 md:pb-16 md:pt-16"
+      className="relative scroll-mt-24 overflow-clip pb-10 pt-10 md:pb-16 md:pt-16"
       style={{
         // Figma: linear fill — White (#f6f3ec) at 21% → #EF7200 at 100%
         backgroundImage: "linear-gradient(180deg, #f6f3ec 21%, #ef7200 100%)",
@@ -22,7 +22,10 @@ export default function TeamSection() {
       />
 
       <div className="relative mx-auto w-full px-6 lg:px-[73px]">
-        <div className="grid grid-cols-1 items-center gap-14 md:grid-cols-[minmax(0,6.5fr)_minmax(0,5.5fr)]">
+        <div
+          data-mobile-motion="rise"
+          className="grid grid-cols-1 items-center gap-14 md:grid-cols-[minmax(0,6.5fr)_minmax(0,5.5fr)]"
+        >
           {/* Copy */}
           <div className="reveal reveal-up">
             <h2 className="font-serif text-[30px] font-bold! leading-[110%] text-[#251f21] md:text-[38px] lg:text-[44px]">

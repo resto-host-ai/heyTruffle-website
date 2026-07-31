@@ -70,7 +70,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative scroll-mt-24 overflow-hidden bg-[#251f21] py-10 md:py-16"
+      className="relative scroll-mt-24 overflow-clip bg-[#251f21] py-10 md:py-16"
     >
       {/* Warm radial glow, echoing the brand gradient */}
       <div
@@ -88,7 +88,10 @@ export default function Contact() {
       />
 
       <div className="relative mx-auto max-w-[1080px] px-6 md:px-10">
-        <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-[1fr_1.05fr]">
+        <div
+          data-mobile-motion="rise"
+          className="grid grid-cols-1 items-center gap-12 md:grid-cols-[1fr_1.05fr]"
+        >
           <div className="reveal reveal-up">
             <p className="text-xs uppercase tracking-[0.2em] text-cream/60">
               Get in touch

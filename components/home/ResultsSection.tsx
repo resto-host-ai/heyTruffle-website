@@ -24,7 +24,7 @@ const STATS = [
 
 export default function ResultsSection() {
   return (
-    <section className="relative overflow-hidden bg-[#251f21] pb-10 pt-10 md:pb-16 md:pt-18">
+    <section className="relative overflow-clip bg-[#251f21] pb-10 pt-10 md:pb-16 md:pt-18">
       {/* gradiante2.webp background. Mask only from md (offscreen composite
           on iOS — see WhatIsSection); phones use plain gradient fades. */}
       <div

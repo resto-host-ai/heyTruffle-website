@@ -106,7 +106,7 @@ export default function CaseStudies({
 
   return (
     <section
-      className={`relative overflow-hidden py-10 md:py-16 ${
+      className={`relative overflow-clip py-10 md:py-16 ${
         transparent ? "" : "bg-[#251f21]"
       }`}
     >

@@ -76,10 +76,7 @@ export default function Pricing() {
           </h2>
         </div>
 
-        <div
-          data-mobile-motion="scale"
-          className="grid grid-cols-1 gap-9 md:grid-cols-3 md:items-stretch"
-        >
+        <div className="grid grid-cols-1 gap-9 md:grid-cols-3 md:items-stretch">
           {TIERS.map((tier) => (
             <TierCard key={tier.id} tier={tier} />
           ))}
@@ -97,6 +94,7 @@ export default function Pricing() {
 function TierCard({ tier }: { tier: Tier }) {
   return (
     <div
+      data-mobile-motion="rise"
       className={
         tier.featured
           ? "relative flex h-full flex-col rounded-3xl border-2 border-brand-orange p-8 [background:linear-gradient(180deg,rgba(239,114,0,0.18)_0%,rgba(26,19,21,0)_60%),#241d1f]"

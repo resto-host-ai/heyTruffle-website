@@ -173,7 +173,7 @@ export default function Header() {
          `invisible` (on top of opacity-0) lets WebKit skip the layer entirely
          while the Calendly overlay covers it; visibility transitions flip at
          the END of the fade, so the fade-out still animates. */
-      className={`fixed inset-x-0 top-0 z-50 h-[80px] transition-all duration-300 md:backdrop-blur-xl ${
+      className={`fixed inset-x-0 top-0 z-50 h-[80px] transition-[background-color,box-shadow,opacity,visibility] duration-300 md:backdrop-blur-xl ${
         overlayOpen ? "pointer-events-none invisible opacity-0" : ""
       } ${
         scrolled

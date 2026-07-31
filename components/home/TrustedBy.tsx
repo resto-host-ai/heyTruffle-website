@@ -21,7 +21,10 @@ export default function TrustedBy() {
   return (
     <section id="trusted" className="bg-[#251f21] pb-6 pt-16 md:pt-20">
       <div className="mx-auto w-full px-6 lg:px-[73px]">
-        <h2 className="reveal reveal-up font-body text-center text-[16px] font-normal! leading-[145%] md:text-[18px] text-cream/90">
+        <h2
+          data-mobile-motion="rise"
+          className="reveal reveal-up font-body text-center text-[16px] font-normal! leading-[145%] md:text-[18px] text-cream/90"
+        >
           Restaurants powered by heytruffle answer every call.{" "}
           <span className="text-[#d592f3]">Your restaurant can too.</span>
         </h2>
@@ -31,10 +34,7 @@ export default function TrustedBy() {
           container whose content translates every frame makes WebKit
           re-composite the whole strip per frame; phones get two cheap gradient
           overlays over the section bg instead. */}
-      <div
-        data-mobile-motion="fade"
-        className="group relative mt-12 overflow-hidden md:[mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]"
-      >
+      <div className="group relative mt-12 overflow-hidden md:[mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
         <div className="marquee flex w-max items-center gap-9 pr-9 md:gap-12 md:pr-12">
           {TRACK.map((logo, i) => (
             <div className="marquee-item" key={i}>

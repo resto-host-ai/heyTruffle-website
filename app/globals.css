@@ -136,6 +136,64 @@ html {
   html.js-ready .reveal-zoom:not(.is-visible) { transform: scale(0.96); }
   html.js-ready .reveal-blur:not(.is-visible) { filter: blur(8px); transform: translateY(10px); }
 }
+
+/* ── Mobile scroll entrances ──────────────────────────────────────────────
+   These are view-timeline animations, not time-based effects launched by an
+   observer. Their progress follows the element through the viewport, so a
+   slow drag feels deliberate, a fast flick completes immediately, and there
+   is no late callback that can push already-visible content backwards.
+
+   Only explicit story beats opt in through `data-mobile-motion`; `.reveal`
+   remains the desktop system. Unsupported browsers render the final state,
+   and reduced-motion users get the same complete, static content. No
+   `will-change` is used, so offscreen sections do not reserve layers. */
+@keyframes mobile-motion-rise {
+  from {
+    opacity: 0.28;
+    translate: 0 18px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes mobile-motion-fade {
+  from { opacity: 0.4; }
+  to { opacity: 1; }
+}
+
+@keyframes mobile-motion-scale {
+  from {
+    opacity: 0.34;
+    translate: 0 10px;
+    scale: 0.98;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
+
+@media (max-width: 767.98px) and (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    [data-mobile-motion] {
+      animation-duration: auto;
+      animation-fill-mode: both;
+      animation-timing-function: var(--ease-out-strong);
+      animation-timeline: view();
+      /* A viewport-relative range gives short headings and taller panels the
+         same perceived cadence: roughly the first quarter of their passage. */
+      animation-range: 0% 24%;
+    }
+
+    [data-mobile-motion="rise"] { animation-name: mobile-motion-rise; }
+    [data-mobile-motion="fade"] { animation-name: mobile-motion-fade; }
+    [data-mobile-motion="scale"] { animation-name: mobile-motion-scale; }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal,
   .reveal-up,
@@ -279,23 +337,28 @@ html {
   );
   transition-property: --btn-g1, --btn-g2, --btn-g3, color, background-color,
     border-color, box-shadow, transform, opacity;
-  transition-duration: 0.45s;
+  transition-duration: 0.3s;
   transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-.btn-grad-blue:hover {
-  --btn-g1: #8b9cd6;
-  --btn-g2: #6076bd;
-  --btn-g3: #3f5490;
-}
-.btn-grad-orange:hover {
-  --btn-g1: #f5a24a;
-  --btn-g2: #e07a12;
-  --btn-g3: #b85400;
-}
-.btn-grad-steel:hover {
-  --btn-g1: #a5b3d1;
-  --btn-g2: #9098b6;
-  --btn-g3: #7a7d9a;
+
+/* Touchscreens can latch `:hover` after a tap. Keep decorative hover motion
+   on devices that actually have a hover-capable pointer. */
+@media (hover: hover) and (pointer: fine) {
+  .btn-grad-blue:hover {
+    --btn-g1: #8b9cd6;
+    --btn-g2: #6076bd;
+    --btn-g3: #3f5490;
+  }
+  .btn-grad-orange:hover {
+    --btn-g1: #f5a24a;
+    --btn-g2: #e07a12;
+    --btn-g3: #b85400;
+  }
+  .btn-grad-steel:hover {
+    --btn-g1: #a5b3d1;
+    --btn-g2: #9098b6;
+    --btn-g3: #7a7d9a;
+  }
 }
 
 /* Google Sans rasterises a touch heavier in browsers than in Figma. Shave the
@@ -377,10 +440,6 @@ html {
   animation: marquee 42s linear infinite;
 }
 
-.group:hover .marquee {
-  animation-play-state: paused;
-}
-
 /* Fixed-size cell per logo. The source SVGs range from 74px to 189px wide, so
    letting them size themselves leaves the spacing visibly uneven; a uniform
    cell with the logo contained inside keeps the rhythm regular.
@@ -411,9 +470,15 @@ html {
     transform 0.25s ease;
 }
 
-.marquee-item:hover img {
-  opacity: 1;
-  transform: scale(1.05);
+@media (hover: hover) and (pointer: fine) {
+  .group:hover .marquee {
+    animation-play-state: paused;
+  }
+
+  .marquee-item:hover img {
+    opacity: 1;
+    transform: scale(1.05);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

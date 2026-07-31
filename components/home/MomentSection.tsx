@@ -96,7 +96,10 @@ export default function MomentSection() {
         <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent to-[#251f21]" />
       </div>
 
-      <div className="relative mx-auto w-full px-6 lg:px-[73px]">
+      <div
+        data-mobile-motion="rise"
+        className="relative mx-auto w-full px-6 lg:px-[73px]"
+      >
         <h2 className="reveal reveal-up text-center font-serif text-[30px] font-bold! leading-[110%] text-[#ef7200] md:text-[38px] lg:text-[44px]">
           You know this moment.
         </h2>
