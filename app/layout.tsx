@@ -98,6 +98,22 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col overflow-x-clip">
+        {/* Instagram's in-app browser (and other stripped-down WKWebViews)
+            don't define window.webkit, but some third-party script we load
+            (Clarity, the Graph8 chat widget, Reb2b, Calendly) reads
+            window.webkit.messageHandlers unguarded to detect a native app
+            bridge, throwing "undefined is not an object" and aborting the
+            rest of that script — Clarity flagged this on ~25% of sessions
+            (Instagram referral traffic). We can't patch a vendor's minified
+            bundle, so stub the object before any other script runs: this
+            must be the first thing in <body>, and inline (not `src`) so it
+            executes synchronously as soon as the parser reaches it. */}
+        <script
+          id="webkit-stub"
+          dangerouslySetInnerHTML={{
+            __html: "window.webkit = window.webkit || {};",
+          }}
+        />
         <Header />
         {children}
         <Footer />
