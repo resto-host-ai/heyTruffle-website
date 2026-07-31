@@ -198,7 +198,7 @@ export default function Hero() {
               <div className="absolute left-0 right-0 top-[calc(100%+12px)] z-20 overflow-hidden rounded-[24px] border border-[#251f21]/10 bg-[#f6f3ec] text-left text-[#251f21] shadow-[0_24px_60px_rgba(0,0,0,0.35)]">
                 {results.length > 0 ? (
                   <ul className="max-h-[300px] divide-y divide-[#251f21]/10 overflow-y-auto">
-                    {results.map((r) => (
+                    {results.slice(0, 3).map((r) => (
                       <li key={r.placeId}>
                         <button
                           type="button"
