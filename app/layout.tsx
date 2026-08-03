@@ -114,6 +114,39 @@ export default function RootLayout({
             __html: "window.webkit = window.webkit || {};",
           }}
         />
+        {/* graph8's flow pixel (events.flow.graph8.com/p.js) re-injects an
+            inline <script> of its own — via insertTags() calling
+            appendChild/insertBefore — on certain events (observed: right
+            after a hero CTA click). Its inline payload re-declares a
+            top-level `const uuid`, which throws
+            "Identifier 'uuid' has already been declared" the second time,
+            since classic (non-module) scripts share one global lexical
+            scope. That SyntaxError aborts whatever ran it, which is why
+            "Hear it live" sometimes did nothing — Clarity measured this on
+            ~5% of sessions. We can't fix graph8's bundle, so patch the DOM
+            APIs it uses to swallow only this specific redeclaration error
+            (rethrowing everything else) before graph8's script ever loads. */}
+        <script
+          id="script-redeclare-guard"
+          dangerouslySetInnerHTML={{
+            __html: `(function(){
+  function guard(name){
+    var orig = Node.prototype[name];
+    Node.prototype[name] = function(){
+      try { return orig.apply(this, arguments); }
+      catch (e) {
+        if (e instanceof SyntaxError && /already been declared/.test(e.message)) {
+          return arguments[0];
+        }
+        throw e;
+      }
+    };
+  }
+  guard("appendChild");
+  guard("insertBefore");
+})();`,
+          }}
+        />
         <Header />
         {children}
         <Footer />
