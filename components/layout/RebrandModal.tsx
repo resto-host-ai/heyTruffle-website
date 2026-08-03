@@ -4,32 +4,68 @@ import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
 /**
- * Rebrand pop-up — shown ONCE to visitors redirected from restohost.ai.
+ * Rebrand pop-up — shown ONCE to visitors arriving from restohost.ai, on ANY
+ * page (the component lives in the root layout, so /, /integrations/clover/,
+ * /blog/... all qualify — not just the home page).
  *
- * Trigger (handled below): the 301 on restohost.ai must send visitors to
- * heytruffle.ai with `?from=restohost`. The modal then appears once and is
- * suppressed afterwards via localStorage.
+ * "Came from restohost" is detected from three independent signals, because
+ * the redirect can reach us in different shapes:
+ *   1. `?from=restohost`         — explicit marker appended by the redirect
+ *   2. `utm_source=restohost`    — same idea via campaign params
+ *   3. `document.referrer`       — any *.restohost.ai page linking here
+ * Path-preserving 301s often drop the query string, so 3 is the safety net.
+ * A server 301 hides restohost.ai from the referrer as well, so the redirect
+ * on restohost.ai SHOULD still forward `?from=restohost` on every path — the
+ * query marker is the only signal that survives a direct-typed URL.
+ *
+ * Once shown it is suppressed via localStorage. The marker is then stripped
+ * from the URL so it is not carried into shares or bookmarks.
  *
  * NOTE (from the handoff): do not surface this before the rebrand launch —
  * the "New funding / New capabilities" chips are launch-day content. It stays
- * dormant until LAUNCH_DATE even if `?from=restohost` is present. Move that
- * date earlier (or delete the guard) to go live.
+ * dormant until LAUNCH_DATE even if the marker is present. Move that date
+ * earlier (or delete the guard) to go live.
  *
- * To re-test: clear the `ht_rebrand_seen` localStorage key.
+ * To re-test: clear the `ht_rebrand_seen` localStorage key and load any page
+ * with `?from=restohost`.
  */
 const STORAGE_KEY = "ht_rebrand_seen";
 const LAUNCH_DATE = new Date("2026-07-28T00:00:00");
 
 const CHIPS = ["New brand", "New funding", "New capabilities"];
 
+/** restohost.ai and any subdomain of it (www., staging., …) */
+function isRestohostReferrer(referrer: string): boolean {
+  if (!referrer) return false;
+  try {
+    const host = new URL(referrer).hostname.toLowerCase();
+    return host === "restohost.ai" || host.endsWith(".restohost.ai");
+  } catch {
+    return false;
+  }
+}
+
+/** Drop the `from` marker so it does not stick around in the address bar. */
+function stripMarker() {
+  const url = new URL(window.location.href);
+  if (!url.searchParams.has("from")) return;
+  url.searchParams.delete("from");
+  window.history.replaceState(null, "", url.pathname + url.search + url.hash);
+}
+
 export default function RebrandModal() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
     const fromRestohost =
-      new URLSearchParams(window.location.search).get("from") === "restohost";
+      params.get("from")?.toLowerCase() === "restohost" ||
+      params.get("utm_source")?.toLowerCase() === "restohost" ||
+      isRestohostReferrer(document.referrer);
     if (!fromRestohost) return;
     if (new Date() < LAUNCH_DATE) return;
+
+    stripMarker();
 
     let seen = false;
     try {
