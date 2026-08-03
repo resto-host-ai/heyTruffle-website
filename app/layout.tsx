@@ -62,9 +62,9 @@ export const metadata: Metadata = {
   // Plain-string default title: it covers the home page and any route that
   // sets no title of its own. Existing pages already append "— heytruffle" to
   // their own titles, so no template is used (it would double the suffix).
-  title: "heytruffle — Voice AI That Answers Every Restaurant Call",
+  title: "heytruffle — Fully managed AI Concierge for restaurants",
   description:
-    "heytruffle is the fully managed voice AI service for U.S. restaurants. We answer 100% of calls 24/7 in English & Spanish — every reservation booked, every order taken, every catering inquiry closed.",
+    "heytruffle answers your restaurant's phones with an AI Concierge trained for your brand. Reservations, orders, catering and events, tuned every week. ",
   alternates: { canonical: "/" },
   verification: {
     google: "A7AGiI5P2uFC-8t5bwNa0gRWdbT5sI5WZpVVQCgZRW0",
@@ -73,16 +73,16 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "heytruffle",
-    title: "heytruffle — Voice AI That Answers Every Restaurant Call",
+    title: "heytruffle — Fully managed AI Concierge for restaurants",
     description:
-      "The fully managed voice AI service that answers every call for your restaurants — reservations, orders and catering, 24/7 in English & Spanish.",
+      "heytruffle answers your restaurant's phones with an AI Concierge trained for your brand. Reservations, orders, catering and events, tuned every week. ",
     url: "https://heytruffle.ai/",
   },
   twitter: {
     card: "summary_large_image",
-    title: "heytruffle — Voice AI That Answers Every Restaurant Call",
+    title: "heytruffle — Fully managed AI Concierge for restaurants",
     description:
-      "The fully managed voice AI service that answers every restaurant call — reservations, orders and catering, 24/7.",
+      "heytruffle answers your restaurant's phones with an AI Concierge trained for your brand. Reservations, orders, catering and events, tuned every week. .",
   },
 };
 

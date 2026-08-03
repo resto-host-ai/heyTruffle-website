@@ -142,12 +142,12 @@ export default function Hero() {
             the CTAs, matching RestoHost's 36px mobile / 48px desktop. Uses the
             desk-* variants rather than sm: so a short desktop (MacBook 14")
             stays compressed instead of both rules matching at ≥640px. */}
-        <div className="mt-3 flex w-full max-w-[500px] flex-col items-stretch gap-3 desk-tall:mt-6 desk-tall:gap-5 desk-short:mt-4 desk-short:gap-4">
+        <div className="mt-3 flex w-full max-w-[500px] flex-col items-stretch gap-3 desk-tall:mt-6 desk-tall:gap-5 desk-short:mt-4 desk-short:gap-4 sm:max-w-[720px] sm:flex-row sm:items-center">
           {/* Search + primary CTA. Shown at every width: the search box is the
               hero's main gesture, so mobile keeps it rather than falling back
               to a plain button. Results drop down inline, in the page, right
               below the bar — no modal takeover. */}
-          <div ref={searchBoxRef} className="relative w-full">
+          <div ref={searchBoxRef} className="relative w-full sm:flex-1">
             <form
               className="flex h-[54px] w-full items-center overflow-hidden rounded-[73.26px] border border-white/40 bg-[#f6f3ec]/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg sm:h-[58px]"
               onSubmit={(e) => {
@@ -239,7 +239,7 @@ export default function Hero() {
 
           {/* Secondary CTA — auto width at every size so it reads as the
               quieter of the two actions, the way it does on desktop. */}
-          <BookDemoButton className="mt-1 flex h-[50px] w-auto items-center justify-center self-center rounded-full bg-[#1c1917]/85 px-8 text-[16px] font-semibold text-cream shadow-lg backdrop-blur-md transition-all duration-300 btn-grad btn-grad-blue sm:mt-4 hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(79,84,144,0.55)]">
+          <BookDemoButton className="mt-1 flex h-[50px] w-auto shrink-0 items-center justify-center self-center rounded-full border border-white/40 bg-[#f6f3ec]/10 px-8 text-[16px] font-semibold text-cream shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg transition-all duration-300 sm:mt-0 sm:h-[54px] sm:self-auto hover:bg-[#f6f3ec]/20">
             Talk to our team
           </BookDemoButton>
         </div>
