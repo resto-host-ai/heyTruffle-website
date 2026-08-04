@@ -43,9 +43,12 @@ export default function Footer() {
       <div className="mx-auto w-full px-6 py-16 lg:px-[73px] md:py-20">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-[1.4fr_1fr_1.2fr]">
           {/* Brand */}
-          <div>
-            <Link href="/" aria-label="heytruffle home" className="inline-block">
-              {/* Logo asset is cream — darken it for the light background */}
+          <div className="flex h-full flex-col">
+            <Link
+              href="/"
+              aria-label="heytruffle home"
+              className="inline-block self-start"
+            >
               <Image
                 src="/images/heytruffle-logo.svg"
                 alt="heytruffle"
@@ -57,24 +60,27 @@ export default function Footer() {
             </Link>
 
             <p className="mt-8 max-w-[340px] font-body text-[16px] font-normal leading-[130%] text-[#251f21]">
-              AI concierge for restaurants. You operate the restaurant. We operate the phones.
+              AI concierge for restaurants. You operate the restaurant. We operate the
+              phones.
             </p>
 
-            <ul className="flex items-center gap-6 py-2
-            ">
+            <ul
+              className="mt-8 flex items-center gap-[18px] md:mt-auto md:pt-8"
+              aria-label="heytruffle social media profiles"
+            >
               {socialLinks.map(({ name, href, icon }) => (
                 <li key={name}>
                   <Link
                     href={href}
                     target="_blank"
                     rel="me noopener noreferrer"
-                    aria-label={`Follow Truffle on ${name}`}
+                    aria-label={`Follow heytruffle on ${name}`}
                     className="inline-block transition-opacity hover:opacity-70"
                   >
                     <Image
                       src={icon}
-                      alt={`Truffle on ${name}`}
-                      width={177}
+                      alt=""
+                      width={40}
                       height={40}
                       className="h-9 w-auto brightness-0"
                     />
