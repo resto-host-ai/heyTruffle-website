@@ -3,6 +3,24 @@ import Image from "next/image";
 import { INTEGRATIONS } from "@/lib/integrations";
 import { BookDemoButton } from "@/components/ui/BookDemoButton";
 
+const socialLinks = [
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/company/heytruffle.ai/",
+    icon: "/images/logo/linkedin.svg",
+  },
+  {
+    name: "Instagram",
+    href: "https://www.instagram.com/heytruffle.ai",
+    icon: "/images/logo/instagram.svg",
+  },
+  {
+    name: "YouTube",
+    href: "https://www.youtube.com/@heytruffle",
+    icon: "/images/logo/youtube.svg",
+  },
+];
+
 /** Primary nav, mirroring the header (plus the Blog and FAQ). */
 const NAV = [
   { label: "Case Studies", href: "/case-study" },
@@ -41,6 +59,29 @@ export default function Footer() {
             <p className="mt-8 max-w-[340px] font-body text-[16px] font-normal leading-[130%] text-[#251f21]">
               AI concierge for restaurants. You operate the restaurant. We operate the phones.
             </p>
+
+            <ul className="flex items-center gap-6 py-2
+            ">
+              {socialLinks.map(({ name, href, icon }) => (
+                <li key={name}>
+                  <Link
+                    href={href}
+                    target="_blank"
+                    rel="me noopener noreferrer"
+                    aria-label={`Follow Truffle on ${name}`}
+                    className="inline-block transition-opacity hover:opacity-70"
+                  >
+                    <Image
+                      src={icon}
+                      alt={`Truffle on ${name}`}
+                      width={177}
+                      height={40}
+                      className="h-9 w-auto brightness-0"
+                    />
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Navigate */}
