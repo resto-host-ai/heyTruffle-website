@@ -3,6 +3,24 @@ import Image from "next/image";
 import { INTEGRATIONS } from "@/lib/integrations";
 import { BookDemoButton } from "@/components/ui/BookDemoButton";
 
+const socialLinks = [
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/company/heytruffle.ai/",
+    icon: "/images/logo/linkedin.svg",
+  },
+  {
+    name: "Instagram",
+    href: "https://www.instagram.com/heytruffle.ai",
+    icon: "/images/logo/instagram.svg",
+  },
+  {
+    name: "YouTube",
+    href: "https://www.youtube.com/@heytruffle",
+    icon: "/images/logo/youtube.svg",
+  },
+];
+
 /** Primary nav, mirroring the header (plus the Blog and FAQ). */
 const NAV = [
   { label: "Case Studies", href: "/case-study" },
@@ -25,9 +43,12 @@ export default function Footer() {
       <div className="mx-auto w-full px-6 py-16 lg:px-[73px] md:py-20">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-[1.4fr_1fr_1.2fr]">
           {/* Brand */}
-          <div>
-            <Link href="/" aria-label="heytruffle home" className="inline-block">
-              {/* Logo asset is cream — darken it for the light background */}
+          <div className="flex h-full flex-col">
+            <Link
+              href="/"
+              aria-label="heytruffle home"
+              className="inline-block self-start"
+            >
               <Image
                 src="/images/heytruffle-logo.svg"
                 alt="heytruffle"
@@ -39,8 +60,34 @@ export default function Footer() {
             </Link>
 
             <p className="mt-8 max-w-[340px] font-body text-[16px] font-normal leading-[130%] text-[#251f21]">
-              AI concierge for restaurants. You operate the restaurant. We operate the phones.
+              AI concierge for restaurants. You operate the restaurant. We operate the
+              phones.
             </p>
+
+            <ul
+              className="mt-8 flex items-center gap-[18px] md:mt-auto md:pt-8"
+              aria-label="heytruffle social media profiles"
+            >
+              {socialLinks.map(({ name, href, icon }) => (
+                <li key={name}>
+                  <Link
+                    href={href}
+                    target="_blank"
+                    rel="me noopener noreferrer"
+                    aria-label={`Follow heytruffle on ${name}`}
+                    className="inline-block transition-opacity hover:opacity-70"
+                  >
+                    <Image
+                      src={icon}
+                      alt=""
+                      width={40}
+                      height={40}
+                      className="h-9 w-auto brightness-0"
+                    />
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Navigate */}
