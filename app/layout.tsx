@@ -114,17 +114,21 @@ export default function RootLayout({
             __html: "window.webkit = window.webkit || {};",
           }}
         />
-        {/* Safety net kept after migrating off the legacy graph8 script
-            (events.flow.graph8.com/p.js, replaced by the official
-            @graph8/sdk below): that build's destination-fanout logic
-            re-injected an inline <script> whose top-level `const uuid`
-            collided with a previous one, throwing "Identifier 'uuid' has
-            already been declared" and aborting whatever ran it — observed
-            on ~5% of sessions per Clarity, including "Hear it live" doing
-            nothing on click. Leaving this guard in place in case the new
-            SDK (also destination-fanout based, per its @jitsu/js
-            dependency) has the same class of bug under different
-            conditions — TODO: remove once confirmed clean post-migration. */}
+        {/* graph8's tracking runtime (@jitsu/js under the hood — see
+            components/layout/Graph8.tsx) fans out each tracked event to
+            "destinations" configured in graph8's dashboard. One destination
+            type is a raw client-side script tag: the server sends back tag
+            code, and jitsu's insertTags() appendChild()s it into <head>.
+            That server-provided script declares a top-level `const uuid`,
+            and if the same event gets delivered to that destination twice
+            (confirmed happening — see graph8 dashboard: Connections > Live
+            Events, and Connections > Destinations for the offending
+            "JavaScript Tag" entry), the second appendChild throws
+            "Identifier 'uuid' has already been declared" and aborts
+            whatever triggered it (observed: "Hear it live" doing nothing).
+            We can't edit graph8's server-side destination config from here,
+            so this patches the DOM APIs insertTags() uses to swallow only
+            this specific redeclaration error, rethrowing everything else. */}
         <script
           id="script-redeclare-guard"
           dangerouslySetInnerHTML={{
@@ -134,19 +138,15 @@ export default function RootLayout({
     Node.prototype[name] = function(){
       try { return orig.apply(this, arguments); }
       catch (e) {
-        console.log("[guard-debug]", name, "caught:", e && e.name, e && e.message, e && e.constructor && e.constructor.name);
         if (e && e.name === "SyntaxError" && /already been declared/.test(e.message || "")) {
-          console.log("[guard-debug] swallowed");
           return arguments[0];
         }
-        console.log("[guard-debug] rethrowing, condition did not match");
         throw e;
       }
     };
   }
   guard("appendChild");
   guard("insertBefore");
-  console.log("[guard-debug] installed", Node.prototype.appendChild.toString().slice(0,40));
 })();`,
           }}
         />

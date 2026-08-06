@@ -6,13 +6,22 @@ import { usePathname } from "next/navigation";
 import { g8 } from "@graph8/sdk";
 
 // Official graph8 SDK (npm: @graph8/sdk), replacing the old hand-rolled
-// <script src="https://events.flow.graph8.com/p.js"> tag. That legacy host
-// ran an older build of graph8's tracking runtime whose destination-fanout
-// logic (insertTags/processDestinations) could re-inject the same inline
-// script and crash with "Identifier 'uuid' has already been declared" —
-// the SDK's default host (t.graph8.com) is the current, actively
-// maintained tracking endpoint.
+// <script src="https://events.flow.graph8.com/p.js"> tag.
 const GRAPH8_WRITE_KEY = process.env.NEXT_PUBLIC_GRAPH8_WRITE_KEY;
+
+// This account's real ingest host — MUST be passed explicitly. The SDK
+// defaults to https://t.graph8.com (the value in graph8's public docs),
+// but that host 404s on every path — the root, /p.js, /api/s/page and
+// /api/s/track all return nginx 404 with no CORS headers at all. Leaving
+// the default in place silently kills tracking: every pageview POST gets
+// blocked at the preflight and jitsu swallows the failure.
+// events.flow.graph8.com, by contrast, serves /p.js (200) and answers the
+// /api/s/* preflights with 200 + the exact headers jitsu sends
+// (x-write-key, x-ip-policy, …), echoing back whatever Origin it's given.
+// Verified by curl against both hosts, 2026-08-06.
+// Env override so a future graph8 ingest migration needs no code change.
+const GRAPH8_HOST =
+  process.env.NEXT_PUBLIC_GRAPH8_HOST ?? "https://events.flow.graph8.com";
 
 // Called during render, not inside an effect, so it runs before any child
 // mounts (including PageTracker below) — and unconditionally, since
@@ -22,7 +31,7 @@ const GRAPH8_WRITE_KEY = process.env.NEXT_PUBLIC_GRAPH8_WRITE_KEY;
 // first"). g8 is the same global singleton everywhere, so no <G8Provider>
 // wrapper is needed — this just initializes it directly.
 if (GRAPH8_WRITE_KEY && !g8.initialized) {
-  g8.init({ writeKey: GRAPH8_WRITE_KEY });
+  g8.init({ writeKey: GRAPH8_WRITE_KEY, host: GRAPH8_HOST });
 }
 
 // The SDK is deliberately lazy — init() only builds the client, it doesn't
