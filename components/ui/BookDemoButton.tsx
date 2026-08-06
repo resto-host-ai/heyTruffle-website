@@ -4,7 +4,7 @@ import { useCallback } from "react";
 
 // heytruffle demo booking link (heytruffle-branded Calendly event).
 const CALENDLY_URL =
-  "https://calendly.com/lucas-heytruffle/discover-heytruffle";
+  "https://calendly.com/d/d2hc-kqk-knn/discover-heytruffle";
 const CALENDLY_SCRIPT =
   "https://assets.calendly.com/assets/external/widget.js";
 const CALENDLY_CSS = "https://assets.calendly.com/assets/external/widget.css";
