@@ -26,6 +26,12 @@ export default function Hero() {
   const searchIdRef = useRef(0);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const searchBoxRef = useRef<HTMLDivElement>(null);
+  // Guards against spamming Enter: without this, N rapid submits fire N
+  // native `submit` events, each of which third-party listeners (analytics/
+  // tracking pixels) may react to independently — observed to make graph8's
+  // own script re-run its script-injection logic concurrently and crash on
+  // a duplicate top-level declaration. One submit action at a time, full stop.
+  const submitLockRef = useRef(false);
 
   // Run an autocomplete request, ignoring out-of-order responses.
   const runSearch = useCallback((input: string) => {
@@ -152,7 +158,23 @@ export default function Hero() {
               className="flex h-[54px] w-full items-center overflow-hidden rounded-[73.26px] border border-white/40 bg-[#f6f3ec]/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg sm:h-[58px]"
               onSubmit={(e) => {
                 e.preventDefault();
-                if (results.length > 0) pick(results[0]);
+                // Swallow rapid repeat submits (spamming Enter) — see the
+                // submitLockRef comment above for why this matters beyond
+                // just avoiding duplicate navigations.
+                if (submitLockRef.current) return;
+                submitLockRef.current = true;
+                setTimeout(() => {
+                  submitLockRef.current = false;
+                }, 800);
+
+                if (results.length > 0) {
+                  pick(results[0]);
+                } else {
+                  // Nothing to pick yet — surface the dropdown's own
+                  // "start typing" / "no matches" copy instead of silently
+                  // doing nothing.
+                  setDropdownOpen(true);
+                }
               }}
             >
               <input

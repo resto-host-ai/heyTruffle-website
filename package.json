@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@graph8/sdk": "^0.7.2",
     "@microsoft/clarity": "^1.0.2",
     "marked": "^18.0.6",
     "next": "16.2.10",
