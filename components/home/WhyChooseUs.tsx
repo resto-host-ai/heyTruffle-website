@@ -1,40 +1,56 @@
-import type { ComponentType, ReactNode } from "react";
-
 type Feature = {
   title: string;
   description: string;
-  icon: ComponentType;
-  iconBg: string;
+  icon: string;
 };
+
+const GRADIENT_PALETTES = [
+  {
+    from: "rgba(255, 140, 50, 0.8)",
+    to: "rgba(70, 130, 200, 0.8)",
+    base: "linear-gradient(135deg, #8B4513 0%, #2c3e50 100%)",
+  },
+  {
+    from: "rgba(230, 80, 100, 0.8)",
+    to: "rgba(100, 150, 220, 0.8)",
+    base: "linear-gradient(135deg, #5a2c42 0%, #1a3a52 100%)",
+  },
+  {
+    from: "rgba(200, 120, 60, 0.8)",
+    to: "rgba(80, 160, 200, 0.8)",
+    base: "linear-gradient(135deg, #6b4423 0%, #1e4d6b 100%)",
+  },
+  {
+    from: "rgba(255, 180, 60, 0.8)",
+    to: "rgba(120, 100, 200, 0.8)",
+    base: "linear-gradient(135deg, #704030 0%, #3a2a5f 100%)",
+  }
+] as const;
 
 const FEATURES: readonly Feature[] = [
   {
     title: "Trained for your brand voice",
     description:
       "A dedicated AI Concierge tailored to your restaurant.",
-    icon: GearIcon,
-    iconBg: "linear-gradient(180deg, #f0a35c 0%, #ef7200 100%)",
+    icon: "/images/logo/settings.svg",
   },
   {
     title: "Monitored and refined weekly",
     description:
       "Real people review calls and improve performance every week.",
-    icon: RadioIcon,
-    iconBg: "linear-gradient(180deg, #6f8fe0 0%, #3773d7 100%)",
+    icon: "/images/logo/sensors.svg",
   },
   {
     title: "Designed to free your staff",
     description:
       "Handles calls so your team can stay focused on guests.",
-    icon: InfoIcon,
-    iconBg: "linear-gradient(180deg, #b53fc4 0%, #7c3f9c 100%)",
+    icon: "/images/logo/attribution.svg",
   },
   {
     title: "Built by and for operators",
     description:
       "Designed around the way restaurants actually operate.",
-    icon: ToolsIcon,
-    iconBg: "linear-gradient(180deg, #f0a35c 0%, #ef7200 100%)",
+    icon: "/images/logo/construction.svg",
   },
 ] as const;
 
@@ -93,8 +109,8 @@ export default function WhyChooseUs() {
         </p>
 
         <div className="mt-12 grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {FEATURES.map((feature) => (
-            <FeatureCard key={feature.title} {...feature} />
+          {FEATURES.map((feature, index) => (
+            <FeatureCard key={feature.title} {...feature} index={index} />
           ))}
         </div>
       </div>
@@ -103,109 +119,60 @@ export default function WhyChooseUs() {
 }
 
 function FeatureCard({
-  icon: Icon,
-  iconBg,
+  icon,
   title,
   description,
-}: Feature) {
+  index,
+}: Feature & { index: number }) {
+  const palette = GRADIENT_PALETTES[index % GRADIENT_PALETTES.length];
+
   return (
     <article
       className="
         flex h-full min-w-0 flex-col
-        rounded-[25px]
-        border border-white/[0.16]
-        bg-[linear-gradient(135deg,rgba(255,255,255,0.10),rgba(255,255,255,0.035))]
+        rounded-[25px] gap-2
+        bg-gray-50/20
+        border border-white/20
         p-6
         shadow-[inset_0_1px_0_rgba(255,255,255,0.10),0_18px_45px_rgba(0,0,0,0.22)]
         backdrop-blur-[18px]
         md:p-7
       "
     >
-      <span
-        className="
-          mb-5 grid h-11 w-11 shrink-0
-          place-items-center rounded-xl text-white
-          shadow-[0_8px_24px_rgba(0,0,0,0.22)]
+      <div className="relative h-12 w-12 flex justify-center items-center">
+
+        <span
+          className=" absolute
+          flex h-full w-full shrink-0 
+          items-center justify-center rounded-xl
+          shadow-[0_8px_24px_rgba(0,0,0,0.22)] opacity-50 -z-1
         "
-        style={{ background: iconBg }}
-      >
-        <Icon />
-      </span>
+          style={{
+            background: `
+            radial-gradient(circle at 20% 30%, ${palette.from} 0%, transparent 45%),
+            radial-gradient(circle at 80% 70%, ${palette.to} 0%, transparent 45%),
+            ${palette.base}
+          `
+          }}
+        >
+        </span>
+        <img src={icon} alt="" className="h-6 w-6 z-10" />
+      </div>
 
       <h3
         className="
-          line-clamp-2 min-h-[2.5em]
+          line-clamp-2
           break-words text-balance
-          font-body text-[19px] font-semibold
-          leading-[1.25] text-cream
+          font-body text-2xl font-semibold text-white
         "
       >
         {title}
       </h3>
 
-      <p className="mt-2 flex-1 font-body text-[14px] leading-[1.6] text-cream/70">
+      <p className="flex-1 font-body text-md leading-[1.6] text-cream/70">
         {description}
       </p>
     </article>
   );
 }
 
-function IconBase({ children }: { children: ReactNode }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="h-5 w-5"
-      aria-hidden="true"
-    >
-      {children}
-    </svg>
-  );
-}
-
-function GearIcon() {
-  return (
-    <IconBase>
-      <circle cx="12" cy="12" r="3" />
-
-      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" />
-    </IconBase>
-  );
-}
-
-function RadioIcon() {
-  return (
-    <IconBase>
-      <path d="M8.5 8.5a5 5 0 0 0 0 7M15.5 8.5a5 5 0 0 1 0 7M5 5a9 9 0 0 0 0 14M19 5a9 9 0 0 1 0 14" />
-
-      <circle
-        cx="12"
-        cy="12"
-        r="1.5"
-        fill="currentColor"
-        stroke="none"
-      />
-    </IconBase>
-  );
-}
-
-function InfoIcon() {
-  return (
-    <IconBase>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 11v5M12 8v.01" />
-    </IconBase>
-  );
-}
-
-function ToolsIcon() {
-  return (
-    <IconBase>
-      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94L6.34 20.7a2 2 0 0 1-2.83-2.83L10.7 10.7a6 6 0 0 1 7.94-7.94l-3.76 3.76Z" />
-    </IconBase>
-  );
-}

@@ -67,7 +67,7 @@ export default function MomentSection() {
   };
 
   return (
-    <section className="relative py-20 md:py-32">
+    <section className="relative py-10 md:py-32">
       {/* Color glows carried over from the card-fan version: cream on the
           left, orange on the right */}
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
