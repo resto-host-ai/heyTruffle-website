@@ -29,7 +29,7 @@ export default function ResultsSection() {
           on iOS — see WhatIsSection); phones use plain gradient fades. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 md:[mask-image:linear-gradient(to_bottom,transparent_0%,#000_8%,#000_78%,transparent_100%)] md:[-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,#000_8%,#000_78%,transparent_100%)]"
+        className="pointer-events-none absolute inset-0 md:[mask-image:linear-gradient(to_bottom,transparent_0%,#000_24%,#000_78%,transparent_100%)] md:[-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,#000_24%,#000_78%,transparent_100%)]"
       >
         <Image
           src="/images/gradiante2.webp"

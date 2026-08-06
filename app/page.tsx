@@ -26,7 +26,7 @@ export default function Home() {
         <WhyChooseUs />
         {/* WhatIsSection is deprecated in the v2 redesign — kept for now
             until the full v2 layout replaces it in a separate change. */}
-        <WhatIsSection />
+        {/* <WhatIsSection /> */}
       </div>
       <ResultsSection />
       <HowItWorks />
