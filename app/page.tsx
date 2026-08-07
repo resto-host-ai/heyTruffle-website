@@ -8,6 +8,7 @@ import HowItWorks from "@/components/home/HowItWorks";
 import CaseStudies from "@/components/case-study/CaseStudies";
 import TeamSection from "@/components/home/TeamSection";
 import Contact from "@/components/home/Contact";
+import HostsDemo from "@/components/demo/HostsDemo";
 // Temporarily hidden from the home — re-enable when ready:
 // (Pricing now renders inside TeamSection, mirroring the client's dev build.)
 // import Features from "@/components/marketing/Features";
@@ -29,7 +30,8 @@ export default function Home() {
         {/* <WhatIsSection /> */}
       </div>
       <ResultsSection />
-      <HowItWorks />
+      <HostsDemo />
+      {/* <HowItWorks /> */}
       <CaseStudies />
       <TeamSection />
       <Contact />
