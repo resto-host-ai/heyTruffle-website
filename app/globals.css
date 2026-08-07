@@ -34,6 +34,10 @@ html {
   --color-cream: #f6f3ec;
   --color-brand-orange: #ef7200;
   --color-brand-purple: #d592f3;
+  /* Dark section canvas shared by every non-light home section (Hero through
+     CaseStudies, plus Contact). Single source of truth so section seams don't
+     drift out of sync — was previously hardcoded as #251f21 in ~6 files. */
+  --color-ink: #251f21;
   /* Type families mirror the RestoHost site: Inter for body/UI, Gowun Batang
      for display headings (Tailwind `font-serif`), Geist Mono for mono accents. */
   --font-sans: var(--font-inter);

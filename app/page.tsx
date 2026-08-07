@@ -19,20 +19,23 @@ import HostsDemo from "@/components/demo/HostsDemo";
 export default function Home() {
   return (
     <>
-      <Hero />
-      <TrustedBy />
-      {/* Shared #251F21 background across both sections */}
-      <div className="bg-[#251f21]">
+      {/* Single dark canvas for the whole Hero→CaseStudies stretch — every
+          section inside is transparent, so there's exactly one place that
+          owns this color instead of each section re-painting it and drifting
+          out of sync at the seams. */}
+      <div className="bg-ink">
+        <Hero />
+        <TrustedBy />
         <MomentSection />
         <WhyChooseUs />
         {/* WhatIsSection is deprecated in the v2 redesign — kept for now
             until the full v2 layout replaces it in a separate change. */}
         {/* <WhatIsSection /> */}
+        <ResultsSection />
+        <HostsDemo />
+        {/* <HowItWorks /> */}
+        <CaseStudies transparent />
       </div>
-      <ResultsSection />
-      <HostsDemo />
-      {/* <HowItWorks /> */}
-      <CaseStudies />
       <TeamSection />
       <Contact />
       {/* Temporarily hidden — re-enable when ready:

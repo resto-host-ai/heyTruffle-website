@@ -22,17 +22,7 @@ export default function ResultsSection() {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <section className="relative overflow-hidden bg-[#251f21] pb-10 pt-10 md:pb-16 md:pt-18">
-      {/* gradiante2.webp background. Mask only from md (offscreen composite
-          on iOS — see WhatIsSection); phones use plain gradient fades. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 md:[mask-image:linear-gradient(to_bottom,transparent_0%,#000_24%,#000_78%,transparent_100%)] md:[-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,#000_24%,#000_78%,transparent_100%)]"
-      >
-        <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#251f21] to-transparent md:hidden" />
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-[#251f21] md:hidden" />
-      </div>
-
+    <section className="relative overflow-hidden pb-10 pt-10 md:pb-16 md:pt-18">
       <div className="relative mx-auto w-full px-6 lg:px-[73px]">
         {/* ---- The results speak for themselves ---- */}
         <h2 className="reveal reveal-up text-center font-serif text-[30px] font-bold! leading-[110%] text-cream md:text-[38px] lg:text-[44px]">
@@ -93,7 +83,7 @@ export default function ResultsSection() {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {/* Card 1: Calls recovered */}
             <div className="relative flex min-h-[200px] flex-col overflow-hidden rounded-3xl p-6 md:min-h-[190px] md:p-8"
-              style={{ backgroundImage: "linear-gradient(180deg, #251f21 4%, #943e72 115%)" }}
+              style={{ backgroundImage: "linear-gradient(180deg, var(--color-ink) 4%, #943e72 115%)" }}
             >
               <div aria-hidden className="pointer-events-none absolute inset-0 opacity-25 md:opacity-40 md:mix-blend-overlay" style={{ backgroundImage: NOISE }} />
               <div className="relative flex h-full flex-col items-center text-center md:items-start md:text-left">
@@ -111,7 +101,7 @@ export default function ResultsSection() {
 
             {/* Card 2: Host hours saved */}
             <div className="relative flex min-h-[200px] flex-col overflow-hidden rounded-3xl p-6 md:min-h-[190px] md:p-8"
-              style={{ backgroundImage: "linear-gradient(180deg, #251f21 4%, #2f3d7c 115%)" }}
+              style={{ backgroundImage: "linear-gradient(180deg, var(--color-ink) 4%, #2f3d7c 115%)" }}
             >
               <div aria-hidden className="pointer-events-none absolute inset-0 opacity-25 md:opacity-40 md:mix-blend-overlay" style={{ backgroundImage: NOISE }} />
               <div className="relative flex h-full flex-col items-center text-center md:items-start md:text-left">
@@ -129,7 +119,7 @@ export default function ResultsSection() {
 
             {/* Card 3: Assisted revenue — full width, number + text side by side on desktop */}
             <div className="relative flex min-h-[200px] flex-col overflow-hidden rounded-3xl p-6 sm:col-span-2 md:min-h-[190px] md:p-8"
-              style={{ backgroundImage: "linear-gradient(180deg, #251f21 4%, #ef7200 115%)" }}
+              style={{ backgroundImage: "linear-gradient(180deg, var(--color-ink) 4%, #ef7200 115%)" }}
             >
               <div aria-hidden className="pointer-events-none absolute inset-0 opacity-25 md:opacity-40 md:mix-blend-overlay" style={{ backgroundImage: NOISE }} />
               <div className="relative flex h-full flex-col items-center text-center md:items-start md:text-left">

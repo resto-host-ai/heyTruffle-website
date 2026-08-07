@@ -91,9 +91,9 @@ export default function MomentSection() {
               "radial-gradient(circle, rgba(239,114,0,0.3) 0%, rgba(239,114,0,0.1) 42%, transparent 70%)",
           }}
         />
-        {/* Bottom fade so the glows melt into #251f21 before the section
-            ends, instead of clipping in a hard seam against WhatIsSection. */}
-        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent to-[#251f21]" />
+        {/* Bottom fade so the glows melt into the shared ink canvas before
+            the section ends, instead of clipping in a hard edge. */}
+        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent to-ink" />
       </div>
 
       <div className="relative mx-auto w-full px-6 lg:px-[73px]">
@@ -105,7 +105,7 @@ export default function MomentSection() {
           className="reveal reveal-up mx-auto mt-10 w-full max-w-[900px] md:mt-14"
           style={{ "--reveal-delay": "0.14s" } as React.CSSProperties}
         >
-          <div className="relative overflow-hidden rounded-[24px] bg-[#251f21] shadow-[0_30px_60px_rgba(0,0,0,0.45)] md:rounded-[36px]">
+          <div className="relative overflow-hidden rounded-[24px] bg-ink shadow-[0_30px_60px_rgba(0,0,0,0.45)] md:rounded-[36px]">
             <video
               ref={videoRef}
               src="/videos/moment.mp4"
@@ -129,7 +129,7 @@ export default function MomentSection() {
             {/* Soft scrim keeps the controls legible over bright frames */}
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#251f21]/45 to-transparent"
+              className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-ink/45 to-transparent"
             />
 
             {/* Play/pause + volume, the only two controls by design. Top-right

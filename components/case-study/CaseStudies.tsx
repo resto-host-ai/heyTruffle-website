@@ -107,7 +107,7 @@ export default function CaseStudies({
   return (
     <section
       className={`relative overflow-hidden py-10 md:py-16 ${
-        transparent ? "" : "bg-[#251f21]"
+        transparent ? "" : "bg-ink"
       }`}
     >
       {/* warm ambient glow on the left */}

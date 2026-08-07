@@ -19,7 +19,7 @@ const TRACK = [...LOGOS, ...LOGOS];
 
 export default function TrustedBy() {
   return (
-    <section id="trusted" className="bg-[#251f21] pb-6 pt-16 md:pt-20">
+    <section id="trusted" className="pb-6 pt-16 md:pt-20">
       <div className="mx-auto w-full px-6 lg:px-[73px]">
         <h2 className="reveal reveal-up font-body text-center text-[16px] font-normal! leading-[145%] md:text-[18px] text-cream/90">
           Restaurants powered by heytruffle answer every call.{" "}
@@ -48,11 +48,11 @@ export default function TrustedBy() {
         {/* Phone-only edge fades (see the mask note above) */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#251f21] to-transparent md:hidden"
+          className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-ink to-transparent md:hidden"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#251f21] to-transparent md:hidden"
+          className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-ink to-transparent md:hidden"
         />
       </div>
 

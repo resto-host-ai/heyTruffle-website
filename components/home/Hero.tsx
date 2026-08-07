@@ -98,14 +98,14 @@ export default function Hero() {
   // "Talk to our team") fits a ~660px svh phone viewport with browser
   // chrome visible — the secondary CTA was falling below the fold.
   return (
-    <section className="relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden pb-12 pt-24 desk-tall:pt-32 desk-tall:pb-16 desk-short:items-center-safe desk-short:pt-28 desk-short:pb-12">
+    <section className="relative isolate flex min-h-[100svh] w-full items-center justify-center overflow-hidden pb-12 pt-24 desk-tall:pt-32 desk-tall:pb-16 desk-short:items-center-safe desk-short:pt-28 desk-short:pb-12">
       {/* Animated gradient background (Figma living-gradient) */}
       <HeroBackground />
 
-      {/* Bottom fade into the #251F21 of the next section */}
+      {/* Bottom fade into the shared ink canvas of the next section */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 -z-[5] h-56 bg-gradient-to-b from-transparent to-[#251f21]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 -z-[5] h-56 bg-gradient-to-b from-transparent to-ink"
       />
 
 

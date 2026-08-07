@@ -26,7 +26,7 @@ export default function HeroBackground() {
   return (
     <div
       aria-hidden
-      className="hero-bg-anim pointer-events-none absolute inset-0 -z-10 overflow-hidden bg-[#251f21]"
+      className="hero-bg-anim pointer-events-none absolute inset-0 -z-10 overflow-hidden bg-ink"
     >
       <Image
         src="/images/hero-living-gradient.webp"
