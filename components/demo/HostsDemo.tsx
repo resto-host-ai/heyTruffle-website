@@ -281,10 +281,10 @@ export default function HostsDemo() {
     <div
       id="meet-the-hosts"
       ref={rootRef}
-      className={`w-full scroll-mt-28 ${
+      className={`w-full scroll-mt-28 md:min-h-[75vh] ${
         host
           ? "mt-20 rounded-[32px] bg-[#f6f3ec] p-2 shadow-2xl md:mt-32 md:p-3"
-          : "mt-20 rounded-[32px] bg-[#f6f3ec] px-6 py-8 shadow-2xl md:mt-32 md:px-16 md:py-12"
+          : "mt-20 flex flex-col justify-center rounded-[32px] bg-[#f6f3ec] px-6 py-8 shadow-2xl md:mt-32 md:px-16 md:py-12"
       }`}
     >
       {/* key on the active host so the animation replays on every swap, both
@@ -353,8 +353,11 @@ export default function HostsDemo() {
                 >
                   {h.name}
                 </p>
-                <p className="mt-1.5 text-center font-body text-[16px] font-normal leading-[145%] text-[#251f21]/60 md:text-[18px]">
+                {/* <p className="mt-1.5 text-center font-body text-[16px] font-normal leading-[145%] text-[#251f21]/60 md:text-[18px]">
                   {h.deployedAt}
+                </p> */}
+                <p className="mt-2 max-w-40 text-center font-body text-[14px] font-normal leading-[140%] text-[#251f21]/45 md:text-[15px]">
+                  {h.voice}
                 </p>
               </button>
             ))}
