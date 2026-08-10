@@ -27,10 +27,8 @@ export default function Hero() {
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const searchBoxRef = useRef<HTMLDivElement>(null);
   // Guards against spamming Enter: without this, N rapid submits fire N
-  // native `submit` events, each of which third-party listeners (analytics/
-  // tracking pixels) may react to independently — observed to make graph8's
-  // own script re-run its script-injection logic concurrently and crash on
-  // a duplicate top-level declaration. One submit action at a time, full stop.
+  // native `submit` events, each triggering its own pick()/navigation.
+  // One submit action at a time, full stop.
   const submitLockRef = useRef(false);
 
   // Run an autocomplete request, ignoring out-of-order responses.
