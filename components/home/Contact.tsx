@@ -9,6 +9,7 @@ type FormState = {
   phone: string;
   email: string;
   restaurant: string;
+  text: string;
   honeypot: string;
 };
 
@@ -17,6 +18,7 @@ const INITIAL: FormState = {
   phone: "",
   email: "",
   restaurant: "",
+  text: "",
   honeypot: "",
 };
 
@@ -70,106 +72,129 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative scroll-mt-24 overflow-hidden bg-ink py-10 md:py-16"
+      className="relative scroll-mt-24 overflow-hidden bg-black py-10 md:py-16 "
     >
       {/* Warm radial glow, echoing the brand gradient */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(60% 70% at 50% 0%, rgba(181,63,196,0.22) 0%, rgba(239,114,0,0.08) 45%, transparent 75%)",
-        }}
-      />
+
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-20 md:opacity-30 md:mix-blend-overlay"
         style={{ backgroundImage: NOISE }}
       />
 
-      <div className="relative mx-auto max-w-[1080px] px-6 md:px-10">
-        <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-[1fr_1.05fr]">
-          <div className="reveal reveal-up">
-            <p className="text-xs uppercase tracking-[0.2em] text-cream/60">
-              Get in touch
-            </p>
-            <h2 className="mt-5 font-serif text-4xl leading-tight text-cream md:text-5xl">
-              Let&rsquo;s unlock your{" "}
-              <span className="text-[#d592f3]">missed revenue.</span>
-            </h2>
-            <p className="font-body mt-6 max-w-md text-base leading-relaxed text-cream/70 md:text-lg">
-              Enter your details to schedule a free consultation and see how much
-              in sales you&rsquo;re leaving on the table.
-            </p>
-          </div>
+      <div className="
+        relative max-w-4/5 mx-auto
+        min-h-100 h-auto
+         
+        flex flex-col lg:flex-row gap-6  justify-between text-white">
 
-          <form
-            onSubmit={onSubmit}
-            className="reveal reveal-up rounded-[28px] border border-white/10 bg-white/[0.04] p-7 backdrop-blur-sm md:p-8"
-            style={{ "--reveal-delay": "0.1s" } as React.CSSProperties}
-          >
-            {status === "submitted" ? (
-              <SubmittedState />
-            ) : (
-              <>
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <Field
-                    label="Name"
-                    placeholder="Jane Smith"
-                    value={form.name}
-                    onChange={(v) => update("name", v)}
-                    required
-                  />
-                  <Field
-                    label="Phone"
-                    type="tel"
-                    placeholder="+1 (555) 000-0000"
-                    value={form.phone}
-                    onChange={(v) => update("phone", v)}
-                    required
-                  />
-                  <Field
-                    label="Email"
-                    type="email"
-                    placeholder="jane@restaurant.com"
-                    value={form.email}
-                    onChange={(v) => update("email", v)}
-                    required
-                  />
-                  <Field
-                    label="Restaurant Name"
-                    placeholder="Joe's Pizza"
-                    value={form.restaurant}
-                    onChange={(v) => update("restaurant", v)}
-                    required
-                  />
-                </div>
+        <div className="reveal reveal-up max-w-160">
+          <p className="text-xs uppercase tracking-[0.2em]">
+            Get in touch
+          </p>
+          <h2 className="mt-5 font-serif text-5xl leading-tight md:2xl lg:text-4xl">
+            Let&rsquo;s unlock <br /> your missed revenue.
+          </h2>
+          <p className="font-body mt-6 max-w-md text-base leading-relaxed  md:text-lg">
+            Enter your details to schedule a free consultation and see how much in sales you&rsquo;re leaving on the table.
 
-                <input
-                  type="text"
-                  name="website"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  aria-hidden="true"
-                  value={form.honeypot}
-                  onChange={(e) => update("honeypot", e.target.value)}
-                  style={{
-                    position: "absolute",
-                    left: "-10000px",
-                    width: 1,
-                    height: 1,
-                    overflow: "hidden",
-                    opacity: 0,
-                    pointerEvents: "none",
-                  }}
+          </p>
+        </div>
+
+        <form
+          onSubmit={onSubmit}
+          className=" 
+            h-auto  
+            w-full 
+            lg:min-w-80 lg:w-auto
+            xl:w-full xl:max-w-130
+            2xl:max-w-160
+            flex items-start 
+            rounded-[28px] border border-white/10 bg-white/10 p-7 backdrop-blur-sm "
+          style={{ "--reveal-delay": "0.1s" } as React.CSSProperties}
+        >
+          {status === "submitted" ? (
+            <SubmittedState />
+          ) : (
+            // <SubmittedState />
+            <div className="gap-4 flex flex-col
+            w-full
+            justify-between  ">
+              <div className=" h-3/4 
+                grid grid-cols-1 gap-4
+                lg:grid-cols-2
+                ">
+                <Field
+                  label="Name"
+                  placeholder="Jane Smith"
+                  value={form.name}
+                  onChange={(v) => update("name", v)}
+                  required
                 />
+                <Field
+                  label="Phone"
+                  type="tel"
+                  placeholder="+1 (555) 000-0000"
+                  value={form.phone}
+                  onChange={(v) => update("phone", v)}
+                  required
+                />
+                <Field
+                  label="Email"
+                  type="email"
+                  placeholder="jane@restaurant.com"
+                  value={form.email}
+                  onChange={(v) => update("email", v)}
+                  required
+                />
+                <Field
+                  label="Restaurant Name"
+                  placeholder="Joe's Pizza"
+                  value={form.restaurant}
+                  onChange={(v) => update("restaurant", v)}
+                  required
+                />
+                <Field
+                  className="lg:col-span-2"
+                  multiline
+                  rows={4}
+                  label="Ask us anything, or tell us a bit about your restaurant."
+                  placeholder="Joe's PizzaReservations, catering, how many locations. Whatever's on your mind."
+                  value={form.text}
+                  onChange={(v) => update("text", v)}
+                  required
+                />
+              </div>
+
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                value={form.honeypot}
+                onChange={(e) => update("honeypot", e.target.value)}
+                style={{
+                  position: "absolute",
+                  left: "-10000px",
+                  width: 1,
+                  height: 1,
+                  overflow: "hidden",
+                  opacity: 0,
+                  pointerEvents: "none",
+                }}
+              />
+
+              <div >
 
                 <button
                   type="submit"
                   disabled={status === "submitting"}
-                  className="mt-7 w-full rounded-full bg-gradient-to-r from-[#b53fc4] to-[#ef7200] py-3.5 text-sm font-bold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70"
+                  className="mt-7 w-full rounded-full bg-[#ef7200] py-3.5 text-sm font-bold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70
+                  justify-self-end
+                  "
                 >
-                  {status === "submitting" ? "Sending…" : "Submit →"}
+                  {status === "submitting" ? "Sending…" : "Send message"}
                 </button>
 
                 <p className="mt-6 text-center text-xs text-cream/50">
@@ -189,10 +214,10 @@ export default function Contact() {
                   </Link>
                   .
                 </p>
-              </>
-            )}
-          </form>
-        </div>
+              </div>
+            </div>
+          )}
+        </form>
       </div>
     </section>
   );
@@ -205,6 +230,9 @@ function Field({
   type = "text",
   required,
   placeholder,
+  className,
+  multiline,
+  rows = 4,
 }: {
   label: string;
   value: string;
@@ -212,28 +240,49 @@ function Field({
   type?: string;
   required?: boolean;
   placeholder?: string;
+  /** Grid placement (e.g. "lg:col-span-2") for the field's wrapping label. */
+  className?: string;
+  /** Renders a <textarea> instead of <input> — for free-text fields that need more than one line. */
+  multiline?: boolean;
+  /** Minimum visible line count for a multiline field. */
+  rows?: number;
 }) {
+  const fieldClassName = `w-full rounded-xl border border-white/15 px-3.5 py-3 text-sm text-black outline-none transition-colors placeholder:text-white/50 focus:border-brand-orange focus:placeholder:text-black/60 ${
+    value ? "bg-white" : "bg-white/15 focus:bg-white"
+  }`;
+
   return (
-    <label className="block">
+    <label className={`block ${className ?? ""}`}>
       <span className="mb-2 block text-[10px] uppercase tracking-[0.16em] text-cream/60">
         {label}
         {required && <span className="ml-1 text-brand-orange">*</span>}
       </span>
-      <input
-        type={type}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        required={required}
-        placeholder={placeholder}
-        className="w-full rounded-xl border border-white/15 bg-white/10 px-3.5 py-3 text-sm text-cream outline-none transition-colors placeholder:text-cream/40 focus:border-[#d592f3] focus:bg-white/15"
-      />
+      {multiline ? (
+        <textarea
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          required={required}
+          placeholder={placeholder}
+          rows={rows}
+          className={`${fieldClassName} resize-none`}
+        />
+      ) : (
+        <input
+          type={type}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          required={required}
+          placeholder={placeholder}
+          className={fieldClassName}
+        />
+      )}
     </label>
   );
 }
 
 function SubmittedState() {
   return (
-    <div className="py-6 text-center">
+    <div className="py-6 text-center  flex-1">
       <div
         aria-hidden
         className="mx-auto mb-5 grid h-16 w-16 place-items-center rounded-full bg-gradient-to-br from-[#b53fc4] to-[#ef7200] shadow-[0_16px_40px_-12px_rgba(181,63,196,0.6)]"
@@ -251,7 +300,7 @@ function SubmittedState() {
       <h3 className="mb-2 font-serif text-2xl text-cream">
         Thanks, we&rsquo;ll be in touch.
       </h3>
-      <p className="text-sm leading-relaxed text-cream/70">
+      <p className="text-sm mt-4 leading-relaxed text-cream/70">
         A member of our team will reach out within 24 hours to schedule your free
         consultation.
       </p>
