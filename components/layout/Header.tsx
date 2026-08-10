@@ -13,7 +13,7 @@ type NavItem = { label: string; href: string; demo?: boolean };
 const NAV_BEFORE: NavItem[] = [
   { label: "Case Studies", href: "/case-study/" },
   { label: "About", href: "/#about" },
-  { label: "Pricing", href: "/#pricing" },
+  { label: "Pricing", href: "/pricing/" },
 ];
 
 const NAV_AFTER: NavItem[] = [{ label: "Contact", href: "/#contact" }];
