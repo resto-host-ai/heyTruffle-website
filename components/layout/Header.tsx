@@ -14,6 +14,7 @@ const NAV_BEFORE: NavItem[] = [
   { label: "Case Studies", href: "/case-study/" },
   { label: "About", href: "/#about" },
   { label: "Pricing", href: "/pricing/" },
+  { label: "Compare", href: "/compare/" },
 ];
 
 const NAV_AFTER: NavItem[] = [{ label: "Contact", href: "/#contact" }];
