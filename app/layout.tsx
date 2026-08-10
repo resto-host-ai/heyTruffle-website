@@ -117,32 +117,53 @@ export default function RootLayout({
         {/* graph8's tracking runtime (@jitsu/js under the hood — see
             components/layout/Graph8.tsx) fans out each tracked event to
             "destinations" configured in graph8's dashboard. One destination
-            type is a raw client-side script tag: the server sends back tag
-            code, and jitsu's insertTags() appendChild()s it into <head>.
-            That server-provided script declares a top-level `const uuid`,
-            and if the same event gets delivered to that destination twice
-            (confirmed happening — see graph8 dashboard: Connections > Live
-            Events, and Connections > Destinations for the offending
-            "JavaScript Tag" entry), the second appendChild throws
-            "Identifier 'uuid' has already been declared" and aborts
-            whatever triggered it (observed: "Hear it live" doing nothing).
-            We can't edit graph8's server-side destination config from here,
-            so this patches the DOM APIs insertTags() uses to swallow only
-            this specific redeclaration error, rethrowing everything else. */}
+            type is a raw script tag: the server sends back tag code, and
+            jitsu's insertTags() clones it into a fresh <script> and does
+            document.head.appendChild(scriptClone) with NO try/catch of its
+            own (confirmed in the vendored bundle at
+            dist/dev/server/vendor-chunks/@jitsu.js). That server-provided script
+            declares a top-level `const uuid`, and if the same event gets
+            delivered to that destination twice (confirmed happening — see
+            graph8 dashboard: Connections > Live Events, and
+            Connections > Destinations for the offending "JavaScript Tag"
+            entry), the second insertion throws "Identifier 'uuid' has
+            already been declared" — synchronously, because a classic
+            <script> that fails to even parse (redeclaration is a
+            SyntaxError, not a runtime error) throws through the DOM call
+            that inserted it rather than being reported async via
+            window.onerror.
+            We can't edit graph8's server-side destination config from here.
+            An earlier version of this guard caught that synchronous throw
+            and also tried to swallow it via window.onerror/unhandledrejection
+            — but preventDefault() on those events only cancels the browser's
+            *default* action, it does NOT stop OTHER listeners (like Next's
+            own dev-overlay error listener) from still firing, so the
+            overlay kept showing up anyway.
+            Fixing it at the source instead: track the exact source of every
+            <script> we've already inserted, and when jitsu tries to append
+            the *same* tag content again, skip the insertion entirely. No
+            duplicate declaration ever executes, so there's nothing left to
+            throw or for any listener to catch. */}
         <script
           id="script-redeclare-guard"
           dangerouslySetInnerHTML={{
             __html: `(function(){
+  var seenScripts = new Set();
+  function dedupeKey(node){
+    if (!node || node.nodeType !== 1 || node.tagName !== "SCRIPT") return null;
+    var src = node.textContent || "";
+    if (!src) return null;
+    return src;
+  }
   function guard(name){
     var orig = Node.prototype[name];
-    Node.prototype[name] = function(){
-      try { return orig.apply(this, arguments); }
-      catch (e) {
-        if (e && e.name === "SyntaxError" && /already been declared/.test(e.message || "")) {
-          return arguments[0];
-        }
-        throw e;
+    Node.prototype[name] = function(node){
+      var key = dedupeKey(node);
+      if (key !== null) {
+        if (seenScripts.has(key)) return node;
+        seenScripts.add(key);
       }
+      return orig.apply(this, arguments);
     };
   }
   guard("appendChild");
