@@ -63,7 +63,7 @@ export default function HeroBackground() {
       <div className="absolute inset-0 bg-black/25" />
 
       <div
-        className="absolute inset-0 opacity-[0.4]"
+        className="absolute inset-0 opacity-[0.1] md:opacity-[0.2]"
         style={{ backgroundImage: NOISE, backgroundSize: "10%" }}
       />
     </div>
