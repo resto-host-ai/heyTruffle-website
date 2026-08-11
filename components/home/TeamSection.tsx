@@ -25,7 +25,17 @@ export default function TeamSection() {
         style={{ backgroundImage: NOISE }}
       />
 
-      <div className="relative mx-auto w-full max-w-[1180px] px-6 text-center lg:px-[73px]">
+      {/* Warm orange glow bleeding up from the bottom edge of the section. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-56 md:h-72"
+        style={{
+          background:
+            "radial-gradient(ellipse at bottom, rgba(239,114,0,0.55) 0%, rgba(239,114,0,0.22) 45%, transparent 75%)",
+        }}
+      />
+
+      <div className="relative mx-auto w-full max-w-[1180px] px-6 pt-6 pb-8 text-center lg:px-[73px]">
         {/* Copy — centered, full width, ahead of the photo row (matches the
             Figma layout: no more side-by-side split). */}
         <div className="reveal reveal-up">
@@ -36,46 +46,50 @@ export default function TeamSection() {
           <p className="mx-auto mt-6 max-w-xl font-body text-[16px] font-normal leading-[145%] text-[#251f21] md:text-[18px]">
             Our team reviews real calls, catch what needs fixing, and
             improve your concierge every week.
-          </p>
-          <BookDemoButton
-            className="mt-7 inline-flex h-[50px] items-center justify-center gap-2.5 rounded-full border border-transparent bg-[#1c1917] px-8 font-body text-[16px] font-bold leading-[110%] text-cream transition-all duration-300 hover:border-[#7a7d9a] btn-grad btn-grad-steel hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_18px_44px_rgba(0,0,0,0.28)]"
-          >
-            Talk to our team
-          </BookDemoButton>
+          </p> 
         </div>
 
         {/* Photo row — breaks out of the max-w container to the full
             viewport width (same left-1/2/-translate-x-1/2/w-screen breakout
-            as SuccessStats.tsx). The mask fades each outer edge to the
-            section's own bg color, so the row blends into it instead of
-            cutting off in a hard edge. */}
+            as SuccessStats.tsx). Only the two outer tiles fade — applied per
+            tile rather than one mask across the whole row, so the fade is a
+            fixed fraction of each edge photo instead of a fraction of the
+            row's total width (which shrinks/grows with viewport and gap). */}
         <div
           className="reveal reveal-up relative left-1/2 mt-8 w-screen -translate-x-1/2 md:mt-10"
           style={{ "--reveal-delay": "0.12s" } as React.CSSProperties}
         >
-          <div
-            className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4"
-            style={{
-              maskImage:
-                "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.55) 3%, #000 8%, #000 92%, rgba(0,0,0,0.55) 97%, transparent 100%)",
-              WebkitMaskImage:
-                "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.55) 3%, #000 8%, #000 92%, rgba(0,0,0,0.55) 97%, transparent 100%)",
-            }}
-          >
-            {PHOTOS.map((src, i) => (
-              <div key={`${src}-${i}`} className="relative h-[130px] sm:h-[160px] md:h-[200px] lg:h-[220px] xl:h-[240px]">
-                <Image
-                  src={src}
-                  alt="heytruffle team member"
-                  fill
-                  loading="lazy"
-                  sizes="(max-width: 768px) 50vw, 25vw"
-                  className="object-cover"
-                />
-              </div>
-            ))}
+          <div className="grid grid-cols-2 gap-5 md:grid-cols-4 md:gap-7">
+            {PHOTOS.map((src, i) => {
+              const isFirst = i === 0;
+              const isLast = i === PHOTOS.length - 1;
+              const edgeMask = isFirst
+                ? "linear-gradient(90deg, transparent 0%, #000 55%)"
+                : isLast
+                  ? "linear-gradient(90deg, #000 45%, transparent 100%)"
+                  : undefined;
+              return (
+                <div
+                  key={`${src}-${i}`}
+                  className="relative aspect-square w-full"
+                  style={
+                    edgeMask
+                      ? { maskImage: edgeMask, WebkitMaskImage: edgeMask }
+                      : undefined
+                  }
+                >
+                  <Image
+                    src={src}
+                    alt="heytruffle team member"
+                    fill
+                    loading="lazy"
+                    className="object-cover"
+                  />
+                </div>
+              );
+            })}
           </div>
-          <p className="mt-4 text-center font-body text-[16px] font-normal leading-[110%] text-[#251f21] md:text-[18px]">
+          <p className="mt-8 text-center font-body text-[16px] font-normal leading-[110%] text-[#251f21] md:text-[18px]">
             Not a tool. A team.
           </p>
         </div>

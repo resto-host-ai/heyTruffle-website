@@ -129,17 +129,17 @@ function FeatureCard({
   return (
     <article
       className="
-        flex h-full min-w-0 flex-col
+        flex  flex-col h-auto min-h-60 justify-evenly
         rounded-[25px] gap-2
         bg-gray-50/20
         border border-white/20
-        p-6
+        p-6 
         shadow-[inset_0_1px_0_rgba(255,255,255,0.10),0_18px_45px_rgba(0,0,0,0.22)]
         backdrop-blur-[18px]
         md:p-7
       "
     >
-      <div className="relative h-12 w-12 flex justify-center items-center">
+      <div className="relative h-16 w-16 flex justify-center items-center">
 
         <span
           className=" absolute
@@ -161,15 +161,15 @@ function FeatureCard({
 
       <h3
         className="
-          line-clamp-2
+          line-clamp-2 py-2
           break-words text-balance
-          font-body text-2xl font-semibold text-white
+          font-body text-3xl font-semibold text-white
         "
       >
         {title}
       </h3>
 
-      <p className="flex-1 font-body text-md leading-[1.6] text-cream/70">
+      <p className="flex-1 font-body text-lg   leading-[1.6] text-cream/70">
         {description}
       </p>
     </article>
