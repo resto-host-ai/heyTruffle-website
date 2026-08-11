@@ -50,6 +50,7 @@ const nextConfig: NextConfig = {
   // canonicals declared in each page's metadata (and match the RestoHost SEO
   // setup this site inherits).
   trailingSlash: true,
+  devIndicators: false,
   // Don't advertise the framework and its version to fingerprinting scanners.
   poweredByHeader: false,
   images: {

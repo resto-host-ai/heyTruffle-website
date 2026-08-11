@@ -281,20 +281,26 @@ export default function HostsDemo() {
     <div
       id="meet-the-hosts"
       ref={rootRef}
-      className={`w-full scroll-mt-28 ${
+      /* The outer margin-top used to live only in the closed (grid) branch
+         below — opening a host dropped it entirely, yanking the whole card
+         ~112px up into the section above (and back down on close). It's
+         fixed here, applied in both states, so opening/closing a host only
+         changes the panel's own padding, never the card's position on the
+         page. */
+      className={`w-full  scroll-mt-28 -mt-10 md:mt-18 md:min-h-[75vh] ${
         host
-          ? "mt-20 rounded-[32px] bg-[#f6f3ec] p-2 shadow-2xl md:mt-32 md:p-3"
-          : "mt-20 rounded-[32px] bg-[#f6f3ec] px-6 py-8 shadow-2xl md:mt-32 md:px-16 md:py-12"
+          ? " rounded-[32px] bg-[#f6f3ec] p-2 shadow-2xl  md:p-3"
+          : " flex flex-col justify-center rounded-[32px] bg-[#f6f3ec] px-6 py-8 shadow-2xl  md:px-16 md:py-12"
       }`}
     >
       {/* key on the active host so the animation replays on every swap, both
           grid → player and player → grid. */}
       {!host ? (
-        <div key="grid" className="host-view-in">
+        <div key="grid" className="host-view-in gap-40 flex-1">
           <h3 className="text-center font-serif text-[30px] font-bold! leading-[110%] text-[#251f21] md:text-[38px] lg:text-[44px]">
             Meet the hosts
           </h3>
-          <p className="font-body mx-auto mt-4 max-w-2xl text-center text-[16px] font-normal leading-[145%] text-[#251f21] md:text-[18px]">
+          <p className="font-body mx-auto mt-4 mb-4 max-w-2xl text-center text-[16px] font-normal leading-[145%] text-[#251f21] md:text-[18px]">
             Trained for the restaurant. Tuned every{" "}
             <br className="hidden sm:inline" />
             week. Built to feel like part of the team.
@@ -303,7 +309,9 @@ export default function HostsDemo() {
           <div
             ref={trackRef}
             onScroll={onTrackScroll}
-            className="mt-4 flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden py-2 [-ms-overflow-style:none] [scrollbar-width:none] sm:mt-8 sm:grid sm:grid-cols-4 sm:gap-x-4 sm:gap-y-10 sm:overflow-visible sm:py-0 [&::-webkit-scrollbar]:hidden"
+            className="mt-8 flex snap-x snap-mandatory overflow-x-auto 
+            
+            overflow-y-hidden py-2 [-ms-overflow-style:none] [scrollbar-width:none] sm:mt-8 sm:grid sm:grid-cols-4 sm:gap-x-4 sm:gap-y-10 sm:overflow-visible sm:py-0 [&::-webkit-scrollbar]:hidden"
           >
             {HOSTS.map((h, i) => (
               <button
@@ -353,15 +361,18 @@ export default function HostsDemo() {
                 >
                   {h.name}
                 </p>
-                <p className="mt-1.5 text-center font-body text-[16px] font-normal leading-[145%] text-[#251f21]/60 md:text-[18px]">
+                {/* <p className="mt-1.5 text-center font-body text-[16px] font-normal leading-[145%] text-[#251f21]/60 md:text-[18px]">
                   {h.deployedAt}
+                </p> */}
+                <p className="mt-2 max-w-40 text-center font-body text-[14px] font-normal leading-[140%] text-[#251f21]/45 md:text-[15px]">
+                  {h.voice}
                 </p>
               </button>
             ))}
           </div>
 
           {/* Carousel bullets (mobile only) */}
-          <div className="mt-5 flex justify-center gap-2.5 sm:hidden">
+          <div className="mt-15 flex justify-center gap-2.5 sm:hidden">
             {HOSTS.map((h, idx) => (
               <button
                 key={h.id}

@@ -65,7 +65,11 @@ export async function searchRestaurants(
 }
 
 /** Step 3: send the user to the demo app, which opens straight on this
- *  restaurant's confirmation screen. */
-export function demoAppUrl(placeId: string): string {
-  return `${DEMO_APP_URL}/?placeId=${encodeURIComponent(placeId)}`;
+ *  restaurant's confirmation screen. Called with no placeId when someone
+ *  wants to jump into the demo without picking (or typing) a restaurant
+ *  first — the demo app falls back to its own generic walkthrough. */
+export function demoAppUrl(placeId?: string): string {
+  return placeId
+    ? `${DEMO_APP_URL}/?placeId=${encodeURIComponent(placeId)}`
+    : DEMO_APP_URL;
 }

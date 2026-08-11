@@ -99,7 +99,7 @@ export default function HowItWorks() {
   }, []);
 
   return (
-    <section id="how-it-works" className="relative scroll-mt-24 bg-[#251f21]">
+    <section id="how-it-works" className="relative scroll-mt-24">
       {/* Tall spacer drives the pinned reveal on desktop; auto height on mobile. */}
       <div ref={pinRef} className="md:relative md:h-[190vh]">
         <div className="mx-auto flex w-full flex-col px-6 py-10 md:sticky md:top-0 md:overflow-hidden md:pb-[7vh] md:pt-[13vh] lg:px-[73px]">

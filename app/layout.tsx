@@ -11,7 +11,6 @@ import Footer from "@/components/layout/Footer";
 import RebrandModal from "@/components/layout/RebrandModal";
 import ScrollReveal from "@/components/layout/ScrollReveal";
 import Clarity from "@/components/layout/Clarity";
-import Graph8Provider from "@/components/layout/Graph8";
 import Reb2b from "@/components/layout/Reb2b";
 import SiteJsonLd from "@/components/layout/JsonLd";
 
@@ -64,7 +63,7 @@ export const metadata: Metadata = {
   // their own titles, so no template is used (it would double the suffix).
   title: "heytruffle — Fully managed AI Concierge for restaurants",
   description:
-    "heytruffle answers your restaurant's phones with an AI Concierge trained for your brand. Reservations, orders, catering and events, tuned every week. ",
+    "heytruffle answers your restaurant's phones with an AI Concierge trained for your brand. Reservations, orders, catering and events, tuned every week.",
   alternates: { canonical: "/" },
   verification: {
     google: "A7AGiI5P2uFC-8t5bwNa0gRWdbT5sI5WZpVVQCgZRW0",
@@ -75,14 +74,14 @@ export const metadata: Metadata = {
     siteName: "heytruffle",
     title: "heytruffle — Fully managed AI Concierge for restaurants",
     description:
-      "heytruffle answers your restaurant's phones with an AI Concierge trained for your brand. Reservations, orders, catering and events, tuned every week. ",
+      "heytruffle answers your restaurant's phones with an AI Concierge trained for your brand. Reservations, orders, catering and events, tuned every week.",
     url: "https://heytruffle.ai/",
   },
   twitter: {
     card: "summary_large_image",
     title: "heytruffle — Fully managed AI Concierge for restaurants",
     description:
-      "heytruffle answers your restaurant's phones with an AI Concierge trained for your brand. Reservations, orders, catering and events, tuned every week. .",
+      "heytruffle answers your restaurant's phones with an AI Concierge trained for your brand. Reservations, orders, catering and events, tuned every week.",
   },
 };
 
@@ -100,7 +99,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col overflow-x-clip">
         {/* Instagram's in-app browser (and other stripped-down WKWebViews)
             don't define window.webkit, but some third-party script we load
-            (Clarity, the Graph8 chat widget, Reb2b, Calendly) reads
+            (Clarity, Reb2b, Calendly) reads
             window.webkit.messageHandlers unguarded to detect a native app
             bridge, throwing "undefined is not an object" and aborting the
             rest of that script — Clarity flagged this on ~25% of sessions
@@ -114,52 +113,14 @@ export default function RootLayout({
             __html: "window.webkit = window.webkit || {};",
           }}
         />
-        {/* graph8's tracking runtime (@jitsu/js under the hood — see
-            components/layout/Graph8.tsx) fans out each tracked event to
-            "destinations" configured in graph8's dashboard. One destination
-            type is a raw client-side script tag: the server sends back tag
-            code, and jitsu's insertTags() appendChild()s it into <head>.
-            That server-provided script declares a top-level `const uuid`,
-            and if the same event gets delivered to that destination twice
-            (confirmed happening — see graph8 dashboard: Connections > Live
-            Events, and Connections > Destinations for the offending
-            "JavaScript Tag" entry), the second appendChild throws
-            "Identifier 'uuid' has already been declared" and aborts
-            whatever triggered it (observed: "Hear it live" doing nothing).
-            We can't edit graph8's server-side destination config from here,
-            so this patches the DOM APIs insertTags() uses to swallow only
-            this specific redeclaration error, rethrowing everything else. */}
-        <script
-          id="script-redeclare-guard"
-          dangerouslySetInnerHTML={{
-            __html: `(function(){
-  function guard(name){
-    var orig = Node.prototype[name];
-    Node.prototype[name] = function(){
-      try { return orig.apply(this, arguments); }
-      catch (e) {
-        if (e && e.name === "SyntaxError" && /already been declared/.test(e.message || "")) {
-          return arguments[0];
-        }
-        throw e;
-      }
-    };
-  }
-  guard("appendChild");
-  guard("insertBefore");
-})();`,
-          }}
-        />
-        <Graph8Provider>
-          <Header />
-          {children}
-          <Footer />
-          <RebrandModal />
-          <ScrollReveal />
-          <Clarity />
-          <Reb2b />
-          <SiteJsonLd />
-        </Graph8Provider>
+        <Header />
+        {children}
+        <Footer />
+        <RebrandModal />
+        <ScrollReveal />
+        <Clarity />
+        <Reb2b />
+        <SiteJsonLd />
       </body>
     </html>
   );

@@ -592,6 +592,46 @@ export const INTEGRATIONS: readonly Integration[] = [
         "heytruffle hosts your Olo phone traffic 24/7, answers menu and hours questions, and sends an ordering link so callers can finish on their own.",
     },
   },
+  {
+    slug: "stream",
+    brand: "Stream",
+    // Placeholder text wordmark — Stream's official brand assets haven't
+    // been confirmed via a brand kit yet; swap this file for the real SVG
+    // before launch. Accent uses a heytruffle brand color as a placeholder
+    // since Stream's exact brand hex hasn't been verified.
+    logoFile: "stream.svg",
+    accent: "#ef7200",
+    category: "POS",
+    h1: "Voice AI for Stream POS",
+    valueProp:
+      "heytruffle plugs into Stream, mirrors your live menu, and pushes every phone order straight into Stream — synced to your POS and channels in real time.",
+    hook: "Answer every call and keep Stream tickets moving 24/7, with zero manual entry.",
+    syncSurface: [
+      "Live menu + item availability",
+      "Guest identified by phone number",
+      "Direct-to-POS order dispatch",
+      "Synced across POS + channels in real time",
+    ],
+    capabilities: [
+      {
+        title: "Phone → Stream POS",
+        body: "Calls land straight in your Stream order flow. The AI identifies the guest by phone number and confirms the order against your live menu.",
+      },
+      {
+        title: "Live menu sync",
+        body: "The AI mirrors your Stream menu in real time — when an item runs out, it stops selling it on the phone immediately.",
+      },
+      {
+        title: "Zero manual entry",
+        body: "Orders flow guest → AI → POS without a staff member retyping a single line. Tickets keep moving 24/7.",
+      },
+    ],
+    meta: {
+      title: "Voice AI for Stream — heytruffle",
+      description:
+        "heytruffle plugs into Stream, mirrors your live menu, and pushes every phone order into Stream — synced to your POS and channels in real time. 24/7 answering, zero manual entry.",
+    },
+  },
 ] as const;
 
 export function getIntegration(slug: string): Integration | undefined {

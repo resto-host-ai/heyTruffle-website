@@ -26,12 +26,17 @@ export default function Hero() {
   const searchIdRef = useRef(0);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const searchBoxRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const hintTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   // Guards against spamming Enter: without this, N rapid submits fire N
-  // native `submit` events, each of which third-party listeners (analytics/
-  // tracking pixels) may react to independently — observed to make graph8's
-  // own script re-run its script-injection logic concurrently and crash on
-  // a duplicate top-level declaration. One submit action at a time, full stop.
+  // native `submit` events, each triggering its own pick()/navigation.
+  // One submit action at a time, full stop.
   const submitLockRef = useRef(false);
+  // Shown when "Hear it live" is submitted with nothing typed — the button
+  // otherwise did nothing visible, which read as broken rather than "type
+  // something first". Cleared as soon as the person starts typing.
+  const [emptyHint, setEmptyHint] = useState(false);
+  const [shake, setShake] = useState(false);
 
   // Run an autocomplete request, ignoring out-of-order responses.
   const runSearch = useCallback((input: string) => {
@@ -65,6 +70,7 @@ export default function Hero() {
     if (!query && value) tokenRef.current = newSessionToken();
     setQuery(value);
     setDropdownOpen(true);
+    setEmptyHint(false);
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => runSearch(value), 250);
   }
@@ -92,20 +98,27 @@ export default function Hero() {
     return () => document.removeEventListener("mousedown", onPointerDown);
   }, []);
 
+  // Clear the pending auto-dismiss so a fast unmount can't set state after.
+  useEffect(() => {
+    return () => {
+      if (hintTimeoutRef.current) clearTimeout(hintTimeoutRef.current);
+    };
+  }, []);
+
   const showDropdown = dropdownOpen && query.trim().length >= 2;
 
   // Mobile paddings/type are compressed so the whole stack (logo →
   // "Talk to our team") fits a ~660px svh phone viewport with browser
   // chrome visible — the secondary CTA was falling below the fold.
   return (
-    <section className="relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden pb-12 pt-24 desk-tall:pt-32 desk-tall:pb-16 desk-short:items-center-safe desk-short:pt-28 desk-short:pb-12">
+    <section className="relative isolate flex min-h-[100vh] h-auto w-full items-center justify-center overflow-hidden pb-12 pt-24 desk-tall:pt-32 desk-tall:pb-16 desk-short:items-center-safe desk-short:pt-28 desk-short:pb-12">
       {/* Animated gradient background (Figma living-gradient) */}
       <HeroBackground />
 
-      {/* Bottom fade into the #251F21 of the next section */}
+      {/* Bottom fade into the shared ink canvas of the next section */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 -z-[5] h-56 bg-gradient-to-b from-transparent to-[#251f21]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 -z-[5] h-56 bg-gradient-to-b from-transparent to-ink"
       />
 
 
@@ -119,7 +132,7 @@ export default function Hero() {
             alt="heytruffle — voice AI for restaurants"
             width={105}
             height={96}
-            priority
+            loading="eager"
             unoptimized
             className="h-12 w-auto sm:h-[60px]"
           />
@@ -155,13 +168,31 @@ export default function Hero() {
               below the bar — no modal takeover. */}
           <div ref={searchBoxRef} className="relative w-full sm:flex-1">
             <form
-              className="flex h-[54px] w-full items-center overflow-hidden rounded-[73.26px] border border-white/40 bg-[#f6f3ec]/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg sm:h-[58px]"
+              className={`flex h-[54px] w-full items-center overflow-hidden rounded-[73.26px] border bg-[#f6f3ec]/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg transition-colors sm:h-[58px] ${
+                emptyHint ? "border-[#ff8a80]" : "border-white/40"
+              } ${shake ? "ht-shake" : ""}`}
               onSubmit={(e) => {
                 e.preventDefault();
                 // Swallow rapid repeat submits (spamming Enter) — see the
                 // submitLockRef comment above for why this matters beyond
                 // just avoiding duplicate navigations.
                 if (submitLockRef.current) return;
+
+                if (query.trim().length === 0) {
+                  // Nothing typed at all — the button otherwise did nothing
+                  // visible, which read as broken. Nudge instead: focus the
+                  // input, shake the bar, and surface a hint that clears
+                  // itself once they start typing (see onQueryChange) or
+                  // after a few seconds either way.
+                  inputRef.current?.focus();
+                  setShake(true);
+                  setTimeout(() => setShake(false), 400);
+                  setEmptyHint(true);
+                  if (hintTimeoutRef.current) clearTimeout(hintTimeoutRef.current);
+                  hintTimeoutRef.current = setTimeout(() => setEmptyHint(false), 3000);
+                  return;
+                }
+
                 submitLockRef.current = true;
                 setTimeout(() => {
                   submitLockRef.current = false;
@@ -178,6 +209,7 @@ export default function Hero() {
               }}
             >
               <input
+                ref={inputRef}
                 type="text"
                 value={query}
                 onChange={(e) => onQueryChange(e.target.value)}
@@ -212,6 +244,20 @@ export default function Hero() {
                 </svg>
               </button>
             </form>
+
+            {/* Nudge for submitting with an empty box — mutually exclusive
+                with the results dropdown below (that one only shows once
+                there's at least a 2-char query). */}
+            {emptyHint && (
+              <div
+                role="alert"
+                className="absolute left-0 right-0 top-[calc(100%+10px)] z-20 flex justify-center"
+              >
+                <span className="rounded-full bg-[#2a1518]/95 px-4 py-2 text-[13px] font-medium text-[#ffcec7] shadow-[0_12px_30px_rgba(0,0,0,0.35)]">
+                  Type your restaurant&rsquo;s name first
+                </span>
+              </div>
+            )}
 
             {/* Inline results dropdown — same data/behavior the old modal
                 used, just anchored to the search bar instead of taking over
@@ -265,6 +311,13 @@ export default function Hero() {
             Talk to our team
           </BookDemoButton>
         </div>
+
+        {/* Tertiary escape hatch — skips both CTAs above (no restaurant to
+            type, no team to talk to yet) and drops straight into the demo
+            app's own generic walkthrough. */}
+        <p className="font-body text-[14px] font-medium text-cream/70 underline underline-offset-2 transition-colors hover:text-cream">
+          Free to try. No sign-up. Under 30 seconds.
+        </p>
       </div>
     </section>
   );

@@ -34,6 +34,10 @@ html {
   --color-cream: #f6f3ec;
   --color-brand-orange: #ef7200;
   --color-brand-purple: #d592f3;
+  /* Dark section canvas shared by every non-light home section (Hero through
+     CaseStudies, plus Contact). Single source of truth so section seams don't
+     drift out of sync — was previously hardcoded as #251f21 in ~6 files. */
+  --color-ink: #251f21;
   /* Type families mirror the RestoHost site: Inter for body/UI, Gowun Batang
      for display headings (Tailwind `font-serif`), Geist Mono for mono accents. */
   --font-sans: var(--font-inter);
@@ -133,6 +137,234 @@ html {
     transform: translate3d(1.5%, 1%, 0) scale(1.16);
   }
 }
+
+/* Hero living-gradient blobs — layer 1. Each blob orbits its own fixed
+   center in a perfect circle (same axis in, same axis out) so blobs can
+   drift into and out of each other without ever wandering off-composition.
+   mix-blend-mode: screen keeps overlaps additive/bright instead of muddying
+   into brown — two brand colors crossing stay legible as color, not sludge. */
+.hero-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  mix-blend-mode: screen;
+  will-change: transform;
+  transform: translateZ(0);
+}
+@keyframes hero-orbit-a {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(6%, 8%, 0);
+  }
+  50% {
+    transform: translate3d(0, 14%, 0);
+  }
+  75% {
+    transform: translate3d(-6%, 8%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes hero-orbit-b {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(-9%, 5%, 0);
+  }
+  50% {
+    transform: translate3d(-14%, 0, 0);
+  }
+  75% {
+    transform: translate3d(-9%, -5%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes hero-orbit-c {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(7%, -6%, 0);
+  }
+  50% {
+    transform: translate3d(0, -12%, 0);
+  }
+  75% {
+    transform: translate3d(-7%, -6%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes hero-orbit-d {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(-5%, -9%, 0);
+  }
+  50% {
+    transform: translate3d(10%, -4%, 0);
+  }
+  75% {
+    transform: translate3d(5%, 9%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes hero-orbit-e {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(8%, 4%, 0);
+  }
+  50% {
+    transform: translate3d(4%, -10%, 0);
+  }
+  75% {
+    transform: translate3d(-8%, -2%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes hero-orbit-f {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(-8%, 6%, 0);
+  }
+  50% {
+    transform: translate3d(-4%, 13%, 0);
+  }
+  75% {
+    transform: translate3d(6%, 7%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes hero-orbit-g {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(10%, -3%, 0);
+  }
+  50% {
+    transform: translate3d(6%, 9%, 0);
+  }
+  75% {
+    transform: translate3d(-5%, 6%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes hero-orbit-h {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(-6%, -8%, 0);
+  }
+  50% {
+    transform: translate3d(9%, -11%, 0);
+  }
+  75% {
+    transform: translate3d(7%, 3%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes hero-orbit-i {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(5%, 9%, 0);
+  }
+  50% {
+    transform: translate3d(-7%, 4%, 0);
+  }
+  75% {
+    transform: translate3d(-3%, -8%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes hero-orbit-j {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(-9%, -4%, 0);
+  }
+  50% {
+    transform: translate3d(3%, -10%, 0);
+  }
+  75% {
+    transform: translate3d(9%, 2%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+.hero-blob-a {
+  animation: hero-orbit-a 22s ease-in-out infinite;
+}
+.hero-blob-b {
+  animation: hero-orbit-b 26s ease-in-out infinite;
+}
+.hero-blob-c {
+  animation: hero-orbit-c 19s ease-in-out infinite;
+}
+.hero-blob-d {
+  animation: hero-orbit-d 24s ease-in-out infinite;
+}
+.hero-blob-e {
+  animation: hero-orbit-e 17s ease-in-out infinite;
+}
+.hero-blob-f {
+  animation: hero-orbit-f 21s ease-in-out infinite;
+}
+.hero-blob-g {
+  animation: hero-orbit-g 28s ease-in-out infinite;
+}
+.hero-blob-h {
+  animation: hero-orbit-h 20s ease-in-out infinite;
+}
+.hero-blob-i {
+  animation: hero-orbit-i 25s ease-in-out infinite;
+}
+.hero-blob-j {
+  animation: hero-orbit-j 23s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-blob-a,
+  .hero-blob-b,
+  .hero-blob-c,
+  .hero-blob-d,
+  .hero-blob-e,
+  .hero-blob-f,
+  .hero-blob-g,
+  .hero-blob-h,
+  .hero-blob-i,
+  .hero-blob-j {
+    animation: none !important;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .hero-bg-anim {
     animation: none !important;
@@ -200,6 +432,17 @@ html {
 }
 .ht-pop {
   animation: ht-pop 0.28s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+/* Hero search bar — nudge when "Hear it live" is submitted with nothing typed */
+@keyframes ht-shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60% { transform: translateX(4px); }
+}
+.ht-shake {
+  animation: ht-shake 0.4s ease-in-out;
 }
 
 /* Smooth gradient-hover buttons.
