@@ -111,7 +111,7 @@ export default function Hero() {
   // "Talk to our team") fits a ~660px svh phone viewport with browser
   // chrome visible — the secondary CTA was falling below the fold.
   return (
-    <section className="relative isolate flex min-h-[100svh] w-full items-center justify-center  pb-12 pt-24 desk-tall:pt-32 desk-tall:pb-16 desk-short:items-center-safe desk-short:pt-28 desk-short:pb-12">
+    <section className="relative isolate flex min-h-[100vh] w-full items-center justify-center overflow-hidden pb-12 pt-24 desk-tall:pt-32 desk-tall:pb-16 desk-short:items-center-safe desk-short:pt-28 desk-short:pb-12">
       {/* Animated gradient background (Figma living-gradient) */}
       <HeroBackground />
 
