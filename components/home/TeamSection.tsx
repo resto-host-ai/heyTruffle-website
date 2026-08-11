@@ -92,6 +92,7 @@ export default function TeamSection() {
                     alt={alt}
                     fill
                     loading="lazy"
+                    sizes="(max-width: 768px) 50vw, 25vw"
                     className="object-cover"
                   />
                 </div>
