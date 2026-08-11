@@ -2,14 +2,23 @@ import Image from "next/image";
 import { NOISE } from "@/lib/noise";
 import { BookDemoButton } from "@/components/ui/BookDemoButton";
 
-// Figma calls for 4 distinct photos; only these 2 exist so far, so each
-// is used twice as a placeholder to fill the row. Swap in the other 2 real
-// photos once they're supplied — no other change needed.
 const PHOTOS = [
-  "/images/team1.webp",
-  "/images/team2.webp",
-  "/images/team1.webp",
-  "/images/team2.webp",
+  {
+    src: "/images/heytruffle-team-1.jpg",
+    alt: "heytruffle engineer reviewing a restaurant's live reservation setup",
+  },
+  {
+    src: "/images/heytruffle-team-2.jpg",
+    alt: "heytruffle teammates reviewing a call together in the office",
+  },
+  {
+    src: "/images/heytruffle-team-3.jpg",
+    alt: "heytruffle engineer monitoring AI host performance",
+  },
+  {
+    src: "/images/heytruffle-team-4.jpg",
+    alt: "heytruffle teammates collaborating on a restaurant account",
+  },
 ];
 
 export default function TeamSection() {
@@ -60,7 +69,7 @@ export default function TeamSection() {
           style={{ "--reveal-delay": "0.12s" } as React.CSSProperties}
         >
           <div className="grid grid-cols-2 gap-5 md:grid-cols-4 md:gap-7">
-            {PHOTOS.map((src, i) => {
+            {PHOTOS.map(({ src, alt }, i) => {
               const isFirst = i === 0;
               const isLast = i === PHOTOS.length - 1;
               const edgeMask = isFirst
@@ -70,7 +79,7 @@ export default function TeamSection() {
                   : undefined;
               return (
                 <div
-                  key={`${src}-${i}`}
+                  key={src}
                   className="relative aspect-square w-full"
                   style={
                     edgeMask
@@ -80,7 +89,7 @@ export default function TeamSection() {
                 >
                   <Image
                     src={src}
-                    alt="heytruffle team member"
+                    alt={alt}
                     fill
                     loading="lazy"
                     className="object-cover"
