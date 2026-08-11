@@ -83,7 +83,7 @@ export default function Contact() {
       />
 
       <div className="
-        relative max-w-4/5 mx-auto
+        relative  px-6 lg:px-[73px]
         min-h-100 h-auto
          
         flex flex-col lg:flex-row gap-6  justify-between text-white">

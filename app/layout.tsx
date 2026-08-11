@@ -63,7 +63,7 @@ export const metadata: Metadata = {
   // their own titles, so no template is used (it would double the suffix).
   title: "heytruffle — Fully managed AI Concierge for restaurants",
   description:
-    "heytruffle answers your restaurant's phones with an AI Concierge trained for your brand. Reservations, orders, catering and events, tuned every week. ",
+    "heytruffle answers your restaurant's phones with an AI Concierge trained for your brand. Reservations, orders, catering and events, tuned every week.",
   alternates: { canonical: "/" },
   verification: {
     google: "A7AGiI5P2uFC-8t5bwNa0gRWdbT5sI5WZpVVQCgZRW0",
@@ -74,14 +74,14 @@ export const metadata: Metadata = {
     siteName: "heytruffle",
     title: "heytruffle — Fully managed AI Concierge for restaurants",
     description:
-      "heytruffle answers your restaurant's phones with an AI Concierge trained for your brand. Reservations, orders, catering and events, tuned every week. ",
+      "heytruffle answers your restaurant's phones with an AI Concierge trained for your brand. Reservations, orders, catering and events, tuned every week.",
     url: "https://heytruffle.ai/",
   },
   twitter: {
     card: "summary_large_image",
     title: "heytruffle — Fully managed AI Concierge for restaurants",
     description:
-      "heytruffle answers your restaurant's phones with an AI Concierge trained for your brand. Reservations, orders, catering and events, tuned every week. .",
+      "heytruffle answers your restaurant's phones with an AI Concierge trained for your brand. Reservations, orders, catering and events, tuned every week.",
   },
 };
 

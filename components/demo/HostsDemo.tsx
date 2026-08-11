@@ -281,10 +281,10 @@ export default function HostsDemo() {
     <div
       id="meet-the-hosts"
       ref={rootRef}
-      className={`w-full scroll-mt-28 md:min-h-[75vh] ${
+      className={`w-full  scroll-mt-28 -mt-10  md:min-h-[75vh] ${
         host
-          ? "mt-20 rounded-[32px] bg-[#f6f3ec] p-2 shadow-2xl md:mt-32 md:p-3"
-          : "mt-20 flex flex-col justify-center rounded-[32px] bg-[#f6f3ec] px-6 py-8 shadow-2xl md:mt-32 md:px-16 md:py-12"
+          ? " rounded-[32px] bg-[#f6f3ec] p-2 shadow-2xl  md:p-3"
+          : " flex flex-col justify-center rounded-[32px] bg-[#f6f3ec] px-6 py-8 shadow-2xl  md:px-16 md:py-12 md:mt-18"
       }`}
     >
       {/* key on the active host so the animation replays on every swap, both
@@ -303,7 +303,9 @@ export default function HostsDemo() {
           <div
             ref={trackRef}
             onScroll={onTrackScroll}
-            className="mt-4 flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden py-2 [-ms-overflow-style:none] [scrollbar-width:none] sm:mt-8 sm:grid sm:grid-cols-4 sm:gap-x-4 sm:gap-y-10 sm:overflow-visible sm:py-0 [&::-webkit-scrollbar]:hidden"
+            className="mt-4 flex snap-x snap-mandatory overflow-x-auto 
+            
+            overflow-y-hidden py-2 [-ms-overflow-style:none] [scrollbar-width:none] sm:mt-8 sm:grid sm:grid-cols-4 sm:gap-x-4 sm:gap-y-10 sm:overflow-visible sm:py-0 [&::-webkit-scrollbar]:hidden"
           >
             {HOSTS.map((h, i) => (
               <button

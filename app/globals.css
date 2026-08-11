@@ -206,6 +206,17 @@ html {
   animation: ht-pop 0.28s cubic-bezier(0.2, 0.8, 0.3, 1);
 }
 
+/* Hero search bar — nudge when "Hear it live" is submitted with nothing typed */
+@keyframes ht-shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60% { transform: translateX(4px); }
+}
+.ht-shake {
+  animation: ht-shake 0.4s ease-in-out;
+}
+
 /* Smooth gradient-hover buttons.
    CSS can't interpolate background-image, so a `hover:bg-[linear-gradient…]`
    class always snaps no matter what transition is set. Instead the gradient is

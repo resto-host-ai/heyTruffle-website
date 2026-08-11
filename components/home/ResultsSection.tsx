@@ -22,7 +22,7 @@ export default function ResultsSection() {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <section className="relative overflow-hidden pb-10 pt-10 md:pb-16 md:pt-18">
+    <section className="relative overflow-hidden pt-10  md:pt-18">
       <div className="relative mx-auto w-full px-6 lg:px-[73px]">
         {/* ---- The results speak for themselves ---- */}
         <h2 className="reveal reveal-up text-center font-serif text-[30px] font-bold! leading-[110%] text-cream md:text-[38px] lg:text-[44px]">
@@ -143,7 +143,7 @@ export default function ResultsSection() {
           Born inside Rreal Tacos from operators to operators.
         </p>
 
-        <p className="mt-12 text-center font-body text-[13px] font-medium uppercase tracking-[0.15em] text-cream/50">
+        <p className="mt-40 text-center font-body text-[13px] font-medium uppercase tracking-[0.15em] text-cream/50">
           We handle
         </p>
         <div className="mt-5 flex flex-wrap items-center justify-center gap-3">

@@ -1,6 +1,5 @@
 import Hero from "@/components/home/Hero";
 import TrustedBy from "@/components/home/TrustedBy";
-import MomentSection from "@/components/home/MomentSection";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import WhatIsSection from "@/components/home/WhatIsSection";
 import ResultsSection from "@/components/home/ResultsSection";
@@ -26,13 +25,12 @@ export default function Home() {
       <div className="bg-ink">
         <Hero />
         <TrustedBy />
-        <MomentSection />
         <WhyChooseUs />
         {/* WhatIsSection is deprecated in the v2 redesign — kept for now
             until the full v2 layout replaces it in a separate change. */}
         {/* <WhatIsSection /> */}
         <ResultsSection />
-        <div className="relative w-full overflow-x-clip px-6 py-10 md:py-16 lg:px-[73px]">
+        <div className="relative w-full overflow-x-clip px-6 pb-24  md:pb-40 lg:px-[73px]">
           {/* Ambient glow — HostsDemo used to sit inside WhatIsSection and
               inherit its background_gradient.webp backdrop; now that it
               renders standalone (WhatIsSection is deprecated), it needs its
@@ -57,7 +55,7 @@ export default function Home() {
             aria-hidden
             className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-[#3773d7] from-0% to-transparent to-40%"
           />
-          <div className="relative">
+          <div className="relative ">
             <HostsDemo />
           </div>
         </div>
