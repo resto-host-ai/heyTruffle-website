@@ -5,20 +5,8 @@ export default function HeroBackground() {
   return (
     <div
       aria-hidden
-      className="hero-bg-anim pointer-events-none absolute inset-0 -z-10 overflow-hidden bg-[#251F21]"
+      className="hero-bg-anim pointer-events-none absolute inset-0 -z-10 overflow-hidden bg-[#0c0b0c]"
     >
-      {/* Sizes use clamp(min, Nvw, max). The first clamp pass fixed the
-          phone→desktop breakpoint cliff, but its "max" was tuned to plateau
-          at ~1280px wide — so 1024–1440 (near that reference width) still
-          hit close to max and looked oversaturated/washed, while 2560+
-          (way past it) sat capped at that same absolute px size, which is
-          tiny relative to a wide monitor and reads as mostly bare dark ink.
-          Same bug as the breakpoint version, just moved further out. Fix:
-          lower the vw% (less overlap at "normal" desktop widths) and raise
-          the max ceiling well past any real screen (so it keeps scaling
-          instead of plateauing) — the result is roughly the same relative
-          coverage from phone to 4K instead of a size that's only right
-          near 1280px. */}
       <div className="absolute inset-0">
         <div
           className="hero-blob hero-blob-a absolute -left-[15%] top-[-25%]"
@@ -61,11 +49,6 @@ export default function HeroBackground() {
           style={{ background: "#EF7200", height: "clamp(190px, 22vw, 1320px)", width: "clamp(190px, 22vw, 1320px)" }}
         />
       </div>
-
-      {/* STEP 3 — logo layer, sitting on top of the blobs. Kept at its full
-          size across breakpoints per feedback — don't shrink it to fix
-          contrast, fix contrast elsewhere (scrim removed, grain lowered
-          below). */}
       <Image
         src="/images/hero-logo-glow.svg"
         alt=""
@@ -75,12 +58,12 @@ export default function HeroBackground() {
         className="absolute left-2/5 top-1/2 w-[460px] max-w-none -translate-x-1/2 -translate-y-1/2 blur-xl sm:w-[500px] md:w-[560px] lg:w-[420px] lg:blur-2xl xl:w-[800px] 2xl:w-[1200px]"
       />
 
-      {/* STEP 4 — "GRADIENT HERO" grain layer, on top of everything else
-          (blobs + logo). Plain opacity (no mix-blend) keeps it cheap on
-          mobile compositors — kept low so the grain reads without
-          flattening the blob colors underneath into gray. */}
+      {/* Dims the overall frame a touch without flattening the color —
+          sits above the blobs/logo, below the grain. */}
+      <div className="absolute inset-0 bg-black/25" />
+
       <div
-        className="absolute inset-0 opacity-[0.08]"
+        className="absolute inset-0 opacity-[0.4]"
         style={{ backgroundImage: NOISE, backgroundSize: "10%" }}
       />
     </div>

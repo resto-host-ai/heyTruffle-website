@@ -11,7 +11,7 @@ import { demoAppUrl } from "@/lib/demoAssistant";
 type NavItem = { label: string; href: string; demo?: boolean };
 
 const NAV_BEFORE: NavItem[] = [
-  { label: "About", href: "/#about" },
+  { label: "About", href: "/#why-choose-us" },
   { label: "Pricing", href: "/pricing/" },
   { label: "Case Studies", href: "/case-study/" },
   // "Compare" pages (heytruffle vs Slang AI / Loman AI / TableVoice) stay
@@ -25,7 +25,7 @@ const NAV_AFTER: NavItem[] = [{ label: "Contact", href: "/#contact" }];
 
 /** Integrations dropdown, grouped like the design. */
 const INTEGRATIONS = [
-  { heading: "POS", items: ["Toast", "Clover", "Square", "SpotOn", "Aloha"] },
+  { heading: "POS", items: ["Toast", "Clover", "Square", "SpotOn", "Aloha", "Stream"] },
   { heading: "Reservations", items: ["Resy", "OpenTable", "SevenRooms"] },
   { heading: "Delivery", items: ["Grubhub", "DoorDash", "Uber Eats", "Postmates"] },
   { heading: "Direct Ordering", items: ["Flipdish", "ChowNow", "Olo"] },
@@ -50,6 +50,7 @@ const INTEGRATION_PAGES = new Set([
   "Flipdish",
   "ChowNow",
   "Olo",
+  "Stream",
 ]);
 const itemHref = (item: string) =>
   INTEGRATION_PAGES.has(item) ? `/integrations/${slug(item)}` : `#${slug(item)}`;
@@ -283,7 +284,7 @@ export default function Header() {
             <a
               href={demoAppUrl()}
               target="_blank"
-              className="flex items-center gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-3.5 py-2 text-center font-body text-[17px] font-normal leading-[110%] bg-brand-orange text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream 2xl:px-5 2xl:text-[20px]"
+              className="flex items-center gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-3.5 py-2 text-center font-body text-[17px] font-semibold leading-[110%] bg-brand-orange text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream 2xl:px-5 2xl:text-[20px]"
             >
               Build your AI
             </a>

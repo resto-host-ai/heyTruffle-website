@@ -89,7 +89,7 @@ export default function TeamSection() {
               );
             })}
           </div>
-          <p className="mt-8 text-center font-body text-[16px] font-normal leading-[110%] text-[#251f21] md:text-[18px]">
+          <p className="mt-8 text-center font-body text-[16px] font-normal leading-[110%] text-[#251f21] md:text-[18px] italic">
             Not a tool. A team.
           </p>
         </div>

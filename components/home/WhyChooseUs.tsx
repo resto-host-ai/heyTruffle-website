@@ -56,7 +56,7 @@ const FEATURES: readonly Feature[] = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="relative isolate py-20 md:py-28">
+    <section id="why-choose-us" className="relative isolate scroll-mt-24 py-20 md:py-28">
       {/* Luces CSS sin imágenes y sin cortes entre secciones */}
       <div
         aria-hidden="true"

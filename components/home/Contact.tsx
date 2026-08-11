@@ -86,7 +86,7 @@ export default function Contact() {
         relative  px-6 lg:px-[73px]
         min-h-100 h-auto
          
-        flex flex-col lg:flex-row gap-6  justify-between text-white">
+        flex flex-col lg:flex-row gap-6  justify-around text-white">
 
         <div className="reveal reveal-up max-w-160">
           <p className="text-xs uppercase tracking-[0.2em]">
@@ -137,7 +137,6 @@ export default function Contact() {
                   placeholder="+1 (555) 000-0000"
                   value={form.phone}
                   onChange={(v) => update("phone", v)}
-                  required
                 />
                 <Field
                   label="Email"
@@ -162,7 +161,6 @@ export default function Contact() {
                   placeholder="Joe's PizzaReservations, catering, how many locations. Whatever's on your mind."
                   value={form.text}
                   onChange={(v) => update("text", v)}
-                  required
                 />
               </div>
 
