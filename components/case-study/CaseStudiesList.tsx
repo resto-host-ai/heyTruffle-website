@@ -245,7 +245,7 @@ export default function CaseStudiesList() {
   });
 
   return (
-    <section className="relative overflow-hidden bg-cream pb-24 pt-32 md:pb-32 md:pt-40">
+    <section className="relative overflow-hidden bg-cream pb-24 pt-32 md:pb-32 md:pt-40 min-h-[95vh]">
       {/* Warm orange (#EF7200) glow from the top-right and bottom-left corners */}
       <div
         aria-hidden

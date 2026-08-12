@@ -145,6 +145,7 @@ function NavLink({ label, href, demo }: NavItem) {
 }
 
 export default function Header() {
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileIntegrationsOpen, setMobileIntegrationsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -189,6 +190,16 @@ export default function Header() {
           <Link
             href="/"
             aria-label="heytruffle home"
+            // Same route → Link/router won't scroll on its own. Take over as
+            // a "back to top" button in that one case; a real navigation to
+            // "/" from elsewhere already lands at the top on its own.
+            onClick={(e) => {
+              setMenuOpen(false);
+              if (pathname === "/") {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            }}
             /* Blend only from md: a blend-mode child inside the fixed header
                forces WebKit to composite everything beneath it offscreen on
                every scroll frame — and it can delay the logo's own first paint
