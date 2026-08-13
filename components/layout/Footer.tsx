@@ -129,9 +129,23 @@ export default function Footer() {
 
         <div className="mt-16 h-px w-full bg-[#251f21]/15" />
 
-        <p className="mt-6 font-body text-[16px] font-normal leading-[110%] text-[#251f21]">
-          © 2026 heytruffle. All rights reserved.
-        </p>
+        <div className="mt-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <p className="font-body text-[16px] font-normal leading-[110%] text-[#251f21]">
+            © 2026 heytruffle. All rights reserved.
+          </p>
+          <ul className="flex items-center gap-6">
+            <li>
+              <Link href="/privacy-policy" className={linkClass}>
+                Privacy Policy
+              </Link>
+            </li>
+            <li>
+              <Link href="/terms-of-service" className={linkClass}>
+                Terms of Service
+              </Link>
+            </li>
+          </ul>
+        </div>
       </div>
     </footer>
   );
