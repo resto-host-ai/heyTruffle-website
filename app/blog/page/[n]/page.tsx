@@ -28,7 +28,18 @@ export async function generateMetadata({
   const { n } = await params;
   return {
     title: `Blog — Page ${n} — heytruffle`,
+    // Older posts than page 1's, so the description isn't just the site's
+    // repeated forever — kept generic since exact post titles shift as new
+    // ones publish and push the older ones down a page.
+    description: `More heytruffle blog posts on AI voice hosts and restaurant operations — page ${n}.`,
     alternates: { canonical: `/blog/page/${n}/` },
+    // Pagination pages add nothing worth ranking on their own and were
+    // showing up as Google sitelinks ahead of Pricing/demo/comparisons.
+    // noindex removes them from the index; follow keeps post discovery
+    // flowing through them. No canonical-to-page-1 here — Google handles
+    // that inconsistently for true pagination and it risks losing posts
+    // from discovery entirely.
+    robots: { index: false, follow: true },
   };
 }
 

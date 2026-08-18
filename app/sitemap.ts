@@ -50,16 +50,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  // Paged blog index (page 1 is /blog/ itself; 9 grid cards per page).
-  const blogPages: MetadataRoute.Sitemap = Array.from(
-    { length: Math.max(0, Math.ceil((getAllPostMeta().length - 1) / 9) - 1) },
-    (_, i) => ({
-      url: `${SITE}/blog/page/${i + 2}/`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.5,
-    }),
-  );
+  // Paged blog index (/blog/page/2/ onward) is intentionally NOT listed here
+  // — those pages are noindex (see app/blog/page/[n]/page.tsx) and don't
+  // belong in a sitemap, which is a hint to crawl+index. They were pulling
+  // disproportionate internal-link weight and got picked as Google sitelinks
+  // ahead of Pricing/demo/comparison pages.
 
-  return [...staticPages, ...caseStudies, ...integrations, ...comparisons, ...posts, ...blogPages];
+  return [...staticPages, ...caseStudies, ...integrations, ...comparisons, ...posts];
 }
