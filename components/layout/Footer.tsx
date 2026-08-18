@@ -144,6 +144,11 @@ export default function Footer() {
                 Terms of Service
               </Link>
             </li>
+            <li>
+              <Link href="/anti-spam" className={linkClass}>
+                Anti-Spam Policy
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

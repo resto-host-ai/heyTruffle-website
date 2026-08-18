@@ -62,8 +62,8 @@ const TIERS: readonly Tier[] = [
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="scroll-mt-24 bg-transparent py-24 md:py-32">
-      <div className="mx-auto w-full px-6 lg:px-[73px]">
+    <section id="pricing" className="scroll-mt-24 bg-cream py-24 md:py-32">
+      <div className="mx-auto w-full px-6 lg:px-18 ">
         <div className="mx-auto mb-12 max-w-[680px] text-center">
           <p className="font-body text-[13px] font-bold uppercase tracking-[0.2em] text-brand-orange">
             Pricing
@@ -73,7 +73,7 @@ export default function Pricing() {
           </h2>
         </div>
 
-        <div className="grid  grid-cols-1 gap-9 md:grid-cols-3 md:items-stretch">
+        <div className="grid grid-cols-1 gap-9 md:grid-cols-3 md:items-stretch ">
           {TIERS.map((tier) => (
             <TierCard key={tier.id} tier={tier} />
           ))}
