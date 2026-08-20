@@ -19,6 +19,14 @@ const PHOTOS = [
     src: "/images/heytruffle-team-4.jpg",
     alt: "heytruffle teammates collaborating on a restaurant account",
   },
+  {
+    src: "/images/heytruffle-team-5.jpeg",
+    alt: "The full heytruffle team gathered in front of the office sign",
+  },
+  {
+    src: "/images/heytruffle-team-6.jpeg",
+    alt: "heytruffle engineer working across a laptop and monitor",
+  },
 ];
 
 export default function TeamSection() {
@@ -58,46 +66,49 @@ export default function TeamSection() {
           </p> 
         </div>
 
-        {/* Photo row — breaks out of the max-w container to the full
-            viewport width (same left-1/2/-translate-x-1/2/w-screen breakout
-            as SuccessStats.tsx). Only the two outer tiles fade — applied per
-            tile rather than one mask across the whole row, so the fade is a
-            fixed fraction of each edge photo instead of a fraction of the
-            row's total width (which shrinks/grows with viewport and gap). */}
+        {/* Photo row — infinite marquee, same mechanism as TrustedBy's logo
+            ticker (.marquee class in globals.css: translateX(0 → -50%),
+            paused on hover, slowed under prefers-reduced-motion instead of
+            stopped). The track is PHOTOS doubled so the -50% loop is
+            seamless regardless of how many photos are in the array — every
+            photo still plays once per lap, it just keeps relooping. Breaks
+            out to the full viewport width (same left-1/2/-translate-x-1/2/
+            w-screen breakout as SuccessStats.tsx). */}
         <div
           className="reveal reveal-up relative left-1/2 mt-8 w-screen -translate-x-1/2 md:mt-10"
           style={{ "--reveal-delay": "0.12s" } as React.CSSProperties}
         >
-          <div className="grid grid-cols-2 gap-5 md:grid-cols-4 md:gap-7">
-            {PHOTOS.map(({ src, alt }, i) => {
-              const isFirst = i === 0;
-              const isLast = i === PHOTOS.length - 1;
-              const edgeMask = isFirst
-                ? "linear-gradient(90deg, transparent 0%, #000 55%)"
-                : isLast
-                  ? "linear-gradient(90deg, #000 45%, transparent 100%)"
-                  : undefined;
-              return (
+          <div className="group relative overflow-hidden md:[mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+            <div className="marquee flex w-max items-center gap-5 md:gap-7">
+              {[...PHOTOS, ...PHOTOS].map(({ src, alt }, i) => (
                 <div
-                  key={src}
-                  className="relative aspect-square w-full"
-                  style={
-                    edgeMask
-                      ? { maskImage: edgeMask, WebkitMaskImage: edgeMask }
-                      : undefined
-                  }
+                  key={i}
+                  aria-hidden={i >= PHOTOS.length}
+                  className="relative aspect-square w-[45vw] shrink-0 sm:w-[280px] md:w-[300px] lg:w-[340px]"
                 >
                   <Image
                     src={src}
                     alt={alt}
                     fill
                     loading="lazy"
-                    sizes="(max-width: 768px) 50vw, 25vw"
+                    sizes="(max-width: 768px) 45vw, 340px"
                     className="object-cover"
                   />
                 </div>
-              );
-            })}
+              ))}
+            </div>
+            {/* Phone-only edge fades — matches TrustedBy: a masked container
+                whose content translates every frame is WebKit's most
+                expensive per-frame recomposite, so phones get plain gradient
+                overlays instead of the md+ mask-image. */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#f6f3ec] to-transparent md:hidden"
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#f6f3ec] to-transparent md:hidden"
+            />
           </div>
           <p className="mt-8 text-center font-body text-[16px] font-normal leading-[110%] text-[#251f21] md:text-[18px] italic">
             Not a tool. A team.

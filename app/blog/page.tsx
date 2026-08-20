@@ -11,5 +11,5 @@ export const metadata: Metadata = {
 };
 
 export default function BlogPage() {
-  return <BlogIndex page={1} />;
+  return <BlogIndex />;
 }

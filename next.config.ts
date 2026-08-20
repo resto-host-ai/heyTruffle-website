@@ -70,6 +70,20 @@ const nextConfig: NextConfig = {
   async headers() {
     return [{ source: "/:path*", headers: SECURITY_HEADERS }];
   },
+  // Blog pagination (/blog/page/2/, /3/, ...) was removed — Google had
+  // picked those thin index pages as sitelinks over Pricing/demo/comparison
+  // pages. /blog/ now lists every post on one page. Permanent redirect so
+  // any inbound links/bookmarks to the old paginated URLs still land
+  // somewhere useful instead of 404ing.
+  async redirects() {
+    return [
+      {
+        source: "/blog/page/:n",
+        destination: "/blog/",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

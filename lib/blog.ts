@@ -1,24 +1,9 @@
 import fs from "node:fs";
 import path from "node:path";
 import { Marked } from "marked";
+import type { PostMeta, Post } from "./postMeta";
 
-export type PostMeta = {
-  slug: string;
-  title: string;
-  description: string;
-  /** ISO date string, e.g. "2026-07-09". */
-  date: string;
-  category: string;
-  /** Human read-time label, e.g. "4 min". */
-  readTime: string;
-  /** Public path to the featured image. */
-  image: string;
-};
-
-export type Post = PostMeta & {
-  /** Raw markdown body (without the frontmatter block). */
-  content: string;
-};
+export { type PostMeta, type Post, formatDate } from "./postMeta";
 
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
 
@@ -126,26 +111,4 @@ const renderer = new Marked({
 /** Render a post body to HTML. */
 export function renderMarkdown(markdown: string): string {
   return renderer.parse(markdown, { async: false }) as string;
-}
-
-/** Format an ISO date as e.g. "July 9, 2026". */
-export function formatDate(iso: string): string {
-  if (!iso) return "";
-  const [y, m, d] = iso.split("-").map(Number);
-  if (!y || !m || !d) return iso;
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  return `${months[m - 1]} ${d}, ${y}`;
 }
