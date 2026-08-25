@@ -168,6 +168,7 @@ export default function PricingRoiCalculator() {
   const locations = toNum(locationsRaw, 1, 2);
   const calls = toNum(callsRaw, 1, 45);
   const ticket = segment.ticket ?? toNum(ticketRaw, 1, 28);
+  const wage = toNum(wageRaw, 1, 15);
 
   const results = useMemo(() => {
     const missedPerMonth = locations * calls * 30 * MISSED_CALL_RATE;
@@ -176,6 +177,9 @@ export default function PricingRoiCalculator() {
     const revenuePerMonth = recovered * ticket;
     const revenuePerYear = revenuePerMonth * 12;
     const hoursSavedYear = ((missedPerMonth * MINUTES_PER_CALL) / 60) * 12;
+    // Value of the host time freed up, not the recovered order/reservation
+    // revenue itself — a separate number from revenuePerYear on purpose.
+    const laborValueYear = hoursSavedYear * wage;
 
     const pricePerLocation =
       locations > ENTERPRISE_THRESHOLD
@@ -185,8 +189,8 @@ export default function PricingRoiCalculator() {
     const paybackMonths =
       revenuePerMonth > 0 ? monthlyCost / revenuePerMonth : null;
 
-    return { revenuePerYear, hoursSavedYear, paybackMonths };
-  }, [locations, calls, ticket]);
+    return { revenuePerYear, hoursSavedYear, laborValueYear, paybackMonths };
+  }, [locations, calls, ticket, wage]);
 
   const paybackLabel =
     results.paybackMonths === null || !Number.isFinite(results.paybackMonths)
@@ -306,20 +310,28 @@ export default function PricingRoiCalculator() {
               Estimated demand recovered per year
             </p>
 
-            <div className="mt-6 flex gap-8 border-t border-[#251f21]/10 pt-5">
+            <div className="mt-6 grid grid-cols-3 gap-4 border-t border-[#251f21]/10 pt-5">
               <div>
-                <p className="font-body text-[20px] font-bold text-[#251f21]">
+                <p className="font-body text-[18px] font-bold text-[#251f21]">
                   {compactNumber(results.hoursSavedYear)}
                 </p>
-                <p className="mt-0.5 font-body text-[12px] text-[#251f21]/50">
+                <p className="mt-0.5 font-body text-[11px] text-[#251f21]/50">
                   Host hours freed / year
                 </p>
               </div>
               <div>
-                <p className="font-body text-[20px] font-bold text-[#251f21]">
+                <p className="font-body text-[18px] font-bold text-[#251f21]">
+                  {currency(results.laborValueYear)}
+                </p>
+                <p className="mt-0.5 font-body text-[11px] text-[#251f21]/50">
+                  Value of that time, at your host wage
+                </p>
+              </div>
+              <div>
+                <p className="font-body text-[18px] font-bold text-[#251f21]">
                   {paybackLabel}
                 </p>
-                <p className="mt-0.5 font-body text-[12px] text-[#251f21]/50">
+                <p className="mt-0.5 font-body text-[11px] text-[#251f21]/50">
                   Payback (months)
                 </p>
               </div>
