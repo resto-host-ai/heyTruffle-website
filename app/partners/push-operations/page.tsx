@@ -123,14 +123,14 @@ export default function PushOperationsPartnerPage() {
               className="h-8 w-auto"
             />
             <span className="text-xl text-cream/30">&times;</span>
-            <span className="flex flex-col items-start leading-none">
-              <span className="font-body text-2xl font-bold text-cream">
-                push<span className="text-brand-orange">.</span>
-              </span>
-              <span className="mt-1 font-body text-[10px] font-medium uppercase tracking-[0.18em] text-cream/50">
-                Operations
-              </span>
-            </span>
+            <Image
+              src="/images/pushoperationlogo.png"
+              alt="heytruffle"
+              width={160}
+              height={40}
+              unoptimized
+              className="h-18 w-auto"
+            />
           </div>
 
           <h1 className="mt-8 font-serif text-4xl leading-tight text-cream md:text-6xl">
