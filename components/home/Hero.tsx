@@ -168,7 +168,7 @@ export default function Hero() {
               below the bar — no modal takeover. */}
           <div ref={searchBoxRef} className="relative w-full sm:flex-1">
             <form
-              className={`flex h-[54px] w-full items-center overflow-hidden rounded-[73.26px] border bg-[#f6f3ec]/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg transition-colors sm:h-[58px] ${
+              className={`flex h-[54px] w-full items-center overflow-hidden rounded-[73.26px] border bg-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg transition-colors sm:h-[58px] ${
                 emptyHint ? "border-[#ff8a80]" : "border-white/40"
               } ${shake ? "ht-shake" : ""}`}
               onSubmit={(e) => {
@@ -217,7 +217,7 @@ export default function Hero() {
                 placeholder="Search for your restaurant"
                 aria-label="Search for your restaurant"
                 autoComplete="off"
-                className="h-full min-w-0 flex-1 bg-transparent pl-5 pr-2 font-body text-[15px] font-normal leading-[110%] text-[#251f21] outline-none placeholder:text-[#251f21] sm:pl-7 sm:pr-4 sm:text-[16px]"
+                className="h-full min-w-0 flex-1 bg-white pl-5 pr-2 font-body text-[15px] font-normal leading-[110%] text-[#251f21] outline-none placeholder:text-[#251f21] sm:pl-7 sm:pr-4 sm:text-[16px]"
               />
               <button
                 type="submit"
