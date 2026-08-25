@@ -148,7 +148,7 @@ export default function PushOperationsPartnerPage() {
               Book a demo
             </BookDemoButton>
             <a
-              href="https://www.pushoperations.com/partners/heytruffle"
+              href="https://web.pushoperations.com/4y4Lqe9"
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-full border border-cream/25 px-7 py-3.5 text-sm font-semibold text-cream transition-colors hover:bg-cream/10"
@@ -366,7 +366,7 @@ export default function PushOperationsPartnerPage() {
                 walk you through it.
               </p>
               <a
-                href="https://www.pushoperations.com/partners/heytruffle"
+                href="https://web.pushoperations.com/4y4Lqe9"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="self-start rounded-full border border-brand-orange px-6 py-2.5 text-sm font-semibold text-brand-orange transition-colors hover:bg-brand-orange/10"
