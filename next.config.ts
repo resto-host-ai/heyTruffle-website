@@ -82,6 +82,21 @@ const nextConfig: NextConfig = {
         destination: "/blog/",
         permanent: true,
       },
+      // /partners has no index page yet — there's only one partner
+      // (Push Operations) so far, and a bare /partners/ would otherwise
+      // 404. Redirect straight to it; temporary (307, not 308) because this
+      // goes away once there's more than one partner and /partners/ becomes
+      // a real index page instead of a stand-in for a single page.
+      {
+        source: "/partners",
+        destination: "/partners/push-operations/",
+        permanent: false,
+      },
+      {
+        source: "/partners/",
+        destination: "/partners/push-operations/",
+        permanent: false,
+      },
     ];
   },
 };

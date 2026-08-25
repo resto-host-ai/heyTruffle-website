@@ -181,7 +181,7 @@ export default function Header() {
            the END of the fade, so the fade-out still animates. */
         className={`fixed inset-x-0 top-0 z-50 h-[80px] transition-all duration-300 md:backdrop-blur-xl ${overlayOpen ? "pointer-events-none invisible opacity-0" : ""
           } ${scrolled
-            ? "bg-[#1c1917]/95 shadow-[0_8px_30px_rgba(0,0,0,0.25)] md:bg-[#1c1917]/85"
+            ? "bg-black shadow-[0_8px_30px_rgba(0,0,0,0.25)] md:bg-[#1c1917]"
             : "bg-black/50 md:bg-black/35"
           }`}
       >

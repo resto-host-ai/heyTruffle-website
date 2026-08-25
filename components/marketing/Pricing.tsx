@@ -1,3 +1,5 @@
+"use client";
+
 import { BookDemoButton } from "@/components/ui/BookDemoButton";
 
 type Tier = {
@@ -5,10 +7,10 @@ type Tier = {
   name: string;
   price: string;
   cadence?: string;
-  description: string;
-  badge?: string;
+  tagline: string;
   features: readonly string[];
-  cta: string;
+  cta?: string;
+  /** Dark card in the middle of the row — the rest are light. */
   featured: boolean;
 };
 
@@ -18,68 +20,81 @@ const TIERS: readonly Tier[] = [
     name: "Standard",
     price: "$299",
     cadence: "/mo",
-    description: "For single locations getting started.",
+    tagline: "Phones handled, no integrations.",
     features: [
-      "Fully managed AI host for your brand",
-      "Reservations, orders and FAQs, 24/7",
-      "Human monitoring + weekly tuning",
+      "AI Concierge built and trained for your brand on your menu, hours, and policies",
+      "Reservations by SMS link, FAQs, hours and directions",
+      "Human escalation and routing",
+      "Weekly tuning, monthly analysis",
       "Bilingual EN / ES",
     ],
-    cta: "Get a Free Demo",
     featured: false,
   },
   {
-    id: "executive",
+    id: "executive-one",
     name: "Executive",
-    price: "$499",
+    price: "$399",
     cadence: "/mo",
-    badge: "Most popular",
-    description: "For growing multi-location groups.",
+    tagline: "For takeout or reservation driven restaurants.",
     features: [
-      "Everything in Standard, plus:",
-      "Catering and private events",
-      "POS + reservation integrations",
-      "Call reporting and outcomes",
+      "Includes everything in standard plus:",
+      "One live integration",
+      "Orders written into your POS",
+      "Reservations written into your book",
+      "Real time availability and party rules",
+      "24/7 priority support",
     ],
-    cta: "Get a Free Demo",
+    cta: "Start your pilot",
     featured: true,
   },
   {
-    id: "enterprise",
-    name: "Enterprise",
-    price: "Custom",
-    description: "For large restaurant groups.",
+    id: "executive-full",
+    name: "Executive · full",
+    price: "$499",
+    cadence: "/mo",
+    tagline: "For full service restaurants at volume.",
     features: [
-      "Everything in Executive, plus:",
-      "Multi-location rollout",
-      "Dedicated account team",
-      "Custom integrations + reporting",
+      "Includes everything in executive plus:",
+      "Full operation in one line.",
+      "Order taking and reservations",
+      "Catering and private events routing",
+      "Real time wait times",
+      "Dedicated CSM team with weekly call review, analytics and tuning by our team",
     ],
-    cta: "Talk to our team",
+    cta: "Start your pilot",
     featured: false,
   },
 ];
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="scroll-mt-24 bg-cream py-24 md:py-32">
-      <div className="mx-auto w-full px-6 lg:px-18 ">
-        <div className="mx-auto mb-12 max-w-[680px] text-center">
-          <p className="font-body text-[13px] font-bold uppercase tracking-[0.2em] text-brand-orange">
-            Pricing
-          </p>
-          <h2 className="mt-4 font-serif text-[30px] leading-tight md:text-[38px] lg:text-[44px] text-[#251f21]">
-            Pricing that scales with you.
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 gap-9 md:grid-cols-3 md:items-stretch ">
+    <section id="pricing" className="scroll-mt-24 bg-[#f6f3ec] pb-16 md:pb-24">
+      <div className="mx-auto w-full max-w-[1180px] px-6 lg:px-[73px]">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-3 md:items-stretch">
           {TIERS.map((tier) => (
             <TierCard key={tier.id} tier={tier} />
           ))}
         </div>
 
-        <p className="mt-11 flex items-center justify-center gap-2.5 text-center font-body text-base text-[#251f21]/80">
+        {/* ---- Enterprise — full-width band below the three tiers ---- */}
+        <div className="mt-5 flex flex-col items-start gap-6 rounded-3xl bg-white p-8 shadow-[0_2px_10px_rgba(37,31,33,0.08)] md:flex-row md:items-center md:justify-between md:p-10">
+          <div>
+            <p className="font-body text-[17px] font-semibold text-[#251f21]">
+              Enterprise
+            </p>
+            <p className="mt-1 font-body text-[14px] font-medium italic text-brand-orange">
+              Volume pricing for multilocation groups.
+            </p>
+            <p className="mt-2 font-serif text-[32px] leading-none text-[#251f21] md:text-[38px]">
+              Contact us
+            </p>
+          </div>
+          <BookDemoButton className="w-full shrink-0 rounded-full border-[1.5px] border-[#251f21]/25 px-8 py-3.5 font-body text-[15px] font-semibold text-[#251f21] transition-colors hover:border-[#251f21] md:w-auto">
+            Talk to our team
+          </BookDemoButton>
+        </div>
+
+        <p className="mt-10 flex items-center justify-center gap-2.5 text-center font-body text-[15px] italic text-[#251f21]/70">
           <span aria-hidden className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand-orange" />
           Start with a 90-day pilot.
         </p>
@@ -88,52 +103,102 @@ export default function Pricing() {
   );
 }
 
+function FeatureList({ tier }: { tier: Tier }) {
+  return (
+    <ul className="space-y-2.5">
+      {tier.features.map((feature) => (
+        <li
+          key={feature}
+          className={`flex items-start gap-3 font-body text-[13.5px] leading-snug ${
+            tier.featured ? "text-cream/90" : "text-[#251f21]/75"
+          }`}
+        >
+          <span
+            aria-hidden
+            className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-orange"
+          />
+          {feature}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 function TierCard({ tier }: { tier: Tier }) {
   return (
     <div
-      className={ +
+      className={
         tier.featured
-          ? "relative flex h-full flex-col rounded-3xl border-2 border-brand-orange p-8 [background:linear-gradient(180deg,rgba(239,114,0,0.18)_0%,rgba(26,19,21,0)_60%),#241d1f]"
-          : "flex h-full flex-col rounded-3xl border border-white/10 bg-[#241d1f] p-8"
+          ? "flex h-full flex-col rounded-3xl bg-[#1c1917] p-8"
+          : "flex h-full flex-col rounded-3xl bg-white p-8 shadow-[0_2px_10px_rgba(37,31,33,0.08)]"
       }
     >
-      {tier.badge && (
-        <div className="absolute -top-[15px] left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-brand-orange px-4 py-1.5 font-body text-xs font-bold text-white">
-          {tier.badge}
-        </div>
-      )}
+      <h3
+        className={`font-body text-[17px] font-semibold ${
+          tier.featured ? "text-cream" : "text-[#251f21]"
+        }`}
+      >
+        {tier.name}
+      </h3>
+      <p className="mt-1.5 font-body text-[13px] font-medium italic text-brand-orange">
+        {tier.tagline}
+      </p>
 
-      <h3 className="font-body text-[17px] font-semibold text-cream">{tier.name}</h3>
-
-      <div className="mb-3 mt-3.5 flex items-baseline leading-none">
-        <span className="font-serif text-[44px] text-white">{tier.price}</span>
+      <div className="mb-4 mt-4 flex items-baseline leading-none">
+        <span
+          className={`font-serif text-[36px] ${
+            tier.featured ? "text-white" : "text-[#251f21]"
+          }`}
+        >
+          {tier.price}
+        </span>
         {tier.cadence && (
-          <span className="ml-1.5 font-body text-[15px] text-cream/60">{tier.cadence}</span>
+          <span
+            className={`ml-1.5 font-body text-[14px] ${
+              tier.featured ? "text-cream/60" : "text-[#251f21]/50"
+            }`}
+          >
+            {tier.cadence}
+          </span>
         )}
       </div>
 
-      <p className="font-body text-sm text-cream/60">{tier.description}</p>
+      <div
+        className={`mb-5 h-px ${tier.featured ? "bg-white/10" : "bg-[#251f21]/10"}`}
+      />
 
-      <div className="my-5 h-px bg-white/10" />
+      {/* Full list, always visible from md up. */}
+      <div className="hidden flex-1 md:block">
+        <FeatureList tier={tier} />
+      </div>
 
-      <ul className="mb-6 flex-1 space-y-2">
-        {tier.features.map((feature) => (
-          <li key={feature} className="flex items-center gap-3 font-body text-[13.5px] leading-snug text-cream/90">
-            <span aria-hidden className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand-orange" />
-            {feature}
-          </li>
-        ))}
-      </ul>
+      {/* Collapsed behind "More information" below md — keeps the stacked
+          mobile cards short; same content, no separate copy to maintain. */}
+      <details className="group flex-1 md:hidden">
+        <summary
+          className={`cursor-pointer list-none font-body text-[13px] font-medium underline underline-offset-2 [&::-webkit-details-marker]:hidden ${
+            tier.featured ? "text-cream/80" : "text-[#251f21]/70"
+          }`}
+        >
+          <span className="group-open:hidden">More information</span>
+          <span className="hidden group-open:inline">Show less</span>
+        </summary>
+        <div className="mt-4">
+          <FeatureList tier={tier} />
+        </div>
+      </details>
 
-      <BookDemoButton
-        className={
-          tier.featured
-            ? "w-full mt-10 rounded-[10px] bg-brand-orange py-3.5 font-body text-[15px] font-semibold text-white transition-colors hover:bg-[#c95f00]"
-            : "w-full rounded-[10px] border-[1.5px] border-white/30 py-3.5 font-body text-[15px] font-semibold text-cream transition-colors hover:border-cream"
-        }
-      >
-        {tier.cta}
-      </BookDemoButton>
+      {tier.cta && (
+        <BookDemoButton
+          className={
+            tier.featured
+              ? "mt-8 w-full rounded-full border-[1.5px] border-white/30 py-3.5 font-body text-[15px] font-semibold text-cream transition-colors hover:border-cream"
+              : "mt-8 w-full rounded-full border-[1.5px] border-[#251f21]/25 py-3.5 font-body text-[15px] font-semibold text-[#251f21] transition-colors hover:border-[#251f21]"
+          }
+        >
+          {tier.cta}
+        </BookDemoButton>
+      )}
     </div>
   );
 }
