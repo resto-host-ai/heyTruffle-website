@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Clarity from "@microsoft/clarity";
+import { whenIdle } from "@/lib/whenIdle";
 
 // Microsoft Clarity — same account as the RestoHost site (project "resto-host").
 // Session recordings + heatmaps. Initialized once from the root layout so it
@@ -16,7 +17,10 @@ export default function ClarityInit() {
     // Without an ID Clarity.init would throw — skip it entirely rather than
     // load a broken tracker.
     if (!CLARITY_PROJECT_ID) return;
-    Clarity.init(CLARITY_PROJECT_ID);
+    // On mount this fired the moment hydration finished, so Clarity's ~25KB
+    // script was downloading while the phone was still painting the hero.
+    // Nothing about a session recording needs to start that early.
+    return whenIdle(() => Clarity.init(CLARITY_PROJECT_ID));
   }, []);
 
   return null;

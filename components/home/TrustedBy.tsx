@@ -1,17 +1,30 @@
 import TrustedByLogo from "@/components/home/TrustedByLogo";
 
-/** Restaurant logos for the infinite carousel — every `logo_*` asset. */
+/** Restaurant logos for the infinite carousel — every `logo_*` asset.
+ *
+ *  These were .svg until it turned out none of them held a single <path>:
+ *  each was a Figma export wrapping a base64 PNG, so they paid 33% in
+ *  base64 overhead AND had to be passed `unoptimized` (next/image will not
+ *  process an .svg), which meant no AVIF and no resizing — 291KB of artwork
+ *  that renders 48px tall. scripts/extract-logo-rasters.mjs pulls the raster
+ *  back out.
+ *
+ *  w/h are the box the marquee RENDERS (h-12 = 48px tall, width from each
+ *  logo's aspect ratio), not the source file's dimensions: with no `sizes`
+ *  prop next/image treats these as fixed-size and builds its 1x/2x srcset
+ *  straight off `width`, so the rendered width is what keeps it from
+ *  fetching a 384px-wide file for a 48px-tall slot. */
 const LOGOS = [
-  { src: "/images/logo_kyu.svg", alt: "KYU", w: 108, h: 73 },
-  { src: "/images/logo_canita.svg", alt: "La Cañita", w: 133, h: 73 },
-  { src: "/images/logo_mojitos.svg", alt: "Mojitos", w: 104, h: 73 },
-  { src: "/images/logo_lima.svg", alt: "Lima", w: 123, h: 57 },
-  { src: "/images/logo_rreal.svg", alt: "Rreal Tacos", w: 74, h: 73 },
-  { src: "/images/logo_south.svg", alt: "South Beach", w: 75, h: 73 },
-  { src: "/images/logo_grove.svg", alt: "The Grove", w: 189, h: 43 },
-  { src: "/images/logo_baires.svg", alt: "Baires Grill", w: 74, h: 73 },
-  { src: "/images/logo_palms.svg", alt: "Palm Tree Club", w: 189, h: 45 },
-  { src: "/images/logo_esme.svg", alt: "Esme", w: 143, h: 73 },
+  { src: "/images/logo_kyu.webp", alt: "KYU", w: 71, h: 48 },
+  { src: "/images/logo_canita.webp", alt: "La Cañita", w: 87, h: 48 },
+  { src: "/images/logo_mojitos.webp", alt: "Mojitos", w: 68, h: 48 },
+  { src: "/images/logo_lima.webp", alt: "Lima", w: 104, h: 48 },
+  { src: "/images/logo_rreal.webp", alt: "Rreal Tacos", w: 48, h: 48 },
+  { src: "/images/logo_south.webp", alt: "South Beach", w: 49, h: 48 },
+  { src: "/images/logo_grove.webp", alt: "The Grove", w: 214, h: 48 },
+  { src: "/images/logo_baires.webp", alt: "Baires Grill", w: 48, h: 48 },
+  { src: "/images/logo_palms.webp", alt: "Palm Tree Club", w: 205, h: 48 },
+  { src: "/images/logo_esme.webp", alt: "Esme", w: 94, h: 48 },
 ];
 
 // Duplicated so the -50% translate loops seamlessly.

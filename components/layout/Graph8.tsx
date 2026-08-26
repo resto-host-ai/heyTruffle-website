@@ -1,5 +1,3 @@
-import Script from "next/script";
-
 // graph8 flow tracking pixel. Loaded once from the root layout so it runs on
 // every route. The write-key identifies our account to events.flow.graph8.com
 // and is a public, client-side value by design — but it's still supplied via
@@ -12,16 +10,28 @@ export default function Graph8() {
   // rather than load a script that would only error.
   if (!GRAPH8_WRITE_KEY) return null;
 
+  /* A plain async <script> rather than next/script.
+     
+     This was <Script strategy="beforeInteractive">, chosen because that is the
+     only next/script strategy rendered into the server HTML itself — the
+     others inject via client JS after hydration, and script-verification tools
+     that fetch the raw HTML would never see the tag. A plain <script> keeps
+     that property (React renders it into the HTML, and hoists async scripts
+     into <head>) while dropping what beforeInteractive also did: it made Next
+     emit a <link rel=preload as=script> and fetch this pixel BEFORE any
+     first-party code, so on a throttled phone connection a tracking script was
+     taking bandwidth from the stylesheet and fonts the first paint waits on.
+
+     async + fetchPriority="low" keeps it off the critical path. It also now
+     sits after the redeclaration guard in <body> rather than ahead of it in
+     <head>, which is the order that guard was written to assume. */
   return (
-    <Script
+    <script
       id="graph8-flow"
       src="https://events.flow.graph8.com/p.js"
       data-write-key={GRAPH8_WRITE_KEY}
-      // beforeInteractive is the only strategy Next.js renders into the
-      // server HTML itself (the others inject via client-side JS after
-      // hydration) — third-party script-verification tools that fetch the
-      // raw HTML without executing JS otherwise never see this tag at all.
-      strategy="beforeInteractive"
+      async
+      fetchPriority="low"
     />
   );
 }

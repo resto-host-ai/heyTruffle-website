@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 /**
@@ -14,6 +15,9 @@ export default function MomentSection() {
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
   const [ended, setEnded] = useState(false);
+  // Latches on the first play and never resets: it only gates the poster
+  // layer, which must not come back over a paused mid-video frame.
+  const [started, setStarted] = useState(false);
 
   // Two encodes of the same spot: phones keep the light 540p (5MB — they
   // render it at ~345px wide, and cellular data is the constraint), while
@@ -112,22 +116,47 @@ export default function MomentSection() {
             <video
               ref={videoRef}
               src="/videos/moment.mp4"
-              poster="/images/moment-poster.webp"
               muted
               playsInline
               /* "none": the page loads zero video bytes until the section
                  scrolls into view and the observer calls play() — the client
                  reported the clip dragging down initial page load. The poster
-                 is a separate 26KB webp, so the card never looks empty. */
+                 layer below keeps the card from ever looking empty. */
               preload="none"
               onPlay={() => {
                 setPlaying(true);
                 setEnded(false);
+                setStarted(true);
               }}
               onPause={() => setPlaying(false)}
               onEnded={() => setEnded(true)}
               className="block aspect-[4/3] w-full object-cover"
             />
+
+            {/* Poster as a real <Image> rather than the video's `poster`
+                attribute. A poster= takes a single URL with no srcset, so
+                every visitor got the same 960x720 file — on a phone that
+                renders this card at ~364px wide, Lighthouse measured 22KB of
+                its 26KB as wasted. Through the image optimizer the same frame
+                ships as AVIF at the width the device actually needs.
+
+                Eager at low priority, matching WhatIsSection's background:
+                that keeps the pre-play frame present the moment the card
+                scrolls up (WebKit's lazy-load margin is short enough that
+                lazy leaves an empty card on iOS) without competing with the
+                hero for bandwidth. Unmounted for good once the spot has
+                started, so it never covers a paused frame. */}
+            {!started && (
+              <Image
+                src="/images/moment-poster.webp"
+                alt=""
+                fill
+                loading="eager"
+                fetchPriority="low"
+                sizes="(max-width: 899px) calc(100vw - 48px), 900px"
+                className="pointer-events-none object-cover"
+              />
+            )}
 
             {/* Soft scrim keeps the controls legible over bright frames */}
             <div
