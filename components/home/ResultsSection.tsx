@@ -60,7 +60,14 @@ export default function ResultsSection() {
                   alt=""
                   fill
                   quality={75}
-                  sizes="(min-width: 768px) 35vw, 100vw"
+                  /* Measured against the layout rather than estimated. The
+                     poster sits in a px-6 / lg:px-[73px] container, full width
+                     below md and half width above it, so 100vw overstated
+                     mobile by the 48px of padding (enough to push the browser
+                     onto the 750w candidate when 640w covers it) while 35vw
+                     understated desktop by a third of the real ~48vw, which
+                     costs sharpness rather than bytes. */
+                  sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 1023px) calc((100vw - 48px) / 2), calc((100vw - 146px) / 2)"
                   className="object-cover"
                 />
                 <span className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 shadow-lg backdrop-blur-sm transition-transform duration-300 group-hover/play:scale-110">

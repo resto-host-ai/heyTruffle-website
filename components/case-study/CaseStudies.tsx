@@ -235,7 +235,7 @@ export default function CaseStudies({
                           alt=""
                           fill
                           quality={75}
-                          sizes="(max-width: 768px) 90vw, 45vw"
+                          sizes="(max-width: 767px) calc(100vw - 48px), (min-width: 1596px) 560px, 40vw"
                           className="object-cover object-left"
                         />
                         {/* Play affordance only — the poster already carries
@@ -265,7 +265,7 @@ export default function CaseStudies({
                       alt={c.name}
                       fill
                       quality={75}
-                      sizes="(max-width: 768px) 90vw, 45vw"
+                      sizes="(max-width: 767px) calc(100vw - 48px), (min-width: 1596px) 560px, 40vw"
                       className="object-cover"
                     />
                   </div>
