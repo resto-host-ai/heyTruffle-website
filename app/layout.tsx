@@ -13,6 +13,7 @@ import ScrollReveal from "@/components/layout/ScrollReveal";
 import Clarity from "@/components/layout/Clarity";
 import Reb2b from "@/components/layout/Reb2b";
 import SiteJsonLd from "@/components/layout/JsonLd";
+import Chatbase from "@/components/layout/Chatbase";
 
 // Same type families as the RestoHost site: Inter for body/UI and Geist Mono
 // for mono accents. Display headings use Gowun Batang (wired into
@@ -121,6 +122,7 @@ export default function RootLayout({
         <Clarity />
         <Reb2b />
         <SiteJsonLd />
+        <Chatbase />
       </body>
     </html>
   );
