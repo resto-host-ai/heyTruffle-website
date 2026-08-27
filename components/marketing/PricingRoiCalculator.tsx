@@ -222,7 +222,7 @@ export default function PricingRoiCalculator() {
   );
 
   return (
-    <section className="pb-16 md:pb-24">
+    <section id="roi-calculator" className="scroll-mt-24 pb-16 md:pb-24">
       <div className="mx-auto max-w-[1180px] px-6 lg:px-[73px]">
         <div className="mx-auto max-w-[600px] text-center">
           <h2 className="font-serif text-[32px] leading-[110%] text-[#251f21] md:text-[40px]">

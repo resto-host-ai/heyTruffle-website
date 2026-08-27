@@ -5,6 +5,7 @@ import PricingPilotBanner from "@/components/marketing/PricingPilotBanner";
 import PricingRoiCalculator from "@/components/marketing/PricingRoiCalculator";
 import CaseStudiesMarquee from "@/components/case-study/CaseStudiesMarquee";
 import FaqList from "@/components/faq/FaqList";
+import PricingUndecidedCta from "@/components/marketing/PricingUndecidedCta";
 
 const META_DESCRIPTION =
   "heytruffle pricing for restaurants: Standard, Executive and Enterprise plans. Fully managed AI phone answering with human oversight, starting at $299/mo.";
@@ -64,6 +65,9 @@ export default function PricingPage() {
           </div>
         </div>
       </section>
+
+      {/* ---- Not sure which plan fits ---- */}
+      <PricingUndecidedCta />
 
     </main>
   );
