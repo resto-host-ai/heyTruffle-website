@@ -1,5 +1,43 @@
 @import "tailwindcss";
 
+/* Display family (Tailwind `font-serif` / `font-display`). Declared by hand
+   rather than through next/font so app/layout.tsx has a stable URL to
+   `<link rel="preload">` — see the long note above that preload for why it
+   matters: the hero headline is the home page LCP element and renders at 700.
+
+   Only the latin (u+00??) slice is shipped. Google publishes Gowun Batang as
+   ~190 unicode-range slices and next/font declared every one of them, which
+   cost 93 KB of render-blocking CSS that Lighthouse measured as 100% unused.
+   This site is English-only, so latin is all that can ever match. There is no
+   unicode-range here on purpose — with a single slice it would only carve out
+   a range the browser then declines to use.
+
+   The overrides on the fallback face are the ones next/font generated from
+   Gowun Batang's real metrics: they keep Times New Roman occupying the same box
+   as the actual face, so the swap on load shifts nothing. */
+@font-face {
+  font-family: "Gowun Batang";
+  src: url("/fonts/gowun-batang-400-latin.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Gowun Batang";
+  src: url("/fonts/gowun-batang-700-latin.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Gowun Batang Fallback";
+  src: local("Times New Roman");
+  ascent-override: 107.35%;
+  descent-override: 26.65%;
+  line-gap-override: 0%;
+  size-adjust: 108.06%;
+}
+
 /* MacBook 14" (and other short desktops): the viewport is wide enough for the
    full desktop layout but only ~982px tall, so the hero's generous vertical
    spacing pushes the CTA below the fold. These two mutually-exclusive variants
@@ -45,7 +83,7 @@ html {
   /* Google Sans for section description / lead copy (Tailwind `font-body`). */
   --font-body: var(--font-google-sans), var(--font-inter), -apple-system,
     BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  --font-display: var(--font-gowun-batang), ui-serif, Georgia,
+  --font-display: "Gowun Batang", "Gowun Batang Fallback", ui-serif, Georgia,
     "Times New Roman", serif;
   --font-serif: var(--font-display);
 }
@@ -372,6 +410,59 @@ html {
   }
 }
 
+/* PHONES: the same gradient, held still.
+
+   The composition above is eleven simultaneous infinite animations — ten
+   .hero-blob orbits plus the wrapper drift — and every blob carries
+   `filter: blur(90px)` and `mix-blend-mode: screen`. That pairing is what
+   makes it expensive rather than the blur alone: a blend mode forces the
+   compositor to read the backdrop back and re-blend the whole stacking
+   context, so it cannot fast-path a moving layer as a cached texture the way
+   the note on .hero-bg-anim assumes. Each blob is ~300px at this width with a
+   90px blur kernel, so the offscreen buffer is several times the element, ten
+   times over, re-rasterised every frame — on a mid-range phone that saturates
+   the GPU for the whole time the hero is on screen. It also competes directly
+   with the LCP paint, since the headline lands in the same frame.
+
+   Holding it still is a genuine fix rather than a mask: the browser rasterises
+   the blur once and then has nothing left to do. Nothing about the gradient
+   changes — same ten blobs, same blur radius, same screen blending, same
+   overscan scale as the animation's resting keyframe — it simply stops moving.
+   A 20-second ambient drift is close to imperceptible on a 390px viewport,
+   which is why this is the cheapest quality to give up.
+
+   Dropping will-change matters as much as dropping the animation: it is a
+   promise to keep a compositor layer alive, and ten retained layers holding
+   blur buffers this size is real memory pressure on a phone for no benefit
+   once nothing animates. globals.css already declines to hand phones a page
+   full of will-change for .reveal, for the same reason.
+
+   Scoped by width, not by pointer or hover: a small window on a desktop
+   has the same compositing budget problem, and the breakpoint matches the
+   768px cut-off .reveal already uses. */
+@media (max-width: 767px) {
+  .hero-bg-anim {
+    animation: none;
+    transform: translate3d(-1.5%, -1%, 0) scale(1.12);
+    will-change: auto;
+  }
+  .hero-blob {
+    will-change: auto;
+  }
+  .hero-blob-a,
+  .hero-blob-b,
+  .hero-blob-c,
+  .hero-blob-d,
+  .hero-blob-e,
+  .hero-blob-f,
+  .hero-blob-g,
+  .hero-blob-h,
+  .hero-blob-i,
+  .hero-blob-j {
+    animation: none;
+  }
+}
+
 /* Ambient blobs for SuccessStats — plain CSS-blur <div>s (not SVG filters), so
    they're cheap enough to drift individually. Percentages resolve against each
    blob's own box (transform-box: fill-box). */
@@ -586,11 +677,12 @@ html {
    letting them size themselves leaves the spacing visibly uneven; a uniform
    cell with the logo contained inside keeps the rhythm regular.
 
-   The 74px height cap is not arbitrary: every logo_*.svg is an SVG wrapper
-   around a base64 bitmap that is 148px tall, so 74px is exactly what a 2x
-   display can render sharp. Going past it (76px was tried) resamples the
-   bitmap and shows on the fine-stroke marks like KYU and Baires. Raising this
-   needs higher-resolution source files, not a CSS change. */
+   The 74px height cap is not arbitrary: every logo_*.webp is a bitmap 148px
+   tall, so 74px is exactly what a 2x display can render sharp. Going past it
+   (76px was tried) resamples the bitmap and shows on the fine-stroke marks
+   like KYU and Baires. Raising this needs higher-resolution source files, not
+   a CSS change. (These were .svg until they turned out to be base64 PNGs in an
+   <svg> wrapper — same pixels, real WebP now, so the cap is unchanged.) */
 .marquee-item {
   display: inline-flex;
   flex-shrink: 0;

@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
-import {
-  Geist_Mono,
-  Google_Sans,
-  Gowun_Batang,
-  Inter,
-} from "next/font/google";
+import localFont from "next/font/local";
+import { preload } from "react-dom";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -15,46 +11,75 @@ import Reb2b from "@/components/layout/Reb2b";
 import SiteJsonLd from "@/components/layout/JsonLd";
 import Chatbase from "@/components/layout/Chatbase";
 
-// Same type families as the RestoHost site: Inter for body/UI and Geist Mono
-// for mono accents. Display headings use Gowun Batang (wired into
-// --font-display in globals.css). Montserrat was dropped: declared for the
-// Resto Experience footer bar, but nothing in the codebase ever used it.
-const inter = Inter({
+/* FONTS — self-hosted latin slices, NOT next/font/google. This is a measured
+   performance fix, not a style change: the files in ./fonts are byte-identical
+   to the latin (u+00??) woff2 slices next/font/google was already serving, and
+   the metric overrides below are the ones it generated. Rendering is unchanged.
+   
+   Why: next/font/google declares EVERY unicode-range slice Google publishes for
+   a family and only *preloads* the ones named in `subsets`. The declarations
+   still ship. On this site that meant 252 @font-face rules across three
+   render-blocking stylesheets — Gowun Batang alone emitted 191 (93 KB raw, of
+   which Lighthouse measured 27.4 KB transferred as 100% unused, blocking render
+   for 880 ms) because Google ships it as ~190 Korean slices. The site is
+   English-only, so 250 of those 252 rules could never match a glyph.
+   Going local declares exactly the slices we render: 5 rules, ~1 KB.
+   
+   Do not "simplify" this back to next/font/google — that regresses ~93 KB of
+   render-blocking CSS. To refresh a file, run a build with the google loader
+   temporarily restored and re-copy the u+00?? slice out of dist/static/media/. */
+
+// Body/UI (Tailwind `font-sans`). One variable file covers 400-700 — the four
+// weights next/font/google declared all pointed at this same file.
+const inter = localFont({
+  src: "./fonts/Inter-var-latin.woff2",
   variable: "--font-inter",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
-const gowunBatang = Gowun_Batang({
-  variable: "--font-gowun-batang",
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  // Gowun Batang is a Korean font that Google ships as ~190 unicode-range
-  // slices; with preload on, Next emitted 94 <link rel=preload> = 1.48MB of
-  // woff2 on EVERY page (measured — it was 55% of the mobile page weight).
-  // Without preload the browser fetches only the latin slices it actually
-  // renders (~2 files) once the CSS lands. Do not re-enable.
+  weight: "400 700",
+  display: "swap",
+  // 48 KB. Text paints immediately in the size-adjusted Arial fallback below
+  // with no layout shift, so spending critical-path bandwidth here would only
+  // starve the LCP font (Gowun Batang 700) it competes with.
   preload: false,
+  adjustFontFallback: "Arial",
 });
 
-// Google Sans for section description / lead copy. Google Sans isn't in
-// next/font's metric-override dataset, so the automatic size-adjusted fallback
-// can't be generated (hence the "Failed to find font override values" warning).
-// Disable that step and provide an explicit fallback stack instead.
-const googleSans = Google_Sans({
+// NOTE: the display family (Tailwind `font-serif` / `font-display`, Gowun
+// Batang) is deliberately NOT loaded here. It is declared by hand in
+// globals.css against /fonts/gowun-batang-*-latin.woff2 so that the `<link
+// rel="preload">` below can point at a stable URL.
+//
+// Why it has to be that way: the home page LCP element is the hero headline,
+// which is this family at weight 700. Lighthouse measured it arriving 774 ms in
+// (the longest request chain on the page) because the font was only discovered
+// after its stylesheet parsed. next/font names a preloadable file
+// `<hash>-s.p.woff2` but Next 16 emits no preload tag for next/font/local in
+// the App Router, and it does not expose the hashed URL to application code —
+// so there is nothing stable to preload. A path under /public is stable, hence
+// the split. next.config.ts gives /fonts/* the immutable cache header the
+// content hash would otherwise have provided.
+
+// Section description / lead copy (Tailwind `font-body`). Keeps the GRAD
+// (grade) axis globals.css leans on — see the `font-body-graded` rule there.
+// Google Sans isn't in next/font's metric-override dataset, so there are no
+// generated fallback metrics to reproduce; the explicit stack stands in.
+const googleSans = localFont({
+  src: "./fonts/GoogleSans-var-latin.woff2",
   variable: "--font-google-sans",
-  subsets: ["latin"],
+  weight: "400 700",
+  display: "swap",
+  preload: false,
   adjustFontFallback: false,
-  // Include the GRAD (grade) axis so components can shave a hair off the stroke
-  // weight to match Figma's lighter rasterisation — grade changes thickness
-  // WITHOUT altering the font's metrics, so size/layout stay identical.
-  axes: ["GRAD"],
   fallback: ["-apple-system", "BlinkMacSystemFont", "Segoe UI", "system-ui", "sans-serif"],
 });
 
-const geistMono = Geist_Mono({
+// Mono accents (Tailwind `font-mono`) — a dozen uses, none above the fold.
+const geistMono = localFont({
+  src: "./fonts/GeistMono-var-latin.woff2",
   variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: "100 900",
+  display: "swap",
+  preload: false,
+  adjustFontFallback: "Arial",
 });
 
 export const metadata: Metadata = {
@@ -91,10 +116,32 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  /* The hero headline is the home page LCP element and it renders in Gowun
+     Batang 700 (declared in globals.css). Without this the browser cannot even
+     ask for the file until it has fetched and parsed the stylesheet, which is
+     what put it 774 ms into the load - the longest request chain Lighthouse
+     found on the page. Preloading starts the fetch off the HTML instead, so
+     the headline paints in its real face rather than swapping out of Times New
+     Roman mid-load.
+
+     crossOrigin is required, not decorative: fonts are always fetched in CORS
+     mode, so a preload without it lands in a separate cache entry that the
+     stylesheet request then has to fetch all over again. Only the 700 weight
+     is preloaded - the 400 is below the fold.
+
+     react-dom preload() rather than a <link> in the JSX: React hoists a
+     rendered <link> into <head> but ALSO registers it as a resource, which
+     emitted the tag twice. */
+  preload("/fonts/gowun-batang-700-latin.woff2", {
+    as: "font",
+    type: "font/woff2",
+    crossOrigin: "anonymous",
+  });
+
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${geistMono.variable} ${gowunBatang.variable} ${googleSans.variable} h-full antialiased`}
+      className={`${inter.variable} ${geistMono.variable} ${googleSans.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col overflow-x-clip">

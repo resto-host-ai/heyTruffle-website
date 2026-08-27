@@ -53,6 +53,17 @@ const nextConfig: NextConfig = {
   devIndicators: false,
   // Don't advertise the framework and its version to fingerprinting scanners.
   poweredByHeader: false,
+  /* NOT using experimental.inlineCss, deliberately — it was tried and measured.
+     It looks like the obvious fix for render-blocking CSS, and Lighthouse did
+     report 910 ms of savings for it, but 5 runs each way came out identical
+     (score 89 both, LCP 3.60 s vs 3.59 s) while the gzipped home page went from
+     20 KB to 60 KB, because inlining also duplicates the CSS into the RSC
+     payload. It was solving a problem that no longer existed: the 1,350 ms of
+     render-blocking this page started with came from FOUR stylesheets totalling
+     52 KB, three of which were nothing but @font-face walls. Once the fonts
+     moved to self-hosted latin slices (see app/layout.tsx and globals.css),
+     what remained was two small files fetched in parallel, and there was no
+     round-trip left to win. Re-measure before reaching for it again. */
   images: {
     /* 90 is the ceiling for the smooth gradient backgrounds — it keeps them
        free of banding at a fraction of the cost. 100 was measured at 5-9x the
@@ -68,7 +79,25 @@ const nextConfig: NextConfig = {
      break the site (Calendly, Clarity, Vimeo and the demo backend all load
      third-party code), so it's being handled as its own change. */
   async headers() {
-    return [{ source: "/:path*", headers: SECURITY_HEADERS }];
+    return [
+      { source: "/:path*", headers: SECURITY_HEADERS },
+      /* Files under /public are served with `max-age=0` by default, so the
+         hero display font would be revalidated on every navigation. Everything
+         in /fonts is content-addressed by hand instead of by a build hash
+         (app/layout.tsx needs a stable URL to preload — see the note there), so
+         the filename carries the version: gowun-batang-700-latin.woff2 will
+         never change bytes. RENAME the file if a slice is ever re-cut; do not
+         overwrite it in place, or clients will hold the old one for a year. */
+      {
+        source: "/fonts/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+    ];
   },
   // Blog pagination (/blog/page/2/, /3/, ...) was removed — Google had
   // picked those thin index pages as sitelinks over Pricing/demo/comparison
