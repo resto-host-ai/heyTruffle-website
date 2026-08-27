@@ -46,9 +46,20 @@ export default function ScrollReveal() {
 
     // Reveal anything already in view synchronously (the observer's first
     // callback is async and can lag), and observe the rest for scroll.
+    //
+    // Measure everything BEFORE touching a single class. Doing both in one
+    // pass looks tidier but interleaves a layout read with a layout write on
+    // every iteration, and the .js-ready stamp above has just invalidated
+    // style for the whole document — so each getBoundingClientRect() has to
+    // flush recalc and layout again from scratch. Lighthouse measured 45 ms of
+    // forced reflow attributed to this effect. Split in two, the same work
+    // costs one layout: the reads all resolve against a single clean pass,
+    // then the writes go out together with nothing reading in between.
     const vh = window.innerHeight;
+    const tops = new Map<HTMLElement, number>();
+    els.forEach((el) => tops.set(el, el.getBoundingClientRect().top));
     els.forEach((el) => {
-      if (el.getBoundingClientRect().top < vh * 0.9) {
+      if (tops.get(el)! < vh * 0.9) {
         el.classList.add("is-visible");
       } else {
         io.observe(el);
