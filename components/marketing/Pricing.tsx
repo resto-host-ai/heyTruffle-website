@@ -77,7 +77,12 @@ export default function Pricing() {
         </div>
 
         {/* ---- Enterprise — full-width band below the three tiers ---- */}
-        <div className="mt-5 flex flex-col items-start gap-6 rounded-3xl bg-white p-8 shadow-[0_2px_10px_rgba(37,31,33,0.08)] md:flex-row md:items-center md:justify-between md:p-10">
+        <div className=" bg-white 
+        mt-5 items-start gap-6 rounded-3xl p-8 shadow-[0_2px_10px_rgba(37,31,33,0.08)]
+
+        md:flex-row 
+        md:items-center md:justify-between 
+        md:p-10">
           <div>
             <p className="font-body text-[17px] font-semibold text-[#251f21]">
               Enterprise
@@ -85,13 +90,18 @@ export default function Pricing() {
             <p className="mt-1 font-body text-[14px] font-medium italic text-brand-orange">
               Volume pricing for multilocation groups.
             </p>
+          </div>
+
+          <div className=" flex flex-col gap-2 w-full justify-between align-middle md:flex-row">
+
             <p className="mt-2 font-serif text-[32px] leading-none text-[#251f21] md:text-[38px]">
               Contact us
             </p>
+
+            <BookDemoButton className="flex-1 shrink-0 rounded-full border-[1.5px] border-black px-8 py-3.5 font-body text-[15px] font-semibold text-black transition-colors md:w-full md:max-w-1/3">
+              Talk to our team
+            </BookDemoButton>
           </div>
-          <BookDemoButton className="w-full shrink-0 rounded-full border-[1.5px] border-[#251f21]/25 px-8 py-3.5 font-body text-[15px] font-semibold text-[#251f21] transition-colors hover:border-[#251f21] md:w-auto">
-            Talk to our team
-          </BookDemoButton>
         </div>
 
         <p className="mt-10 flex items-center justify-center gap-2.5 text-center font-body text-[15px] italic text-[#251f21]/70">
@@ -109,9 +119,8 @@ function FeatureList({ tier }: { tier: Tier }) {
       {tier.features.map((feature) => (
         <li
           key={feature}
-          className={`flex items-start gap-3 font-body text-[13.5px] leading-snug ${
-            tier.featured ? "text-cream/90" : "text-[#251f21]/75"
-          }`}
+          className={`flex items-start gap-3 font-body text-[13.5px] leading-snug ${tier.featured ? "text-cream/90" : "text-[#251f21]/75"
+            }`}
         >
           <span
             aria-hidden
@@ -129,34 +138,31 @@ function TierCard({ tier }: { tier: Tier }) {
     <div
       className={
         tier.featured
-          ? "flex h-full flex-col rounded-3xl bg-[#1c1917] p-8"
+          ? "flex h-full flex-col rounded-3xl bg-[#251F21] p-8"
           : "flex h-full flex-col rounded-3xl bg-white p-8 shadow-[0_2px_10px_rgba(37,31,33,0.08)]"
       }
     >
       <h3
-        className={`font-body text-[17px] font-semibold ${
-          tier.featured ? "text-cream" : "text-[#251f21]"
-        }`}
+        className={`font-body text-[17px] font-semibold ${tier.featured ? "text-cream" : "text-[#251f21]"
+          }`}
       >
         {tier.name}
       </h3>
-      <p className="mt-1.5 font-body text-[13px] font-medium italic text-brand-orange">
+      <p className="mt-1.5 font-body text-[12px] font-medium italic text-brand-orange">
         {tier.tagline}
       </p>
 
       <div className="mb-4 mt-4 flex items-baseline leading-none">
         <span
-          className={`font-serif text-[36px] ${
-            tier.featured ? "text-white" : "text-[#251f21]"
-          }`}
+          className={`font-serif text-[36px] ${tier.featured ? "text-white" : "text-[#251f21]"
+            }`}
         >
           {tier.price}
         </span>
         {tier.cadence && (
           <span
-            className={`ml-1.5 font-body text-[14px] ${
-              tier.featured ? "text-cream/60" : "text-[#251f21]/50"
-            }`}
+            className={`ml-1.5 font-body text-[14px] ${tier.featured ? "text-cream/60" : "text-[#251f21]/50"
+              }`}
           >
             {tier.cadence}
           </span>
@@ -164,7 +170,7 @@ function TierCard({ tier }: { tier: Tier }) {
       </div>
 
       <div
-        className={`mb-5 h-px ${tier.featured ? "bg-white/10" : "bg-[#251f21]/10"}`}
+        className={`mb-5 h-px ${tier.featured ? "bg-white" : "bg-[#8A8279]"}`}
       />
 
       {/* Full list, always visible from md up. */}
@@ -176,9 +182,8 @@ function TierCard({ tier }: { tier: Tier }) {
           mobile cards short; same content, no separate copy to maintain. */}
       <details className="group flex-1 md:hidden">
         <summary
-          className={`cursor-pointer list-none font-body text-[13px] font-medium underline underline-offset-2 [&::-webkit-details-marker]:hidden ${
-            tier.featured ? "text-cream/80" : "text-[#251f21]/70"
-          }`}
+          className={`cursor-pointer list-none font-body text-[13px] font-medium underline underline-offset-2 [&::-webkit-details-marker]:hidden ${tier.featured ? "text-cream/80" : "text-[#251f21]/70"
+            }`}
         >
           <span className="group-open:hidden">More information</span>
           <span className="hidden group-open:inline">Show less</span>
@@ -192,8 +197,8 @@ function TierCard({ tier }: { tier: Tier }) {
         <BookDemoButton
           className={
             tier.featured
-              ? "mt-8 w-full rounded-full border-[1.5px] border-white/30 py-3.5 font-body text-[15px] font-semibold text-cream transition-colors hover:border-cream"
-              : "mt-8 w-full rounded-full border-[1.5px] border-[#251f21]/25 py-3.5 font-body text-[15px] font-semibold text-[#251f21] transition-colors hover:border-[#251f21]"
+              ? "mt-8 w-full rounded-full border-[1.5px] border-white py-3.5 font-body text-[15px]  text-white transition-colors hover:border-cream"
+              : "mt-8 w-full rounded-full border-[1.5px] border-black py-3.5 font-body text-[15px]  text-black transition-colors hover:border-[#251f21]"
           }
         >
           {tier.cta}

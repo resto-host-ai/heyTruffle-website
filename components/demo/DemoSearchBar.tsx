@@ -5,7 +5,11 @@ import DemoAssistant from "@/components/demo/DemoAssistant";
 
 /** Search + "Hear it live" bar that opens the live demo assistant, mirroring
  *  the home hero's behaviour. */
-export default function DemoSearchBar() {
+export default function DemoSearchBar({
+  ctaLabel = "Hear it live",
+}: {
+  ctaLabel?: string;
+} = {}) {
   const [query, setQuery] = useState("");
   const [demoOpen, setDemoOpen] = useState(false);
 
@@ -21,7 +25,7 @@ export default function DemoSearchBar() {
           e.preventDefault();
           setDemoOpen(true);
         }}
-        className="flex h-[54px] w-full max-w-[500px] items-center overflow-hidden rounded-[73.26px] border border-white/40 bg-[#f6f3ec]/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg sm:h-[58px]"
+        className="flex h-[54px] w-full max-w-[500px] items-center overflow-hidden rounded-[73.26px] border border-white/40 bg-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg sm:h-[58px]"
       >
         <input
           type="text"
@@ -29,13 +33,13 @@ export default function DemoSearchBar() {
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search for your restaurant"
           aria-label="Search for your restaurant"
-          className="h-full min-w-0 flex-1 bg-transparent pl-5 pr-2 font-body text-[15px] font-normal leading-[110%] text-cream outline-none placeholder:text-cream/70 sm:pl-7 sm:pr-4 sm:text-[16px]"
+          className="h-full min-w-0 flex-1 bg-transparent pl-5 pr-2 font-body text-[15px] font-normal leading-[110%] text-black outline-none placeholder:text-black/50 sm:pl-7 sm:pr-4 sm:text-[16px]"
         />
         <button
           type="submit"
           className="flex h-full shrink-0 items-center justify-center gap-1.5 rounded-full bg-brand-orange px-4 font-body text-[15px] font-bold leading-[110%] text-[#f6f3ec] transition-all duration-300 btn-grad btn-grad-orange hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(239,114,0,0.55)] sm:gap-3 sm:px-8 sm:text-[16px]"
         >
-          Hear it live
+          {ctaLabel}
           <svg
             width="8"
             height="17"

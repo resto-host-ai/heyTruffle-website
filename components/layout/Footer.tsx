@@ -23,9 +23,10 @@ const socialLinks = [
 
 /** Primary nav, mirroring the header (plus the Blog and FAQ). */
 const NAV = [
-  { label: "Case Studies", href: "/case-study" },
-  { label: "How It Works", href: "/#how-it-works" },
+  { label: "Pricing", href: "/pricing/" },
   { label: "About", href: "/#about" },
+  { label: "How It Works", href: "/#how-it-works" },
+  { label: "Case Studies", href: "/case-study" },
   { label: "Blog", href: "/blog" },
   { label: "FAQ", href: "/faq" },
   { label: "Partners", href: "/partners/push-operations" },

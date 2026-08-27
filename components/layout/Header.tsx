@@ -12,7 +12,7 @@ type NavItem = { label: string; href: string; demo?: boolean };
 
 const NAV_BEFORE: NavItem[] = [
   { label: "About", href: "/#why-choose-us" },
-  { label: "Pricing", href: "/pricing/" },
+  // { label: "Pricing", href: "/pricing/" },
   { label: "Case Studies", href: "/case-study/" },
   // "Compare" pages (heytruffle vs Slang AI / Loman AI / TableVoice) stay
   // live and indexable — sitemap.ts, CompetitorCompare's own cross-links —
