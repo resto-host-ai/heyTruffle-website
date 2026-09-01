@@ -2,6 +2,8 @@ import Image from "next/image";
 import { BookDemoButton } from "@/components/ui/BookDemoButton";
 import HeroBackground from "@/components/home/HeroBackground";
 import HeroSearch from "@/components/home/HeroSearch";
+import { getCtaVariant } from "@/lib/cta-variant";
+import { ClarityVariantTag } from "@/components/ClarityVariantTag";
 
 /**
  * Hero — a Server Component, deliberately. It used to be a Client Component
@@ -10,7 +12,9 @@ import HeroSearch from "@/components/home/HeroSearch";
  * whole hero. The interactive part now lives in HeroSearch; everything here is
  * static markup that ships as HTML and stays that way.
  */
-export default function Hero() {
+export default async function Hero() {
+  const { variant, label } = await getCtaVariant();
+
   // Mobile paddings/type are compressed so the whole stack (logo →
   // "Talk to our team") fits a ~660px svh phone viewport with browser
   // chrome visible — the secondary CTA was falling below the fold.
@@ -70,7 +74,7 @@ export default function Hero() {
               hero's main gesture, so mobile keeps it rather than falling back
               to a plain button. Results drop down inline, in the page, right
               below the bar — no modal takeover. */}
-          <HeroSearch />
+          <HeroSearch ctaLabel={label} />
 
           {/* Secondary CTA — auto width at every size so it reads as the
               quieter of the two actions, the way it does on desktop. */}
@@ -86,6 +90,8 @@ export default function Hero() {
           Free to try. No sign-up. Under 30 seconds.
         </p>
       </div>
+
+      <ClarityVariantTag variant={variant} />
     </section>
   );
 }

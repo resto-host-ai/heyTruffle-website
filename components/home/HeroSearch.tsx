@@ -20,7 +20,11 @@ import {
  * interactive; only this box is. As an island it hydrates on its own while
  * the text around it stays static server-rendered HTML that never re-renders.
  */
-export default function HeroSearch() {
+export default function HeroSearch({
+  ctaLabel = "Build your AI",
+}: {
+  ctaLabel?: string;
+} = {}) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<PlaceSuggestion[]>([]);
   const [searching, setSearching] = useState(false);
@@ -174,7 +178,7 @@ export default function HeroSearch() {
           type="submit"
           className="flex h-full shrink-0 items-center justify-center gap-1.5 rounded-full bg-brand-orange px-4 font-body text-[15px] font-bold leading-[110%] text-[#f6f3ec] transition-all duration-300 btn-grad btn-grad-orange hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_34px_rgba(239,114,0,0.55)] sm:gap-3 sm:px-8 sm:text-[16px]"
         >
-          Build your AI 
+          {ctaLabel}
         </button>
       </form>
 

@@ -310,8 +310,8 @@ export default function PricingRoiCalculator() {
               Estimated demand recovered per year
             </p>
 
-            <div className="mt-6 grid grid-cols-3 gap-4 border-t border-[#251f21]/10 pt-5">
-              <div>
+            <div className="mt-6 flex flex-col gap-2 border-t border-[#251f21]/10 pt-5">
+              <div className="flex gap-2 items-baseline">
                 <p className="font-body text-[18px] font-bold text-[#251f21]">
                   {compactNumber(results.hoursSavedYear)}
                 </p>
@@ -319,7 +319,8 @@ export default function PricingRoiCalculator() {
                   Host hours freed / year
                 </p>
               </div>
-              <div>
+
+              <div className="flex gap-2 items-baseline">
                 <p className="font-body text-[18px] font-bold text-[#251f21]">
                   {currency(results.laborValueYear)}
                 </p>
@@ -327,7 +328,8 @@ export default function PricingRoiCalculator() {
                   Value of that time, at your host wage
                 </p>
               </div>
-              <div>
+              
+              <div className="flex gap-2 items-baseline">
                 <p className="font-body text-[18px] font-bold text-[#251f21]">
                   {paybackLabel}
                 </p>
