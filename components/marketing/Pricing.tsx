@@ -28,6 +28,7 @@ const TIERS: readonly Tier[] = [
       "Weekly tuning, monthly analysis",
       "Bilingual EN / ES",
     ],
+    cta: "Start your pilot",
     featured: false,
   },
   {
