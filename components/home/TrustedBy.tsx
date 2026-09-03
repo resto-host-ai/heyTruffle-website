@@ -1,4 +1,4 @@
-import TrustedByLogo from "@/components/home/TrustedByLogo";
+import Image from "next/image";
 
 /** Restaurant logos for the infinite carousel — every `logo_*` asset.
  *
@@ -45,15 +45,19 @@ export default function TrustedBy() {
           re-composite the whole strip per frame; phones get two cheap gradient
           overlays over the section bg instead. */}
       <div className="group relative mt-12 overflow-hidden md:[mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-        <div className="marquee flex w-max items-center gap-9 pr-9 md:gap-12 md:pr-12">
+        <div className="marquee mobile-logo-marquee flex w-max items-center gap-9 pr-9 md:gap-12 md:pr-12">
           {TRACK.map((logo, i) => (
             <div className="marquee-item" key={i}>
-              <TrustedByLogo
+              <Image
                 src={logo.src}
                 alt={logo.alt}
                 width={logo.w}
                 height={logo.h}
-                hidden={i >= LOGOS.length}
+                aria-hidden={i >= LOGOS.length}
+                loading={i < 3 ? "eager" : "lazy"}
+                fetchPriority={i < 3 ? "low" : undefined}
+                unoptimized
+                className="h-12 w-auto shrink-0 opacity-70 transition-opacity hover:opacity-100"
               />
             </div>
           ))}

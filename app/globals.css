@@ -119,7 +119,7 @@ html {
       paints black checkerboard surfaces where the layers should be.
    The `will-change` hint also only lives while an element is still hidden —
    once revealed, the layer is released instead of held forever. */
-@media (min-width: 768px) {
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
   .reveal {
     transition:
       opacity 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) var(--reveal-delay, 0s),
@@ -437,10 +437,10 @@ html {
    once nothing animates. globals.css already declines to hand phones a page
    full of will-change for .reveal, for the same reason.
 
-   Scoped by width, not by pointer or hover: a small window on a desktop
-   has the same compositing budget problem, and the breakpoint matches the
-   768px cut-off .reveal already uses. */
-@media (max-width: 767px) {
+   Scoped to phone widths and coarse touch pointers: a small desktop window
+   has the same compositing constraint, while the pointer clause also covers
+   iPads wider than the 768px breakpoint. */
+@media (max-width: 767px), (hover: none) and (pointer: coarse) {
   .hero-bg-anim {
     animation: none;
     transform: translate3d(-1.5%, -1%, 0) scale(1.12);
@@ -899,6 +899,68 @@ html {
   .host-ring {
     display: block;
     animation: host-ring 3s ease-out infinite both;
+  }
+}
+
+/* Mobile / touch reliability mode.
+
+   iOS WebKit shares a limited tile/compositor budget between kinetic scroll,
+   blurred layers and CSS animation. The home page previously kept several
+   infinite tracks moving even after the hero and host pulses had been made
+   static, so a phone could still exhaust that budget farther down the page.
+
+   Keep interaction intact: this turns off CSS animation and compositor hints,
+   but it does not remove pointer events, state styles, audio/video playback or
+   the transforms React uses to select a carousel slide. Short CSS transitions
+   attached to an actual tap are also left alone. The coarse-pointer clause
+   covers iPhones and iPads whose viewport is wider than the phone breakpoint. */
+@media (max-width: 767px), (hover: none) and (pointer: coarse) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    will-change: auto !important;
+  }
+
+  html.js-ready .reveal,
+  html.js-ready .reveal-up,
+  html.js-ready .reveal-left,
+  html.js-ready .reveal-right,
+  html.js-ready .reveal-zoom,
+  html.js-ready .reveal-blur {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+
+  .hero-bg-anim {
+    transform: none;
+  }
+
+  .mobile-section-lights {
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+  }
+
+  .host-ring {
+    display: none !important;
+  }
+}
+
+/* Keep one inexpensive, meaningful motion on phones: the trusted-restaurant
+   strip. It only translates a single layer and never combines with blur or
+   masking, so it remains well inside iOS WebKit's compositor budget. */
+@media (max-width: 767px) and (prefers-reduced-motion: no-preference),
+  (hover: none) and (pointer: coarse) and (prefers-reduced-motion: no-preference) {
+  .mobile-logo-marquee {
+    animation: marquee 48s linear infinite !important;
   }
 }
 
