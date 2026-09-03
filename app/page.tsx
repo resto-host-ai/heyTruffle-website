@@ -42,7 +42,7 @@ export default function Home() {
               cutting off in a hard line. */}
           <div
             aria-hidden
-            className="pointer-events-none absolute -top-48 -right-32 h-[600px] w-[600px] rounded-full opacity-90 blur-[110px]"
+            className="pointer-events-none absolute -top-48 -right-32 h-[600px] w-[600px] rounded-full opacity-90 md:blur-[110px]"
             style={{
               background:
                 "radial-gradient(circle, rgba(239,114,0,0.65) 0%, rgba(181,63,196,0.3) 45%, transparent 72%)",

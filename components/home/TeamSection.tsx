@@ -84,7 +84,9 @@ export default function TeamSection() {
                 <div
                   key={i}
                   aria-hidden={i >= PHOTOS.length}
-                  className="relative aspect-square w-[45vw] shrink-0 sm:w-[280px] md:w-[300px] lg:w-[340px]"
+                  className={`relative aspect-square w-[45vw] shrink-0 sm:w-[280px] md:w-[300px] lg:w-[340px] ${
+                    i >= 3 ? "hidden md:block" : ""
+                  }`}
                 >
                   <Image
                     src={src}

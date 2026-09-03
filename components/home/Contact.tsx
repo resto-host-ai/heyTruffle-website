@@ -110,7 +110,7 @@ export default function Contact() {
             xl:w-full xl:max-w-130
             2xl:max-w-160
             flex items-start 
-            rounded-[28px] border border-white/10 bg-white/10 p-7 backdrop-blur-sm "
+            rounded-[28px] border border-white/10 bg-[#241f21]/95 p-7 md:bg-white/10 md:backdrop-blur-sm "
           style={{ "--reveal-delay": "0.1s" } as React.CSSProperties}
         >
           {status === "submitted" ? (
