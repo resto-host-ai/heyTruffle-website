@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   demoAppUrl,
   newSessionToken,
@@ -50,6 +51,10 @@ export default function HeroSearch({
   // something first". Cleared as soon as the person starts typing.
   const [emptyHint, setEmptyHint] = useState(false);
   const [shake, setShake] = useState(false);
+  // The dropdown/hint render into a portal (see below) instead of as
+  // position:absolute children here, so their on-screen position has to be
+  // tracked in state and recomputed on resize/scroll.
+  const [anchorRect, setAnchorRect] = useState<DOMRect | null>(null);
 
   // Run an autocomplete request, ignoring out-of-order responses.
   const runSearch = useCallback((input: string) => {
@@ -97,12 +102,19 @@ export default function HeroSearch({
   }
 
   // Close the dropdown on outside click (but leave `results` cached so
-  // refocusing the input shows them again without a re-fetch).
+  // refocusing the input shows them again without a re-fetch). The overlay
+  // is portaled to <body> (see below), so it's not a DOM descendant of
+  // searchBoxRef any more — overlayRef has to be checked too, or every
+  // click on a result would register as "outside" and close the dropdown
+  // on mousedown, before its own onClick ever got to fire on mouseup.
+  const overlayRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     function onPointerDown(e: MouseEvent) {
+      const target = e.target as Node;
       if (
         searchBoxRef.current &&
-        !searchBoxRef.current.contains(e.target as Node)
+        !searchBoxRef.current.contains(target) &&
+        !overlayRef.current?.contains(target)
       ) {
         setDropdownOpen(false);
       }
@@ -119,6 +131,69 @@ export default function HeroSearch({
   }, []);
 
   const showDropdown = dropdownOpen && query.trim().length >= 2;
+  const showOverlay = showDropdown || emptyHint;
+
+  // The hero section this box lives in has `overflow-hidden` (it clips the
+  // animated background), which also clips any `position: absolute`
+  // descendant the moment it needs to extend past the section's own box —
+  // exactly what a dropdown does on a short/manually-resized viewport where
+  // the section's flow-content height leaves little room below the search
+  // bar. Rendering the overlay into a body-level portal, positioned from the
+  // search box's own measured rect, escapes that clip entirely — this must
+  // never silently break again regardless of viewport size.
+  //
+  // The rect is only recomputed on open and on resize, NOT continuously on
+  // scroll — re-measuring and re-rendering on every scroll tick is what made
+  // this visibly jank while flicking through the page. Since this search box
+  // sits in the hero at the very top of the page, a scroll happening while
+  // the overlay is open just closes it, same as any other popover.
+  useEffect(() => {
+    if (!showOverlay) return;
+
+    if (searchBoxRef.current) {
+      setAnchorRect(searchBoxRef.current.getBoundingClientRect());
+    }
+
+    const handleResize = () => {
+      if (searchBoxRef.current) {
+        setAnchorRect(searchBoxRef.current.getBoundingClientRect());
+      }
+    };
+    const handleScroll = () => {
+      setDropdownOpen(false);
+      setEmptyHint(false);
+    };
+
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [showOverlay]);
+
+  // Flip above the search box when there isn't room below (short viewport,
+  // or the box sitting low on the page) — picks whichever side actually has
+  // more space rather than always preferring one direction.
+  const DROPDOWN_HEIGHT_ESTIMATE = 300;
+  const OVERLAY_GAP = 12;
+  const placeAbove =
+    anchorRect !== null &&
+    typeof window !== "undefined" &&
+    window.innerHeight - anchorRect.bottom < DROPDOWN_HEIGHT_ESTIMATE + OVERLAY_GAP &&
+    anchorRect.top > window.innerHeight - anchorRect.bottom;
+
+  const overlayPositionStyle = (gap: number): React.CSSProperties =>
+    anchorRect
+      ? {
+          position: "fixed",
+          left: anchorRect.left,
+          width: anchorRect.width,
+          ...(placeAbove
+            ? { bottom: window.innerHeight - anchorRect.top + gap }
+            : { top: anchorRect.bottom + gap }),
+        }
+      : {};
 
   return (
     <div ref={searchBoxRef} className="relative w-full sm:flex-1">
@@ -182,65 +257,78 @@ export default function HeroSearch({
         </button>
       </form>
 
-      {/* Nudge for submitting with an empty box — mutually exclusive
-          with the results dropdown below (that one only shows once
-          there's at least a 2-char query). */}
-      {emptyHint && (
-        <div
-          role="alert"
-          className="absolute left-0 right-0 top-[calc(100%+10px)] z-20 flex justify-center"
-        >
-          <span className="rounded-full bg-[#2a1518]/95 px-4 py-2 text-[13px] font-medium text-[#ffcec7] shadow-[0_12px_30px_rgba(0,0,0,0.35)]">
-            Type your restaurant&rsquo;s name first
-          </span>
-        </div>
-      )}
+      {/* Both overlays below are portaled to <body> and positioned from
+          anchorRect (viewport coordinates, position: fixed) instead of
+          being position:absolute children here — see the effect above for
+          why. */}
+      {anchorRect &&
+        createPortal(
+          <div ref={overlayRef}>
+            {/* Nudge for submitting with an empty box — mutually exclusive
+                with the results dropdown below (that one only shows once
+                there's at least a 2-char query). */}
+            {emptyHint && (
+              <div
+                role="alert"
+                style={overlayPositionStyle(10)}
+                className="z-20 flex justify-center"
+              >
+                <span className="rounded-full bg-[#2a1518]/95 px-4 py-2 text-[13px] font-medium text-[#ffcec7] shadow-[0_12px_30px_rgba(0,0,0,0.35)]">
+                  Type your restaurant&rsquo;s name first
+                </span>
+              </div>
+            )}
 
-      {/* Inline results dropdown — same data/behavior the old modal
-          used, just anchored to the search bar instead of taking over
-          the screen. */}
-      {showDropdown && (
-        <div className="absolute left-0 right-0 top-[calc(100%+12px)] z-20 overflow-hidden rounded-[24px] border border-[#251f21]/10 bg-[#f6f3ec] text-left text-[#251f21] shadow-[0_24px_60px_rgba(0,0,0,0.35)]">
-          {results.length > 0 ? (
-            <ul className="max-h-[300px] divide-y divide-[#251f21]/10 overflow-y-auto">
-              {results.slice(0, 3).map((r) => (
-                <li key={r.placeId}>
-                  <button
-                    type="button"
-                    onClick={() => pick(r)}
-                    disabled={redirecting !== null}
-                    className="flex w-full items-start gap-3 px-5 py-3 text-left transition-colors hover:text-brand-orange disabled:cursor-wait disabled:opacity-60"
-                  >
-                    <span aria-hidden className="mt-0.5 shrink-0 text-brand-orange">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-                        <circle cx="12" cy="10" r="3" />
-                      </svg>
-                    </span>
-                    <span>
-                      <span className="block text-[15px] font-semibold leading-tight">
-                        {r.mainText}
-                      </span>
-                      <span className="block text-[13px] leading-tight text-[#251f21]/55">
-                        {r.secondaryText}
-                      </span>
-                    </span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="px-5 py-4 text-center text-sm text-[#251f21]/50">
-              {error
-                ? error
-                : searching
-                  ? "Searching…"
-                  : "No matches yet — keep typing."}
-            </p>
-          )}
-        </div>
-      )}
+            {/* Inline results dropdown — same data/behavior the old modal
+                used, just anchored to the search bar instead of taking over
+                the screen. */}
+            {showDropdown && (
+              <div
+                style={overlayPositionStyle(12)}
+                className="z-20 overflow-hidden rounded-[24px] border border-[#251f21]/10 bg-[#f6f3ec] text-left text-[#251f21] shadow-[0_24px_60px_rgba(0,0,0,0.35)]"
+              >
+                {results.length > 0 ? (
+                  <ul className="max-h-[300px] divide-y divide-[#251f21]/10 overflow-y-auto">
+                    {results.slice(0, 3).map((r) => (
+                      <li key={r.placeId}>
+                        <button
+                          type="button"
+                          onClick={() => pick(r)}
+                          disabled={redirecting !== null}
+                          className="flex w-full items-start gap-3 px-5 py-3 text-left transition-colors hover:text-brand-orange disabled:cursor-wait disabled:opacity-60"
+                        >
+                          <span aria-hidden className="mt-0.5 shrink-0 text-brand-orange">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                              <circle cx="12" cy="10" r="3" />
+                            </svg>
+                          </span>
+                          <span>
+                            <span className="block text-[15px] font-semibold leading-tight">
+                              {r.mainText}
+                            </span>
+                            <span className="block text-[13px] leading-tight text-[#251f21]/55">
+                              {r.secondaryText}
+                            </span>
+                          </span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="px-5 py-4 text-center text-sm text-[#251f21]/50">
+                    {error
+                      ? error
+                      : searching
+                        ? "Searching…"
+                        : "No matches yet — keep typing."}
+                  </p>
+                )}
+              </div>
+            )}
+          </div>,
+          document.body,
+        )}
     </div>
-
   );
 }
