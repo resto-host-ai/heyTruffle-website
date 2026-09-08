@@ -88,6 +88,7 @@ function RoleCard({
 }) {
   return (
     <div
+      id={role.id}
       className={`overflow-hidden rounded-2xl border-[1.5px] bg-white transition-colors ${
         role.wide ? "border-dashed border-brand-orange" : "border-[#DCD6CC]"
       } ${selected ? "!border-brand-orange shadow-[0_0_0_3px_rgba(239,114,0,0.12)]" : ""} ${
@@ -137,21 +138,36 @@ function RoleCard({
           }`}
         />
       </button>
-      {expanded && (
-        <div className="border-t border-[#EDE9E0] px-4 pb-[18px] pt-0.5 sm:px-[18px]">
-          <ul className="mt-3.5 flex flex-col gap-[11px]">
-            {role.bullets.map((b, i) => (
-              <li key={i} className="flex gap-3 text-[14.5px] leading-[1.5] text-[#4A4345]">
-                <span aria-hidden className="mt-2 h-[7px] w-[7px] shrink-0 rounded-full bg-brand-orange" />
-                <span>{b}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-4 rounded-[11px] bg-[#FDF2E5] px-[15px] py-[13px] text-[14px] leading-[1.5] text-ink">
-            {role.ident}
+      {/* Always in the DOM — collapsed with a CSS grid-rows trick
+          (0fr/1fr + overflow-hidden) instead of conditional rendering, so
+          each role's real description is present in the page's HTML for
+          search/AI crawlers even though a visitor has to click to see it.
+          Accordion content hidden this way (not removed from the DOM) is
+          treated as regular indexable content by Google. */}
+      <div
+        className={`grid transition-[grid-template-rows] duration-300 ease-out ${
+          expanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        }`}
+      >
+        <div className="overflow-hidden">
+          <div
+            aria-hidden={!expanded}
+            className="border-t border-[#EDE9E0] px-4 pb-[18px] pt-0.5 sm:px-[18px]"
+          >
+            <ul className="mt-3.5 flex flex-col gap-[11px]">
+              {role.bullets.map((b, i) => (
+                <li key={i} className="flex gap-3 text-[14.5px] leading-[1.5] text-[#4A4345]">
+                  <span aria-hidden className="mt-2 h-[7px] w-[7px] shrink-0 rounded-full bg-brand-orange" />
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-4 rounded-[11px] bg-[#FDF2E5] px-[15px] py-[13px] text-[14px] leading-[1.5] text-ink">
+              {role.ident}
+            </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
