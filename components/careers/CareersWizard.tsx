@@ -2,12 +2,39 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ROLES, STEPS, type Field, type Role } from "@/lib/data/careers";
+import {
+  isPlausibleFreeText,
+  isValidEmail,
+  isValidLinkedIn,
+  isValidName,
+  isValidPhone,
+  sanitizeText,
+} from "@/lib/validation/careers";
 
-// Set this to a real endpoint (a Google Apps Script /exec URL, or any POST
-// endpoint) once one exists — until then the form runs in prototype mode:
-// nothing is sent, and the result step shows the payload that would have
-// been submitted instead.
-const FORM_ENDPOINT = process.env.NEXT_PUBLIC_CAREERS_FORM_ENDPOINT || null;
+/** Per-field-key validators for the "fields" steps — keyed by the same `k`
+ *  the data file uses for `fullName`, `email`, `phone` and `linkedin`.
+ *  Anything not listed here (optional free-text fields like `degree` or
+ *  `resumeUrl`, and the select fields) has no shape to enforce beyond "not
+ *  blank" / "picked". */
+const FIELD_VALIDATORS: Record<string, (v: string) => boolean> = {
+  fullName: isValidName,
+  email: isValidEmail,
+  phone: isValidPhone,
+  linkedin: isValidLinkedIn,
+};
+
+const FIELD_ERRORS: Record<string, string> = {
+  fullName: "Letters only, no numbers or symbols.",
+  email: "Enter a real, non-disposable email address.",
+  phone: "Enter a valid phone number (digits only, 7-15 of them).",
+  linkedin: "Enter your LinkedIn URL or handle.",
+};
+
+// Posts to our own API route, never straight to the automation webhook —
+// that URL lives server-side only (CAREERS_WEBHOOK_URL, see
+// app/api/careers/route.ts), so it never ships in the browser bundle where
+// anyone could copy it out of devtools and hit it directly.
+const SUBMIT_ENDPOINT = "/api/careers";
 
 type Answers = Record<string, string | string[] | undefined>;
 
@@ -143,6 +170,9 @@ function FieldInput({
   onChange: (v: string) => void;
   autoFocus?: boolean;
 }) {
+  const validator = FIELD_VALIDATORS[field.k];
+  const invalid = !!validator && value.trim().length > 0 && !validator(value);
+
   return (
     <div>
       <label className="mb-[7px] block font-body text-[13.5px] font-semibold text-[#4A4345]">
@@ -165,13 +195,19 @@ function FieldInput({
         </select>
       ) : (
         <input
-          type={field.type}
-          className={inputClass}
+          type={field.type === "email" ? "email" : field.type === "tel" ? "tel" : "text"}
+          className={`${inputClass} ${invalid ? "!border-[#C95F00]" : ""}`}
           placeholder={field.ph}
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => onChange(sanitizeText(e.target.value))}
           autoFocus={autoFocus}
+          aria-invalid={invalid}
         />
+      )}
+      {invalid && (
+        <div className="mt-1.5 text-[13px] font-medium text-[#C95F00]">
+          {FIELD_ERRORS[field.k]}
+        </div>
       )}
       {field.note && (
         <div className="mt-1.5 rounded-2xl bg-[#FDF2E5] px-4 py-3 text-[13.5px] leading-[1.55] text-[#4A4345]">
@@ -220,22 +256,19 @@ export default function CareersWizard() {
 
   const saveProgress = useCallback(
     (completed: boolean) => {
-      if (!FORM_ENDPOINT || !sessionId) return;
+      if (!sessionId) return;
       const payload = {
         session_id: sessionId,
-        idioma: "en",
-        step_reached: stepIndex,
-        step_total: STEPS.length - 1,
         completed,
         updated_at: new Date().toISOString(),
-        respuestas: answers,
+        ...answers,
       };
       const json = JSON.stringify(payload);
       if (json === lastSaveRef.current) return;
       lastSaveRef.current = json;
-      fetch(FORM_ENDPOINT, {
+      fetch(SUBMIT_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        headers: { "Content-Type": "application/json" },
         body: json,
       }).catch(() => {});
     },
@@ -264,15 +297,17 @@ export default function CareersWizard() {
     if (step.type === "intro") return true;
     if (step.type === "fields") {
       return step.fields.every((f) => {
-        if (f.opt) return true;
         const v = answers[f.k];
-        return typeof v === "string" && v.trim().length > 0;
+        const filled = typeof v === "string" && v.trim().length > 0;
+        if (!filled) return !!f.opt;
+        const validator = FIELD_VALIDATORS[f.k];
+        return validator ? validator(v as string) : true;
       });
     }
     if (step.type === "choice") return typeof answers[step.k] === "string" && !!answers[step.k];
     if (step.type === "line" || step.type === "text") {
       const v = (answers[step.k] as string) || "";
-      return v.trim().length >= step.min;
+      return isPlausibleFreeText(v, step.min);
     }
     if (step.type === "roles") return selectedRoles.size > 0;
     return true;
@@ -337,7 +372,7 @@ export default function CareersWizard() {
         />
       </div>
 
-      <main className="flex justify-center px-6 pb-32 pt-8 sm:px-10">
+      <main className="flex justify-center px-6 pb-16 pt-8 sm:px-10">
         <div className="w-full max-w-[740px]">
           {step.type === "intro" && (
             <IntroStep
@@ -465,37 +500,41 @@ export default function CareersWizard() {
               selectedRoleNames={[...selectedRoles].map((n) => ROLES[n].name)}
               openRolePicked={[...selectedRoles].some((n) => ROLES[n].id === "open")}
               sessionId={sessionId}
-              stepIndex={stepIndex}
               saveProgress={saveProgress}
             />
           )}
+
+          {/* In normal document flow, right after each step's content —
+              NOT position:fixed. A globally-fixed bar stays pinned to the
+              viewport bottom no matter how far the page scrolls, which meant
+              it could end up floating on top of the site's real footer the
+              moment a step's content was shorter than the viewport. Living
+              in flow means it can only ever appear where the wizard's own
+              content actually ends. */}
+          {showBottomNav && (
+            <div className="mt-10 flex items-center gap-3.5">
+              <button
+                type="button"
+                onClick={back}
+                className={`rounded-[10px] px-2 py-3.5 font-body text-[15px] font-semibold text-[#6F6668] transition-colors hover:text-ink ${
+                  showBack ? "visible" : "invisible"
+                }`}
+              >
+                Back
+              </button>
+              <span className="flex-1" />
+              <button
+                type="button"
+                onClick={go}
+                disabled={!nextEnabled}
+                className="rounded-[10px] border-[1.5px] border-transparent bg-brand-orange px-[26px] py-3.5 font-body text-[15px] font-semibold text-white transition-colors hover:bg-[#C95F00] disabled:cursor-not-allowed disabled:bg-[#DCD6CC] disabled:text-[#6F6668]"
+              >
+                {step.type === "intro" ? "Start" : "Continue"}
+              </button>
+            </div>
+          )}
         </div>
       </main>
-
-      {showBottomNav && (
-        <div className="fixed inset-x-0 bottom-0 z-40 bg-gradient-to-t from-cream from-55% to-transparent px-6 pb-6 pt-5 sm:px-10">
-          <div className="mx-auto flex max-w-[740px] items-center gap-3.5">
-            <button
-              type="button"
-              onClick={back}
-              className={`rounded-[10px] px-2 py-3.5 font-body text-[15px] font-semibold text-[#6F6668] transition-colors hover:text-ink ${
-                showBack ? "visible" : "invisible"
-              }`}
-            >
-              Back
-            </button>
-            <span className="flex-1" />
-            <button
-              type="button"
-              onClick={go}
-              disabled={!nextEnabled}
-              className="rounded-[10px] border-[1.5px] border-transparent bg-brand-orange px-[26px] py-3.5 font-body text-[15px] font-semibold text-white transition-colors hover:bg-[#C95F00] disabled:cursor-not-allowed disabled:bg-[#DCD6CC] disabled:text-[#6F6668]"
-            >
-              {step.type === "intro" ? "Start" : "Continue"}
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
@@ -535,7 +574,7 @@ function TextAreaField({
         value={value}
         maxLength={step.type === "line" ? step.max : undefined}
         placeholder={step.ph}
-        onChange={(e) => setAnswer(step.k, e.target.value)}
+        onChange={(e) => setAnswer(step.k, sanitizeText(e.target.value))}
         className={`${inputClass} ${heightClass} resize-y leading-[1.55]`}
       />
       <div className={`mt-1.5 text-right text-[12px] ${overLimit ? "font-semibold text-[#C95F00]" : "text-[#B7AFA8]"}`}>
@@ -633,30 +672,17 @@ function ResultStep({
   selectedRoleNames,
   openRolePicked,
   sessionId,
-  stepIndex,
   saveProgress,
 }: {
   answers: Answers;
   selectedRoleNames: string[];
   openRolePicked: boolean;
   sessionId: string;
-  stepIndex: number;
   saveProgress: (completed: boolean) => void;
 }) {
-  const [copied, setCopied] = useState(false);
-  const firstName = ((answers.nombre as string) || "").split(" ")[0] || "";
-  const stillStudying = answers.estudios === "I still have more than a semester left";
-  const cantCommute = answers.oficina === "I can't make it two days a week";
-
-  const payload = {
-    session_id: sessionId,
-    idioma: "en",
-    step_reached: stepIndex,
-    step_total: STEPS.length - 1,
-    completed: true,
-    updated_at: new Date().toISOString(),
-    respuestas: answers,
-  };
+  const firstName = ((answers.fullName as string) || "").split(" ")[0] || "";
+  const stillStudying = answers.studies === "I still have more than a semester left";
+  const cantCommute = answers.officeAvailability === "I can't make it two days a week";
 
   useEffect(() => {
     saveProgress(true);
@@ -733,27 +759,6 @@ function ResultStep({
         that fits today, you stay in the pool: we&rsquo;ll come back when one opens, with an actual
         date, not just a &ldquo;we&rsquo;ll let you know.&rdquo;
       </p>
-
-      {!FORM_ENDPOINT && (
-        <div className="mt-[22px] rounded-2xl border border-dashed border-[#DCD6CC] px-5 py-[18px] text-[13px] text-[#6F6668]">
-          <strong className="font-semibold text-ink">Prototype mode.</strong> No submission endpoint
-          is configured yet, so this response wasn&rsquo;t saved anywhere. Payload that would have
-          been sent:
-          <pre className="mt-3 max-h-[200px] overflow-auto rounded-lg bg-ink p-3.5 font-mono text-[11.5px] leading-[1.5] text-[#EDE9E0]">
-            {JSON.stringify(payload, null, 2)}
-          </pre>
-          <button
-            type="button"
-            onClick={() => {
-              navigator.clipboard.writeText(JSON.stringify(payload, null, 2));
-              setCopied(true);
-            }}
-            className="mt-3 rounded-lg bg-ink px-[18px] py-2.5 font-body text-[13.5px] font-semibold text-cream transition-opacity hover:opacity-90"
-          >
-            {copied ? "Copied" : "Copy payload"}
-          </button>
-        </div>
-      )}
     </div>
   );
 }

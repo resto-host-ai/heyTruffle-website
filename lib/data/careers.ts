@@ -223,9 +223,9 @@ export const STEPS: readonly Step[] = [
     title: "Let's start with the basics",
     sub: "None of this leaves the team.",
     fields: [
-      { k: "nombre", label: "Full name", type: "text", req: true },
+      { k: "fullName", label: "Full name", type: "text", req: true },
       { k: "email", label: "Email", type: "email", req: true },
-      { k: "whatsapp", label: "WhatsApp", type: "tel", ph: "+54 9 11 ...", req: true },
+      { k: "phone", label: "Phone", type: "tel", ph: "+54 9 11 ... or +1 555 ...", req: true },
     ],
   },
 
@@ -246,7 +246,7 @@ export const STEPS: readonly Step[] = [
   {
     type: "line",
     eyebrow: "3 of 9",
-    k: "bueno",
+    k: "strongestSkill",
     max: 140,
     min: 15,
     title: "In one line: what's your strongest skill?",
@@ -257,7 +257,7 @@ export const STEPS: readonly Step[] = [
   {
     type: "roles",
     eyebrow: "4 of 9",
-    k: "interes",
+    k: "interestedRoles",
     max: 3,
     title: "Which ones interest you?",
     sub: "Click any of them to read again what the role means. Pick up to three with the circle on the left.",
@@ -266,7 +266,7 @@ export const STEPS: readonly Step[] = [
   {
     type: "text",
     eyebrow: "5 of 9",
-    k: "ia",
+    k: "aiExperience",
     cls: "big",
     min: 50,
     title: "What have you built with AI?",
@@ -278,7 +278,7 @@ export const STEPS: readonly Step[] = [
   {
     type: "text",
     eyebrow: "6 of 9",
-    k: "startup",
+    k: "startupExperience",
     cls: "mid",
     min: 30,
     title: "Have you worked at a startup?",
@@ -289,7 +289,7 @@ export const STEPS: readonly Step[] = [
   {
     type: "text",
     eyebrow: "7 of 9",
-    k: "gusto",
+    k: "likesDislikes",
     cls: "mid",
     min: 40,
     title: "Of the places you've worked: what did you like, and what didn't you?",
@@ -300,7 +300,7 @@ export const STEPS: readonly Step[] = [
   {
     type: "choice",
     eyebrow: "8 of 9",
-    k: "ingles",
+    k: "englishLevel",
     title:
       "English: a 45-minute Zoom with an American COO who talks fast and interrupts you.",
     sub: "Be honest. Some of the roles need this and some don't, so overstating it here only wastes your time.",
@@ -319,7 +319,7 @@ export const STEPS: readonly Step[] = [
     sub: "Your resume is optional. If you'd rather just leave us your LinkedIn, that's enough.",
     fields: [
       {
-        k: "estudios",
+        k: "studies",
         label: "Where are you at with your studies?",
         type: "select",
         note: "Junior roles are for people who've already graduated, or who are in their last semester. If you have more than that left, write to us when you're finishing up and we'll keep you in mind.",
@@ -331,14 +331,14 @@ export const STEPS: readonly Step[] = [
         ],
       },
       {
-        k: "carrera",
+        k: "degree",
         label: "Degree and university",
         opt: true,
         type: "text",
         ph: "E.g.: Industrial Engineering, ITBA",
       },
       {
-        k: "oficina",
+        k: "officeAvailability",
         label: "The office is in Béccar, in the northern part of Buenos Aires.",
         type: "select",
         note: "Two days a week in the office is required. If that doesn't work for you right now, we'd rather tell you upfront than in your fourth interview.",
@@ -351,13 +351,13 @@ export const STEPS: readonly Step[] = [
       },
       { k: "linkedin", label: "LinkedIn", type: "text", ph: "linkedin.com/in/...", req: true },
       {
-        k: "cv",
+        k: "resumeUrl",
         label: "Link to your resume or portfolio (Drive, Notion, PDF, Behance)",
         opt: true,
         type: "text",
       },
       {
-        k: "canal",
+        k: "howFound",
         label: "How did you find us?",
         type: "select",
         options: [
@@ -372,7 +372,7 @@ export const STEPS: readonly Step[] = [
         ],
       },
       {
-        k: "referido",
+        k: "referredBy",
         label: "If someone on the team sent it to you, who?",
         opt: true,
         type: "text",
