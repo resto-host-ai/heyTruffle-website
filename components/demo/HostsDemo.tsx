@@ -15,6 +15,12 @@ function formatTime(t: number) {
 /** Lowercases only the first character, leaving acronyms like ES↔EN alone. */
 const lowerFirst = (s: string) => s.charAt(0).toLowerCase() + s.slice(1);
 
+const interactiveScrollBehavior = (): ScrollBehavior =>
+  window.matchMedia("(max-width: 767px), (hover: none) and (pointer: coarse)")
+    .matches
+    ? "auto"
+    : "smooth";
+
 /** Folds the outcome list into one phrase — "Resolved · Pickup + private
  *  dining inquiry" — instead of stacking each item on its own line. The first
  *  item leads, the rest join with "+" and drop their leading capital since
@@ -118,7 +124,10 @@ export default function HostsDemo() {
   const goToSlide = (idx: number) => {
     const el = trackRef.current;
     if (!el) return;
-    el.scrollTo({ left: idx * el.clientWidth, behavior: "smooth" });
+    el.scrollTo({
+      left: idx * el.clientWidth,
+      behavior: interactiveScrollBehavior(),
+    });
   };
 
   const host = activeId ? HOSTS.find((h) => h.id === activeId) ?? null : null;
@@ -197,7 +206,10 @@ export default function HostsDemo() {
         if (!el) return;
         const top =
           window.scrollY + el.getBoundingClientRect().top - HEADER_H - GAP;
-        window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+        window.scrollTo({
+          top: Math.max(0, top),
+          behavior: interactiveScrollBehavior(),
+        });
       });
     });
     return () => {
@@ -273,7 +285,7 @@ export default function HostsDemo() {
     if (!last) return;
     el.scrollTo({
       top: last.offsetTop - el.clientHeight + last.offsetHeight + 24,
-      behavior: "smooth",
+      behavior: interactiveScrollBehavior(),
     });
   }, [revealedCount, activeId]);
 

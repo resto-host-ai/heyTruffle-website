@@ -55,6 +55,12 @@ const INTEGRATION_PAGES = new Set([
 const itemHref = (item: string) =>
   INTEGRATION_PAGES.has(item) ? `/integrations/${slug(item)}` : `#${slug(item)}`;
 
+const navigationScrollBehavior = (): ScrollBehavior =>
+  window.matchMedia("(max-width: 767px), (hover: none) and (pointer: coarse)")
+    .matches
+    ? "auto"
+    : "smooth";
+
 /**
  * Next's <Link> jumps to same-page anchors instantly, ignoring CSS
  * scroll-behavior. When the anchor's target lives on the current page,
@@ -88,7 +94,10 @@ function smoothScrollToAnchor(
   const GAP = 16;
   const scrollToTarget = () => {
     const top = window.scrollY + el.getBoundingClientRect().top - HEADER_H - GAP;
-    window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+    window.scrollTo({
+      top: Math.max(0, top),
+      behavior: navigationScrollBehavior(),
+    });
   };
 
   let passes = 0;
@@ -155,6 +164,11 @@ export default function Header() {
   const [overlayOpen, setOverlayOpen] = useState(false);
 
   useEffect(() => {
+    const staticTouch = window.matchMedia(
+      "(max-width: 767px), (hover: none) and (pointer: coarse)",
+    );
+    if (staticTouch.matches) return;
+
     const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -182,7 +196,7 @@ export default function Header() {
         className={`fixed inset-x-0 top-0 z-50 h-[80px] transition-all duration-300 md:backdrop-blur-xl ${overlayOpen ? "pointer-events-none invisible opacity-0" : ""
           } ${scrolled
             ? "bg-black shadow-[0_8px_30px_rgba(0,0,0,0.25)] md:bg-[#1c1917]"
-            : "bg-black/50 md:bg-black/35"
+            : "bg-black md:bg-black/35"
           }`}
       >
         <div className="relative z-20 flex h-full w-full items-center justify-between gap-6 px-6 lg:px-[73px]">
@@ -197,7 +211,7 @@ export default function Header() {
               setMenuOpen(false);
               if (pathname === "/") {
                 e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
+                window.scrollTo({ top: 0, behavior: navigationScrollBehavior() });
               }
             }}
             /* Blend only from md: a blend-mode child inside the fixed header

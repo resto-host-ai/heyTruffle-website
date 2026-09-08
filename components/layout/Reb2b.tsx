@@ -38,6 +38,7 @@ export default function Reb2b() {
     if (!REB2B_KEY) return;
 
     let cancelled = false;
+    let idleHandle: number | null = null;
     const start = () => {
       if (cancelled) return;
       const el = document.createElement("script");
@@ -45,18 +46,24 @@ export default function Reb2b() {
       document.body.appendChild(el);
     };
 
-    if (typeof requestIdleCallback === "function") {
-      const handle = requestIdleCallback(start, { timeout: 4000 });
-      return () => {
-        cancelled = true;
-        cancelIdleCallback(handle);
-      };
-    }
+    const isTouch = window.matchMedia(
+      "(max-width: 767px), (hover: none) and (pointer: coarse)",
+    ).matches;
+    const minimumDelay = isTouch ? 15000 : 4000;
+    const timer = window.setTimeout(() => {
+      if (typeof requestIdleCallback === "function") {
+        idleHandle = requestIdleCallback(start, { timeout: 10000 });
+      } else {
+        start();
+      }
+    }, minimumDelay);
 
-    const timer = setTimeout(start, 2500);
     return () => {
       cancelled = true;
       clearTimeout(timer);
+      if (idleHandle !== null && typeof cancelIdleCallback === "function") {
+        cancelIdleCallback(idleHandle);
+      }
     };
   }, []);
 

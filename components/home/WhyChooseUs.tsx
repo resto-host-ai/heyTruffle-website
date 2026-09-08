@@ -60,7 +60,7 @@ export default function WhyChooseUs() {
       {/* Luces CSS sin imágenes y sin cortes entre secciones */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 -top-48 -bottom-48 z-0"
+        className="mobile-section-lights pointer-events-none absolute inset-x-0 -top-48 -bottom-48 z-0"
         style={{
           background: `
             radial-gradient(
@@ -131,11 +131,11 @@ function FeatureCard({
       className="
         flex  flex-col h-auto min-h-60 justify-evenly
         rounded-[25px] gap-2
-        bg-gray-50/20
+        bg-[#45383c] md:bg-gray-50/20
         border border-white/20
         p-6 
         shadow-[inset_0_1px_0_rgba(255,255,255,0.10),0_18px_45px_rgba(0,0,0,0.22)]
-        backdrop-blur-[18px]
+        md:backdrop-blur-[18px]
         md:p-7
       "
     >
@@ -175,4 +175,3 @@ function FeatureCard({
     </article>
   );
 }
-
