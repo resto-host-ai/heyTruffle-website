@@ -33,6 +33,7 @@ const NAV = [
   { label: "About", href: "/#about" },
   { label: "Case Studies", href: "/case-study" },
   { label: "Blog", href: "/blog" },
+  { label: "Careers", href: "/careers/" },
   { label: "Partners", href: "/partners/push-operations" },
   { label: "Contact", href: "/#contact" },
   { label: "Book a demo", demo: true as const },
@@ -77,10 +78,10 @@ export default function Footer() {
         </div>
 
         {/* Navigate + Contact us */}
-        <div className="mt-14 flex flex-col sm:flex-row justify-end gap-4 ">
+        <div className="mt-14 flex flex-col sm:flex-row justify-end gap-20 ">
           <nav aria-label="Footer navigation max-w-50">
             <p className={headingClass}>Navigate</p>
-            <ul className="mt-5 grid grid-cols-1 gap-y-3 sm:max-w-60 sm:grid-flow-col sm:grid-rows-4 sm:gap-x-10">
+            <ul className="mt-5 grid grid-cols-1 gap-y-3 sm:max-w-60 sm:grid-flow-col sm:grid-rows-5 sm:gap-x-10">
               {NAV.map((item) =>
                 item.demo ? (
                   <li key={item.label}>
@@ -102,7 +103,7 @@ export default function Footer() {
             </ul>
           </nav>
 
-          <div className="sm:justify-self-end">
+          <div className="flex flex-col sm:justify-self-end border">
             <p className={headingClass}>Contact us</p>
             <a
               href="mailto:info@heytruffle.ai"
@@ -111,7 +112,7 @@ export default function Footer() {
               info@heytruffle.ai
             </a>
             <ul
-              className="mt-4 min-w-50 flex items-center gap-2.5"
+              className="mt-auto flex max-w-80 min-w-50 justify-around gap-2.5 border"
               aria-label="heytruffle social media profiles"
             >
               {socialLinks.map(({ name, href, icon, alt }) => (
