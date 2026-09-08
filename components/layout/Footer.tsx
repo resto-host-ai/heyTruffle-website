@@ -103,7 +103,7 @@ export default function Footer() {
             </ul>
           </nav>
 
-          <div className="flex flex-col sm:justify-self-end border">
+          <div className="flex flex-col sm:justify-self-end">
             <p className={headingClass}>Contact us</p>
             <a
               href="mailto:info@heytruffle.ai"
@@ -112,7 +112,7 @@ export default function Footer() {
               info@heytruffle.ai
             </a>
             <ul
-              className="mt-auto flex max-w-80 min-w-50 justify-around gap-2.5 border"
+              className="mt-auto flex max-w-80 min-w-50 justify-around gap-2.5"
               aria-label="heytruffle social media profiles"
             >
               {socialLinks.map(({ name, href, icon, alt }) => (
