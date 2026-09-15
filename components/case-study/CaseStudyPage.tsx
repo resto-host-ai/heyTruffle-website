@@ -293,7 +293,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
                     ))}
                   </ol>
 
-                  <div className="mt-12 grid grid-cols-2 gap-6 sm:gap-8">
+                  <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
                     {cs.featureStory.supportingStats.map((s) => (
                       <div key={s.value}>
                         <p
@@ -326,7 +326,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
                   >
                     {cs.featureStory.chain.map((m) => (
                       <div key={m.label}>
-                        <p className="font-body text-[52px] font-normal leading-[110%] text-[#F6F3EC] md:text-[64px]">
+                        <p className="font-body text-[32px] font-normal leading-[110%] text-[#F6F3EC] md:text-[64px]">
                           {m.value}
                         </p>
                         <p className="font-body text-[18px] font-normal leading-[140%] text-[#F6F3EC]/90 md:text-[20px]">
@@ -339,7 +339,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
                     ))}
 
                     <p
-                      className="font-body text-[52px] font-normal leading-[110%] md:text-[64px]"
+                      className="font-body text-[32px] font-normal leading-[110%] md:text-[64px]"
                       style={{
                         backgroundImage:
                           "linear-gradient(85deg, #3773D7 1.02%, #EF7200 38.22%, #D592F3 98.98%)",
@@ -350,7 +350,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
                     >
                       {cs.featureStory.total.value}
                     </p>
-                    <p className="mx-auto mt-1 max-w-[280px] font-body text-[18px] font-normal leading-[140%] text-[#F6F3EC]/90 md:text-[20px] lg:mx-0">
+                    <p className="mx-auto mt-1 max-w-[280px] font-body text-[100%] md:text-[18px] font-normal leading-[140%] text-[#F6F3EC]/90 md:text-[20px] lg:mx-0">
                       {cs.featureStory.total.label}
                     </p>
                   </div>
@@ -493,8 +493,8 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
                         <p
                           className={
                             cs.impact!.valueWidth === "fixed"
-                              ? "w-[104px] shrink-0 text-right font-body text-[48px] font-normal leading-[110%] text-[#251F21] md:w-auto min-[1280px]:max-[1899px]:text-[52px] min-[1900px]:text-[72px]"
-                              : "shrink-0 whitespace-nowrap text-right font-body text-[48px] font-normal leading-[110%] text-[#251F21] min-[1280px]:max-[1899px]:text-[52px] min-[1900px]:text-[72px]"
+                              ? "w-[104px] shrink-0 text-right font-body text-[32px] font-normal leading-[110%] text-[#251F21] md:w-auto min-[1280px]:max-[1899px]:text-[52px] min-[1900px]:text-[72px]"
+                              : "shrink-0 whitespace-nowrap text-right font-body text-[32px] font-normal leading-[110%] text-[#251F21] min-[1280px]:max-[1899px]:text-[52px] min-[1900px]:text-[72px]"
                           }
                         >
                           {item.value}

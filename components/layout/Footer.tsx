@@ -34,7 +34,7 @@ const NAV = [
   { label: "Case Studies", href: "/case-study" },
   { label: "Blog", href: "/blog" },
   { label: "Careers", href: "/careers/" },
-  { label: "Partners", href: "/partners/push-operations" },
+  { label: "Partners", href: "/partners/" },
   { label: "Contact", href: "/#contact" },
   { label: "Book a demo", demo: true as const },
   { label: "FAQ", href: "/faq" },
@@ -112,7 +112,7 @@ export default function Footer() {
               info@heytruffle.ai
             </a>
             <ul
-              className="mt-auto flex max-w-80 min-w-50 justify-around gap-2.5"
+              className="mt-6 w-1/2 sm:w-auto flex border justify-evenly gap-2.5"
               aria-label="heytruffle social media profiles"
             >
               {socialLinks.map(({ name, href, icon, alt }) => (
@@ -144,7 +144,7 @@ export default function Footer() {
           <p className="font-body text-[14px] font-normal leading-[110%] text-[#251f21]/60">
             © 2026 heytruffle. All rights reserved.
           </p>
-          <ul className="flex items-start gap-5">
+          <ul className="flex flex-col sm:flex-row mb-5 items-start gap-3 ">
             <li>
               <Link href="/privacy-policy" className={`${linkClass} text-[14px]`}>
                 Privacy Policy

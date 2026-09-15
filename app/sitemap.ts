@@ -20,8 +20,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE}/privacy-policy/`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
     { url: `${SITE}/terms-of-service/`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
     { url: `${SITE}/anti-spam/`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${SITE}/partners/`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${SITE}/partners/push-operations/`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${SITE}/careers/`, lastModified: now, changeFrequency: "weekly", priority: 0.6 },
+    { url: `${SITE}/mrla/`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
   ];
 
   const caseStudies: MetadataRoute.Sitemap = CASE_STUDY_SLUGS.map((slug) => ({
