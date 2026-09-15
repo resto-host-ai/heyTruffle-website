@@ -26,6 +26,7 @@ const BAIRES_GRILL_NORMAL_NIGHT = {
   bg: "#eae6dc",
   bgIdle: "#c8c5bf",
   accent: "#a05fc4",
+  slug: "baires-grill",
 };
 
 export const rrealTacos: CaseStudy = {

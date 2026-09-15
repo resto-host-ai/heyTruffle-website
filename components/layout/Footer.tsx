@@ -112,7 +112,7 @@ export default function Footer() {
               info@heytruffle.ai
             </a>
             <ul
-              className="mt-6 w-1/2 sm:w-auto flex border justify-evenly gap-2.5"
+              className="mt-6 w-1/2 sm:w-auto flex justify-evenly gap-2.5"
               aria-label="heytruffle social media profiles"
             >
               {socialLinks.map(({ name, href, icon, alt }) => (

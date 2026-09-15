@@ -13,11 +13,14 @@ type Case = {
   desc: string;
   image?: string;
   /** Testimonial clip shown instead of the still, same asset as Testimonials. */
-  vimeoId?: string;
+  youtubeId?: string;
   posterUrl?: string;
   bg: string; // active / centered
   bgIdle: string; // dimmed when off to the side
   accent: string;
+  /** Case study slug to link to (/case-study/{slug}/). Omitted for cards
+   *  with no matching page yet (e.g. Mojitos) — those stay static. */
+  slug?: string;
 };
 
 const CASES: Case[] = [
@@ -28,7 +31,8 @@ const CASES: Case[] = [
     metric: "Calls recovered in one month.",
     desc: "Reservations, orders and catering that would have gone unanswered.",
     image: "/images/case-rreal.webp",
-    vimeoId: "1163753938",
+    // TODO: placeholder YouTube ID until the real per-testimonial videos come in.
+    youtubeId: "SQpBZlyokbo",
     posterUrl: "/testimonials/rreal-poster.webp",
     bg: "#f4efe3",
     bgIdle: "#cfcabf",
@@ -40,7 +44,7 @@ const CASES: Case[] = [
     metric: "A normal night, in a single evening.",
     desc: "Every call answered while the team stayed on the floor.",
     image: "/images/mojitos.webp",
-    vimeoId: "1163755952",
+    youtubeId: "IBsApAVXPCo",
     // Luis Fernandez's Mojitos still — the "lima" in the filename is a
     // historical misnomer, the asset itself is the Mojitos testimonial.
     posterUrl: "/testimonials/lima-poster.webp",
@@ -56,6 +60,36 @@ const CASES: Case[] = [
    76% of the track with the neighbours peeking in at both edges, --peek being
    the leftover per side: (100 − basis) / 2. */
 const GAP = 24; // px (matches gap-6)
+
+function TextBlock({ c }: { c: Case }) {
+  return (
+    <>
+      <h3 className="font-body text-[22px] font-normal! leading-[120%] text-[#251f21] md:text-[28px]">
+        {c.name}
+      </h3>
+      {c.location && (
+        <p className="mt-1 font-body text-[15px] font-normal leading-[120%] text-[#251f21]/70 md:text-[16px]">
+          {c.location}
+        </p>
+      )}
+      <p
+        className="mt-4 font-body text-[48px] font-normal leading-[110%] md:mt-8 md:text-[64px] lg:text-[80px]"
+        style={{ color: c.accent }}
+      >
+        {formatValue(c.value)}
+      </p>
+      <p
+        className="mt-3 font-body text-[16px] font-normal leading-[125%] md:mt-4 md:text-[18px]"
+        style={{ color: c.accent }}
+      >
+        {c.metric}
+      </p>
+      <p className="mt-3 max-w-md font-body text-[16px] font-normal leading-[145%] text-[#251f21]/80 md:text-[18px]">
+        {c.desc}
+      </p>
+    </>
+  );
+}
 
 export default function CaseStudies({
   heading = "Success you can measure.",
@@ -184,42 +218,32 @@ export default function CaseStudies({
                     bare strip of card background under the video. Letting the text
                     block grow absorbs that surplus instead (it's justify-center, so
                     it just gains breathing room). md is a row layout with a fixed
-                    card height, so it opts out. */}
-                <div className="relative z-10 flex flex-1 flex-col justify-center p-6 md:w-1/2 md:flex-none md:p-10">
-                  <h3 className="font-body text-[22px] font-normal! leading-[120%] text-[#251f21] md:text-[28px]">
-                    {c.name}
-                  </h3>
-                  {c.location && (
-                    <p className="mt-1 font-body text-[15px] font-normal leading-[120%] text-[#251f21]/70 md:text-[16px]">
-                      {c.location}
-                    </p>
-                  )}
-                  <p
-                    className="mt-4 font-body text-[48px] font-normal leading-[110%] md:mt-8 md:text-[64px] lg:text-[80px]"
-                    style={{ color: c.accent }}
+                    card height, so it opts out.
+                    A Link when the case has a slug (most related/carousel cards do),
+                    a plain div otherwise — e.g. Mojitos, which has no case study
+                    page yet, stays a static, non-clickable card. */}
+                {c.slug ? (
+                  <Link
+                    href={`/case-study/${c.slug}/`}
+                    className="relative z-10 flex flex-1 flex-col justify-center p-6 md:w-1/2 md:flex-none md:p-10"
                   >
-                    {formatValue(c.value)}
-                  </p>
-                  <p
-                    className="mt-3 font-body text-[16px] font-normal leading-[125%] md:mt-4 md:text-[18px]"
-                    style={{ color: c.accent }}
-                  >
-                    {c.metric}
-                  </p>
-                  <p className="mt-3 max-w-md font-body text-[16px] font-normal leading-[145%] text-[#251f21]/80 md:text-[18px]">
-                    {c.desc}
-                  </p>
-                </div>
+                    <TextBlock c={c} />
+                  </Link>
+                ) : (
+                  <div className="relative z-10 flex flex-1 flex-col justify-center p-6 md:w-1/2 md:flex-none md:p-10">
+                    <TextBlock c={c} />
+                  </div>
+                )}
 
                 {/* Image (or an accent gradient when a photo isn't available),
                     pinned top-to-bottom so it always fills the card */}
-                {c.vimeoId ? (
+                {c.youtubeId ? (
                   <div className="relative aspect-[2328/1772] w-full overflow-hidden md:absolute md:inset-y-0 md:right-0 md:aspect-auto md:h-auto md:w-1/2 md:flex-none">
                     {playingId === c.name ? (
                       <iframe
-                        src={`https://player.vimeo.com/video/${c.vimeoId}?autoplay=1&title=0&byline=0&portrait=0&dnt=1`}
+                        src={`https://www.youtube-nocookie.com/embed/${c.youtubeId}?autoplay=1&modestbranding=1&rel=0&playsinline=1`}
                         title={`${c.name} testimonial`}
-                        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+                        allow="autoplay; fullscreen; picture-in-picture; encrypted-media; clipboard-write"
                         allowFullScreen
                         className="absolute inset-0 h-full w-full border-0"
                       />
@@ -259,16 +283,33 @@ export default function CaseStudies({
                     )}
                   </div>
                 ) : c.image ? (
-                  <div className="relative aspect-[2328/1772] w-full overflow-hidden md:absolute md:inset-y-0 md:right-0 md:aspect-auto md:h-auto md:w-1/2 md:flex-none">
-                    <Image
-                      src={c.image}
-                      alt={c.name}
-                      fill
-                      quality={75}
-                      sizes="(max-width: 767px) calc(100vw - 48px), (min-width: 1596px) 560px, 40vw"
-                      className="object-cover"
-                    />
-                  </div>
+                  c.slug ? (
+                    <Link
+                      href={`/case-study/${c.slug}/`}
+                      aria-label={`See the ${c.name} case study`}
+                      className="relative aspect-[2328/1772] block w-full overflow-hidden md:absolute md:inset-y-0 md:right-0 md:aspect-auto md:h-auto md:w-1/2 md:flex-none"
+                    >
+                      <Image
+                        src={c.image}
+                        alt={c.name}
+                        fill
+                        quality={75}
+                        sizes="(max-width: 767px) calc(100vw - 48px), (min-width: 1596px) 560px, 40vw"
+                        className="object-cover"
+                      />
+                    </Link>
+                  ) : (
+                    <div className="relative aspect-[2328/1772] w-full overflow-hidden md:absolute md:inset-y-0 md:right-0 md:aspect-auto md:h-auto md:w-1/2 md:flex-none">
+                      <Image
+                        src={c.image}
+                        alt={c.name}
+                        fill
+                        quality={75}
+                        sizes="(max-width: 767px) calc(100vw - 48px), (min-width: 1596px) 560px, 40vw"
+                        className="object-cover"
+                      />
+                    </div>
+                  )
                 ) : (
                   <div
                     className="relative aspect-[2328/1772] w-full overflow-hidden md:absolute md:inset-y-0 md:right-0 md:aspect-auto md:h-auto md:w-1/2 md:flex-none"

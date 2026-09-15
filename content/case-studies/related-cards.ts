@@ -19,8 +19,11 @@ export const RREAL_TACOS: RelatedCard = {
   bg: "#f4efe3",
   bgIdle: "#cfcabf",
   accent: "#ef7200",
+  slug: "rreal-tacos",
 };
 
+// No slug: there is no /case-study/mojitos/ page in content/case-studies —
+// this card is used on 7 pages as a teaser but has nowhere to link to yet.
 export const MOJITOS: RelatedCard = {
   name: "Mojitos",
   location: "Miami",
@@ -43,4 +46,5 @@ export const BAIRES_GRILL: RelatedCard = {
   bg: "#eae6dc",
   bgIdle: "#c8c5bf",
   accent: "#a05fc4",
+  slug: "baires-grill",
 };

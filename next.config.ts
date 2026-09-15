@@ -1,13 +1,14 @@
 import type { NextConfig } from "next";
 
-/* The testimonials section embeds Vimeo (components/Testimonials.tsx). An
+/* All video embeds (Testimonials.tsx, ResultsSection.tsx, CaseStudies.tsx)
+   use YouTube (youtube-nocookie.com, no branding cookies until playback). An
    iframe can only use a feature the parent page still holds, so every
    permission its `allow` attribute asks for has to be delegated here too —
    otherwise the player loses fullscreen/autoplay and fails silently. */
-const VIMEO = "https://player.vimeo.com";
+const YOUTUBE = "https://www.youtube-nocookie.com";
 
 /* Everything the site does not use is denied outright; the rest is limited to
-   this origin plus the Vimeo player. */
+   this origin plus the YouTube embed origin above. */
 const PERMISSIONS_POLICY = [
   "accelerometer=()",
   "camera=()",
@@ -23,11 +24,11 @@ const PERMISSIONS_POLICY = [
   "payment=()",
   "usb=()",
   "xr-spatial-tracking=()",
-  `autoplay=(self "${VIMEO}")`,
-  `clipboard-write=(self "${VIMEO}")`,
-  `encrypted-media=(self "${VIMEO}")`,
-  `fullscreen=(self "${VIMEO}")`,
-  `picture-in-picture=(self "${VIMEO}")`,
+  `autoplay=(self "${YOUTUBE}")`,
+  `clipboard-write=(self "${YOUTUBE}")`,
+  `encrypted-media=(self "${YOUTUBE}")`,
+  `fullscreen=(self "${YOUTUBE}")`,
+  `picture-in-picture=(self "${YOUTUBE}")`,
 ].join(", ");
 
 const SECURITY_HEADERS = [

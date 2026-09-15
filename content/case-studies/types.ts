@@ -31,6 +31,9 @@ export type RelatedCard = {
   bg: string;
   bgIdle: string;
   accent: string;
+  /** Case study slug to link to (/case-study/{slug}/). Omitted for cards
+   *  that don't have a matching page yet — those render as before, static. */
+  slug?: string;
 };
 
 export type FeatureStoryHighlights = {

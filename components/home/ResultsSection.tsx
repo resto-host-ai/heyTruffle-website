@@ -5,7 +5,8 @@ import { useState } from "react";
 import { NOISE } from "@/lib/noise";
 
 // Same testimonial asset CaseStudies.tsx uses for Rreal Tacos.
-const VIMEO_ID = "1163753938";
+// TODO: placeholder YouTube ID until the real Rreal Tacos video comes in.
+const YOUTUBE_ID = "SQpBZlyokbo";
 const POSTER_URL = "/testimonials/rreal-poster.webp";
 
 const WE_HANDLE = [
@@ -42,9 +43,9 @@ export default function ResultsSection() {
           <div className="relative w-full overflow-hidden rounded-3xl aspect-[4/3] md:aspect-auto md:w-1/2 md:self-stretch">
             {isPlaying ? (
               <iframe
-                src={`https://player.vimeo.com/video/${VIMEO_ID}?autoplay=1&title=0&byline=0&portrait=0&dnt=1`}
+                src={`https://www.youtube-nocookie.com/embed/${YOUTUBE_ID}?autoplay=1&modestbranding=1&rel=0&playsinline=1`}
                 title="Rreal Tacos testimonial"
-                allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+                allow="autoplay; fullscreen; picture-in-picture; encrypted-media; clipboard-write"
                 allowFullScreen
                 className="absolute inset-0 h-full bg-black w-full border-0"
               />

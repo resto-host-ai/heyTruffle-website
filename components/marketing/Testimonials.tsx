@@ -11,7 +11,7 @@ const TESTIMONIALS = [
     role: "Owner & Operator",
     quote: "We never miss calls anymore",
     posterUrl: "/testimonials/lima-poster.webp",
-    vimeoId: "1163755952",
+    youtubeId: "IBsApAVXPCo",
   },
   {
     id: "rreal-tacos",
@@ -20,12 +20,15 @@ const TESTIMONIALS = [
     role: "C.O.O & Co-Owner",
     quote: "Our staff finally focuses on guests",
     posterUrl: "/testimonials/rreal-poster.webp",
-    vimeoId: "1163753938",
+    youtubeId: "SQpBZlyokbo",
   },
 ] as const;
 
-const VIMEO_PARAMS =
-  "autoplay=1&color&autopause=0&loop=0&muted=0&title=1&portrait=1&byline=1";
+// youtube-nocookie.com (privacy-enhanced mode, no branding cookies until
+// playback) + modestbranding/rel=0 to keep the chrome as minimal as YouTube
+// allows. The iframe is only ever mounted after a click (see `playing`
+// below), so no YouTube branding shows at all until then.
+const YOUTUBE_PARAMS = "autoplay=1&modestbranding=1&rel=0&playsinline=1";
 
 export default function Testimonials() {
   return (
@@ -58,7 +61,7 @@ function TestimonialCard({
   role,
   quote,
   posterUrl,
-  vimeoId,
+  youtubeId,
 }: (typeof TESTIMONIALS)[number]) {
   const [playing, setPlaying] = useState(false);
 
@@ -70,7 +73,7 @@ function TestimonialCard({
       >
         {playing ? (
           <iframe
-            src={`https://player.vimeo.com/video/${vimeoId}?${VIMEO_PARAMS}`}
+            src={`https://www.youtube-nocookie.com/embed/${youtubeId}?${YOUTUBE_PARAMS}`}
             title={`${restaurant} testimonial`}
             allow="autoplay; fullscreen; picture-in-picture; encrypted-media; clipboard-write"
             allowFullScreen
