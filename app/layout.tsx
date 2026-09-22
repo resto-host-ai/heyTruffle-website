@@ -10,6 +10,7 @@ import Clarity from "@/components/layout/Clarity";
 import Reb2b from "@/components/layout/Reb2b";
 import SiteJsonLd from "@/components/layout/JsonLd";
 import Chatbase from "@/components/layout/Chatbase";
+import Graph8 from "@/components/layout/Graph8";
 
 /* FONTS — self-hosted latin slices, NOT next/font/google. This is a measured
    performance fix, not a style change: the files in ./fonts are byte-identical
@@ -170,6 +171,7 @@ export default function RootLayout({
         <Reb2b />
         <SiteJsonLd />
         <Chatbase />
+        <Graph8 />
       </body>
     </html>
   );
