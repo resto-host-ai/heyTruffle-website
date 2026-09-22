@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import AssociationLandingPage from "@/components/associations/AssociationLandingPage";
 
+// Dedicated MRLA event (was the shared discover-heytruffle event before).
 const CALENDLY_URL =
-  "https://calendly.com/d/dtqn-973-ryc/discover-heytruffle?utm_source=MRLA&utm_medium=partner&utm_campaign=discover_heytruffle";
+  "https://calendly.com/d/dtt4-78h-m83/discover-heytruffle-mrla?utm_source=MRLA&utm_medium=partner&utm_campaign=discover_heytruffle";
 
 const DESCRIPTION =
   "heytruffle is here to grow your top line and bring in extra revenue with a fully managed AI Concierge. Exclusive offering for Michigan Restaurant and Lodging Association members.";

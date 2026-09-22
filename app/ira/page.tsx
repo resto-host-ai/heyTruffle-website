@@ -9,8 +9,9 @@ import AssociationLandingPage from "@/components/associations/AssociationLanding
    shipping a dead link; add it back once there's a real date/link. Also per
    the mockup notes: membership and offer terms for IRA are copied from the
    MRLA deal and not yet confirmed for IRA specifically. */
+// Dedicated IRA event (was the shared discover-heytruffle event before).
 const CALENDLY_URL =
-  "https://calendly.com/d/dtqn-973-ryc/discover-heytruffle?utm_source=IRA&utm_medium=association&utm_campaign=discover_heytruffle&utm_content=ira_landing";
+  "https://calendly.com/d/dv93-mw4-bzj/discover-heytruffle-ira?utm_source=IRA&utm_medium=association&utm_campaign=discover_heytruffle&utm_content=ira_landing";
 
 const DESCRIPTION =
   "heytruffle is here to grow your top line and bring in extra revenue with a fully managed AI Concierge. Exclusive offering for Illinois Restaurant Association members.";

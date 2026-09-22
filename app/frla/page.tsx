@@ -6,8 +6,9 @@ import AssociationLandingPage from "@/components/associations/AssociationLanding
    tier-specific badge applies still needs sign-off from Nicolette Hoffman /
    Lynne Hernandez at FRLA. Offer terms are copied from the MRLA deal and not
    yet confirmed for FRLA specifically. */
+// Dedicated FRLA event (was the shared discover-heytruffle event before).
 const CALENDLY_URL =
-  "https://calendly.com/d/dtqn-973-ryc/discover-heytruffle?utm_source=FRLA&utm_medium=association&utm_campaign=discover_heytruffle&utm_content=frla_landing";
+  "https://calendly.com/d/d324-kcn-y9j/discover-heytruffle-frla?utm_source=FRLA&utm_medium=association&utm_campaign=discover_heytruffle&utm_content=frla_landing";
 
 const DESCRIPTION =
   "heytruffle is here to grow your top line and bring in extra revenue with a fully managed AI Concierge. Exclusive offering for Florida Restaurant and Lodging Association members.";

@@ -5,6 +5,10 @@ import { BookDemoButton } from "@/components/ui/BookDemoButton";
 const DESCRIPTION =
   "heytruffle and Push Operations partner to help multilocation restaurant groups run a calmer operation. Push handles your team. heytruffle handles your phones.";
 
+// Dedicated Push Operations event (was the shared discover-heytruffle event before).
+const CALENDLY_URL =
+  "https://calendly.com/d/d3sg-rf8-2rw/discover-heytruffle-push?utm_source=PushOperations&utm_medium=partner&utm_campaign=discover_heytruffle";
+
 export const metadata: Metadata = {
   title: "heytruffle and Push Operations Partnership — heytruffle",
   description: DESCRIPTION,
@@ -144,7 +148,7 @@ export default function PushOperationsPartnerPage() {
             behind your phone line.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <BookDemoButton className="flex items-center gap-2 rounded-full bg-gradient-to-r from-[#b53fc4] to-[#ef7200] px-7 py-3.5 text-sm font-bold text-white transition-opacity hover:opacity-90">
+            <BookDemoButton calendlyUrl={CALENDLY_URL} className="flex items-center gap-2 rounded-full bg-gradient-to-r from-[#b53fc4] to-[#ef7200] px-7 py-3.5 text-sm font-bold text-white transition-opacity hover:opacity-90">
               Book a demo
             </BookDemoButton>
             <a
@@ -323,7 +327,7 @@ export default function PushOperationsPartnerPage() {
                 for: its menu, its hours, its policies and the way its team
                 speaks.
               </p>
-              <BookDemoButton className="shrink-0 rounded-full bg-white px-6 py-3 text-sm font-bold text-[#251f21] transition-opacity hover:opacity-90">
+              <BookDemoButton calendlyUrl={CALENDLY_URL} className="shrink-0 rounded-full bg-white px-6 py-3 text-sm font-bold text-[#251f21] transition-opacity hover:opacity-90">
                 Hear it live
               </BookDemoButton>
             </div>
@@ -352,7 +356,7 @@ export default function PushOperationsPartnerPage() {
                 Want to hear what an AI Concierge would sound like answering
                 for your restaurant? Book a demo and listen to it live.
               </p>
-              <BookDemoButton className="self-start rounded-full bg-brand-orange px-6 py-2.5 text-sm font-bold text-white transition-opacity hover:opacity-90">
+              <BookDemoButton calendlyUrl={CALENDLY_URL} className="self-start rounded-full bg-brand-orange px-6 py-2.5 text-sm font-bold text-white transition-opacity hover:opacity-90">
                 Book a demo
               </BookDemoButton>
             </div>
@@ -411,7 +415,7 @@ export default function PushOperationsPartnerPage() {
             Start with a demo built on your own restaurant.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <BookDemoButton className="flex items-center gap-2 rounded-full bg-gradient-to-r from-[#b53fc4] to-[#ef7200] px-7 py-3.5 text-sm font-bold text-white transition-opacity hover:opacity-90">
+            <BookDemoButton calendlyUrl={CALENDLY_URL} className="flex items-center gap-2 rounded-full bg-gradient-to-r from-[#b53fc4] to-[#ef7200] px-7 py-3.5 text-sm font-bold text-white transition-opacity hover:opacity-90">
               Book a demo
             </BookDemoButton>
           </div>
