@@ -59,13 +59,15 @@ function ensureCalendlyLoaded(): Promise<void> {
   return calendlyLoadingPromise;
 }
 
-/** Open the booking popup; fall back to a new tab if the widget can't load. */
-export async function openCalendly(): Promise<void> {
+/** Open the booking popup; fall back to a new tab if the widget can't load.
+ *  Accepts a specific Calendly URL (e.g. one carrying campaign UTMs, like the
+ *  MRLA/IRA/FRLA pages use) — defaults to the plain heytruffle event. */
+export async function openCalendly(url: string = CALENDLY_URL): Promise<void> {
   try {
     await ensureCalendlyLoaded();
-    window.Calendly?.initPopupWidget({ url: CALENDLY_URL });
+    window.Calendly?.initPopupWidget({ url });
   } catch {
-    window.open(CALENDLY_URL, "_blank", "noopener,noreferrer");
+    window.open(url, "_blank", "noopener,noreferrer");
   }
 }
 
@@ -75,20 +77,24 @@ export function BookDemoButton({
   onClick,
   children,
   ariaLabel,
+  calendlyUrl,
 }: {
   className?: string;
   style?: React.CSSProperties;
   onClick?: () => void;
   children: React.ReactNode;
   ariaLabel?: string;
+  /** Override the default heytruffle Calendly event, e.g. to keep a
+   *  campaign's UTM params on the link. */
+  calendlyUrl?: string;
 }) {
   const handleClick = useCallback(
     async (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       onClick?.();
-      await openCalendly();
+      await openCalendly(calendlyUrl);
     },
-    [onClick],
+    [onClick, calendlyUrl],
   );
 
   return (

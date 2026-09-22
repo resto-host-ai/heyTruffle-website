@@ -24,14 +24,27 @@ const ENTRIES = [
     cta: "See the partnership",
   },
   {
-    // MRLA wording rule: "partner" must never appear in copy tied to MRLA
-    // (they reserve it for their own endorsed partners — heytruffle is on
-    // the Basic membership). "Industry association" and "Learn more" avoid
-    // it; the Push card above is unaffected since that rule is MRLA-only.
+    // Same wording rule as MRLA below: these associations reserve "partner"
+    // for their own endorsed partners, so "Industry association" / "Learn
+    // more" everywhere here instead of "partnership".
     tag: "Industry association",
     name: "MRLA",
     desc: "Michigan Restaurant & Lodging Association — the industry body representing restaurant and lodging operators across Michigan.",
     href: "/mrla/",
+    cta: "Learn more",
+  },
+  {
+    tag: "Industry association",
+    name: "IRA",
+    desc: "Illinois Restaurant Association — the industry body representing restaurant operators across Illinois.",
+    href: "/ira/",
+    cta: "Learn more",
+  },
+  {
+    tag: "Industry association",
+    name: "FRLA",
+    desc: "Florida Restaurant & Lodging Association — the industry body representing restaurant and lodging operators across Florida.",
+    href: "/frla/",
     cta: "Learn more",
   },
 ];

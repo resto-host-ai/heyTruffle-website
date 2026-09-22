@@ -225,7 +225,7 @@ export const STEPS: readonly Step[] = [
     fields: [
       { k: "fullName", label: "Full name", type: "text", req: true },
       { k: "email", label: "Email", type: "email", req: true },
-      { k: "phone", label: "Phone", type: "tel", ph: "+54 9 11 ... or +1 555 ...", req: true },
+      { k: "phone", label: "Phone", type: "tel", ph: "9 11 1234 5678", req: true },
     ],
   },
 

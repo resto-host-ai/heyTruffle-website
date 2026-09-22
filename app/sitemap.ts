@@ -24,6 +24,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE}/partners/push-operations/`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${SITE}/careers/`, lastModified: now, changeFrequency: "weekly", priority: 0.6 },
     { url: `${SITE}/mrla/`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
+    { url: `${SITE}/ira/`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
+    { url: `${SITE}/frla/`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
   ];
 
   const caseStudies: MetadataRoute.Sitemap = CASE_STUDY_SLUGS.map((slug) => ({

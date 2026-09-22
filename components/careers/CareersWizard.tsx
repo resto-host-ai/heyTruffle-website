@@ -38,7 +38,55 @@ const SUBMIT_ENDPOINT = "/api/careers";
 
 type Answers = Record<string, string | string[] | undefined>;
 
+// Every answer key the form can ever produce, derived from STEPS itself so
+// it can't drift out of sync with the data file. Used to pad every autosave
+// payload out to the same, full shape — see the note on saveProgress below.
+const ANSWER_KEYS: string[] = STEPS.flatMap((step) =>
+  step.type === "fields"
+    ? step.fields.map((f) => f.k)
+    : "k" in step
+      ? [step.k]
+      : [],
+);
+
 const CHOICE_KEYS = "ABCDEFGHIJ";
+
+// Dial codes for the phone field's country picker — same country scope as
+// VALID_TLDS in lib/validation/careers.ts, so "countries we expect
+// applicants from" stays in one place conceptually even though the two
+// lists live in different files for different reasons (email TLD allowlist
+// vs. a phone UI). Forcing a dial code here (rather than letting people type
+// a bare local number) is what fixes the Make -> ClickUp error: ClickUp's
+// Phone field rejects a number with no country code.
+const DIAL_CODES = [
+  { iso: "US", label: "US", dial: "+1" },
+  { iso: "AR", label: "Argentina", dial: "+54" },
+  { iso: "MX", label: "Mexico", dial: "+52" },
+  { iso: "CA", label: "Canada", dial: "+1" }, 
+  { iso: "GB", label: "United Kingdom", dial: "+44" },
+  ] as const;
+
+const DEFAULT_DIAL = "+1";
+
+/** Splits a stored phone value ("+54 9 11 2345 6789") into its dial code and
+ *  the rest, so the UI can show them in two boxes while `answers.phone`
+ *  keeps holding one plain string (same shape every other field uses, and
+ *  what actually gets validated/submitted). Longest-match first because
+ *  some dial codes are prefixes of others (+1 vs +54 isn't ambiguous, but
+ *  being consistent here avoids future surprises as more codes get added). */
+function splitPhone(value: string): { dial: string; national: string } {
+  const v = value.trim();
+  if (!v.startsWith("+")) return { dial: DEFAULT_DIAL, national: v };
+  const dial = DIAL_CODES.map((c) => c.dial)
+    .filter((d) => v.startsWith(d))
+    .sort((a, b) => b.length - a.length)[0];
+  if (!dial) return { dial: DEFAULT_DIAL, national: v.slice(1).trim() };
+  return { dial, national: v.slice(dial.length).trim() };
+}
+
+function combinePhone(dial: string, national: string): string {
+  return national ? `${dial} ${national}` : "";
+}
 
 const CaretIcon = ({ className = "" }: { className?: string }) => (
   <svg
@@ -89,11 +137,9 @@ function RoleCard({
   return (
     <div
       id={role.id}
-      className={`overflow-hidden rounded-2xl border-[1.5px] bg-white transition-colors ${
-        role.wide ? "border-dashed border-brand-orange" : "border-[#DCD6CC]"
-      } ${selected ? "!border-brand-orange shadow-[0_0_0_3px_rgba(239,114,0,0.12)]" : ""} ${
-        selected && role.wide ? "!border-solid" : ""
-      }`}
+      className={`overflow-hidden rounded-2xl border-[1.5px] bg-white transition-colors ${role.wide ? "border-dashed border-brand-orange" : "border-[#DCD6CC]"
+        } ${selected ? "!border-brand-orange shadow-[0_0_0_3px_rgba(239,114,0,0.12)]" : ""} ${selected && role.wide ? "!border-solid" : ""
+        }`}
     >
       <button
         type="button"
@@ -117,11 +163,10 @@ function RoleCard({
             }}
             aria-label={`Mark ${role.name} as interesting`}
             aria-pressed={selected}
-            className={`flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full border-[1.5px] transition-colors ${
-              selected
+            className={`flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full border-[1.5px] transition-colors ${selected
                 ? "border-brand-orange bg-brand-orange"
                 : "border-[#DCD6CC] bg-white hover:border-[#B7AFA8]"
-            }`}
+              }`}
           >
             {selected && <CheckIcon />}
           </span>
@@ -133,9 +178,8 @@ function RoleCard({
           <span className="mt-[3px] block text-[12.5px] text-[#6F6668]">{role.vac}</span>
         </span>
         <CaretIcon
-          className={`h-5 w-5 shrink-0 text-[#B7AFA8] transition-transform duration-200 ${
-            expanded ? "rotate-180" : ""
-          }`}
+          className={`h-5 w-5 shrink-0 text-[#B7AFA8] transition-transform duration-200 ${expanded ? "rotate-180" : ""
+            }`}
         />
       </button>
       {/* Always in the DOM — collapsed with a CSS grid-rows trick
@@ -145,9 +189,8 @@ function RoleCard({
           Accordion content hidden this way (not removed from the DOM) is
           treated as regular indexable content by Google. */}
       <div
-        className={`grid transition-[grid-template-rows] duration-300 ease-out ${
-          expanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-        }`}
+        className={`grid transition-[grid-template-rows] duration-300 ease-out ${expanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+          }`}
       >
         <div className="overflow-hidden">
           <div
@@ -172,8 +215,15 @@ function RoleCard({
   );
 }
 
+// No width here on purpose — every call site sets its own (w-full almost
+// everywhere, but the phone row needs a fixed-width select + a flexible
+// input side by side, and a stray w-full baked into this base class fought
+// with that: Tailwind's generated stylesheet order doesn't follow the order
+// classes appear in a className string, so "w-full" from here was beating
+// "w-[7.5rem]" appended after it and the dial-code select rendered full
+// width with the number input squeezed into whatever sliver was left.
 const inputClass =
-  "w-full rounded-2xl border-[1.5px] border-[#DCD6CC] bg-white px-[15px] py-[13px] font-body text-[15.5px] text-ink outline-none transition-colors focus:border-brand-orange focus:shadow-[0_0_0_3px_rgba(239,114,0,0.12)] placeholder:text-[#B7AFA8]";
+  "rounded-2xl border-[1.5px] border-[#DCD6CC] bg-white px-[15px] py-[13px] font-body text-[15.5px] text-ink outline-none transition-colors focus:border-brand-orange focus:shadow-[0_0_0_3px_rgba(239,114,0,0.12)] placeholder:text-[#B7AFA8]";
 
 function FieldInput({
   field,
@@ -197,7 +247,7 @@ function FieldInput({
       </label>
       {field.type === "select" ? (
         <select
-          className={inputClass}
+          className={`${inputClass} w-full`}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           autoFocus={autoFocus}
@@ -209,10 +259,41 @@ function FieldInput({
             </option>
           ))}
         </select>
+      ) : field.k === "phone" ? (
+        (() => {
+          const { dial, national } = splitPhone(value);
+          return (
+            <div className="flex gap-2">
+              <select
+                className={`${inputClass} w-[7.5rem] shrink-0 px-2.5`}
+                value={dial}
+                onChange={(e) => onChange(combinePhone(e.target.value, national))}
+                aria-label="Country code"
+              >
+                {DIAL_CODES.map((c) => (
+                  <option key={c.iso} value={c.dial}>
+                    {c.label} ({c.dial})
+                  </option>
+                ))}
+              </select>
+              <input
+                type="tel"
+                className={`${inputClass} min-w-0 flex-1 ${invalid ? "!border-[#C95F00]" : ""}`}
+                placeholder={field.ph}
+                value={national}
+                onChange={(e) =>
+                  onChange(combinePhone(dial, sanitizeText(e.target.value)))
+                }
+                autoFocus={autoFocus}
+                aria-invalid={invalid}
+              />
+            </div>
+          );
+        })()
       ) : (
         <input
           type={field.type === "email" ? "email" : field.type === "tel" ? "tel" : "text"}
-          className={`${inputClass} ${invalid ? "!border-[#C95F00]" : ""}`}
+          className={`${inputClass} w-full ${invalid ? "!border-[#C95F00]" : ""}`}
           placeholder={field.ph}
           value={value}
           onChange={(e) => onChange(sanitizeText(e.target.value))}
@@ -273,11 +354,20 @@ export default function CareersWizard() {
   const saveProgress = useCallback(
     (completed: boolean) => {
       if (!sessionId) return;
+      // Every key present on every call, even blank ("") before the user
+      // reaches that step — not just whatever's been filled so far. Make's
+      // webhook "detect data structure" infers its schema from whichever
+      // call it last saw; a sparse early-step payload (just session_id/
+      // completed/updated_at) was overwriting the full 17-field schema
+      // every time someone opened the form and dropped off before finishing.
+      const fullAnswers = Object.fromEntries(
+        ANSWER_KEYS.map((k) => [k, answers[k] ?? ""]),
+      );
       const payload = {
         session_id: sessionId,
         completed,
         updated_at: new Date().toISOString(),
-        ...answers,
+        ...fullAnswers,
       };
       const json = JSON.stringify(payload);
       if (json === lastSaveRef.current) return;
@@ -286,17 +376,10 @@ export default function CareersWizard() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: json,
-      }).catch(() => {});
+      }).catch(() => { });
     },
     [sessionId, stepIndex, answers],
   );
-
-  useEffect(() => {
-    if (step.type !== "intro" && step.type !== "result") saveProgress(false);
-    // Only re-run when the step actually changes, matching the original
-    // "save on advance" behavior rather than saving on every keystroke.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stepIndex]);
 
   const go = useCallback(() => {
     setStepIndex((i) => Math.min(i + 1, STEPS.length - 1));
@@ -436,18 +519,16 @@ export default function CareersWizard() {
                         setAnswer(step.k, o.t);
                         setTimeout(go, 260);
                       }}
-                      className={`flex w-full items-start gap-3.5 rounded-2xl border-[1.5px] bg-white px-[18px] py-4 text-left font-body text-[15.5px] leading-[1.45] text-ink transition-all hover:-translate-y-px hover:border-[#B7AFA8] hover:shadow-[0_2px_10px_rgba(37,31,33,0.08)] ${
-                        selected
+                      className={`flex w-full items-start gap-3.5 rounded-2xl border-[1.5px] bg-white px-[18px] py-4 text-left font-body text-[15.5px] leading-[1.45] text-ink transition-all hover:-translate-y-px hover:border-[#B7AFA8] hover:shadow-[0_2px_10px_rgba(37,31,33,0.08)] ${selected
                           ? "border-brand-orange bg-[#FDF2E5] shadow-[0_0_0_3px_rgba(239,114,0,0.12)]"
                           : "border-[#DCD6CC]"
-                      }`}
+                        }`}
                     >
                       <span
-                        className={`grid h-6 w-6 shrink-0 place-items-center rounded-lg border text-[12px] font-bold ${
-                          selected
+                        className={`grid h-6 w-6 shrink-0 place-items-center rounded-lg border text-[12px] font-bold ${selected
                             ? "border-brand-orange bg-brand-orange text-white"
                             : "border-[#DCD6CC] bg-cream text-[#6F6668]"
-                        }`}
+                          }`}
                       >
                         {CHOICE_KEYS[n]}
                       </span>
@@ -532,9 +613,8 @@ export default function CareersWizard() {
               <button
                 type="button"
                 onClick={back}
-                className={`rounded-[10px] px-2 py-3.5 font-body text-[15px] font-semibold text-[#6F6668] transition-colors hover:text-ink ${
-                  showBack ? "visible" : "invisible"
-                }`}
+                className={`rounded-[10px] px-2 py-3.5 font-body text-[15px] font-semibold text-[#6F6668] transition-colors hover:text-ink ${showBack ? "visible" : "invisible"
+                  }`}
               >
                 Back
               </button>
@@ -591,7 +671,7 @@ function TextAreaField({
         maxLength={step.type === "line" ? step.max : undefined}
         placeholder={step.ph}
         onChange={(e) => setAnswer(step.k, sanitizeText(e.target.value))}
-        className={`${inputClass} ${heightClass} resize-y leading-[1.55]`}
+        className={`${inputClass} w-full ${heightClass} resize-y leading-[1.55]`}
       />
       <div className={`mt-1.5 text-right text-[12px] ${overLimit ? "font-semibold text-[#C95F00]" : "text-[#B7AFA8]"}`}>
         {step.type === "line" ? `${value.length} / ${step.max}` : `${value.length} characters`}
