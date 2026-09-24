@@ -68,34 +68,108 @@ const CHOICE_KEYS = "ABCDEFGHIJ";
 // vs. a phone UI). Forcing a dial code here (rather than letting people type
 // a bare local number) is what fixes the Make -> ClickUp error: ClickUp's
 // Phone field rejects a number with no country code.
+//
+// Keyed by `iso`, not `dial`, for the select's value/state — US and Canada
+// both dial "+1", so keying the <select> by the dial digits meant picking
+// "Canada" and "US" produced the exact same value; React (and the browser)
+// then just kept showing whichever <option> with that value came first in
+// the DOM (US), so the dropdown silently snapped back and never actually
+// showed Canada as selected. `iso` is unique per entry, so that ambiguity
+// can't happen.
+// Short acronyms (US, ARG, MEX, CAN, UK), not full country names — the
+// common convention for phone country pickers everywhere. Same in both
+// languages: these are abbreviations, not translated words.
 const DIAL_CODES = [
-  { iso: "US", label: "US", labelEs: "EE.UU.", dial: "+1" },
-  { iso: "AR", label: "Argentina", labelEs: "Argentina", dial: "+54" },
-  { iso: "MX", label: "Mexico", labelEs: "México", dial: "+52" },
-  { iso: "CA", label: "Canada", labelEs: "Canadá", dial: "+1" },
-  { iso: "GB", label: "United Kingdom", labelEs: "Reino Unido", dial: "+44" },
+  { iso: "US", label: "US", labelEs: "US", dial: "+1" },
+  { iso: "AR", label: "ARG", labelEs: "ARG", dial: "+54" },
+  { iso: "MX", label: "MEX", labelEs: "MEX", dial: "+52" },
+  { iso: "CA", label: "CAN", labelEs: "CAN", dial: "+1" },
+  { iso: "GB", label: "UK", labelEs: "UK", dial: "+44" },
 ] as const;
 
-const DEFAULT_DIAL = "+1";
+type DialCode = (typeof DIAL_CODES)[number];
 
-/** Splits a stored phone value ("+54 9 11 2345 6789") into its dial code and
- *  the rest, so the UI can show them in two boxes while `answers.phone`
- *  keeps holding one plain string (same shape every other field uses, and
- *  what actually gets validated/submitted). Longest-match first because
- *  some dial codes are prefixes of others (+1 vs +54 isn't ambiguous, but
- *  being consistent here avoids future surprises as more codes get added). */
-function splitPhone(value: string): { dial: string; national: string } {
+// A locally-formatted example number per country, shown as the input's
+// placeholder — updates the moment the country picker changes, instead of
+// always showing the same (Argentina-shaped) example no matter which
+// country is selected.
+const PHONE_PLACEHOLDERS: Record<string, string> = {
+  US: "404 555 0134",
+  AR: "9 11 1234 5678",
+  MX: "55 1234 5678",
+  CA: "416 555 0134",
+  GB: "20 7946 0958",
+};
+
+/** Which DIAL_CODES entry a stored phone value ("+54 9 11 2345 6789")
+ *  starts with. Longest dial match first (no two dials here are prefixes of
+ *  each other, but that stays correct if a future code were), and the first
+ *  DIAL_CODES entry with that dial when several share it (US over Canada)
+ *  — an unavoidable guess given the value alone doesn't distinguish them;
+ *  PhoneField's own iso state (set the moment someone actually picks a
+ *  country) is what makes the picker itself unambiguous going forward. */
+function guessCountry(value: string): DialCode {
   const v = value.trim();
-  if (!v.startsWith("+")) return { dial: DEFAULT_DIAL, national: v };
-  const dial = DIAL_CODES.map((c) => c.dial)
-    .filter((d) => v.startsWith(d))
-    .sort((a, b) => b.length - a.length)[0];
-  if (!dial) return { dial: DEFAULT_DIAL, national: v.slice(1).trim() };
-  return { dial, national: v.slice(dial.length).trim() };
+  if (v.startsWith("+")) {
+    const match = DIAL_CODES.filter((c) => v.startsWith(c.dial)).sort(
+      (a, b) => b.dial.length - a.dial.length,
+    )[0];
+    if (match) return match;
+  }
+  return DIAL_CODES[0];
 }
 
 function combinePhone(dial: string, national: string): string {
   return national ? `${dial} ${national}` : "";
+}
+
+function PhoneField({
+  value,
+  onChange,
+  lang,
+  invalid,
+  autoFocus,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  lang: Lang;
+  invalid: boolean;
+  autoFocus?: boolean;
+}) {
+  const [iso, setIso] = useState(() => guessCountry(value).iso);
+  const country = DIAL_CODES.find((c) => c.iso === iso) ?? DIAL_CODES[0];
+  const v = value.trim();
+  const national = v.startsWith(country.dial) ? v.slice(country.dial.length).trim() : v.replace(/^\+\S*\s*/, "");
+
+  return (
+    <div className="flex gap-2">
+      <select
+        className={`${inputClass} w-[7.5rem] shrink-0 px-2.5`}
+        value={iso}
+        onChange={(e) => {
+          const next = DIAL_CODES.find((c) => c.iso === e.target.value) ?? DIAL_CODES[0];
+          setIso(next.iso);
+          onChange(combinePhone(next.dial, national));
+        }}
+        aria-label={lang === "es" ? UI_ES.countryCode : "Country code"}
+      >
+        {DIAL_CODES.map((c) => (
+          <option key={c.iso} value={c.iso}>
+            {lang === "es" ? c.labelEs : c.label} {c.dial}
+          </option>
+        ))}
+      </select>
+      <input
+        type="tel"
+        className={`${inputClass} min-w-0 flex-1 ${invalid ? "!border-[#C95F00]" : ""}`}
+        placeholder={PHONE_PLACEHOLDERS[iso]}
+        value={national}
+        onChange={(e) => onChange(combinePhone(country.dial, sanitizeText(e.target.value)))}
+        autoFocus={autoFocus}
+        aria-invalid={invalid}
+      />
+    </div>
+  );
 }
 
 const CaretIcon = ({ className = "" }: { className?: string }) => (
@@ -305,36 +379,13 @@ function FieldInput({
           ))}
         </select>
       ) : field.k === "phone" ? (
-        (() => {
-          const { dial, national } = splitPhone(value);
-          return (
-            <div className="flex gap-2">
-              <select
-                className={`${inputClass} w-[7.5rem] shrink-0 px-2.5`}
-                value={dial}
-                onChange={(e) => onChange(combinePhone(e.target.value, national))}
-                aria-label={lang === "es" ? UI_ES.countryCode : "Country code"}
-              >
-                {DIAL_CODES.map((c) => (
-                  <option key={c.iso} value={c.dial}>
-                    {lang === "es" ? c.labelEs : c.label} ({c.dial})
-                  </option>
-                ))}
-              </select>
-              <input
-                type="tel"
-                className={`${inputClass} min-w-0 flex-1 ${invalid ? "!border-[#C95F00]" : ""}`}
-                placeholder={ph}
-                value={national}
-                onChange={(e) =>
-                  onChange(combinePhone(dial, sanitizeText(e.target.value)))
-                }
-                autoFocus={autoFocus}
-                aria-invalid={invalid}
-              />
-            </div>
-          );
-        })()
+        <PhoneField
+          value={value}
+          onChange={onChange}
+          lang={lang}
+          invalid={invalid}
+          autoFocus={autoFocus}
+        />
       ) : (
         <input
           type={field.type === "email" ? "email" : field.type === "tel" ? "tel" : "text"}

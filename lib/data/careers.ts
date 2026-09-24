@@ -302,8 +302,8 @@ export const STEPS: readonly Step[] = [
     eyebrow: "8 of 9",
     k: "englishLevel",
     title:
-      "English: a 45-minute Zoom with an American COO who talks fast and interrupts you.",
-    sub: "Be honest. Some of the roles need this and some don't, so overstating it here only wastes your time.",
+      "English level: how does this go? ",
+    sub: "A 45 minute Zoom with an American COO who talks fast and interrupts you. Be honest some of the roles need this and some don't.",
     opts: [
       { t: "I run the meeting, no second thoughts." },
       { t: "I hold my own. I might miss a nuance, but it doesn't fall apart." },
