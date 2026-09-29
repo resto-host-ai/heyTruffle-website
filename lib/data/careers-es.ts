@@ -184,7 +184,7 @@ export const STEPS_ES: Record<string, StepEs> = {
   interestedRoles: {
     eyebrow: "4 de 9",
     title: "¿Cuáles te interesan?",
-    sub: "Hacé click en cualquiera para releer qué significa el rol. Elegí hasta tres con el círculo de la izquierda.",
+    sub: "Hacé click en cualquiera para releer qué significa el rol. Elegí hasta tres con el círculo de la izquierda — el primero que elijas es tu opción principal, el resto son alternativas.",
   },
   aiExperience: {
     eyebrow: "5 de 9",

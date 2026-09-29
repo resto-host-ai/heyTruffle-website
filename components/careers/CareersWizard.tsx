@@ -51,13 +51,20 @@ type Answers = Record<string, string | string[] | undefined>;
 // Every answer key the form can ever produce, derived from STEPS itself so
 // it can't drift out of sync with the data file. Used to pad every autosave
 // payload out to the same, full shape — see the note on saveProgress below.
-const ANSWER_KEYS: string[] = STEPS.flatMap((step) =>
-  step.type === "fields"
-    ? step.fields.map((f) => f.k)
-    : "k" in step
-      ? [step.k]
-      : [],
-);
+// "secondaryRoles" is appended by hand: it isn't a STEPS field key, it's
+// split off the "roles" step's single answer (see the selectedRoles effect
+// below) — interestedRoles becomes the one primary pick, secondaryRoles the
+// up-to-two runner-ups.
+const ANSWER_KEYS: string[] = [
+  ...STEPS.flatMap((step) =>
+    step.type === "fields"
+      ? step.fields.map((f) => f.k)
+      : "k" in step
+        ? [step.k]
+        : [],
+  ),
+  "secondaryRoles",
+];
 
 const CHOICE_KEYS = "ABCDEFGHIJ";
 
@@ -187,22 +194,6 @@ const CaretIcon = ({ className = "" }: { className?: string }) => (
   </svg>
 );
 
-const CheckIcon = () => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="white"
-    strokeWidth="3"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    aria-hidden
-  >
-    <path d="M20 6 9 17l-5-5" />
-  </svg>
-);
-
 type RoleDisplay = { name: string; vac: string; bullets: readonly string[]; ident: string };
 
 // Display-only: role.id/.name stay the English canonical values used for
@@ -220,7 +211,7 @@ function RoleCard({
   expanded,
   onToggleExpand,
   selectable,
-  selected,
+  rank,
   onToggleSelect,
 }: {
   role: Role;
@@ -231,9 +222,12 @@ function RoleCard({
   expanded: boolean;
   onToggleExpand: () => void;
   selectable: boolean;
-  selected?: boolean;
+  /** 1-based pick order — 1 is the primary choice (interestedRoles), 2/3
+   *  are secondary (secondaryRoles). Undefined/unset when not picked. */
+  rank?: number;
   onToggleSelect?: () => void;
 }) {
+  const selected = rank !== undefined;
   return (
     <div
       id={role.id}
@@ -265,12 +259,12 @@ function RoleCard({
               lang === "es" ? UI_ES.markAsInteresting(display.name) : `Mark ${display.name} as interesting`
             }
             aria-pressed={selected}
-            className={`flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full border-[1.5px] transition-colors ${selected
-                ? "border-brand-orange bg-brand-orange"
-                : "border-[#DCD6CC] bg-white hover:border-[#B7AFA8]"
+            className={`flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full border-[1.5px] text-[13px] font-bold transition-colors ${selected
+                ? "border-brand-orange bg-brand-orange text-white"
+                : "border-[#DCD6CC] bg-white text-transparent hover:border-[#B7AFA8]"
               }`}
           >
-            {selected && <CheckIcon />}
+            {rank ?? ""}
           </span>
         )}
         <span className="min-w-0 flex-1">
@@ -423,7 +417,10 @@ export default function CareersWizard() {
   const [answers, setAnswers] = useState<Answers>({});
   const [expandedIntro, setExpandedIntro] = useState<Set<number>>(new Set());
   const [expandedRoles, setExpandedRoles] = useState<Set<number>>(new Set());
-  const [selectedRoles, setSelectedRoles] = useState<Set<number>>(new Set());
+  // Ordered by pick sequence, not a Set — the order now carries meaning:
+  // index 0 is the primary choice (sent as interestedRoles), the rest are
+  // secondary (secondaryRoles). See the effect below.
+  const [selectedRoles, setSelectedRoles] = useState<number[]>([]);
   // Display language only — never affects what's stored in `answers` or
   // sent to Make/ClickUp (see lib/data/careers-es.ts header). Starts in
   // English; a visible toggle lets the applicant switch either way.
@@ -515,7 +512,7 @@ export default function CareersWizard() {
       const v = (answers[step.k] as string) || "";
       return isPlausibleFreeText(v, step.min);
     }
-    if (step.type === "roles") return selectedRoles.size > 0;
+    if (step.type === "roles") return selectedRoles.length > 0;
     return true;
   }, [step, answers, selectedRoles]);
 
@@ -543,23 +540,30 @@ export default function CareersWizard() {
 
   function toggleRoleSelect(n: number, max: number) {
     setSelectedRoles((prev) => {
-      const next = new Set(prev);
-      if (next.has(n)) {
-        next.delete(n);
-      } else {
-        if (next.size >= max) return prev;
-        next.add(n);
-      }
-      return next;
+      if (prev.includes(n)) return prev.filter((x) => x !== n);
+      if (prev.length >= max) return prev;
+      // Appended, not inserted — the pick order is the rank: whichever role
+      // was clicked first stays index 0 (primary/interestedRoles) even if
+      // more are added after it.
+      return [...prev, n];
     });
   }
 
   useEffect(() => {
     if (step.type === "roles") {
-      setAnswer(
-        step.k,
-        [...selectedRoles].map((n) => ROLES[n].name),
-      );
+      const names = selectedRoles.map((n) => ROLES[n].name);
+      const [primary, ...secondary] = names;
+      // Both plain strings, not arrays — every other multi-choice field
+      // in this payload (howFound, studies, etc.) is a plain string too,
+      // and ClickUp's Text fields expect that, not JSON array notation.
+      // interestedRoles: the single primary pick (index 0).
+      // secondaryRoles: everything picked after it (up to two), in its own
+      // field so Make/ClickUp can map them apart from the primary.
+      // Semicolon-separated, not comma — one role's own name already
+      // contains a comma ("Account Manager, US Accounts"), which a
+      // comma-joined list couldn't be told apart from a separator.
+      setAnswer(step.k, primary ?? "");
+      setAnswer("secondaryRoles", secondary.join("; "));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedRoles]);
@@ -750,15 +754,19 @@ export default function CareersWizard() {
                       })
                     }
                     selectable
-                    selected={selectedRoles.has(n)}
+                    rank={
+                      selectedRoles.includes(n)
+                        ? selectedRoles.indexOf(n) + 1
+                        : undefined
+                    }
                     onToggleSelect={() => toggleRoleSelect(n, step.max)}
                   />
                 ))}
               </div>
               <div className="mt-3.5 text-[13px] text-[#6F6668]">
                 {lang === "es"
-                  ? UI_ES.roleSelectedCount(selectedRoles.size, step.max)
-                  : `${selectedRoles.size} of ${step.max} selected`}
+                  ? UI_ES.roleSelectedCount(selectedRoles.length, step.max)
+                  : `${selectedRoles.length} of ${step.max} selected`}
               </div>
             </div>
           )}
@@ -766,11 +774,11 @@ export default function CareersWizard() {
           {step.type === "result" && (
             <ResultStep
               answers={answers}
-              selectedRoleNames={[...selectedRoles].map((n) => ROLES[n].name)}
-              selectedRoleDisplayNames={[...selectedRoles].map(
+              selectedRoleNames={selectedRoles.map((n) => ROLES[n].name)}
+              selectedRoleDisplayNames={selectedRoles.map(
                 (n) => roleDisplay(ROLES[n], lang).name,
               )}
-              openRolePicked={[...selectedRoles].some((n) => ROLES[n].id === "open")}
+              openRolePicked={selectedRoles.some((n) => ROLES[n].id === "open")}
               sessionId={sessionId}
               saveProgress={saveProgress}
               lang={lang}
@@ -1076,8 +1084,13 @@ function ResultStep({
       <div className="mb-1 font-body text-[12px] font-semibold uppercase tracking-[0.08em] text-[#6F6668]">
         {lang === "es" ? "Lo que elegiste" : "What you selected"}
       </div>
-      <div className="mt-3.5 flex flex-wrap gap-2">
-        {selectedRoleDisplayNames.map((name) => (
+      <div className="mt-3.5 flex flex-wrap items-center gap-2">
+        {selectedRoleDisplayNames[0] && (
+          <span className="rounded-full border border-brand-orange bg-[#FDF2E5] px-[15px] py-[7px] text-[14px] font-semibold text-ink">
+            {selectedRoleDisplayNames[0]}
+          </span>
+        )}
+        {selectedRoleDisplayNames.slice(1).map((name) => (
           <span key={name} className="rounded-full border border-[#DCD6CC] bg-cream px-[15px] py-[7px] text-[14px] text-ink">
             {name}
           </span>

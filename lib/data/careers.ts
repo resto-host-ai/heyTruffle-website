@@ -260,7 +260,7 @@ export const STEPS: readonly Step[] = [
     k: "interestedRoles",
     max: 3,
     title: "Which ones interest you?",
-    sub: "Click any of them to read again what the role means. Pick up to three with the circle on the left.",
+    sub: "Click any of them to read again what the role means. Pick up to three with the circle on the left — the first one you pick is your top choice, the rest are backups.",
   },
 
   {
