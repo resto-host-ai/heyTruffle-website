@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { randomUUID } from "node:crypto";
 
 type Payload = Record<string, string>;
 
@@ -77,6 +78,44 @@ export async function POST(req: NextRequest) {
     }
   } else {
     console.log("[contact] LEADS_WEBHOOK_URL not configured; skipping forward");
+  }
+
+  /* Second, independent forward to the partners.heytruffle.ai demo intake
+     (a different system from the Make/Zapier automation above — this one
+     wants its own fixed shape and a bearer-token secret, not the generic
+     {source, timestamp, data} envelope). Both URL and secret are
+     server-only env vars; the secret must never ship as NEXT_PUBLIC_, same
+     reasoning as CAREERS_WEBHOOK_URL in app/api/careers/route.ts. */
+  const partnersUrl = process.env.PARTNERS_WEBHOOK_URL;
+  const partnersSecret = process.env.PARTNERS_WEBHOOK_SECRET;
+  if (partnersUrl && partnersSecret) {
+    try {
+      const res = await fetch(partnersUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${partnersSecret}`,
+        },
+        body: JSON.stringify({
+          externalId: randomUUID(),
+          name,
+          email,
+          phone: payload.phone || "",
+          restaurantName: payload.restaurant || "",
+          kind: "contact-form",
+          message: payload.text || "",
+        }),
+      });
+      if (!res.ok) {
+        console.error("[contact] partners webhook non-2xx:", res.status);
+      }
+    } catch (err) {
+      console.error("[contact] partners webhook error:", err);
+    }
+  } else {
+    console.log(
+      "[contact] PARTNERS_WEBHOOK_URL/SECRET not configured; skipping forward",
+    );
   }
 
   return NextResponse.json({ ok: true });
