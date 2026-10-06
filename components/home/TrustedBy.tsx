@@ -32,9 +32,9 @@ const TRACK = [...LOGOS, ...LOGOS];
 
 export default function TrustedBy() {
   return (
-    <section id="trusted" className="pb-6 pt-16 md:pt-20">
+    <section id="trusted" className="pb-6 pt-16 md:pt-[calc(80*var(--fx))]">
       <div className="mx-auto w-full px-6 lg:px-[73px]">
-        <h2 className="reveal reveal-up font-body text-center text-[16px] font-normal! leading-[145%] md:text-[18px] text-cream/90">
+        <h2 className="reveal reveal-up font-body text-center text-[16px] font-normal! leading-[145%] md:text-[calc(18*var(--fx))] text-cream/90">
           Restaurants powered by heytruffle answer every call.{" "}
           <span className="text-[#d592f3]">Your restaurant can too.</span>
         </h2>
@@ -45,7 +45,7 @@ export default function TrustedBy() {
           re-composite the whole strip per frame; phones get two cheap gradient
           overlays over the section bg instead. */}
       <div className="group relative mt-12 overflow-hidden md:[mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-        <div className="marquee mobile-logo-marquee flex w-max items-center gap-9 pr-9 md:gap-12 md:pr-12">
+        <div className="marquee mobile-logo-marquee flex w-max items-center gap-9 pr-9 md:gap-[calc(48*var(--fx))] md:pr-[calc(48*var(--fx))]">
           {TRACK.map((logo, i) => (
             <div className="marquee-item" key={i}>
               <Image
@@ -73,7 +73,7 @@ export default function TrustedBy() {
         />
       </div>
 
-      <p className="mt-12 text-center font-body text-[15px] font-normal leading-[110%] md:text-[16px] text-cream">
+      <p className="mt-12 text-center font-body text-[15px] font-normal leading-[110%] md:text-[calc(16*var(--fx))] text-cream">
         Trusted by leading U.S. restaurants
       </p>
     </section>

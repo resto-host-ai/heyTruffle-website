@@ -52,6 +52,13 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  /* One Figma pixel. The v2 desktop designs are drawn on a 1920px frame;
+     sizing with calc(N * var(--fx)) keeps them at their Figma size from
+     1920px up and shrinks them in proportion below it — so a 1536px laptop
+     (1920 at 125% display scale) sees the same composition, not one ~25%
+     larger. Floored at 70% so small laptops and tablets keep readable type.
+     Desktop (md+) values only; mobile has its own sizes. */
+  --fx: clamp(0.7px, calc(100vw / 1920), 1px);
 }
 
 /* Smooth-scroll to in-page anchors (Features, Pricing, Meet the hosts, …). */
@@ -460,6 +467,53 @@ html {
   .hero-blob-i,
   .hero-blob-j {
     animation: none;
+  }
+}
+
+/* AiHostStory — each animated part (data-story="copy" / "card") sits paused
+   until StoryReplay marks it [data-playing] on scroll. !important because
+   the timings are inline styles, whose `animation` shorthand would otherwise
+   reset the play state to running. */
+[data-story]:not([data-playing]),
+[data-story]:not([data-playing]) * {
+  animation-play-state: paused !important;
+}
+@keyframes story-fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes story-msg-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes story-card-in {
+  from { opacity: 0; transform: translateY(26px) scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes story-typing {
+  0% { opacity: 0; max-height: 0; padding-top: 0; padding-bottom: 0; margin-top: -10px; }
+  16%, 64% { opacity: 1; max-height: 32px; padding-top: 12px; padding-bottom: 12px; margin-top: 0; }
+  86%, 100% { opacity: 0; max-height: 0; padding-top: 0; padding-bottom: 0; margin-top: -10px; }
+}
+@keyframes story-dot {
+  0%, 100% { transform: translateY(0); opacity: 0.35; }
+  50% { transform: translateY(-3px); opacity: 1; }
+}
+@keyframes story-live-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+@keyframes story-rail {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .story-block,
+  .story-block * {
+    animation: none !important;
+  }
+  .story-typing {
+    display: none;
   }
 }
 
@@ -919,7 +973,10 @@ html {
     scroll-behavior: auto;
   }
 
-  *,
+  /* AiHostStory's mock calls are exempt: they play a short one-off sequence
+     of opacity/transform on small elements, only while the block is on
+     screen (StoryReplay pauses it otherwise) — the motion is the content. */
+  *:not(.story-block, .story-block *),
   *::before,
   *::after {
     animation: none !important;

@@ -1,70 +1,44 @@
 import Image from "next/image";
 import { NOISE } from "@/lib/noise";
+import HeroBlobs from "@/components/home/HeroBlobs";
 
 export default function HeroBackground() {
   return (
+    /* Stops a few px short of the hero's bottom edge. The drifting layer is
+       scaled past its box, and clipped right at that edge — which often lands
+       on a fractional device pixel — it bled a bright 1px seam under the host
+       player. Ending inside the fade-to-ink leaves only ink at the edge. */
     <div
       aria-hidden
-      className="hero-bg-anim pointer-events-none absolute inset-0 -z-10 overflow-hidden bg-[#0c0b0c]"
+      className="pointer-events-none absolute inset-x-0 top-0 bottom-2 -z-10 overflow-hidden"
     >
-      {/* Phones get one responsive raster instead of ten independently
-          blurred, blended layers. On a 3x iPhone those layers allocate large
-          offscreen surfaces even while static, which is enough to make WebKit
-          evict tiles and repaint the page as black during a fast scroll. */}
+    <div className="hero-bg-anim absolute inset-0 overflow-hidden bg-[#0c0b0c] [container-type:size]">
+
+      <HeroBlobs /> 
       <Image
-        src="/images/hero-living-gradient.webp"
+        src="/images/hero-logo-glow.svg"
+        alt=""
+        width={2224}
+        height={1923}
+        unoptimized
+        className="absolute left-[38%] top-[68%] md:top-[58%] w-[max(75cqw,80cqh)] md:w-[max(90cqw,160cqh)] max-w-none -translate-x-1/2 -translate-y-1/2 opacity-50 blur-xl"
+      />
+      <Image
+        src="/images/GRADIENT%20HERO.svg"
         alt=""
         fill
-        quality={75}
-        loading="eager"
-        fetchPriority="high"
-        sizes="100vw"
-        className="object-cover object-[35%_center] md:hidden"
+        unoptimized
+        className="object-cover opacity-20"
       />
 
-      {/* The layered living gradient remains a desktop-only enhancement. */}
+
+      
+
+{/*       
+
       <div className="hidden md:block">
         <div className="absolute inset-0">
-          <div
-            className="hero-blob hero-blob-a absolute -left-[15%] top-[-25%]"
-            style={{ background: "#3773D7", height: "clamp(300px, 34.5vw, 2000px)", width: "clamp(300px, 34.5vw, 2000px)" }}
-          />
-          <div
-            className="hero-blob hero-blob-b absolute right-[-12%] top-[-5%]"
-            style={{ background: "#EF7200", height: "clamp(260px, 31.5vw, 1850px)", width: "clamp(260px, 31.5vw, 1850px)" }}
-          />
-          <div
-            className="hero-blob hero-blob-c absolute bottom-[-25%] left-[10%]"
-            style={{ background: "#D592F3", height: "clamp(280px, 32.5vw, 1900px)", width: "clamp(280px, 32.5vw, 1900px)" }}
-          />
-          <div
-            className="hero-blob hero-blob-d absolute bottom-[-5%] right-[5%]"
-            style={{ background: "#3773D7", height: "clamp(220px, 25vw, 1500px)", width: "clamp(220px, 25vw, 1500px)" }}
-          />
-          <div
-            className="hero-blob hero-blob-e absolute left-[35%] top-[20%]"
-            style={{ background: "#EF7200", height: "clamp(190px, 21vw, 1260px)", width: "clamp(190px, 21vw, 1260px)" }}
-          />
-          <div
-            className="hero-blob hero-blob-f absolute left-[0%] bottom-[0%]"
-            style={{ background: "#D592F3", height: "clamp(200px, 23vw, 1380px)", width: "clamp(200px, 23vw, 1380px)" }}
-          />
-          <div
-            className="hero-blob hero-blob-g absolute right-[15%] top-[-20%]"
-            style={{ background: "#3773D7", height: "clamp(230px, 26vw, 1560px)", width: "clamp(230px, 26vw, 1560px)" }}
-          />
-          <div
-            className="hero-blob hero-blob-h absolute right-[-5%] bottom-[-20%]"
-            style={{ background: "#D592F3", height: "clamp(220px, 25vw, 1500px)", width: "clamp(220px, 25vw, 1500px)" }}
-          />
-          <div
-            className="hero-blob hero-blob-i absolute left-[15%] top-[-10%]"
-            style={{ background: "#3773D7", height: "clamp(200px, 23vw, 1380px)", width: "clamp(200px, 23vw, 1380px)" }}
-          />
-          <div
-            className="hero-blob hero-blob-j absolute right-[30%] bottom-[-15%]"
-            style={{ background: "#EF7200", height: "clamp(190px, 22vw, 1320px)", width: "clamp(190px, 22vw, 1320px)" }}
-          />
+          
         </div>
         <Image
           src="/images/hero-logo-glow.svg"
@@ -81,9 +55,8 @@ export default function HeroBackground() {
         />
       </div>
 
-      {/* Dims the overall frame a touch without flattening the color —
-          sits above the blobs/logo, below the grain. */}
-      <div className="absolute inset-0 bg-black/25" />
+      <div className="absolute inset-0 bg-black/25" /> */}
+    </div>
     </div>
   );
 }

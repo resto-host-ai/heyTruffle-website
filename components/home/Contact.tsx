@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
-import { NOISE } from "@/lib/noise";
 
 type FormState = {
   name: string;
@@ -72,71 +71,38 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative scroll-mt-24 overflow-hidden bg-black py-10 md:py-16 "
+      className="relative scroll-mt-24 overflow-hidden bg-ink px-5 py-16 font-body text-cream md:py-[calc(110*var(--fx))] lg:px-[73px]"
     >
-      {/* Warm radial glow, echoing the brand gradient */}
-
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-20 md:opacity-30 md:mix-blend-overlay"
-        style={{ backgroundImage: NOISE }}
-      />
-
-      <div className="
-        relative  px-6 lg:px-[73px]
-        min-h-100 h-auto
-         
-        flex flex-col lg:flex-row gap-6  justify-around text-white">
-
-        <div className="reveal reveal-up max-w-160">
-          <p className="text-xs uppercase tracking-[0.2em]">
-            Get in touch
-          </p>
-          <h2 className="mt-5 font-serif text-5xl leading-tight md:2xl lg:text-4xl">
+      <div className="mx-auto flex max-w-[1610px] flex-col gap-10 md:max-w-[calc(1610*var(--fx))] lg:flex-row lg:items-start lg:justify-between lg:gap-[calc(80*var(--fx))]">
+        {/* Copy */}
+        <div className="reveal reveal-up lg:max-w-[calc(660*var(--fx))]">
+          <p className="text-[14px] md:text-[calc(16*var(--fx))]">Get in touch</p>
+          <h2 className="mt-4 font-serif text-[38px] font-normal! leading-[1.12] md:mt-[calc(20*var(--fx))] md:text-[calc(64*var(--fx))] lg:whitespace-nowrap">
             Let&rsquo;s unlock <br /> your missed revenue.
           </h2>
-          <p className="font-body mt-6 max-w-md text-base leading-relaxed  md:text-lg">
-            Enter your details to schedule a free consultation and see how much in sales you&rsquo;re leaving on the table.
-
+          <p className="mt-5 max-w-md text-[16px] leading-[1.6] text-cream/90 md:mt-[calc(32*var(--fx))] md:max-w-[calc(500*var(--fx))] md:text-[calc(22*var(--fx))]">
+            Enter your details to schedule a free consultation and see how much
+            in sales you&rsquo;re leaving on the table.
           </p>
         </div>
 
+        {/* Form card */}
         <form
           onSubmit={onSubmit}
-          className=" 
-            h-auto  
-            w-full 
-            lg:min-w-80 lg:w-auto
-            xl:w-full xl:max-w-130
-            2xl:max-w-160
-            flex items-start 
-            rounded-[28px] border border-white/10 bg-[#241f21]/95 p-7 md:bg-white/10 md:backdrop-blur-sm "
+          className="reveal reveal-up w-full rounded-[22px] border border-white/10 bg-[#4A4345] p-6 lg:w-[calc(850*var(--fx))] lg:shrink-0 md:rounded-[calc(28*var(--fx))] md:p-[calc(58*var(--fx))]"
           style={{ "--reveal-delay": "0.1s" } as React.CSSProperties}
         >
           {status === "submitted" ? (
             <SubmittedState />
           ) : (
-            // <SubmittedState />
-            <div className="gap-4 flex flex-col
-            w-full
-            justify-between  ">
-              <div className=" h-3/4 
-                grid grid-cols-1 gap-4
-                lg:grid-cols-2
-                ">
+            <div className="flex flex-col">
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:gap-x-[calc(34*var(--fx))] md:gap-y-[calc(28*var(--fx))]">
                 <Field
                   label="Name"
                   placeholder="Jane Smith"
                   value={form.name}
                   onChange={(v) => update("name", v)}
                   required
-                />
-                <Field
-                  label="Phone"
-                  type="tel"
-                  placeholder="+1 (555) 000-0000"
-                  value={form.phone}
-                  onChange={(v) => update("phone", v)}
                 />
                 <Field
                   label="Email"
@@ -148,17 +114,24 @@ export default function Contact() {
                 />
                 <Field
                   label="Restaurant Name"
-                  placeholder="Joe's Pizza"
+                  placeholder="Jane's Pizza"
                   value={form.restaurant}
                   onChange={(v) => update("restaurant", v)}
                   required
                 />
                 <Field
-                  className="lg:col-span-2"
+                  label="Phone"
+                  type="tel"
+                  placeholder="+1 (555) 000-0000"
+                  value={form.phone}
+                  onChange={(v) => update("phone", v)}
+                />
+                <Field
+                  className="sm:col-span-2"
                   multiline
                   rows={4}
                   label="Ask us anything, or tell us a bit about your restaurant."
-                  placeholder="Joe's PizzaReservations, catering, how many locations. Whatever's on your mind."
+                  placeholder="Reservations, catering, how many locations. Whatever's on your mind."
                   value={form.text}
                   onChange={(v) => update("text", v)}
                 />
@@ -183,36 +156,31 @@ export default function Contact() {
                 }}
               />
 
-              <div >
+              <button
+                type="submit"
+                disabled={status === "submitting"}
+                className="mt-7 h-14 w-full rounded-full bg-brand-orange text-[16px] font-semibold text-cream transition-colors hover:bg-[#C95F00] disabled:cursor-not-allowed disabled:opacity-70 md:mt-[calc(36*var(--fx))] md:h-[calc(72*var(--fx))] md:text-[calc(18*var(--fx))]"
+              >
+                {status === "submitting" ? "Sending…" : "Send message"}
+              </button>
 
-                <button
-                  type="submit"
-                  disabled={status === "submitting"}
-                  className="mt-7 w-full rounded-full bg-[#ef7200] py-3.5 text-sm font-bold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70
-                  justify-self-end
-                  "
+              <p className="mt-5 text-center text-[12px] text-cream/50 md:text-[calc(13*var(--fx))]">
+                By submitting, you agree to our{" "}
+                <Link
+                  href="/privacy-policy"
+                  className="underline underline-offset-2 transition-colors hover:text-cream"
                 >
-                  {status === "submitting" ? "Sending…" : "Send message"}
-                </button>
-
-                <p className="mt-6 text-center text-xs text-cream/50">
-                  By submitting, you agree to our{" "}
-                  <Link
-                    href="/privacy-policy"
-                    className="underline underline-offset-2 transition-colors hover:text-cream"
-                  >
-                    Privacy Policy
-                  </Link>{" "}
-                  and{" "}
-                  <Link
-                    href="/terms-of-service"
-                    className="underline underline-offset-2 transition-colors hover:text-cream"
-                  >
-                    Terms of Service
-                  </Link>
-                  .
-                </p>
-              </div>
+                  Privacy Policy
+                </Link>{" "}
+                and{" "}
+                <Link
+                  href="/terms-of-service"
+                  className="underline underline-offset-2 transition-colors hover:text-cream"
+                >
+                  Terms of Service
+                </Link>
+                .
+              </p>
             </div>
           )}
         </form>
@@ -238,20 +206,19 @@ function Field({
   type?: string;
   required?: boolean;
   placeholder?: string;
-  /** Grid placement (e.g. "lg:col-span-2") for the field's wrapping label. */
+  /** Grid placement (e.g. "sm:col-span-2") for the field's wrapping label. */
   className?: string;
   /** Renders a <textarea> instead of <input> — for free-text fields that need more than one line. */
   multiline?: boolean;
   /** Minimum visible line count for a multiline field. */
   rows?: number;
 }) {
-  const fieldClassName = `w-full rounded-xl border border-white/15 px-3.5 py-3 text-sm text-black outline-none transition-colors placeholder:text-white/50 focus:border-brand-orange focus:placeholder:text-black/60 ${
-    value ? "bg-white" : "bg-white/15 focus:bg-white"
-  }`;
+  const fieldClassName =
+    "w-full rounded-xl border border-transparent bg-[#E8E6E3] px-4 text-[15px] text-ink outline-none transition-colors placeholder:text-ink/45 focus:border-brand-orange focus:bg-white md:rounded-[calc(14*var(--fx))] md:px-[calc(20*var(--fx))] md:text-[calc(16*var(--fx))]";
 
   return (
     <label className={`block ${className ?? ""}`}>
-      <span className="mb-2 block text-[10px] uppercase tracking-[0.16em] text-cream/60">
+      <span className="mb-2 block text-[14px] text-cream md:mb-[calc(12*var(--fx))] md:text-[calc(16*var(--fx))]">
         {label}
         {required && <span className="ml-1 text-brand-orange">*</span>}
       </span>
@@ -262,7 +229,7 @@ function Field({
           required={required}
           placeholder={placeholder}
           rows={rows}
-          className={`${fieldClassName} resize-none`}
+          className={`${fieldClassName} resize-none py-3 md:h-[calc(197*var(--fx))] md:py-[calc(16*var(--fx))]`}
         />
       ) : (
         <input
@@ -271,7 +238,7 @@ function Field({
           onChange={(e) => onChange(e.target.value)}
           required={required}
           placeholder={placeholder}
-          className={fieldClassName}
+          className={`${fieldClassName} h-12 md:h-[calc(62*var(--fx))]`}
         />
       )}
     </label>

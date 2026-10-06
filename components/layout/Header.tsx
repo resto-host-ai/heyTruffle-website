@@ -11,7 +11,7 @@ import { demoAppUrl } from "@/lib/demoAssistant";
 type NavItem = { label: string; href: string; demo?: boolean };
 
 const NAV_BEFORE: NavItem[] = [
-  { label: "About", href: "/#why-choose-us" },
+  { label: "About", href: "/#about" },
   // { label: "Pricing", href: "/pricing/" },
   { label: "Case Studies", href: "/case-study/" },
   // "Compare" pages (heytruffle vs Slang AI / Loman AI / TableVoice) stay

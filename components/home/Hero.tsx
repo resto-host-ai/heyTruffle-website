@@ -1,7 +1,7 @@
-import Image from "next/image";
 import { BookDemoButton } from "@/components/ui/BookDemoButton";
 import HeroBackground from "@/components/home/HeroBackground";
 import HeroSearch from "@/components/home/HeroSearch";
+import HeroHosts from "@/components/home/HeroHosts";
 import { getCtaVariant } from "@/lib/cta-variant";
 import { ClarityVariantTag } from "@/components/ClarityVariantTag";
 
@@ -19,7 +19,7 @@ export default async function Hero() {
   // "Talk to our team") fits a ~660px svh phone viewport with browser
   // chrome visible — the secondary CTA was falling below the fold.
   return (
-    <section className="relative isolate flex min-h-[100vh] h-auto w-full items-center justify-center overflow-hidden pb-12 pt-24 desk-tall:pt-32 desk-tall:pb-16 desk-short:items-center-safe desk-short:pt-28 desk-short:pb-12">
+    <section className="relative isolate flex min-h-[100vh] h-auto w-full flex-col items-center overflow-clip">
       {/* Animated gradient background (Figma living-gradient) */}
       <HeroBackground />
 
@@ -30,38 +30,20 @@ export default async function Hero() {
       />
 
 
-      {/* Content */}
-      <div className="flex flex-col items-center gap-5 px-6 text-center text-cream desk-tall:gap-6 desk-short:gap-4">
-        {/* Logo — the page's single H1. Its accessible name (the image alt)
-            carries the brand + primary keyword. */}
-        <h1 className="m-0 leading-none">
-          <Image
-            src="/images/icono.svg"
-            alt="heytruffle — voice AI for restaurants"
-            width={105}
-            height={96}
-            loading="eager"
-            unoptimized
-            className="h-12 w-auto sm:h-[60px]"
-          />
+      {/* Content — anchored so the top of the host player peeks
+          in at the bottom of the first screen, as in the Figma. */}
+      <div className="flex min-h-[calc(100svh-180px)] w-full flex-col items-center justify-end gap-5 px-6 pt-24 text-center text-cream desk-tall:gap-6 desk-tall:pt-28 desk-short:gap-4 desk-short:pt-28 md:min-h-[calc(100svh-330px)]">
+        {/* Headline — the page's single H1. */}
+        <h1 className="m-0 max-w-[1000px] font-serif text-[32px] font-bold! leading-[105%] tracking-tight text-cream sm:max-w-[calc(1000*var(--fx))] sm:text-[calc(72*var(--fx))]">
+          Stop losing revenue
+          <br />
+          over the <span className="text-brand-orange">phone</span>
         </h1>
 
-        {/* Headline — demoted from <h1> to <p> so the logo stays the only H1.
-            Sized against the RestoHost scale (h1 caps at 88px there); Gowun
-            Batang reads heavier than a sans at the same px, so this sits a
-            step below it. */}
-        <p className="max-w-[1000px] font-serif text-[38px] font-bold! leading-[110%] tracking-tight text-cream sm:text-[60px] lg:text-[76px]">
-          You operate the restaurant.
-          <br />
-          We operate the phones.
-        </p>
-
-        {/* Subtitle — RestoHost sets body copy at 18px max; 20px keeps a bit
-            more presence without the 26px that read as oversized. */}
-        <p className="font-body w-full max-w-[860px] text-[16px] font-normal leading-[145%] text-cream/85 sm:text-[20px] desk-tall:h-[80px]">
-          A fully managed service that answers every call for your restaurants:
-          every reservation booked, every order taken, every catering inquiry
-          handled.
+        {/* Subtitle */}
+        <p className="font-body w-full max-w-[800px] text-[16px] font-normal leading-[150%] text-cream/90 sm:max-w-[calc(800*var(--fx))] sm:text-[calc(24*var(--fx))]">
+          A fully managed AI Concierge that books reservations, takes orders
+          and handles catering. Trained for your brand, run by our team.
         </p>
 
         {/* CTAs — desktop shows the search bar; mobile shows stacked buttons */}
@@ -90,6 +72,9 @@ export default async function Hero() {
           Free to try. No sign-up. Under 30 seconds.
         </p>
       </div>
+
+      {/* Host player */}
+      <HeroHosts />
 
       <ClarityVariantTag variant={variant} />
     </section>
