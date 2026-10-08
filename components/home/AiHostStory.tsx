@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import StoryReplay from "@/components/home/StoryReplay";
+import StoryScroller, { type StoryStep } from "@/components/home/StoryScroller";
 
 /**
  * AiHostStory — "what the AI host handles", three use cases (Figma
@@ -9,10 +9,12 @@ import StoryReplay from "@/components/home/StoryReplay";
  * catering. Each block pairs copy + integration logos on the left with a
  * mock live call on the right that shows what got written to the POS.
  *
- * Each block plays out its call when it scrolls into view (StoryReplay):
- * the caller speaks, the host types and answers, then the result lands line
- * by line and the call closes with its outcome — held 10s, then replayed.
- * Timings follow the Claude Design "AI Host Scroll Story" prototype.
+ * On desktop it's a scroll story (StoryScroller): the copy scrolls by while
+ * one sticky container on the right switches between the three call cards.
+ * Each card plays out its call — the caller speaks, the host types and
+ * answers, the result lands line by line, the call closes with its outcome —
+ * holds 10s, then replays. Timings follow the Claude Design "AI Host Scroll
+ * Story" prototype.
  */
 
 type ChatLine = { who: "caller" | "host"; text: string };
@@ -26,8 +28,10 @@ type Story = {
   desc: string;
   bullets: string[];
   /** w/h: the SVG's viewBox. cropW: where its artwork actually ends, for the
-   *  files that carry empty space on the right. */
-  logos: { src: string; alt: string; w: number; h: number; cropW?: number }[];
+   *  files that carry empty space on the right. cap: the share of the logo's
+   *  height its lettering takes (measured per file), so every brand name can
+   *  be drawn at the same letter height. */
+  logos: { src: string; alt: string; w: number; h: number; cropW?: number; cap: number }[];
   host: { name: string; role: string };
   chat: ChatLine[];
   /** How the call ends — the green pill at the bottom of the card */
@@ -58,9 +62,9 @@ const STORIES: Story[] = [
       "Special requests escalated to your team",
     ],
     logos: [
-      { src: "/images/integrations/resy.svg", alt: "Resy", w: 77, h: 34 },
-      { src: "/images/integrations/sevenrooms.svg", alt: "SevenRooms", w: 109, h: 30 },
-      { src: "/images/integrations/opentable.svg", alt: "OpenTable", w: 428, h: 95 },
+      { src: "/images/integrations/resy.svg", alt: "Resy", w: 77, h: 34, cap: 0.45 },
+      { src: "/images/integrations/sevenrooms.svg", alt: "SevenRooms", w: 109, h: 30, cap: 0.33 },
+      { src: "/images/integrations/opentable.svg", alt: "OpenTable", w: 428, h: 95, cap: 0.43 },
     ],
     host: { name: "Margarita", role: "AI host" },
     chat: [
@@ -71,7 +75,7 @@ const STORIES: Story[] = [
     done: "Confirmed",
     result: {
       kind: "chips",
-      label: "Written to POS",
+      label: "Send to POS",
       chips: [
         { text: "Party of 6" },
         { text: "Fri · 8:15 pm" },
@@ -86,16 +90,16 @@ const STORIES: Story[] = [
     n: "02",
     eyebrow: "Orders",
     title: ["Pickup and delivery,", "zero friction."],
-    desc: "Pickup and delivery orders taken, charged, and sent straight to your POS. Full menu knowledge, modifiers, allergies, combos and more.",
+    desc: "Pickup and delivery orders taken, charged, and sent straight to your POS. Full menu knowledge, modifiers, allergies, combos and more",
     bullets: [
       "Modifiers, allergies and combos handled the way your kitchen expects",
       "Pickup time and payment link confirmed and sent on the call",
-      "Fired into your POS in real time",
+      "Fired into your POS at real time.",
     ],
     logos: [
-      { src: "/images/integrations/doordash.svg", alt: "DoorDash", w: 476, h: 57 },
-      { src: "/images/integrations/grubhub.svg", alt: "Grubhub", w: 371, h: 78 },
-      { src: "/images/integrations/uber-eats.svg", alt: "Uber Eats", w: 134, h: 24 },
+      { src: "/images/integrations/doordash.svg", alt: "DoorDash", w: 476, h: 57, cap: 0.48 },
+      { src: "/images/integrations/grubhub.svg", alt: "Grubhub", w: 371, h: 78, cap: 0.78 },
+      { src: "/images/integrations/uber-eats.svg", alt: "Uber Eats", w: 134, h: 24, cap: 0.67 },
     ],
     host: { name: "Jeff", role: "AI host · pickup line" },
     chat: [
@@ -120,23 +124,23 @@ const STORIES: Story[] = [
     tab: "Catering & events",
     n: "03",
     eyebrow: "Catering & private events",
-    title: ["Big parties,", "booked solid."],
-    desc: "Catering, private events and large party inquiries get qualified on the spot, then land with your events manager the same day.",
+    title: ["Big parties,", "booked solid"],
+    desc: "Catering, private events, large party reservations inquiries get qualified on the spot then land with your events manager the same day",
     bullets: [
-      "Qualifies headcount, date, budget, service style and more",
-      "Routed to your events manager in the format you prefer",
-      "Sends the follow-ups to the customer automatically",
+      "Qualifies headcount, date, budget, service style and more.",
+      "Routed to your events manager in the format you prefer.",
+      "Sends the follows up automatically to the customers.",
     ],
     logos: [
-      { src: "/images/integrations/toast.svg", alt: "Toast", w: 67, h: 17 },
-      { src: "/images/integrations/square.svg", alt: "Square", w: 130, h: 28, cropW: 82 },
-      { src: "/images/integrations/clover.svg", alt: "Clover", w: 1045, h: 256 },
-      { src: "/images/integrations/olo.svg", alt: "Olo", w: 70, h: 28, cropW: 40 },
+      { src: "/images/integrations/toast.svg", alt: "Toast", w: 67, h: 17, cap: 0.7 },
+      { src: "/images/integrations/square.svg", alt: "Square", w: 130, h: 28, cropW: 82, cap: 0.53 },
+      { src: "/images/integrations/clover.svg", alt: "Clover", w: 1045, h: 256, cap: 0.6 },
+      { src: "/images/integrations/olo.svg", alt: "Olo", w: 70, h: 28, cropW: 40, cap: 0.6 },
     ],
     host: { name: "Nacho", role: "AI host · events line" },
     chat: [
       { who: "caller", text: "We're planning a company dinner for about forty people in December." },
-      { who: "host", text: "Lovely. Is that a seated dinner or passed bites, and do you have a date in mind?" },
+      { who: "host", text: "Lovely. Is that a seated dinner or passed bites and do you have a date in mind?" },
       { who: "caller", text: "Seated, December 12th. Budget is around four thousand." },
     ],
     done: "Lead captured · manager notified",
@@ -162,12 +166,16 @@ const anim = (name: string, ms: number, delay = 0): React.CSSProperties => ({
 const T = {
   msgs: [90, 1320, 1900],
   typing: 320,
-  rail: 2280,
-  label: 2400,
-  items: 2490,
-  step: 80,
-  done: 2980,
+  // After the call, everything below lands one piece at a time at the same
+  // pace as the messages: each item gets its own beat (gap) and the same
+  // entrance length as a message (dur), instead of the whole block sharing
+  // a single half-second.
+  gap: 580,
+  dur: 480,
 };
+
+/** Start time of the n-th piece after the last message (0 = the divider). */
+const beat = (n: number) => T.msgs[T.msgs.length - 1] + T.gap * (n + 1);
 
 function CheckIcon() {
   return (
@@ -186,10 +194,14 @@ function CheckIcon() {
 
 function CallCard({ story }: { story: Story }) {
   const { host, chat, result, done } = story;
-  const item = (i: number) => anim("story-fade-up", 360, T.items + i * T.step);
+  // Beats: 0 divider, 1 label, 2.. each item, then (ticket) divider + total,
+  // then the outcome pill.
+  const item = (i: number) => anim("story-msg-in", T.dur, beat(2 + i));
+  const count =
+    result.kind === "chips" ? result.chips.length : result.kind === "ticket" ? result.items.length : result.fields.length;
+  const doneBeat = result.kind === "ticket" ? 2 + count + 2 : 2 + count;
   return (
     <div
-      data-story="card"
       className="flex flex-col rounded-[22px] bg-cream px-[18px] pb-3.5 pt-[18px] font-body text-ink shadow-[0_18px_44px_rgba(0,0,0,0.13)] md:min-h-[calc(560*var(--fx))] md:rounded-[calc(24*var(--fx))] md:p-[calc(28*var(--fx))]"
       style={anim("story-card-in", 600, 240)}
     >
@@ -253,11 +265,11 @@ function CallCard({ story }: { story: Story }) {
         <div className="pt-5 md:pt-[calc(32*var(--fx))]">
           <div
             className="h-px origin-left bg-[#DCD6CC]"
-            style={anim("story-rail", 520, T.rail)}
+            style={anim("story-rail", T.dur, beat(0))}
           />
           <p
             className="pb-3 pt-4 text-[10.5px] uppercase tracking-[0.1em] text-[#6F6668] md:pb-[calc(12*var(--fx))] md:pt-[calc(16*var(--fx))] md:text-[calc(11*var(--fx))]"
-            style={anim("story-fade-up", 380, T.label)}
+            style={anim("story-msg-in", T.dur, beat(1))}
           >
             {result.label}
           </p>
@@ -302,11 +314,11 @@ function CallCard({ story }: { story: Story }) {
               </div>
               <div
                 className="h-px origin-left bg-[#DCD6CC]"
-                style={anim("story-rail", 460, T.items + result.items.length * T.step)}
+                style={anim("story-rail", T.dur, beat(2 + result.items.length))}
               />
               <div
                 className="flex items-baseline justify-between gap-3 pb-4 pt-3 text-[15.5px] font-semibold md:text-[calc(16*var(--fx))]"
-                style={anim("story-fade-up", 360, T.items + (result.items.length + 1) * T.step)}
+                style={anim("story-msg-in", T.dur, beat(3 + result.items.length))}
               >
                 <span className="whitespace-nowrap">{result.total.text}</span>
                 <span className="whitespace-nowrap">{result.total.price}</span>
@@ -334,7 +346,7 @@ function CallCard({ story }: { story: Story }) {
           {/* The call's outcome */}
           <div
             className="mb-1 flex items-center gap-[9px] rounded-xl bg-[rgba(47,125,88,0.14)] px-3.5 py-[11px] text-[13.5px] font-semibold leading-[1.3] text-[#1E5C40] md:px-[calc(14*var(--fx))] md:py-[calc(11*var(--fx))] md:text-[calc(14*var(--fx))]"
-            style={anim("story-fade-up", 420, T.done)}
+            style={anim("story-msg-in", T.dur, beat(doneBeat))}
           >
             <CheckIcon />
             <span>{done}</span>
@@ -345,101 +357,96 @@ function CallCard({ story }: { story: Story }) {
   );
 }
 
-export default function AiHostStory() {
+function StoryCopy({ s }: { s: Story }) {
   return (
-    <section className="relative z-10 w-full overflow-x-clip px-5 py-16 font-body text-cream md:py-[calc(112*var(--fx))] lg:px-[73px]">
-      <div className="mx-auto flex flex-col md:max-w-[calc(1330*var(--fx))] gap-24 md:gap-[calc(160*var(--fx))]">
-        {STORIES.map((s) => (
-          <StoryReplay
-            key={s.id}
-            className="relative grid items-center gap-10 md:grid-cols-[1fr_minmax(0,calc(620*var(--fx)))] md:gap-[calc(64*var(--fx))]"
-          >
-            {/* Copy */}
-            <div data-story="copy">
-              <p
-                className="text-[14px] uppercase tracking-[0.18em] md:text-[calc(15*var(--fx))]"
-                style={anim("story-fade-up", 460)}
-              >
-                <span className="mr-3 text-brand-orange">{s.n}</span>
-                <span className="text-cream/70">{s.eyebrow}</span>
-              </p>
-              <h2
-                className="mt-4 font-serif text-[34px] font-normal! leading-[1.08] md:text-[calc(48*var(--fx))]"
-                style={anim("story-fade-up", 520, 80)}
-              >
-                {s.title[0]} <br className="hidden md:inline" />
-                {s.title[1]}
-              </h2>
-              <p
-                className="mt-5 max-w-[600px] text-[17px] leading-[1.35] text-cream/90 md:text-[calc(22*var(--fx))]"
-                style={anim("story-fade-up", 520, 170)}
-              >
-                {s.desc}
-              </p>
+    <div>
+      <p
+        className="text-[14px] uppercase tracking-[0.18em] md:text-[calc(15*var(--fx))]"
+        style={anim("story-fade-up", 460)}
+      >
+        <span className="mr-3 text-brand-orange">{s.n}</span>
+        <span className="text-cream/70">{s.eyebrow}</span>
+      </p>
+      <h2
+        className="mt-4 font-serif text-[34px] font-normal! leading-[1.08] md:text-[calc(48*var(--fx))]"
+        style={anim("story-fade-up", 520, 80)}
+      >
+        {s.title[0]} <br className="hidden md:inline" />
+        {s.title[1]}
+      </h2>
+      <p
+        className="mt-5 max-w-[600px] text-[17px] leading-[1.35] text-cream/90 md:text-[calc(22*var(--fx))]"
+        style={anim("story-fade-up", 520, 170)}
+      >
+        {s.desc}
+      </p>
 
-              {/* Bullets — desktop only, as in the mobile frame */}
-              <ul className="hidden text-cream/80 md:mt-[calc(32*var(--fx))] md:block md:space-y-[calc(10*var(--fx))] md:text-[calc(18*var(--fx))]">
-                {s.bullets.map((b) => (
-                  <li key={b} className="flex items-baseline gap-3">
-                    <span aria-hidden className="h-1.5 w-1.5 shrink-0 translate-y-[-3px] rounded-full bg-brand-orange" />
-                    {b}
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-4 md:mt-[calc(96*var(--fx))]">
-                {/* Every logo gets the same height; the box is cropped to the
-                    artwork so files with empty space don't push the gaps out. */}
-                {s.logos.map((l) => (
-                  <span
-                    key={l.alt}
-                    className="flex h-[22px] shrink-0 overflow-hidden md:h-[calc(26*var(--fx))]"
-                    style={{ aspectRatio: `${l.cropW ?? l.w} / ${l.h}` }}
-                  >
-                    <Image
-                      src={l.src}
-                      alt={l.alt}
-                      width={l.w}
-                      height={l.h}
-                      className="h-full w-auto max-w-none brightness-0 invert"
-                    />
-                  </span>
-                ))}
-              </div>
-
-              <Link
-                href="/integrations"
-                className="hidden items-center gap-2 text-brand-orange underline underline-offset-4 md:mt-[calc(24*var(--fx))] md:inline-flex md:text-[calc(17*var(--fx))]"
-              >
-                Check our integrations <span aria-hidden>→</span>
-              </Link>
-            </div>
-
-            {/* Mock call — tabs above it on desktop */}
-            <div className="relative">
-              {/* Warm glow behind the card on mobile */}
-              <div
-                aria-hidden
-                className="pointer-events-none absolute -bottom-10 -left-16 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(239,114,0,0.45),transparent_70%)] blur-2xl md:hidden"
-              />
-              <div className="hidden justify-center md:mb-[calc(20*var(--fx))] md:flex md:gap-[calc(8*var(--fx))]">
-                {STORIES.map((t) => (
-                  <span
-                    key={t.id}
-                    className={`rounded-full md:px-[calc(20*var(--fx))] md:py-[calc(10*var(--fx))] md:text-[calc(14*var(--fx))] ${
-                      t.id === s.id ? "bg-brand-orange text-cream" : "bg-white/10 text-cream/70"
-                    }`}
-                  >
-                    {t.tab}
-                  </span>
-                ))}
-              </div>
-              <div className="relative">
-                <CallCard story={s} />
-              </div>
-            </div>
-          </StoryReplay>
+      {/* Bullets — desktop only, as in the mobile frame */}
+      <ul className="hidden text-cream/80 md:mt-[calc(32*var(--fx))] md:block md:space-y-[calc(10*var(--fx))] md:text-[calc(18*var(--fx))]">
+        {s.bullets.map((b) => (
+          <li key={b} className="flex items-baseline gap-3">
+            <span aria-hidden className="h-1.5 w-1.5 shrink-0 translate-y-[-3px] rounded-full bg-brand-orange" />
+            {b}
+          </li>
         ))}
+      </ul>
+
+      {/* --cap-t is the letter height every brand name is drawn at:
+          each logo's height is cap-t / its own lettering share, so a
+          wordmark that fills its box (Grubhub) and one sitting beside a
+          big icon (SevenRooms) read as the same size. */}
+      <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 [--cap-t:8px] md:mt-[calc(96*var(--fx))] md:gap-x-[calc(36*var(--fx))] md:[--cap-t:calc(12*var(--fx))]">
+        {s.logos.map((l) => (
+          <span
+            key={l.alt}
+            className="flex shrink-0 overflow-hidden"
+            style={{
+              aspectRatio: `${l.cropW ?? l.w} / ${l.h}`,
+              height: `calc(var(--cap-t) / ${l.cap})`,
+            }}
+          >
+            <Image
+              src={l.src}
+              alt={l.alt}
+              width={l.w}
+              height={l.h}
+              className="h-full w-auto max-w-none brightness-0 invert"
+            />
+          </span>
+        ))}
+      </div>
+
+      <Link
+        href="/integrations"
+        className="hidden items-center gap-2 text-brand-orange underline underline-offset-4 md:mt-[calc(24*var(--fx))] md:inline-flex md:text-[calc(17*var(--fx))]"
+      >
+        Check our integrations <span aria-hidden>→</span>
+      </Link>
+    </div>
+  );
+}
+
+export default function AiHostStory() {
+  const steps: StoryStep[] = STORIES.map((s) => ({
+    id: s.id,
+    tab: s.tab,
+    copy: <StoryCopy s={s} />,
+    card: <CallCard story={s} />,
+  }));
+  return (
+    <section className="relative z-10 w-full overflow-clip px-5 py-16 font-body text-cream md:py-[calc(60*var(--fx))] lg:px-[73px]">
+      {/* Ambient light, as in the Figma: plum behind the copy on the left,
+          deep blue toward the right, a warm orange low on the left. Plain
+          radial gradients (no blur filter) so they cost nothing to paint;
+          overflow-clip keeps them inside the section without breaking the
+          sticky stage. */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 [mask-image:linear-gradient(to_bottom,transparent,#000_8%,#000_80%,transparent)]">
+        <div className="absolute -left-[25%] top-[18%] h-[55%] w-[75%] bg-[radial-gradient(closest-side,rgba(239,114,0,0.22),transparent)]" />
+        <div className="absolute -left-[20%] top-[48%] h-[60%] w-[70%] bg-[radial-gradient(closest-side,rgba(148,62,114,0.42),transparent)]" />
+        <div className="absolute -right-[25%] top-[40%] h-[65%] w-[75%] bg-[radial-gradient(closest-side,rgba(55,90,190,0.32),transparent)]" />
+      </div>
+      <div className="mx-auto md:max-w-[calc(1330*var(--fx))]">
+        <StoryScroller steps={steps} />
       </div>
     </section>
   );

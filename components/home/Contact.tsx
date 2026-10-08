@@ -99,7 +99,7 @@ export default function Contact() {
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:gap-x-[calc(34*var(--fx))] md:gap-y-[calc(28*var(--fx))]">
                 <Field
                   label="Name"
-                  placeholder="Jane Smith"
+                  placeholder="Jaime Smith"
                   value={form.name}
                   onChange={(v) => update("name", v)}
                   required

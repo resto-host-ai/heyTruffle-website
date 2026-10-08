@@ -142,6 +142,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      /* Next 16 no longer resets the global smooth scroll on navigation, so
+         changing page animated a long scroll to the top. This attribute makes
+         route changes jump instantly again; in-page anchors stay smooth. */
+      data-scroll-behavior="smooth"
       className={`${inter.variable} ${geistMono.variable} ${googleSans.variable} h-full antialiased`}
       suppressHydrationWarning
     >

@@ -471,7 +471,7 @@ html {
 }
 
 /* AiHostStory — each animated part (data-story="copy" / "card") sits paused
-   until StoryReplay marks it [data-playing] on scroll. !important because
+   until StoryScroller marks it [data-playing] on scroll. !important because
    the timings are inline styles, whose `animation` shorthand would otherwise
    reset the play state to running. */
 [data-story]:not([data-playing]),
@@ -508,8 +508,8 @@ html {
   to { transform: scaleX(1); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .story-block,
-  .story-block * {
+  [data-story],
+  [data-story] * {
     animation: none !important;
   }
   .story-typing {
@@ -975,8 +975,8 @@ html {
 
   /* AiHostStory's mock calls are exempt: they play a short one-off sequence
      of opacity/transform on small elements, only while the block is on
-     screen (StoryReplay pauses it otherwise) — the motion is the content. */
-  *:not(.story-block, .story-block *),
+     screen (StoryScroller pauses it otherwise) — the motion is the content. */
+  *:not([data-story], [data-story] *),
   *::before,
   *::after {
     animation: none !important;

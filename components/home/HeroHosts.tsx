@@ -52,10 +52,58 @@ const subscribeMobile = (cb: () => void) => {
 };
 const getMobile = () => window.matchMedia(MOBILE).matches;
 
+/** The words of `text` spoken by `progress` (0–1 through the line), paced by
+ *  character count so long words take proportionally longer. */
+function revealWords(text: string, progress: number) {
+  const words = text.split(" ");
+  const total = text.length;
+  let chars = 0;
+  let shown = 0;
+  for (const w of words) {
+    if (chars / total > progress) break;
+    chars += w.length + 1;
+    shown++;
+  }
+  return words.slice(0, Math.max(1, shown)).join(" ");
+}
+
+/** One transcript line. The host's lines take the host's colour — name in
+ *  full, words lightened toward cream so they stay readable on the dark box —
+ *  while the caller stays cream, so it's clear at a glance who's talking. */
+function Line({
+  who,
+  text,
+  host,
+  accent,
+}: {
+  who: "host" | "caller";
+  text: string;
+  host: string;
+  accent: string;
+}) {
+  const isHost = who === "host";
+  return (
+    <>
+      <span
+        className="font-semibold"
+        style={isHost ? { color: `color-mix(in srgb, ${accent} 80%, #f6f3ec)` } : undefined}
+      >
+        {isHost ? host : "Caller"}:
+      </span>{" "}
+      <span style={isHost ? { color: `color-mix(in srgb, ${accent} 45%, #f6f3ec)` } : undefined}>
+        {text}
+      </span>
+    </>
+  );
+}
+
 export default function HeroHosts() {
   const [activeId, setActiveId] = useState<Host["id"] | null>(null);
   const [playing, setPlaying] = useState(false);
   const [time, setTime] = useState(0);
+  // Which host's call has actually been started (audio loaded) — until then
+  // the transcript shows a prompt instead of any lines.
+  const [startedId, setStartedId] = useState<Host["id"] | null>(null);
   // Flips once the waveform has drawn, fading out the placeholder line.
   const [waveReady, setWaveReady] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -173,6 +221,7 @@ export default function HeroHosts() {
       // part of the click.
       wsRef.current?.load(h.audio, [peaks], duration).catch(() => {});
       setTime(0);
+      setStartedId(h.id);
     } else if (a.ended) {
       a.currentTime = 0;
     }
@@ -196,14 +245,19 @@ export default function HeroHosts() {
   };
 
   // The line being spoken right now (the first one before playback starts).
-  let idx = 0;
+  // Only what has been said so far: the line being spoken, written out word by
+  // word in step with the audio, and the one before it. Nothing ahead of the
+  // audio — the host's answer never shows before the caller has asked.
+  const started = startedId === host.id;
+  const t = time + (host.karaokeBias ?? 0);
+  let idx = -1;
   for (let i = 0; i < lines.length; i++) {
-    if (time + 0.15 >= lines[i].start) idx = i;
+    if (t >= lines[i].start) idx = i;
   }
-
-  const speaker = (who: "host" | "caller") => (who === "host" ? host.name : "Caller");
-  const current = lines[idx];
-  const next = lines[idx + 1];
+  const accent = PILLS[host.id].accent;
+  const current = started && idx >= 0 ? lines[idx] : null;
+  const previous = started && idx > 0 ? lines[idx - 1] : null;
+  const spoken = current ? revealWords(current.text, (t - current.start) / Math.max(0.001, current.end - current.start)) : "";
 
   return (
     <div className="relative z-10 mx-auto mb-10 mt-14 w-[calc(100%-32px)] rounded-[26px] border border-white/10 bg-[#231e20] p-[18px] font-body text-cream md:mb-0 md:mt-[calc(80*var(--fx))] md:w-[90%] md:rounded-b-none md:rounded-t-[calc(60*var(--fx))] md:border-0 md:bg-ink md:px-[calc(40*var(--fx))] md:pb-[calc(56*var(--fx))] md:pt-[calc(60*var(--fx))]">
@@ -286,21 +340,33 @@ export default function HeroHosts() {
           </div>
         </div>
 
-        {/* Transcript — the line being spoken and the one after it. Mobile
-            shows both in full; desktop dims the second and keeps it to one
-            line. Desktop keeps a fixed height so the box never jumps. */}
-        <div className="mt-5 flex min-h-[150px] flex-col gap-3 overflow-hidden rounded-2xl bg-white/10 p-4 text-[15px] leading-[1.45] md:mt-[calc(37*var(--fx))] md:h-[calc(120*var(--fx))] md:min-h-0 md:justify-center md:gap-[calc(4*var(--fx))] md:rounded-[calc(10*var(--fx))] md:bg-white/[0.14] md:px-[calc(18*var(--fx))] md:text-[calc(17*var(--fx))]">
-          <p key={`${host.id}-${idx}`} className="msg-in">
-            <span className="font-semibold">{speaker(current.who)}:</span> {current.text}
-          </p>
-          {next && (
+        {/* Transcript — newest on top: the line being spoken, written out
+            word by word, with the previous line pushed down below it, dimmed.
+            Both are capped in lines (current 3 / previous 2 on mobile, 2 / 1
+            on desktop) so a long turn never balloons the box; when the current
+            line runs past its cap, its latest words stay in view. Mobile fits
+            the box to the text; desktop keeps a fixed height. */}
+        <div className="mt-5 flex flex-col justify-start gap-2.5 overflow-hidden rounded-2xl bg-white/10 p-4 text-[15px] leading-[1.45] md:mt-[calc(37*var(--fx))] md:h-[calc(120*var(--fx))] md:gap-[calc(6*var(--fx))] md:rounded-[calc(10*var(--fx))] md:bg-white/[0.14] md:px-[calc(18*var(--fx))] md:py-[calc(16*var(--fx))] md:text-[calc(17*var(--fx))]">
+          {!started ? (
+            <p className="m-auto text-center text-cream/50">
+              Press play to hear a real call with {host.name}.
+            </p>
+          ) : (
             <>
-              <div className="line-clamp-4 md:hidden">
-                <span className="font-semibold">{speaker(next.who)}:</span> {next.text}
-              </div>
-              <div className="hidden truncate text-cream/40 md:block">
-                <span className="font-semibold">{speaker(next.who)}:</span> {next.text}
-              </div>
+              {current && (
+                // Bottom-anchored inside its own capped box: overflow spills
+                // off the top, so the words being spoken are the ones shown.
+                <div className="flex max-h-[4.35em] shrink-0 flex-col justify-end overflow-hidden md:max-h-[2.9em]">
+                  <p key={`${host.id}-${idx}`}>
+                    <Line who={current.who} text={spoken} host={host.name} accent={accent} />
+                  </p>
+                </div>
+              )}
+              {previous && (
+                <div className="line-clamp-2 shrink-0 opacity-50 md:line-clamp-1">
+                  <Line who={previous.who} text={previous.text} host={host.name} accent={accent} />
+                </div>
+              )}
             </>
           )}
         </div>

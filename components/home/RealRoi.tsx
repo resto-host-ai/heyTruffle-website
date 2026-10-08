@@ -48,12 +48,17 @@ const FIGURES = [
 
 export default function RealRoi() {
   return (
-    <section className="relative z-10 w-full px-5 pb-20 font-body md:pb-[calc(128*var(--fx))] lg:px-[73px]">
+    <section className="relative z-10 w-full overflow-clip px-5 pb-20 pt-14 font-body md:pb-[calc(128*var(--fx))] md:pt-[calc(56*var(--fx))] lg:px-[73px]">
+      {/* Warm orange glow coming in from the right edge, as in the Figma */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 right-0 -z-10 w-[70%] [mask-image:linear-gradient(to_bottom,transparent,#000_25%,#000_75%,transparent)] bg-[radial-gradient(farthest-side_at_100%_60%,rgba(239,114,0,0.45),rgba(148,62,114,0.12)_55%,transparent)]"
+      />
       <div className="mx-auto flex flex-col md:max-w-[calc(1330*var(--fx))] gap-5 rounded-[20px] bg-cream px-5 py-6 text-ink md:flex-row md:items-center md:gap-[calc(40*var(--fx))] md:rounded-[calc(24*var(--fx))] md:px-[calc(44*var(--fx))] md:py-[calc(48*var(--fx))] lg:gap-[calc(64*var(--fx))]">
         {/* Title */}
         <div className="shrink-0">
           <p className="text-[13px] uppercase tracking-[0.12em] text-[#6F6668] md:text-[calc(12*var(--fx))] md:font-semibold md:tracking-[0.04em]">
-            Real ROI
+            Real ROI<span className="hidden md:inline">.</span>
           </p>
           <h2 className="mt-2 font-serif text-[24px] font-normal! leading-[1.1] md:max-w-[calc(190*var(--fx))] md:text-[calc(26*var(--fx))]">
             What covers a full month?

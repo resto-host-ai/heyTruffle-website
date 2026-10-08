@@ -130,7 +130,7 @@ function NavLink({ label, href, demo }: NavItem) {
   // Only page-level links (not home-section anchors) get the active pill.
   const active = !demo && path !== "/" && stripSlash(pathname) === stripSlash(path);
 
-  const className = `whitespace-nowrap rounded-full border-2 px-3.5 py-2 text-center font-body text-[17px] leading-[110%] text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream 2xl:px-5 2xl:text-[20px] ${active ? "border-cream font-bold" : "border-transparent font-normal"
+  const className = `whitespace-nowrap rounded-full border-2 px-[calc(16*var(--fx))] py-[calc(8*var(--fx))] text-center font-body text-[calc(19*var(--fx))] leading-[110%] text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream ${active ? "border-cream font-bold" : "border-transparent font-normal"
     }`;
 
   // Demo items open the Calendly popup instead of navigating.
@@ -199,7 +199,7 @@ export default function Header() {
             : "bg-black md:bg-black/35"
           }`}
       >
-        <div className="relative z-20 flex h-full w-full items-center justify-between gap-6 px-6 lg:px-[73px]">
+        <div className="relative z-20 flex h-full w-full items-center justify-between gap-4 px-5 sm:px-6 lg:px-[73px]">
           {/* Logo */}
           <Link
             href="/"
@@ -228,12 +228,12 @@ export default function Header() {
               height={40}
               loading="eager"
               unoptimized
-              className="h-9 w-32"
+              className="h-7 w-[100px] sm:h-9 sm:w-32"
             />
           </Link>
 
           {/* Desktop nav — centered relative to the page */}
-          <nav className="hidden items-center gap-2 lg:flex xl:gap-4">
+          <nav className="hidden items-center gap-[calc(20*var(--fx))] lg:flex">
             {NAV_BEFORE.map((link) => (
               <NavLink key={link.label} {...link} />
             ))}
@@ -244,7 +244,7 @@ export default function Header() {
             <div className="group">
               <button
                 type="button"
-                className="flex items-center gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-3.5 py-2 text-center font-body text-[17px] font-normal leading-[110%] text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream 2xl:px-5 2xl:text-[20px]"
+                className="flex items-center gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-[calc(16*var(--fx))] py-[calc(8*var(--fx))] text-center font-body text-[calc(19*var(--fx))] font-normal leading-[110%] text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream"
               >
                 Integrations
                 <svg
@@ -304,16 +304,31 @@ export default function Header() {
               <NavLink key={link.label} {...link} />
             ))}
 
-            {/* Direct link to the demo app — no restaurant search, no
-                Calendly booking, just the demo's own generic walkthrough. */}
-            <a
-              href={demoAppUrl()}
-              target="_blank"
-              className="flex items-center gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-3.5 py-2 text-center font-body text-[17px] font-semibold leading-[110%] bg-brand-orange text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream 2xl:px-5 2xl:text-[20px]"
+            {/* Book a demo — opens the Calendly popup; solid orange pill as
+                in the reference. */}
+            <button
+              type="button"
+              onClick={() => void openCalendly()}
+              className="whitespace-nowrap rounded-full bg-brand-orange px-[calc(20*var(--fx))] py-[calc(10*var(--fx))] text-center font-body text-[calc(18*var(--fx))] font-semibold leading-[110%] text-cream transition-colors duration-200 hover:bg-brand-orange/90"
             >
-              Build your AI
-            </a>
+              Book a demo
+            </button>
+
+            
           </nav>
+
+          {/* Mobile: Book a demo sits right beside the menu button */}
+          <div className="flex items-center gap-2 lg:hidden">
+          <button
+            type="button"
+            onClick={() => {
+              setMenuOpen(false);
+              void openCalendly();
+            }}
+            className="whitespace-nowrap rounded-full bg-brand-orange px-4 py-2 font-body text-[14px] font-semibold leading-none text-cream transition-colors duration-200 hover:bg-brand-orange/90"
+          >
+            Book a demo
+          </button>
 
           {/* Mobile menu button — three absolutely-positioned bars rather than a
             swapped SVG, so the burger can morph into the X instead of cutting
@@ -324,7 +339,7 @@ export default function Header() {
             aria-label="Toggle menu"
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((open) => !open)}
-            className="relative flex h-10 w-10 items-center justify-center text-cream lg:hidden"
+            className="relative -mr-2 flex h-10 w-10 items-center justify-center text-cream"
           >
             <span
               aria-hidden
@@ -342,6 +357,7 @@ export default function Header() {
                 }`}
             />
           </button>
+          </div>
         </div>
       </header>
 

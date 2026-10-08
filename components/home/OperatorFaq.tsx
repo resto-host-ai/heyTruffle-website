@@ -8,21 +8,52 @@ import { useState } from "react";
  * into our answer. One open at a time.
  */
 
-const QUESTIONS = [
+// Copy as written in the Figma — keep it verbatim.
+const QUESTIONS: { q: string[]; who: string; a: React.ReactNode }[] = [
   {
     q: ["I'm scared it'll", "sound like a robot"],
     who: "Owner, 5 location group",
-    a: "It won't. Your AI Concierge is trained on your menu, your policies and your brand's voice, and it talks the way your best host does — warm, natural, and in English or Spanish. Our team listens to real calls every week and keeps tuning it, so it only gets better.",
+    a: (
+      <>
+        It will not. The voice is chosen by you, it speaks your menu and your
+        tone, and plenty of callers finish the conversation without realizing
+        they were not talking to your host. Hear one yourself: call{" "}
+        <a href="tel:+14702007963" className="text-brand-orange hover:underline">
+          +1 (470) 200-7963.
+        </a>{" "}
+        <strong className="font-semibold">
+          Then we build yours, and it does not go on your line until you have
+          called it and signed off.
+        </strong>
+      </>
+    ),
   },
   {
     q: ["We're a people business.", "The phone is our first", "impression."],
     who: "Owner, restaurant group, 30 locations.",
-    a: "That's exactly why we answer every call, on the first ring, at every location — even on your busiest Friday. Guests get a consistent, hospitable welcome, and anything that needs a person is handed straight to your team.",
+    a: (
+      <>
+        So is ours. Most voice AI is one system with your name on it.
+        heytruffle is built for your restaurant: your live menu from your POS,
+        your hours, your policies and your tone. It confirms every order back to
+        the caller, and when it is not sure it hands the call to your team
+        instead of guessing.
+      </>
+    ),
   },
   {
     q: ["We don't have time to", "babysit another system."],
     who: "COO, 4 locations, 3 more opening",
-    a: "You won't have to. heytruffle is a fully managed service: we set it up, connect it to the systems you already run, and our team monitors and improves it every week. New locations go live without adding work to yours.",
+    a: (
+      <>
+        <strong className="font-semibold">You will not have to.</strong> We are
+        not software you maintain, we are a team that works inside your
+        operation. Two customer success managers assigned to your brand, who
+        know your locations and your managers and answer when you write. They
+        update your menu, your hours and your policies, review real calls every
+        week, and send you a report and sit down with you every month.
+      </>
+    ),
   },
 ];
 
@@ -48,7 +79,7 @@ export default function OperatorFaq() {
           <span className="text-brand-orange">before they sign.</span>
         </h2>
         <p className="mt-4 text-center text-[16px] md:mt-[calc(32*var(--fx))] md:text-[calc(22*var(--fx))]">
-          Commonly asked questions before we go live.
+          Communly ask questions before we go live.
         </p>
 
         <ul className="mt-12 md:mt-[calc(70*var(--fx))]">
@@ -85,14 +116,16 @@ export default function OperatorFaq() {
                     aria-hidden
                     className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-brand-orange shadow-[0_4px_14px_rgba(37,31,33,0.16)] md:h-[calc(56*var(--fx))] md:w-[calc(56*var(--fx))]"
                   >
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      className={`transition-transform duration-300 ${isOpen ? "rotate-45" : ""}`}
-                    >
-                      <path d="M10 3v14M3 10h14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                    {/* "+" closed, "−" open: the vertical stroke folds away */}
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                      <path
+                        d="M10 3v14"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        className={`origin-center transition-transform [transform-box:fill-box] duration-300 ${isOpen ? "scale-y-0" : ""}`}
+                      />
+                      <path d="M3 10h14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
                     </svg>
                   </span>
                 </button>
@@ -105,7 +138,7 @@ export default function OperatorFaq() {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <p className="max-w-[820px] pb-8 pl-[30px] text-[16px] leading-[1.55] text-ink/80 md:pb-[calc(44*var(--fx))] md:pl-[calc(46*var(--fx))] md:text-[calc(20*var(--fx))]">
+                    <p className="max-w-[680px] pb-8 pl-[30px] text-[16px] leading-[1.5] text-ink md:max-w-[calc(680*var(--fx))] md:pb-[calc(44*var(--fx))] md:pl-[calc(46*var(--fx))] md:text-[calc(20*var(--fx))]">
                       {item.a}
                     </p>
                   </div>

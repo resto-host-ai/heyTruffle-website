@@ -49,16 +49,16 @@ const STORIES: Story[] = [
     // from the top crops that band out so it doesn't fight the card's own
     // "Play the video" caption.
     imageClassName: "origin-top scale-[1.45] object-top",
-    youtubeId: "IBsApAVXPCo",
+    youtubeId: "IBsApAVXPCo"
   },
 ];
 
 function StoryCard({ story }: { story: Story }) {
   const [playing, setPlaying] = useState(false);
   return (
-    <article className="flex w-full shrink-0 snap-center flex-col overflow-hidden rounded-[20px] bg-white shadow-[0_24px_60px_rgba(0,0,0,0.3)] md:flex-row md:rounded-[calc(24*var(--fx))]">
+    <article className="flex w-full shrink-0 snap-center flex-col overflow-hidden rounded-[20px] bg-cream shadow-[0_24px_60px_rgba(0,0,0,0.3)] md:flex-row md:rounded-[calc(24*var(--fx))] md:bg-white">
       {/* Video */}
-      <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-ink md:aspect-auto md:min-h-[calc(517*var(--fx))] md:w-[calc(647*var(--fx))]">
+      <div className="relative aspect-[5/3] w-full shrink-0 overflow-hidden bg-ink md:aspect-auto md:min-h-[calc(517*var(--fx))] md:w-[calc(647*var(--fx))]">
         {playing ? (
           <iframe
             src={`https://www.youtube-nocookie.com/embed/${story.youtubeId}?autoplay=1&modestbranding=1&rel=0&playsinline=1`}
@@ -85,13 +85,13 @@ function StoryCard({ story }: { story: Story }) {
             {/* Keeps the caption legible over a bright photo */}
             <span
               aria-hidden
-              className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/50 to-transparent"
+              className="absolute inset-x-0 bottom-0 hidden h-1/3 bg-gradient-to-t from-black/50 to-transparent md:block"
             />
-            <span className="absolute bottom-5 left-5 font-body text-[15px] text-white md:bottom-[calc(44*var(--fx))] md:left-[calc(46*var(--fx))] md:text-[calc(18*var(--fx))]">
+            <span className="absolute bottom-5 left-5 hidden font-body text-[15px] text-white md:block md:bottom-[calc(44*var(--fx))] md:left-[calc(46*var(--fx))] md:text-[calc(18*var(--fx))]">
               Play the video
             </span>
-            <span className="absolute bottom-4  right-4 flex h-14 w-14 items-center border border-gray-500 justify-center rounded-full bg-ink/70 backdrop-blur-sm transition-transform duration-300 group-hover:scale-105 md:bottom-[calc(40*var(--fx))] md:right-[calc(40*var(--fx))] md:h-[calc(68*var(--fx))] md:w-[calc(68*var(--fx))]">
-              <svg width="18" height="20" viewBox="0 0 18 20" aria-hidden className="translate-x-[2px] fill-white  ">
+            <span className="absolute left-1/2 top-1/2 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-gray-500 bg-ink/60 backdrop-blur-sm transition-transform duration-300 group-hover:scale-105 md:bottom-[calc(40*var(--fx))] md:left-auto md:right-[calc(40*var(--fx))] md:top-auto md:translate-x-0 md:translate-y-0 md:h-[calc(68*var(--fx))] md:w-[calc(68*var(--fx))]">
+              <svg viewBox="0 0 18 20" aria-hidden className="h-4 w-[14px] translate-x-[2px] fill-white md:h-5 md:w-[18px]">
                 <path d="M17 10L0.5 19.5V0.5L17 10Z" />
               </svg>
             </span>
@@ -100,22 +100,23 @@ function StoryCard({ story }: { story: Story }) {
       </div>
 
       {/* Result */}
-      <div className="flex flex-1 flex-col justify-between gap-8 border p-6 font-body text-ink md:px-[calc(60*var(--fx))] md:pb-[calc(36*var(--fx))] md:pt-[calc(50*var(--fx))]">
-        <h3 className="text-[28px] font-medium!  leading-[1.2] md:text-[calc(44*var(--fx))]">
+      <div className="flex flex-1 flex-col justify-between gap-5 border p-5 font-body text-ink md:gap-8 md:px-[calc(60*var(--fx))] md:pb-[calc(36*var(--fx))] md:pt-[calc(50*var(--fx))]">
+        <h3 className="font-serif text-[24px] font-normal! leading-[1.25] md:font-body md:text-[calc(44*var(--fx))] md:font-medium! md:leading-[1.2]">
           {story.headline[0]}
-          <span className="text-brand-orange">{story.headline[1]}</span>
+          <span className="md:text-brand-orange">{story.headline[1]}</span>
           {story.headline[2]}
         </h3>
-        <div className="border-t border-ink/40 pt-6 md:pt-[calc(40*var(--fx))]">
-          <div className="flex items-end justify-between gap-4">
-            <div className="text-[15px] leading-snug md:text-[calc(18*var(--fx))]">
+        <div className="border-t border-ink/25 pt-4 md:border-ink/40 md:pt-[calc(40*var(--fx))]">
+          {/* Mobile: who said it, then Learn More under it. Desktop: side by side. */}
+          <div className="flex flex-col items-start gap-4 md:flex-row md:items-end md:justify-between">
+            <div className="text-[14px] leading-snug md:text-[calc(18*var(--fx))]">
               <p>{story.person}</p>
               <p className="text-ink/60">{story.role}</p>
             </div>
             {story.href && (
               <Link
                 href={story.href}
-                className="flex shrink-0 items-center gap-3 text-[17px] font-bold transition-colors hover:text-brand-orange md:text-[calc(22*var(--fx))]"
+                className="flex shrink-0 items-center gap-2 text-[15px] font-bold transition-colors hover:text-brand-orange md:gap-3 md:text-[calc(22*var(--fx))]"
               >
                 Learn More
                 <svg width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden>
@@ -170,11 +171,15 @@ export default function OperatorStories() {
 
       <div className="relative mx-auto md:max-w-[calc(1353*var(--fx))]">
         <h2 className="text-center font-serif text-[36px] font-normal! leading-[1.1] md:text-[calc(70*var(--fx))]">
-          Trusted by operators
+          Trusted by operatores
         </h2>
-        <p className="mx-auto mt-4 max-w-[680px] text-center text-[16px] leading-[1.45] text-cream/90 md:mt-[calc(24*var(--fx))] md:max-w-[calc(700*var(--fx))] md:text-[calc(24*var(--fx))]">
-          From independent restaurants to multi-location groups, these are the
-          outcomes our locations are seeing.
+
+        <p className="block md:hidden mx-auto mt-4 max-w-[680px] text-center text-[16px] leading-[1.45] text-cream/90 md:mt-[calc(24*var(--fx))] md:max-w-[calc(700*var(--fx))] md:text-[calc(24*var(--fx))]">
+          From independent restaurants
+          to multi-location groups.
+        </p>
+        <p className="hidden md:block mx-auto mt-4 max-w-[680px] text-center text-[16px] leading-[1.45] text-cream/90 md:mt-[calc(24*var(--fx))] md:max-w-[calc(700*var(--fx))] md:text-[calc(24*var(--fx))]">
+          From independent restaurants to multi-location groups, these are the outcomes our locations are seeing.
         </p>
 
         {several ? (
@@ -205,9 +210,8 @@ export default function OperatorStories() {
                   onClick={() => goTo(i)}
                   aria-label={`Show the ${s.person} story`}
                   aria-current={i === active}
-                  className={`h-2.5 rounded-full transition-all duration-300 ${
-                    i === active ? "w-6 bg-cream" : "w-2.5 bg-cream/35 hover:bg-cream/60"
-                  }`}
+                  className={`h-2.5 rounded-full transition-all duration-300 ${i === active ? "w-6 bg-cream" : "w-2.5 bg-cream/35 hover:bg-cream/60"
+                    }`}
                 />
               ))}
             </div>

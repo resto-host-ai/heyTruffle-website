@@ -31,13 +31,17 @@ export default async function Hero() {
 
 
       {/* Content — anchored so the top of the host player peeks
-          in at the bottom of the first screen, as in the Figma. */}
-      <div className="flex min-h-[calc(100svh-180px)] w-full flex-col items-center justify-end gap-5 px-6 pt-24 text-center text-cream desk-tall:gap-6 desk-tall:pt-28 desk-short:gap-4 desk-short:pt-28 md:min-h-[calc(100svh-330px)]">
+          in at the bottom of the first screen, as in the Figma.
+          relative z-10: iOS Safari would sometimes paint the animated
+          background layer over unpositioned content on first load, leaving
+          only the search bar and player (which have their own layers)
+          visible. Its own stacking layer keeps the copy on top. */}
+      <div className="relative z-10 flex w-full flex-col items-center justify-end gap-5 px-6 pt-[164px] text-center text-cream desk-tall:gap-6 desk-tall:pt-28 desk-short:gap-4 desk-short:pt-28 md:min-h-[calc(100svh-330px)] md:pt-24">
         {/* Headline — the page's single H1. */}
         <h1 className="m-0 max-w-[1000px] font-serif text-[32px] font-bold! leading-[105%] tracking-tight text-cream sm:max-w-[calc(1000*var(--fx))] sm:text-[calc(72*var(--fx))]">
           Stop losing revenue
           <br />
-          over the <span className="text-brand-orange">phone</span>
+          over the <span className="md:text-brand-orange">phone</span>
         </h1>
 
         {/* Subtitle */}
@@ -46,11 +50,10 @@ export default async function Hero() {
           and handles catering. Trained for your brand, run by our team.
         </p>
 
-        {/* CTAs — desktop shows the search bar; mobile shows stacked buttons */}
-        {/* Extra top margin on top of the parent gap sets the copy apart from
-            the CTAs, matching RestoHost's 36px mobile / 48px desktop. Uses the
-            desk-* variants rather than sm: so a short desktop (MacBook 14")
-            stays compressed instead of both rules matching at ≥640px. */}
+        {/* Search + primary CTA, with "Talk to our team" beside it.
+            Extra top margin on top of the parent gap sets the copy apart from
+            the CTAs. Uses the desk-* variants rather than sm: so a short
+            desktop (MacBook 14") stays compressed. */}
         <div className="mt-3 flex w-full max-w-[500px] flex-col items-stretch gap-3 desk-tall:mt-6 desk-tall:gap-5 desk-short:mt-4 desk-short:gap-4 sm:max-w-[720px] sm:flex-row sm:items-center">
           {/* Search + primary CTA. Shown at every width: the search box is the
               hero's main gesture, so mobile keeps it rather than falling back
@@ -65,9 +68,7 @@ export default async function Hero() {
           </BookDemoButton>
         </div>
 
-        {/* Tertiary escape hatch — skips both CTAs above (no restaurant to
-            type, no team to talk to yet) and drops straight into the demo
-            app's own generic walkthrough. */}
+        {/* Tertiary note under the search. */}
         <p className="font-body text-[14px] font-medium text-cream/70 underline underline-offset-2 transition-colors hover:text-cream">
           Free to try. No sign-up. Under 30 seconds.
         </p>
