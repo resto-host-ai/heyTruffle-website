@@ -9,7 +9,6 @@ import ScrollReveal from "@/components/layout/ScrollReveal";
 import Clarity from "@/components/layout/Clarity";
 import Reb2b from "@/components/layout/Reb2b";
 import SiteJsonLd from "@/components/layout/JsonLd";
-import Chatbase from "@/components/layout/Chatbase";
 import Graph8 from "@/components/layout/Graph8";
 
 /* FONTS — self-hosted latin slices, NOT next/font/google. This is a measured
@@ -174,7 +173,6 @@ export default function RootLayout({
         <Clarity />
         <Reb2b />
         <SiteJsonLd />
-        <Chatbase />
         <Graph8 />
       </body>
     </html>

@@ -21,9 +21,13 @@ export default function Graph8() {
     let cancelled = false;
     let idleHandle: number | null = null;
     const start = () => {
-      if (cancelled) return;
+      // Never insert the tracker twice — a second copy re-runs its globals.
+      if (cancelled || document.querySelector(`script[src="${GRAPH8_SRC}"]`)) return;
       const el = document.createElement("script");
       el.async = true;
+      // CORS mode so Clarity sees its real errors instead of "Script error."
+      // (graph8 answers with Access-Control-Allow-Origin for our origin).
+      el.crossOrigin = "anonymous";
       el.src = GRAPH8_SRC;
       el.dataset.writeKey = GRAPH8_WRITE_KEY;
       document.body.appendChild(el);
