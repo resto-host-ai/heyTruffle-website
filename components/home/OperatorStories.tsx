@@ -76,7 +76,7 @@ function StoryCard({ story }: { story: Story }) {
           >
             <Image
               src={story.image}
-              alt=""
+              alt={`${story.person}, ${story.role}`}
               fill
               quality={75}
               sizes="(max-width: 767px) 100vw, 650px"
