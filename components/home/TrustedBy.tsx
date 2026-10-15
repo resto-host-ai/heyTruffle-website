@@ -74,7 +74,7 @@ export default function TrustedBy() {
       </div>
 
       <p className="mt-12 text-center font-body text-[15px] font-normal leading-[110%] md:text-[calc(16*var(--fx))] text-cream">
-        Trusted by +400 U.S brands
+        Trusted by +100 U.S brands
       </p>
     </section>
   );
