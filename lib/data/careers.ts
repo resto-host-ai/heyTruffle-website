@@ -118,25 +118,12 @@ export const ROLES: readonly Role[] = [
       "You're half prompt engineer, half the face of the product to the client: as comfortable tuning a prompt as explaining it to someone who has no idea what an LLM is.",
   },
   {
-    id: "talent",
-    name: "Talent Acquisition Partner",
-    vac: "1 opening",
-    bullets: [
-      "You'll build the team that builds everything else. It's the hire that makes every other hire possible.",
-      "And you'll be our face out in the world: events, job fairs, universities, technical communities. Right now nobody knows us in the Argentine talent market, and you're the one who changes that.",
-      "True full cycle: you define the role with the hiring manager before posting it, you source, you interview, and you close.",
-      "You'll be able to tell a department head that their search is poorly defined. More than able: you're expected to.",
-    ],
-    ident:
-      "If you love the craft of finding people, and you're also comfortable standing up and speaking to a room full of strangers, those are the two halves of this role.",
-  },
-  {
     id: "open",
     name: "Don't see your role here",
     vac: "always open",
     wide: true,
     bullets: [
-      "If none of the nine roles above is yours, but you still think you could change something here, this is your position.",
+      "If none of the eight roles above is yours, but you still think you could change something here, this is your position.",
       "This isn't a resume dump. If someone exceptional shows up for a function we don't have today, we create the role.",
       "Real example: we're not looking for a Head of Finance. If one writes to us and makes the case, we'll interview them and build the role.",
       "You'll talk to Lucas, the founder, even if the role doesn't exist today. And if it's not the right moment, we'll give you an actual date to talk again.",

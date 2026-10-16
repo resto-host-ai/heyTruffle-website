@@ -123,23 +123,11 @@ export const ROLES_ES: Record<
     ident:
       "Sos mitad prompt engineer, mitad la cara del producto frente al cliente: tan cómodo ajustando un prompt como explicándoselo a alguien que no tiene idea qué es un LLM.",
   },
-  talent: {
-    name: "Talent Acquisition Partner",
-    vac: "1 vacante",
-    bullets: [
-      "Vas a construir el equipo que construye todo lo demás. Es la contratación que hace posible cada otra contratación.",
-      "Y vas a ser nuestra cara en el mundo: eventos, ferias de empleo, universidades, comunidades técnicas. Hoy nadie nos conoce en el mercado de talento argentino, y vos sos quien cambia eso.",
-      "Full cycle de verdad: definís el rol con el hiring manager antes de publicarlo, buscás, entrevistás, y cerrás.",
-      "Vas a poder decirle a un jefe de área que su búsqueda está mal definida. Más que poder: se espera que lo hagas.",
-    ],
-    ident:
-      "Si te apasiona el oficio de encontrar gente, y también te sentís cómodo parado hablándole a una sala llena de desconocidos, esas son las dos mitades de este rol.",
-  },
   open: {
     name: "No ves tu rol acá",
     vac: "siempre abierto",
     bullets: [
-      "Si ninguno de los nueve roles de arriba es el tuyo, pero igual pensás que podrías cambiar algo acá, esta es tu posición.",
+      "Si ninguno de los ocho roles de arriba es el tuyo, pero igual pensás que podrías cambiar algo acá, esta es tu posición.",
       "Esto no es un buzón de currículums. Si aparece alguien excepcional para una función que hoy no tenemos, creamos el rol.",
       "Ejemplo real: no estamos buscando un Head of Finance. Si uno nos escribe y hace el caso, lo entrevistamos y construimos el rol.",
       "Vas a hablar con Lucas, el fundador, incluso si el rol no existe todavía. Y si no es el momento, te vamos a dar una fecha concreta para volver a hablar.",
