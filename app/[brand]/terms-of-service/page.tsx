@@ -1,23 +1,19 @@
 import type { Metadata } from "next";
 import { BrandLegalPage, brandLegalMetadata } from "@/components/layout/BrandLegalPage";
 import { getBrands } from "@/lib/data/brands";
-import {
-  TERMS_INTRO,
-  TERMS_PREAMBLE,
-  TERMS_SECTIONS,
-  TERMS_UPDATED,
-} from "@/lib/legal/terms-of-service";
+import { BRAND_TERMS_TEMPLATE } from "@/lib/legal/brand-templates";
 
+// A client's Terms of Service, linked from its Twilio A2P campaign.
+// Brands the manager adds later are rendered on first request (dynamicParams
+// defaults to true); every page re-checks the manager at most every 5 min.
 export const revalidate = 300;
 
 const DOC = {
   path: "terms-of-service",
   label: "Terms of Service",
-  intro: TERMS_INTRO,
-  updated: TERMS_UPDATED,
-  preamble: TERMS_PREAMBLE,
-  sections: TERMS_SECTIONS,
-};
+  intro: "",
+  template: BRAND_TERMS_TEMPLATE,
+} as const;
 
 export async function generateStaticParams() {
   return (await getBrands()).map((b) => ({ brand: b.slug }));

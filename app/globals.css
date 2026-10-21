@@ -1186,3 +1186,69 @@ button:not(:disabled),
   border-radius: 0.35rem;
   font-size: 0.9em;
 }
+
+/* Per-client Privacy Policy / Terms (components/layout/BrandLegalPage.tsx):
+   markdown from lib/legal/brand-templates.ts, styled like LegalPage's blocks. */
+.legal-md {
+  font-family: var(--font-body);
+  color: rgba(37, 31, 33, 0.75);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+}
+@media (min-width: 768px) {
+  .legal-md { font-size: 1rem; }
+}
+.legal-md > :first-child { margin-top: 0; }
+.legal-md p { margin-top: 1rem; }
+.legal-md strong { font-weight: 600; color: #251f21; }
+.legal-md h2 {
+  font-family: var(--font-serif, ui-serif, Georgia, serif);
+  color: #251f21;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  margin-top: 2.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid rgba(37, 31, 33, 0.1);
+}
+@media (min-width: 768px) {
+  .legal-md h2 { font-size: 1.875rem; }
+}
+.legal-md ul { margin-top: 1rem; display: grid; gap: 0.75rem; }
+.legal-md ul > li { position: relative; padding-left: 1.5rem; }
+.legal-md ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 9999px;
+  transform: translateY(-50%);
+  background: linear-gradient(to right, #b53fc4, #ef7200);
+}
+.legal-md a {
+  font-weight: 500;
+  color: var(--color-brand-orange);
+  text-decoration: underline;
+  text-decoration-color: rgba(239, 114, 0, 0.3);
+  text-underline-offset: 2px;
+  overflow-wrap: anywhere;
+}
+.legal-md a:hover { text-decoration-color: var(--color-brand-orange); }
+.legal-md table {
+  margin-top: 1.25rem;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+.legal-md th,
+.legal-md td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.625rem 0.75rem;
+  border-bottom: 1px solid rgba(37, 31, 33, 0.1);
+}
+.legal-md th { color: #251f21; font-weight: 600; }
+@media (max-width: 767px) {
+  .legal-md table { display: block; overflow-x: auto; }
+}

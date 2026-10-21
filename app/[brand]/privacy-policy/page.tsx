@@ -1,23 +1,19 @@
 import type { Metadata } from "next";
 import { BrandLegalPage, brandLegalMetadata } from "@/components/layout/BrandLegalPage";
 import { getBrands } from "@/lib/data/brands";
-import {
-  PRIVACY_INTRO,
-  PRIVACY_PREAMBLE,
-  PRIVACY_SECTIONS,
-  PRIVACY_UPDATED,
-} from "@/lib/legal/privacy-policy";
+import { BRAND_PRIVACY_TEMPLATE } from "@/lib/legal/brand-templates";
 
+// A client's Privacy Policy, linked from its Twilio A2P campaign.
+// Brands the manager adds later are rendered on first request (dynamicParams
+// defaults to true); every page re-checks the manager at most every 5 min.
 export const revalidate = 300;
 
 const DOC = {
   path: "privacy-policy",
   label: "Privacy Policy",
-  intro: PRIVACY_INTRO,
-  updated: PRIVACY_UPDATED,
-  preamble: PRIVACY_PREAMBLE,
-  sections: PRIVACY_SECTIONS,
-};
+  intro: "",
+  template: BRAND_PRIVACY_TEMPLATE,
+} as const;
 
 export async function generateStaticParams() {
   return (await getBrands()).map((b) => ({ brand: b.slug }));

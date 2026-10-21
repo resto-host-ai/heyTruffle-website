@@ -92,6 +92,55 @@ function Block({ block }: { block: LegalBlock }) {
   }
 }
 
+/** Dark hero shared by the legal pages (also the per-client ones). */
+export function LegalHero({
+  eyebrow,
+  title,
+  titleAccent,
+  intro,
+}: Pick<LegalPageProps, "eyebrow" | "title" | "titleAccent"> & { intro?: string }) {
+  // Same dark treatment as the ROI calculator & testimonials pages.
+  return (
+    <section className="relative overflow-hidden bg-[#251f21] pb-16 pt-32 md:pb-20 md:pt-40">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          maskImage:
+            "linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%)",
+        }}
+      >
+        <Image
+          src="/images/background_gradient.webp"
+          alt=""
+          fill
+          loading="eager"
+          fetchPriority="low"
+          quality={90}
+          sizes="100vw"
+          className="object-cover"
+        />
+      </div>
+
+      <div className="relative mx-auto max-w-[820px] px-6 text-center md:px-10">
+        <p className="text-xs uppercase tracking-[0.2em] text-cream/70">
+          {eyebrow}
+        </p>
+        <h1 className="mt-6 font-serif text-5xl leading-tight text-cream md:text-6xl">
+          {title} <span className="text-[#d592f3]">{titleAccent}</span>
+        </h1>
+        {intro && (
+          <p className="font-body mx-auto mt-6 max-w-[680px] text-base leading-relaxed text-cream/70 md:text-lg">
+            {intro}
+          </p>
+        )}
+      </div>
+    </section>
+  );
+}
+
 export default function LegalPage({
   eyebrow,
   title,
@@ -103,42 +152,7 @@ export default function LegalPage({
 }: LegalPageProps) {
   return (
     <main className="flex-1">
-      {/* Hero — same dark treatment as the ROI calculator & testimonials pages */}
-      <section className="relative overflow-hidden bg-[#251f21] pb-16 pt-32 md:pb-20 md:pt-40">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0"
-          style={{
-            maskImage:
-              "linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%)",
-            WebkitMaskImage:
-              "linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%)",
-          }}
-        >
-          <Image
-            src="/images/background_gradient.webp"
-            alt=""
-            fill
-            loading="eager"
-            fetchPriority="low"
-            quality={90}
-            sizes="100vw"
-            className="object-cover"
-          />
-        </div>
-
-        <div className="relative mx-auto max-w-[820px] px-6 text-center md:px-10">
-          <p className="text-xs uppercase tracking-[0.2em] text-cream/70">
-            {eyebrow}
-          </p>
-          <h1 className="mt-6 font-serif text-5xl leading-tight text-cream md:text-6xl">
-            {title} <span className="text-[#d592f3]">{titleAccent}</span>
-          </h1>
-          <p className="font-body mx-auto mt-6 max-w-[680px] text-base leading-relaxed text-cream/70 md:text-lg">
-            {intro}
-          </p>
-        </div>
-      </section>
+      <LegalHero eyebrow={eyebrow} title={title} titleAccent={titleAccent} intro={intro} />
 
       {/* Body */}
       <section className="bg-cream">
