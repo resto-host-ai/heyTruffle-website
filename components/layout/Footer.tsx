@@ -24,6 +24,14 @@ const socialLinks = [
   },
 ];
 
+/** Restaurant associations we belong to, in the reference's order. Stacked
+ *  versions of the logos (the horizontal ones live at /images/*-badge.png). */
+const MEMBERSHIPS = [
+  { name: "Illinois Restaurant Association", src: "/images/members/illinois-restaurant-association.webp", width: 112, height: 144 },
+  { name: "Florida Restaurant & Lodging Association", src: "/images/members/florida-restaurant-lodging-association.webp", width: 144, height: 144 },
+  { name: "Michigan Restaurant & Lodging Association", src: "/images/members/michigan-restaurant-lodging-association.webp", width: 107, height: 144 },
+];
+
 /** Flat, in on-page order: a 2-column grid (`grid-flow-col grid-rows-4`)
  *  reads this top-to-bottom then wraps to the next column, so items 1-4 land
  *  in column one and 5-8 in column two — no need to pre-split the array. The
@@ -77,8 +85,27 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Navigate + Contact us */}
-        <div className="mt-14 flex flex-col sm:flex-row justify-end gap-20 ">
+        {/* Proud members of (left, bottom-aligned) + Navigate / Contact us (right) */}
+        <div className="mt-14 flex flex-col gap-14 lg:flex-row lg:items-end lg:justify-between">
+        <div className="order-last lg:order-first">
+          <p className={headingClass}>Proud members of</p>
+          <ul className="mt-4 flex items-center gap-8" aria-label="Restaurant associations heytruffle belongs to">
+            {MEMBERSHIPS.map((m) => (
+              <li key={m.name}>
+                <Image
+                  src={m.src}
+                  alt={m.name}
+                  width={m.width}
+                  height={m.height}
+                  unoptimized
+                  className="h-10 w-auto"
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="flex flex-col sm:flex-row justify-end gap-20 ">
           <nav aria-label="Footer navigation max-w-50">
             <p className={headingClass}>Navigate</p>
             <ul className="mt-5 grid grid-cols-1 gap-y-3 sm:max-w-60 sm:grid-flow-col sm:grid-rows-5 sm:gap-x-10">
@@ -136,6 +163,7 @@ export default function Footer() {
               ))}
             </ul>
           </div>
+        </div>
         </div>
 
         <div className="mt-16 h-px w-full bg-[#251f21]/15" />

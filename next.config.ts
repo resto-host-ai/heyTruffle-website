@@ -75,6 +75,13 @@ const nextConfig: NextConfig = {
     /* AVIF first: 30-50% smaller than webp on the 100vw gradient backgrounds
        (the site's heaviest image class). Next's default is webp-only. */
     formats: ["image/avif", "image/webp"],
+    /* Encoding an AVIF variant takes ~1 s per image on the server (measured
+       on /case-study: 0.9-1.3 s per MISS vs ~0.3 s once cached), so a cold
+       grid of 9 photos is slow on a phone. Next's default TTL (4 h) re-encodes
+       them several times a day; source images here only change by being
+       replaced, so keep variants for 31 days. Render wipes this cache on
+       every deploy regardless. */
+    minimumCacheTTL: 2678400,
   },
   /* NOTE: no Content-Security-Policy yet — it's the one header here that can
      break the site (Calendly, Clarity, Vimeo and the demo backend all load
