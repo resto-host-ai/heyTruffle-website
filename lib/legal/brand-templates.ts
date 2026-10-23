@@ -19,7 +19,7 @@ export const BRAND_PRIVACY_TEMPLATE = `**Operated by [Company Legal Name], doing
 
 This policy applies to guests who call or text the phone line and messaging flows of [Brand Name] ("[Short Form Name]"), a restaurant operated by [Company Legal Name].
 
-[Short Form Name] uses heytruffle, a hospitality technology company, to answer its phone line with an AI voice assistant and to send text messages to guests. heytruffle provides these services on behalf of [Company Legal Name] dba [Brand Name] and processes your information only to provide them. If you do not agree with this policy, please do not use these services.
+[Short Form Name] uses heytruffle, a hospitality technology company, to answer its phone line with an AI voice assistant and to send text messages to guests. heytruffle provides these services on behalf of [Company Legal Name] doing business as [Brand Name] and processes your information only to provide them. If you do not agree with this policy, please do not use these services.
 
 Our Terms of Service are available at [Terms URL].
 
@@ -100,9 +100,9 @@ export const BRAND_TERMS_TEMPLATE = `**Operated by [Company Legal Name], doing b
 
 ## Who these terms cover
 
-These terms apply to guests who call or text the phone line and messaging flows of [Brand Name] ("[Short Form Name]"), a restaurant operated by [Company Legal Name]. Program name: [Brand Name] Text Messages.
+These terms apply to guests who call or text the phone line and messaging flows of [Brand Name] ("[Short Form Name]"), a restaurant operated by [Company Legal Name].
 
-[Short Form Name] uses heytruffle, a hospitality technology company, to answer its phone line with an AI voice assistant and to send text messages to guests. heytruffle provides these services on behalf of [Company Legal Name] dba [Brand Name].
+[Short Form Name] uses heytruffle, a hospitality technology company, to answer its phone line with an AI voice assistant and to send text messages to guests. heytruffle provides these services on behalf of [Company Legal Name] doing business as [Brand Name].
 
 Our Privacy Policy is available at [Privacy Policy URL].
 
