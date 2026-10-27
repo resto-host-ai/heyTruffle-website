@@ -720,56 +720,41 @@ html {
 
 /* Logo ticker — matches the RestoHost pacing and cell sizing. */
 .marquee {
-  animation: marquee 42s linear infinite;
+  animation: marquee var(--marquee-duration, 42s) linear infinite;
 }
 
 .group:hover .marquee {
   animation-play-state: paused;
 }
 
-/* Fixed-size cell per logo. The source SVGs range from 74px to 189px wide, so
-   letting them size themselves leaves the spacing visibly uneven; a uniform
-   cell with the logo contained inside keeps the rhythm regular.
-
-   The 74px height cap is not arbitrary: every logo_*.webp is a bitmap 148px
-   tall, so 74px is exactly what a 2x display can render sharp. Going past it
-   (76px was tried) resamples the bitmap and shows on the fine-stroke marks
-   like KYU and Baires. Raising this needs higher-resolution source files, not
-   a CSS change. (These were .svg until they turned out to be base64 PNGs in an
-   <svg> wrapper — same pixels, real WebP now, so the cap is unchanged.) */
+/* TrustedBy client logos: each cell is its logo plus 60px a side, so every
+   pair of marks sits 120px apart, centred on the row. The visual
+   weight is balanced inside the files themselves (a solid mark is drawn
+   smaller, a thin-line one bigger), and each <img> carries its own
+   width/height — never cap or equalise the height here, it undoes that.
+   No width/height: auto either: on an <img> that resolves to the file's own
+   pixels (2x) and overrides the attributes. */
 .marquee-item {
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: clamp(140px, 14vw, 192px);
-  height: clamp(56px, 5vw, 74px);
-}
-
-/* TrustedBy: each item sizes to its logo (height set inline), so the CSS
-   gap is the real visual gap between marks. */
-.marquee-item.marquee-item--optical {
-  width: auto;
-}
-.marquee-item--optical img {
-  max-height: none;
+  padding-inline: 50px;
 }
 
 .marquee-item img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
+  max-width: none;
   opacity: 0.78;
   transition:
     opacity 0.25s ease,
-    transform 0.25s ease;
+    filter 0.25s ease;
 }
 
+/* Hover lights the logo up (no scaling); the strip itself pauses via
+   .group:hover .marquee. */
 .marquee-item:hover img {
   opacity: 1;
-  transform: scale(1.05);
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.35));
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1027,7 +1012,7 @@ html {
 @media (max-width: 767px) and (prefers-reduced-motion: no-preference),
   (hover: none) and (pointer: coarse) and (prefers-reduced-motion: no-preference) {
   .mobile-logo-marquee {
-    animation: marquee 48s linear infinite !important;
+    animation: marquee var(--marquee-duration-mobile, 48s) linear infinite !important;
   }
 }
 
