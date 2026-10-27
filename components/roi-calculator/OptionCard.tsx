@@ -24,7 +24,7 @@ export function OptionCard({
       type="button"
       onClick={onSelect}
       aria-pressed={selected}
-      className={`relative flex min-h-[130px] flex-col items-center justify-center gap-2.5 rounded-3xl border-[1.5px] px-4 pb-4 pt-7 text-center transition-all duration-200 md:min-h-[160px] ${
+      className={`relative flex min-h-[130px] flex-col items-center justify-center gap-2.5 rounded-card border-[1.5px] px-4 pb-4 pt-7 text-center transition-all duration-200 md:min-h-[160px] ${
         selected
           ? "border-brand-orange bg-[#fff6ec] shadow-[0_0_0_3px_rgba(239,114,0,0.16),0_16px_36px_-16px_rgba(239,114,0,0.4)]"
           : "border-[#251f21]/10 bg-[#fdfbf5] hover:-translate-y-0.5 hover:border-[#251f21]/25 hover:shadow-[0_12px_28px_-16px_rgba(37,31,33,0.3)]"

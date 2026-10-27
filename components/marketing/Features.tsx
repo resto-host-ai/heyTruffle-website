@@ -56,7 +56,7 @@ export default function Features() {
           {FEATURES.map((f) => (
             <div
               key={f.id}
-              className="relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.03] p-7 transition-colors hover:border-white/20 md:p-8"
+              className="relative overflow-hidden rounded-card border border-white/10 bg-white/[0.03] p-7 transition-colors hover:border-white/20 md:p-8"
             >
               <div
                 aria-hidden

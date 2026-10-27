@@ -166,7 +166,7 @@ export default function PushOperationsPartnerPage() {
       {/* ---- Meta strip ---- */}
       <section className="bg-cream pt-10">
         <div className="mx-auto max-w-[960px] px-6 md:px-10">
-          <div className="grid grid-cols-1 divide-y divide-[#251f21]/10 overflow-hidden rounded-3xl bg-white shadow-[0_2px_10px_rgba(37,31,33,0.08)] md:grid-cols-3 md:divide-x md:divide-y-0">
+          <div className="grid grid-cols-1 divide-y divide-[#251f21]/10 overflow-hidden rounded-card bg-white shadow-[0_2px_10px_rgba(37,31,33,0.08)] md:grid-cols-3 md:divide-x md:divide-y-0">
             {META.map(({ k, v }) => (
               <div key={k} className="px-8 py-6">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#251f21]/50">
@@ -199,7 +199,7 @@ export default function PushOperationsPartnerPage() {
           </div>
 
           <div className="mt-12 grid gap-5 md:grid-cols-2">
-            <div className="rounded-[26px] bg-brand-orange p-9 text-white">
+            <div className="rounded-card bg-brand-orange p-9 text-white">
               <p className="font-body text-lg font-bold">heytruffle</p>
               <p className="mt-3 font-serif text-3xl">Your phones</p>
               <ul className="mt-6 space-y-3">
@@ -211,7 +211,7 @@ export default function PushOperationsPartnerPage() {
                 ))}
               </ul>
             </div>
-            <div className="rounded-[26px] bg-[#251f21] p-9 text-cream">
+            <div className="rounded-card bg-[#251f21] p-9 text-cream">
               <p className="font-body text-lg font-bold">
                 push<span className="text-brand-orange">.</span>
               </p>
@@ -245,7 +245,7 @@ export default function PushOperationsPartnerPage() {
             {WHY_TOGETHER.map((chip) => (
               <div
                 key={chip.title}
-                className="rounded-[24px] bg-white p-8 shadow-[0_2px_10px_rgba(37,31,33,0.08)]"
+                className="rounded-card bg-white p-8 shadow-[0_2px_10px_rgba(37,31,33,0.08)]"
               >
                 <h3 className="font-body text-lg font-semibold text-[#251f21]">
                   {chip.title}
@@ -268,7 +268,7 @@ export default function PushOperationsPartnerPage() {
           <h2 className="mt-3 font-serif text-3xl text-[#251f21] md:text-4xl">
             Push Operations
           </h2>
-          <div className="mt-8 rounded-[26px] bg-white p-9 shadow-[0_2px_10px_rgba(37,31,33,0.08)] md:p-11">
+          <div className="mt-8 rounded-card bg-white p-9 shadow-[0_2px_10px_rgba(37,31,33,0.08)] md:p-11">
             <p className="text-base leading-relaxed text-[#251f21]/75">
               <strong className="font-semibold text-[#251f21]">
                 Push Operations is a workforce management platform built for
@@ -302,7 +302,7 @@ export default function PushOperationsPartnerPage() {
             Built inside a restaurant group, for restaurant groups.
           </h2>
 
-          <div className="mt-10 rounded-[26px] bg-white/[0.04] p-9 md:p-11">
+          <div className="mt-10 rounded-card bg-white/[0.04] p-9 md:p-11">
             <div className="flex flex-wrap items-baseline gap-3">
               <span className="font-serif text-2xl">Rreal Tacos</span>
               <span className="text-sm text-cream/50">
@@ -348,7 +348,7 @@ export default function PushOperationsPartnerPage() {
           </div>
 
           <div className="mt-12 grid gap-5 md:grid-cols-3">
-            <div className="flex flex-col gap-4 rounded-[22px] border border-[#251f21]/10 bg-white p-8">
+            <div className="flex flex-col gap-4 rounded-card border border-[#251f21]/10 bg-white p-8">
               <h3 className="font-body text-[17px] font-semibold text-[#251f21]">
                 Connect with heytruffle
               </h3>
@@ -360,7 +360,7 @@ export default function PushOperationsPartnerPage() {
                 Book a demo
               </BookDemoButton>
             </div>
-            <div className="flex flex-col gap-4 rounded-[22px] border border-[#251f21]/10 bg-white p-8">
+            <div className="flex flex-col gap-4 rounded-card border border-[#251f21]/10 bg-white p-8">
               <h3 className="font-body text-[17px] font-semibold text-[#251f21]">
                 Connect with Push Operations
               </h3>
@@ -378,7 +378,7 @@ export default function PushOperationsPartnerPage() {
                 Visit Push Operations
               </a>
             </div>
-            <div className="flex flex-col gap-4 rounded-[22px] border border-[#251f21]/10 bg-white p-8">
+            <div className="flex flex-col gap-4 rounded-card border border-[#251f21]/10 bg-white p-8">
               <h3 className="font-body text-[17px] font-semibold text-[#251f21]">
                 Questions about the partnership
               </h3>

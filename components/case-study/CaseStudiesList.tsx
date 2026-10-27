@@ -167,7 +167,7 @@ export default function CaseStudiesList() {
               </button>
 
               {open === group.key && (
-                <div className="absolute left-0 top-full z-30 mt-3 w-full rounded-[20px] bg-cream p-3 shadow-[0_24px_60px_rgba(0,0,0,0.22)]">
+                <div className="absolute left-0 top-full z-30 mt-3 w-full rounded-card bg-cream p-3 shadow-[0_24px_60px_rgba(0,0,0,0.22)]">
                   {group.options.map((option) => {
                     const isSelected = selected[group.key].includes(option);
                     return (
@@ -199,7 +199,7 @@ export default function CaseStudiesList() {
             <Link
               key={c.name}
               href={c.slug ? `/case-study/${c.slug}/` : "#"}
-              className="group relative flex flex-col overflow-hidden rounded-[25px] border border-[#251f21]/10 bg-white shadow-[0_14px_40px_rgba(37,31,33,0.10)] transition-shadow duration-300 hover:shadow-[0_22px_54px_rgba(37,31,33,0.18)]"
+              className="group relative flex flex-col overflow-hidden rounded-card border border-[#251f21]/10 bg-white shadow-[0_14px_40px_rgba(37,31,33,0.10)] transition-shadow duration-300 hover:shadow-[0_22px_54px_rgba(37,31,33,0.18)]"
             >
               {/* Dark bg + a hair of scale: fill images round down to whole
                   pixels, and on fractional card widths that leaves a white

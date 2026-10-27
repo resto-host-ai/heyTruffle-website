@@ -114,7 +114,7 @@ export default function RebrandModal() {
       className="fixed inset-0 z-[9999] flex items-center justify-center p-5 backdrop-blur-[2px]"
       style={{ background: "rgba(37,31,33,0.45)" }}
     >
-      <div className="ht-pop relative w-[420px] max-w-full rounded-[24px] bg-white px-[30px] pb-[28px] pt-[26px] shadow-[0_8px_30px_rgba(37,31,33,0.16)]">
+      <div className="ht-pop relative w-[420px] max-w-full rounded-card bg-white px-[30px] pb-[28px] pt-[26px] shadow-[0_8px_30px_rgba(37,31,33,0.16)]">
         {/* Header */}
         <div className="mb-[22px] flex items-center justify-between">
           <Image

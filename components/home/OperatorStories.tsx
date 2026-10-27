@@ -56,7 +56,7 @@ const STORIES: Story[] = [
 function StoryCard({ story }: { story: Story }) {
   const [playing, setPlaying] = useState(false);
   return (
-    <article className="flex w-full shrink-0 snap-center flex-col overflow-hidden rounded-[20px] bg-cream shadow-[0_24px_60px_rgba(0,0,0,0.3)] md:flex-row md:rounded-[calc(24*var(--fx))] md:bg-white">
+    <article className="flex w-full shrink-0 snap-center flex-col overflow-hidden rounded-card bg-cream shadow-[0_24px_60px_rgba(0,0,0,0.3)] md:flex-row md:bg-white">
       {/* Video */}
       <div className="relative aspect-[5/3] w-full shrink-0 overflow-hidden bg-ink md:aspect-auto md:min-h-[calc(517*var(--fx))] md:w-[calc(647*var(--fx))]">
         {playing ? (

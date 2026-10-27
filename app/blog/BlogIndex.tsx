@@ -61,7 +61,7 @@ export default function BlogIndex() {
           {featured && (
             <Link
               href={`/blog/${featured.slug}/`}
-              className="group mt-14 grid grid-cols-1 gap-0 overflow-hidden rounded-[25px] bg-white shadow-[0_18px_44px_rgba(0,0,0,0.08)] transition-shadow duration-300 hover:shadow-[0_28px_70px_rgba(0,0,0,0.14)] md:grid-cols-2"
+              className="group mt-14 grid grid-cols-1 gap-0 overflow-hidden rounded-card bg-white shadow-[0_18px_44px_rgba(0,0,0,0.08)] transition-shadow duration-300 hover:shadow-[0_28px_70px_rgba(0,0,0,0.14)] md:grid-cols-2"
             >
               <div className="relative aspect-[16/10] overflow-hidden md:aspect-auto">
                 <Image

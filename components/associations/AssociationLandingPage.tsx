@@ -230,7 +230,7 @@ export default function AssociationLandingPage({
       {/* ---- Offer ---- */}
       <section className="py-16 md:py-20">
         <div className="mx-auto max-w-[1080px] px-6 md:px-10">
-          <div className="flex flex-wrap items-center justify-between gap-8 rounded-3xl border border-[#251f21]/10 bg-white p-9">
+          <div className="flex flex-wrap items-center justify-between gap-8 rounded-card border border-[#251f21]/10 bg-white p-9">
             <div>
               <span className="font-body text-xs font-bold uppercase tracking-[0.12em] text-[#251f21]/50">
                 {abbr} members receive
@@ -285,7 +285,7 @@ export default function AssociationLandingPage({
             {CAPABILITIES.map((cap) => (
               <div
                 key={cap.title}
-                className="rounded-3xl border border-[#251f21]/10 bg-white p-6"
+                className="rounded-card border border-[#251f21]/10 bg-white p-6"
               >
                 <div className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-brand-orange/10 text-brand-orange">
                   <span className="h-[21px] w-[21px]">{cap.icon}</span>
@@ -305,7 +305,7 @@ export default function AssociationLandingPage({
       {/* ---- Managed service ---- */}
       <section className="py-16 md:py-20">
         <div className="mx-auto max-w-[1080px] px-6 md:px-10">
-          <div className="rounded-3xl bg-[#251f21] p-9 text-cream md:p-12">
+          <div className="rounded-card bg-[#251f21] p-9 text-cream md:p-12">
             <span className="font-body text-xs font-bold uppercase tracking-[0.12em] text-cream/40">
               Service, not software
             </span>
@@ -378,7 +378,7 @@ export default function AssociationLandingPage({
             {STATS.map((s) => (
               <div
                 key={s.lbl}
-                className="rounded-3xl border border-[#251f21]/10 bg-white p-6 text-center"
+                className="rounded-card border border-[#251f21]/10 bg-white p-6 text-center"
               >
                 <p className="font-serif text-4xl text-brand-orange">
                   {s.num}

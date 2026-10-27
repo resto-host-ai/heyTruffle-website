@@ -95,7 +95,7 @@ export default function PartnersPage() {
               <Link
                 key={entry.name}
                 href={entry.href}
-                className="group flex flex-col rounded-[26px] bg-white p-9 shadow-[0_2px_10px_rgba(37,31,33,0.08)] transition-shadow hover:shadow-[0_4px_18px_rgba(37,31,33,0.12)]"
+                className="group flex flex-col rounded-card bg-white p-9 shadow-[0_2px_10px_rgba(37,31,33,0.08)] transition-shadow hover:shadow-[0_4px_18px_rgba(37,31,33,0.12)]"
               >
                 <span className="w-fit rounded-full bg-brand-orange/10 px-3 py-1.5 font-body text-[11px] font-bold uppercase tracking-[0.1em] text-brand-orange">
                   {entry.tag}

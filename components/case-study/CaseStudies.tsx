@@ -179,7 +179,7 @@ export default function CaseStudies({
             aria-hidden
             /* md+ only: a viewport-wide blurred layer that re-rasterizes on
                every accent-colour transition is pure tile pressure on iOS. */
-            className="pointer-events-none absolute -inset-4 hidden rounded-[36px] opacity-30 blur-3xl transition-colors duration-500 md:block"
+            className="pointer-events-none absolute -inset-4 hidden rounded-card opacity-30 blur-3xl transition-colors duration-500 md:block"
             style={{ backgroundColor: cases[index].accent }}
           />
           {/* No overflow-hidden here: the peeking neighbours must run past this
@@ -206,7 +206,7 @@ export default function CaseStudies({
                    also faded the drop shadow, which left a pale halo around the
                    peeking card. Dimming stays with bgIdle, and only the active
                    card casts a shadow. */
-                className={`relative flex w-full shrink-0 grow-0 basis-[var(--basis)] flex-col overflow-hidden rounded-[28px] transition-all duration-500 ease-out md:h-[clamp(330px,calc(28.93vw-42.2px),420px)] md:flex-row md:transform-gpu ${
+                className={`relative flex w-full shrink-0 grow-0 basis-[var(--basis)] flex-col overflow-hidden rounded-card transition-all duration-500 ease-out md:h-[clamp(330px,calc(28.93vw-42.2px),420px)] md:flex-row md:transform-gpu ${
                   i === index ? "shadow-[0_18px_36px_-12px_rgba(0,0,0,0.55)]" : ""
                 }`}
                 style={{ backgroundColor: i === index ? c.bg : c.bgIdle }}

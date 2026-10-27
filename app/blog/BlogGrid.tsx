@@ -38,7 +38,7 @@ export default function BlogGrid({ posts }: { posts: PostMeta[] }) {
           <Link
             key={post.slug}
             href={`/blog/${post.slug}/`}
-            className="group flex flex-col overflow-hidden rounded-[25px] bg-white shadow-[0_14px_34px_rgba(0,0,0,0.06)] transition-shadow duration-300 hover:shadow-[0_22px_54px_rgba(0,0,0,0.12)]"
+            className="group flex flex-col overflow-hidden rounded-card bg-white shadow-[0_14px_34px_rgba(0,0,0,0.06)] transition-shadow duration-300 hover:shadow-[0_22px_54px_rgba(0,0,0,0.12)]"
           >
             <div className="relative aspect-[16/10] overflow-hidden">
               <Image

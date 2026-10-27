@@ -10,7 +10,7 @@ export default function FaqList({
   faqs?: readonly Faq[];
 } = {}) {
   return (
-    <div className="overflow-hidden rounded-3xl border border-[#251f21]/10 bg-white/60">
+    <div className="overflow-hidden rounded-card border border-[#251f21]/10 bg-white/60">
       {faqs.map((faq, i) => (
         <details
           key={faq.id}

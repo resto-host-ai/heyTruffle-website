@@ -3,7 +3,7 @@ import { ProgressBar } from "./ProgressBar";
 
 export function ThanksPanel({ firstName }: { firstName: string }) {
   return (
-    <div className="overflow-hidden rounded-[36px] bg-[#f6f3ec] shadow-2xl">
+    <div className="overflow-hidden rounded-card bg-[#f6f3ec] shadow-2xl">
       <ProgressBar value={1} />
       <div className="px-6 pb-14 pt-12 md:px-16">
         <div

@@ -14,18 +14,27 @@ import Image from "next/image";
  *  next/image sizes against; the rendered size comes from .marquee-item in
  *  globals.css, which caps height at 74px. Keep them at 2x that cap: the fine
  *  strokes on KYU and Baires visibly resample below it. */
+/* Trimmed copies (public/images/logos-trimmed): the originals carry uneven
+   transparent padding, which made the same CSS gap look different between
+   logos. `w`/`h` are the trimmed bitmap's size. */
 const LOGOS = [
-  { src: "/images/logo_kyu.webp", alt: "KYU", w: 218, h: 148 },
-  { src: "/images/logo_canita.webp", alt: "La Cañita", w: 269, h: 148 },
-  { src: "/images/logo_mojitos.webp", alt: "Mojitos", w: 211, h: 148 },
-  { src: "/images/logo_lima.webp", alt: "Lima", w: 321, h: 148 },
-  { src: "/images/logo_rreal.webp", alt: "Rreal Tacos", w: 149, h: 148 },
-  { src: "/images/logo_south.webp", alt: "South Beach", w: 151, h: 148 },
-  { src: "/images/logo_grove.webp", alt: "The Grove", w: 384, h: 86 },
-  { src: "/images/logo_baires.webp", alt: "Baires Grill", w: 149, h: 148 },
-  { src: "/images/logo_palms.webp", alt: "Palm Tree Club", w: 384, h: 90 },
-  { src: "/images/logo_esme.webp", alt: "Esme", w: 291, h: 148 },
+  { src: "/images/logos-trimmed/logo_kyu.webp", alt: "KYU", w: 207, h: 128 },
+  { src: "/images/logos-trimmed/logo_canita.webp", alt: "La Cañita", w: 233, h: 102 },
+  { src: "/images/logos-trimmed/logo_mojitos.webp", alt: "Mojitos", w: 189, h: 99 },
+  { src: "/images/logos-trimmed/logo_lima.webp", alt: "Lima", w: 304, h: 143 },
+  { src: "/images/logos-trimmed/logo_rreal.webp", alt: "Rreal Tacos", w: 148, h: 148 },
+  { src: "/images/logos-trimmed/logo_south.webp", alt: "South Beach", w: 150, h: 148 },
+  { src: "/images/logos-trimmed/logo_grove.webp", alt: "The Grove", w: 383, h: 86 },
+  { src: "/images/logos-trimmed/logo_baires.webp", alt: "Baires Grill", w: 133, h: 106 },
+  { src: "/images/logos-trimmed/logo_palms.webp", alt: "Palm Tree Club", w: 384, h: 90 },
+  { src: "/images/logos-trimmed/logo_esme.webp", alt: "Esme", w: 241, h: 129 },
 ];
+
+/* Optical sizing: every logo gets the same visual area instead of the same
+   height. Height scales with 1/sqrt(aspect), so a square mark renders at the
+   full --logo-base height and a long wordmark proportionally shorter (and
+   wider). Clamped so the widest marks don't shrink to a sliver. */
+const heightFactor = (w: number, h: number) => Math.max(0.5, Math.min(1, 1 / Math.sqrt(w / h)));
 
 // Duplicated so the -50% translate loops seamlessly.
 const TRACK = [...LOGOS, ...LOGOS];
@@ -45,9 +54,13 @@ export default function TrustedBy() {
           re-composite the whole strip per frame; phones get two cheap gradient
           overlays over the section bg instead. */}
       <div className="group relative mt-12 overflow-hidden md:[mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-        <div className="marquee mobile-logo-marquee flex w-max items-center gap-9 pr-9 md:gap-[calc(48*var(--fx))] md:pr-[calc(48*var(--fx))]">
+        <div className="marquee mobile-logo-marquee flex w-max items-center gap-12 pr-12 [--logo-base:72px] md:gap-[calc(72*var(--fx))] md:pr-[calc(72*var(--fx))] md:[--logo-base:calc(100*var(--fx))]">
           {TRACK.map((logo, i) => (
-            <div className="marquee-item" key={i}>
+            <div
+              className="marquee-item marquee-item--optical"
+              key={i}
+              style={{ height: `calc(var(--logo-base) * ${heightFactor(logo.w, logo.h).toFixed(3)})` }}
+            >
               <Image
                 src={logo.src}
                 alt={logo.alt}
@@ -57,7 +70,7 @@ export default function TrustedBy() {
                 loading={i < 3 ? "eager" : "lazy"}
                 fetchPriority={i < 3 ? "low" : undefined}
                 unoptimized
-                className="h-12 w-auto shrink-0 opacity-70 transition-opacity hover:opacity-100"
+                className="h-full w-auto shrink-0"
               />
             </div>
           ))}

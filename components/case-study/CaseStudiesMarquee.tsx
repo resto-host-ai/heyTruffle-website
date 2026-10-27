@@ -55,7 +55,7 @@ export default function CaseStudiesMarquee({
               href={c.slug ? `/case-study/${c.slug}/` : "#"}
               aria-hidden={i >= cases.length}
               tabIndex={i >= cases.length ? -1 : undefined}
-              className="group/card relative aspect-[5/3] w-80 shrink-0 overflow-hidden rounded-[25px] bg-[#251f21] shadow-[0_14px_40px_rgba(0,0,0,0.25)] transition-shadow duration-300 hover:shadow-[0_22px_54px_rgba(0,0,0,0.35)] md:w-120"
+              className="group/card relative aspect-[5/3] w-80 shrink-0 overflow-hidden rounded-card bg-[#251f21] shadow-[0_14px_40px_rgba(0,0,0,0.25)] transition-shadow duration-300 hover:shadow-[0_22px_54px_rgba(0,0,0,0.35)] md:w-120"
             >
               {/* Image fills the whole card now — no white footer strip. */}
               <Image

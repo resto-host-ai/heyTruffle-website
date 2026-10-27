@@ -79,7 +79,7 @@ export default function Pricing() {
 
         {/* ---- Enterprise — full-width band below the three tiers ---- */}
         <div className=" bg-white 
-        mt-5 items-start gap-6 rounded-3xl p-8 shadow-[0_2px_10px_rgba(37,31,33,0.08)]
+        mt-5 items-start gap-6 rounded-card p-8 shadow-[0_2px_10px_rgba(37,31,33,0.08)]
 
         md:flex-row 
         md:items-center md:justify-between 
@@ -139,8 +139,8 @@ function TierCard({ tier }: { tier: Tier }) {
     <div
       className={
         tier.featured
-          ? "flex h-full flex-col rounded-3xl bg-[#251F21] p-8"
-          : "flex h-full flex-col rounded-3xl bg-white p-8 shadow-[0_2px_10px_rgba(37,31,33,0.08)]"
+          ? "flex h-full flex-col rounded-card bg-[#251F21] p-8"
+          : "flex h-full flex-col rounded-card bg-white p-8 shadow-[0_2px_10px_rgba(37,31,33,0.08)]"
       }
     >
       <h3

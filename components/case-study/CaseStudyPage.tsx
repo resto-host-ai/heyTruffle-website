@@ -143,7 +143,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
         <section className="relative bg-cream pb-24 pt-24 md:pb-32 md:pt-32">
           <div className="mx-auto w-full px-6 lg:px-[73px]">
             <div
-              className="relative overflow-hidden rounded-[36px] px-8 py-12 md:rounded-[48px] md:px-16 md:py-16"
+              className="relative overflow-hidden rounded-card px-8 py-12 md:px-16 md:py-16"
               style={{
                 background: [
                   "radial-gradient(75% 130% at 100% 50%, rgba(239,114,0,0.55) 0%, rgba(239,114,0,0.14) 34%, transparent 66%)",
@@ -185,7 +185,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
 
                 {cs.featureStory.highlights.length === 1 ? (
                   <div
-                    className="relative flex flex-col items-center justify-center gap-2 overflow-hidden rounded-[32px] border border-white/15 bg-white/[0.05] px-8 py-16 text-center backdrop-blur-xl md:py-24"
+                    className="relative flex flex-col items-center justify-center gap-2 overflow-hidden rounded-card border border-white/15 bg-white/[0.05] px-8 py-16 text-center backdrop-blur-xl md:py-24"
                     style={{
                       boxShadow:
                         "inset 0 1px 1px rgba(255,255,255,0.18), 0 24px 60px rgba(0,0,0,0.35)",
@@ -209,7 +209,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
                   </div>
                 ) : (
                   <div
-                    className="relative flex flex-col items-center justify-center gap-6 overflow-hidden rounded-[32px] border border-white/15 bg-white/[0.05] px-8 py-14 text-center backdrop-blur-xl md:py-16"
+                    className="relative flex flex-col items-center justify-center gap-6 overflow-hidden rounded-card border border-white/15 bg-white/[0.05] px-8 py-14 text-center backdrop-blur-xl md:py-16"
                     style={{
                       boxShadow:
                         "inset 0 1px 1px rgba(255,255,255,0.18), 0 24px 60px rgba(0,0,0,0.35)",
@@ -254,7 +254,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
         <section className="relative bg-cream pb-24 pt-24 md:pb-32 md:pt-32">
           <div className="mx-auto w-full px-6 lg:px-[73px]">
             <div
-              className="relative overflow-hidden rounded-[36px] px-8 py-12 md:rounded-[48px] md:px-16 md:py-16"
+              className="relative overflow-hidden rounded-card px-8 py-12 md:px-16 md:py-16"
               style={{
                 background: [
                   "radial-gradient(75% 130% at 100% 40%, rgba(239,114,0,0.55) 0%, rgba(239,114,0,0.14) 34%, transparent 66%)",
@@ -318,7 +318,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
 
                 <div className="flex flex-col gap-8">
                   <div
-                    className="relative overflow-hidden rounded-[32px] border border-white/15 bg-white/[0.05] px-8 py-12 text-center backdrop-blur-xl md:px-10 md:py-14 lg:text-left"
+                    className="relative overflow-hidden rounded-card border border-white/15 bg-white/[0.05] px-8 py-12 text-center backdrop-blur-xl md:px-10 md:py-14 lg:text-left"
                     style={{
                       boxShadow:
                         "inset 0 1px 1px rgba(255,255,255,0.18), 0 24px 60px rgba(0,0,0,0.35)",
@@ -390,7 +390,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
               {cs.capabilities.items.map((c) => (
                 <div
                   key={c.title}
-                  className="group relative min-h-[240px] overflow-hidden rounded-[25px] shadow-[0_18px_44px_rgba(0,0,0,0.06)] md:h-[308.1px] md:min-h-0"
+                  className="group relative min-h-[240px] overflow-hidden rounded-card shadow-[0_18px_44px_rgba(0,0,0,0.06)] md:h-[308.1px] md:min-h-0"
                 >
                   <Image
                     src={c.img}
@@ -465,7 +465,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
             {cs.measured.cards.map((m) => (
               <div
                 key={m.label}
-                className="flex h-[150px] flex-col justify-center rounded-[25px] border border-transparent [background:linear-gradient(#f6f3ec,#f6f3ec)_padding-box,linear-gradient(180deg,#ffffff_0%,rgba(37,31,33,0.06)_45%,rgba(37,31,33,0.28)_100%)_border-box] p-5 shadow-[0_14px_34px_rgba(0,0,0,0.06)] sm:h-[202px] md:p-8"
+                className="flex h-[150px] flex-col justify-center rounded-card border border-transparent [background:linear-gradient(#f6f3ec,#f6f3ec)_padding-box,linear-gradient(180deg,#ffffff_0%,rgba(37,31,33,0.06)_45%,rgba(37,31,33,0.28)_100%)_border-box] p-5 shadow-[0_14px_34px_rgba(0,0,0,0.06)] sm:h-[202px] md:p-8"
               >
                 <p
                   className="font-body text-[40px] font-normal leading-[110%] sm:text-[56px] md:text-[72px]"
@@ -486,7 +486,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
                 Estimated business impact
               </p>
               <div className="mt-8 flex flex-col gap-6 xl:flex-row xl:items-stretch">
-                <div className="flex flex-1 flex-col gap-4 rounded-[25px] border border-transparent [background:linear-gradient(#f1eee6,#f1eee6)_padding-box,linear-gradient(180deg,#ffffff_0%,rgba(37,31,33,0.06)_45%,rgba(37,31,33,0.28)_100%)_border-box] p-7 shadow-[0_10px_30px_rgba(0,0,0,0.04)] md:h-[202.34px] md:flex-row md:flex-nowrap md:items-center md:justify-between md:gap-4 md:p-12">
+                <div className="flex flex-1 flex-col gap-4 rounded-card border border-transparent [background:linear-gradient(#f1eee6,#f1eee6)_padding-box,linear-gradient(180deg,#ffffff_0%,rgba(37,31,33,0.06)_45%,rgba(37,31,33,0.28)_100%)_border-box] p-7 shadow-[0_10px_30px_rgba(0,0,0,0.04)] md:h-[202.34px] md:flex-row md:flex-nowrap md:items-center md:justify-between md:gap-4 md:p-12">
                   {cs.impact.factors.map((item, i, arr) => (
                     <Fragment key={item.label}>
                       <div className="flex items-center gap-4">
@@ -519,7 +519,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
                 </div>
 
                 <div
-                  className="relative flex flex-col items-start gap-3 overflow-hidden rounded-[25px] p-7 text-cream shadow-[0_18px_44px_rgba(0,0,0,0.25)] md:h-[202.34px] md:flex-row md:items-center md:gap-5 md:p-10 min-[1280px]:max-[1899px]:w-[38%] min-[1900px]:w-[34%]"
+                  className="relative flex flex-col items-start gap-3 overflow-hidden rounded-card p-7 text-cream shadow-[0_18px_44px_rgba(0,0,0,0.25)] md:h-[202.34px] md:flex-row md:items-center md:gap-5 md:p-10 min-[1280px]:max-[1899px]:w-[38%] min-[1900px]:w-[34%]"
                   style={{
                     backgroundImage:
                       "linear-gradient(180deg, #12162c 0%, #21306a 55%, #3454b0 100%)",
@@ -567,7 +567,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
                 </p>
 
                 <div className="mt-16 grid grid-cols-1 gap-10 lg:grid-cols-[1.15fr_1fr] lg:items-start">
-                  <div className="relative min-h-[420px] overflow-hidden rounded-[25px] md:min-h-[600px]">
+                  <div className="relative min-h-[420px] overflow-hidden rounded-card md:min-h-[600px]">
                     <Image
                       src={cs.testimonial.photo}
                       alt={cs.testimonial.person}
@@ -623,7 +623,7 @@ export default function CaseStudyPage({ cs }: { cs: CaseStudy }) {
           <section className="relative pb-28 text-cream">
             <div className="mx-auto w-full px-6 lg:px-[73px]">
               <div
-                className="relative flex w-full flex-col items-center overflow-hidden rounded-[40px] px-6 py-20 text-center md:rounded-[67px] md:px-10 md:py-28"
+                className="relative flex w-full flex-col items-center overflow-hidden rounded-card px-6 py-20 text-center md:px-10 md:py-28"
                 style={{
                   background: [
                     "radial-gradient(75% 95% at -8% 82%, rgba(239,114,0,0.5) 0%, rgba(239,114,0,0.12) 42%, transparent 68%)",

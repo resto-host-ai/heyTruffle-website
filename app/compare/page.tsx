@@ -57,7 +57,7 @@ export default function ComparisonsHub() {
             <Link
               key={c.slug}
               href={`/compare/${c.slug}`}
-              className="group flex flex-col gap-3.5 rounded-3xl bg-white p-8 shadow-[0_2px_10px_rgba(37,31,33,0.08)] transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_34px_rgba(37,31,33,0.14)]"
+              className="group flex flex-col gap-3.5 rounded-card bg-white p-8 shadow-[0_2px_10px_rgba(37,31,33,0.08)] transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_34px_rgba(37,31,33,0.14)]"
             >
               <p className="font-serif text-2xl text-[#251f21]">
                 heytruffle <span className="italic text-brand-orange">vs</span>{" "}

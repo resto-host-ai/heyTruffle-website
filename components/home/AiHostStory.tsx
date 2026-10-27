@@ -202,7 +202,7 @@ function CallCard({ story }: { story: Story }) {
   const doneBeat = result.kind === "ticket" ? 2 + count + 2 : 2 + count;
   return (
     <div
-      className="flex flex-col rounded-[22px] bg-cream px-[18px] pb-3.5 pt-[18px] font-body text-ink shadow-[0_18px_44px_rgba(0,0,0,0.13)] md:min-h-[calc(560*var(--fx))] md:rounded-[calc(24*var(--fx))] md:p-[calc(28*var(--fx))]"
+      className="flex flex-col rounded-card bg-cream px-[18px] pb-3.5 pt-[18px] font-body text-ink shadow-[0_18px_44px_rgba(0,0,0,0.13)] md:min-h-[calc(560*var(--fx))] md:p-[calc(28*var(--fx))]"
       style={anim("story-card-in", 600, 240)}
     >
       <div className="flex flex-1 flex-col" style={anim("story-fade-up", 400)}>

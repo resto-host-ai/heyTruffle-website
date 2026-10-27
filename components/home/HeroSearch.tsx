@@ -22,7 +22,7 @@ import {
  * the text around it stays static server-rendered HTML that never re-renders.
  */
 export default function HeroSearch({
-  ctaLabel = "Build your AI",
+  ctaLabel = "Try it for free",
 }: {
   ctaLabel?: string;
 } = {}) {
@@ -285,7 +285,7 @@ export default function HeroSearch({
             {showDropdown && (
               <div
                 style={overlayPositionStyle(12)}
-                className="z-20 overflow-hidden rounded-[24px] border border-[#251f21]/10 bg-[#f6f3ec] text-left text-[#251f21] shadow-[0_24px_60px_rgba(0,0,0,0.35)]"
+                className="z-20 overflow-hidden rounded-card border border-[#251f21]/10 bg-[#f6f3ec] text-left text-[#251f21] shadow-[0_24px_60px_rgba(0,0,0,0.35)]"
               >
                 {results.length > 0 ? (
                   <ul className="max-h-[300px] divide-y divide-[#251f21]/10 overflow-y-auto">

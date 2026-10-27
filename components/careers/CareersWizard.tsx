@@ -1056,7 +1056,7 @@ function ResultStep({
   }, []);
 
   return (
-    <div className="relative overflow-hidden rounded-3xl bg-white p-6 shadow-[0_2px_10px_rgba(37,31,33,0.08)] sm:p-[34px]">
+    <div className="relative overflow-hidden rounded-card bg-white p-6 shadow-[0_2px_10px_rgba(37,31,33,0.08)] sm:p-[34px]">
       <div
         aria-hidden
         className="absolute inset-x-0 top-0 h-1"

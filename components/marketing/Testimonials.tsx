@@ -66,7 +66,7 @@ function TestimonialCard({
   const [playing, setPlaying] = useState(false);
 
   return (
-    <article className="flex flex-col overflow-hidden rounded-[28px] bg-[#f6f3ec] shadow-[0_24px_60px_rgba(0,0,0,0.35)]">
+    <article className="flex flex-col overflow-hidden rounded-card bg-[#f6f3ec] shadow-[0_24px_60px_rgba(0,0,0,0.35)]">
       <div
         className="relative w-full overflow-hidden bg-[#1c1917]"
         style={{ aspectRatio: "16 / 12" }}

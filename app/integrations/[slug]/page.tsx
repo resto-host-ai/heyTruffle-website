@@ -109,7 +109,7 @@ export default async function IntegrationPage({
 
           {/* Brand lockup */}
           <div className="mx-auto mt-14 flex max-w-[520px] flex-col items-center gap-4">
-            <div className="grid w-full grid-cols-[1fr_auto_1fr] items-center gap-6 rounded-[25px] border border-cream/15 bg-cream/[0.06] px-8 py-7 backdrop-blur-sm md:gap-10">
+            <div className="grid w-full grid-cols-[1fr_auto_1fr] items-center gap-6 rounded-card border border-cream/15 bg-cream/[0.06] px-8 py-7 backdrop-blur-sm md:gap-10">
               <div className="flex justify-end">
                 <Image
                   src="/images/heytruffle-logo.svg"
@@ -175,7 +175,7 @@ export default async function IntegrationPage({
             </div>
 
             {/* Sync surface card */}
-            <aside className="rounded-[25px] border border-transparent [background:linear-gradient(#f6f3ec,#f6f3ec)_padding-box,linear-gradient(180deg,#ffffff_0%,rgba(37,31,33,0.06)_45%,rgba(37,31,33,0.28)_100%)_border-box] p-7 shadow-[0_14px_34px_rgba(0,0,0,0.06)] md:p-8">
+            <aside className="rounded-card border border-transparent [background:linear-gradient(#f6f3ec,#f6f3ec)_padding-box,linear-gradient(180deg,#ffffff_0%,rgba(37,31,33,0.06)_45%,rgba(37,31,33,0.28)_100%)_border-box] p-7 shadow-[0_14px_34px_rgba(0,0,0,0.06)] md:p-8">
               <p className="border-b border-[#251f21]/10 pb-3.5 font-body text-[13px] font-semibold uppercase tracking-[0.16em] text-[#251f21]/50">
                 Sync surface · {brand}
               </p>
@@ -205,7 +205,7 @@ export default async function IntegrationPage({
             {capabilities.map((c, i) => (
               <article
                 key={c.title}
-                className="flex flex-col rounded-[25px] border border-transparent [background:linear-gradient(#f6f3ec,#f6f3ec)_padding-box,linear-gradient(180deg,#ffffff_0%,rgba(37,31,33,0.06)_45%,rgba(37,31,33,0.28)_100%)_border-box] p-7 shadow-[0_14px_34px_rgba(0,0,0,0.06)] md:p-8"
+                className="flex flex-col rounded-card border border-transparent [background:linear-gradient(#f6f3ec,#f6f3ec)_padding-box,linear-gradient(180deg,#ffffff_0%,rgba(37,31,33,0.06)_45%,rgba(37,31,33,0.28)_100%)_border-box] p-7 shadow-[0_14px_34px_rgba(0,0,0,0.06)] md:p-8"
               >
                 <span className="font-mono text-[13px] font-medium tracking-[0.14em] text-brand-purple">
                   {String(i + 1).padStart(2, "0")}
@@ -226,7 +226,7 @@ export default async function IntegrationPage({
       <section className="relative overflow-hidden bg-cream pb-28 text-cream">
         <div className="mx-auto w-full px-6 lg:px-[73px]">
           <div
-            className="relative flex w-full flex-col items-center overflow-hidden rounded-[40px] px-6 py-20 text-center md:rounded-[67px] md:px-10 md:py-28"
+            className="relative flex w-full flex-col items-center overflow-hidden rounded-card px-6 py-20 text-center md:px-10 md:py-28"
             style={{
               background: [
                 "radial-gradient(75% 95% at -8% 82%, rgba(239,114,0,0.5) 0%, rgba(239,114,0,0.12) 42%, transparent 68%)",

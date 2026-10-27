@@ -41,7 +41,7 @@ export default function Partner() {
     <>
       <section id="become-a-partner" className="bg-[#251f21] pb-28 md:pb-36">
         <div className="mx-auto w-full px-6 lg:px-[73px]">
-          <div className="relative overflow-hidden rounded-[40px] bg-[#1c1917] px-8 py-16 text-center shadow-[0_24px_60px_rgba(0,0,0,0.35)] md:px-14 md:py-24">
+          <div className="relative overflow-hidden rounded-card bg-[#1c1917] px-8 py-16 text-center shadow-[0_24px_60px_rgba(0,0,0,0.35)] md:px-14 md:py-24">
             {/* Warm radial glow, echoing the header CTA gradient */}
             <div
               aria-hidden
@@ -172,7 +172,7 @@ function PartnerModal({ onClose }: { onClose: () => void }) {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative max-h-[calc(100dvh-32px)] w-full max-w-[640px] overflow-y-auto rounded-[28px] bg-[#f6f3ec] px-7 py-8 text-[#251f21] shadow-2xl md:px-9"
+        className="relative max-h-[calc(100dvh-32px)] w-full max-w-[640px] overflow-y-auto rounded-card bg-[#f6f3ec] px-7 py-8 text-[#251f21] shadow-2xl md:px-9"
       >
         <button
           type="button"

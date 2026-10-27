@@ -138,7 +138,7 @@ export default function CompetitorCompare({
           </div>
 
           <div className="mt-12 grid gap-5 md:grid-cols-2">
-            <div className="rounded-[26px] bg-[#251f21] p-9 text-cream">
+            <div className="rounded-card bg-[#251f21] p-9 text-cream">
               <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-brand-orange">
                 heytruffle
               </p>
@@ -148,7 +148,7 @@ export default function CompetitorCompare({
                 you every week.
               </p>
             </div>
-            <div className="rounded-[26px] bg-white p-9 shadow-[0_2px_10px_rgba(37,31,33,0.08)]">
+            <div className="rounded-card bg-white p-9 shadow-[0_2px_10px_rgba(37,31,33,0.08)]">
               <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-[#251f21]/50">
                 {competitor.name}
               </p>
@@ -177,7 +177,7 @@ export default function CompetitorCompare({
           </div>
 
           <div className="mt-12 grid gap-5 md:grid-cols-2">
-            <div className="rounded-[26px] bg-gradient-to-b from-[#241d20] to-[#191214] p-8 text-cream">
+            <div className="rounded-card bg-gradient-to-b from-[#241d20] to-[#191214] p-8 text-cream">
               <div className="mb-5 flex items-center gap-2.5">
                 <span className="h-2.5 w-2.5 rounded-full bg-brand-orange" />
                 <h3 className="font-serif text-2xl">Choose heytruffle if</h3>
@@ -199,7 +199,7 @@ export default function CompetitorCompare({
               </ul>
             </div>
 
-            <div className="rounded-[26px] bg-white p-8 shadow-[0_2px_10px_rgba(37,31,33,0.08)]">
+            <div className="rounded-card bg-white p-8 shadow-[0_2px_10px_rgba(37,31,33,0.08)]">
               <div className="mb-5 flex items-center gap-2.5">
                 <span className="h-2.5 w-2.5 rounded-full bg-[#251f21]/30" />
                 <h3 className="font-serif text-2xl text-[#251f21]">
@@ -245,7 +245,7 @@ export default function CompetitorCompare({
             </p>
           </div>
 
-          <div className="mt-12 overflow-hidden rounded-3xl bg-white shadow-[0_2px_10px_rgba(37,31,33,0.08)]">
+          <div className="mt-12 overflow-hidden rounded-card bg-white shadow-[0_2px_10px_rgba(37,31,33,0.08)]">
             <div className="hidden grid-cols-[200px_1fr_1fr] bg-[#251f21] text-cream md:grid">
               <div className="px-6 py-4 text-sm font-semibold">&nbsp;</div>
               <div className="px-6 py-4 text-sm font-semibold">
@@ -295,7 +295,7 @@ export default function CompetitorCompare({
             {STATS.map((s, i) => (
               <div
                 key={s.lbl}
-                className="rounded-[22px] p-8"
+                className="rounded-card p-8"
                 style={{
                   background:
                     i === 0
@@ -332,7 +332,7 @@ export default function CompetitorCompare({
           </div>
 
           <div className="mt-12 grid gap-5 md:grid-cols-2">
-            <div className="rounded-[24px] bg-[#251f21] p-8 text-cream">
+            <div className="rounded-card bg-[#251f21] p-8 text-cream">
               <span className="text-[12px] font-semibold uppercase tracking-[0.1em] text-brand-orange">
                 heytruffle is best for
               </span>
@@ -345,7 +345,7 @@ export default function CompetitorCompare({
                 week, personalized to your brand.
               </p>
             </div>
-            <div className="rounded-[24px] bg-white p-8 shadow-[0_2px_10px_rgba(37,31,33,0.08)]">
+            <div className="rounded-card bg-white p-8 shadow-[0_2px_10px_rgba(37,31,33,0.08)]">
               <span className="text-[12px] font-semibold uppercase tracking-[0.1em] text-[#251f21]/50">
                 {competitor.name} is best for
               </span>
@@ -366,7 +366,7 @@ export default function CompetitorCompare({
           <h2 className="text-center font-serif text-3xl text-[#251f21] md:text-4xl">
             Questions operators ask
           </h2>
-          <div className="mt-10 overflow-hidden rounded-3xl border border-[#251f21]/10 bg-white/60">
+          <div className="mt-10 overflow-hidden rounded-card border border-[#251f21]/10 bg-white/60">
             {competitor.faqs.map((faq, i) => (
               <details
                 key={faq.q}

@@ -260,7 +260,7 @@ export default function HeroHosts() {
   const spoken = current ? revealWords(current.text, (t - current.start) / Math.max(0.001, current.end - current.start)) : "";
 
   return (
-    <div className="relative z-10 mx-auto mb-10 mt-14 w-[calc(100%-32px)] rounded-[26px] border border-white/10 bg-[#231e20] p-[18px] font-body text-cream md:mb-0 md:mt-[calc(80*var(--fx))] md:w-[90%] md:rounded-b-none md:rounded-t-[calc(60*var(--fx))] md:border-0 md:bg-ink md:px-[calc(40*var(--fx))] md:pb-[calc(56*var(--fx))] md:pt-[calc(60*var(--fx))]">
+    <div className="relative z-10 mx-auto mb-10 mt-14 w-[calc(100%-32px)] rounded-card border border-white/10 bg-[#231e20] p-[18px] font-body text-cream md:mb-0 md:mt-[calc(80*var(--fx))] md:w-[90%] md:rounded-b-none md:border-0 md:bg-ink md:px-[calc(40*var(--fx))] md:pb-[calc(56*var(--fx))] md:pt-[calc(60*var(--fx))]">
       <div className="mx-auto md:max-w-[calc(1330*var(--fx))]">
         {/* Host pills — a swipeable row on mobile, a centered row on desktop */}
         <div className="-mx-[18px] flex snap-x scroll-px-[18px] gap-2.5 overflow-x-auto px-[18px] [-ms-overflow-style:none] [scrollbar-width:none] md:mx-0 md:flex-wrap md:justify-center md:gap-[calc(45*var(--fx))] md:overflow-visible md:px-0 [&::-webkit-scrollbar]:hidden">

@@ -47,7 +47,7 @@ export default function IntegrationsPage() {
                   <Link
                     key={integration.slug}
                     href={`/integrations/${integration.slug}/`}
-                    className="flex flex-col rounded-[25px] border border-transparent [background:linear-gradient(#f6f3ec,#f6f3ec)_padding-box,linear-gradient(180deg,#ffffff_0%,rgba(37,31,33,0.06)_45%,rgba(37,31,33,0.28)_100%)_border-box] p-7 shadow-[0_14px_34px_rgba(0,0,0,0.06)] transition-transform duration-300 hover:-translate-y-1 md:p-8"
+                    className="flex flex-col rounded-card border border-transparent [background:linear-gradient(#f6f3ec,#f6f3ec)_padding-box,linear-gradient(180deg,#ffffff_0%,rgba(37,31,33,0.06)_45%,rgba(37,31,33,0.28)_100%)_border-box] p-7 shadow-[0_14px_34px_rgba(0,0,0,0.06)] transition-transform duration-300 hover:-translate-y-1 md:p-8"
                   >
                     <span
                       className="font-body text-[13px] font-semibold uppercase tracking-[0.14em]"

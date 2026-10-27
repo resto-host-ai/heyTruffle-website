@@ -145,7 +145,7 @@ export function RoiCalculatorForm() {
   }
 
   return (
-    <div className="overflow-hidden rounded-[36px] bg-[#f6f3ec] shadow-2xl">
+    <div className="overflow-hidden rounded-card bg-[#f6f3ec] shadow-2xl">
       <ProgressBar value={(step + 1) / TOTAL_STEPS} />
 
       <div className="roi-fade px-6 pb-8 pt-12 md:px-12 md:pt-14" key={step}>

@@ -66,7 +66,7 @@ export default function PricingIncludes() {
           {ITEMS.map((item) => (
             <div
               key={item.title}
-              className="rounded-[24px] bg-white p-7 shadow-[0_2px_10px_rgba(37,31,33,0.08)]"
+              className="rounded-card bg-white p-7 shadow-[0_2px_10px_rgba(37,31,33,0.08)]"
             >
               <span className="flex h-10 w-10 items-center justify-center text-brand-orange">
                 {item.icon}

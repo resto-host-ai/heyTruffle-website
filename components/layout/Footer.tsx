@@ -77,7 +77,7 @@ export default function Footer() {
               target="_blank"
               className="flex w-full justify-center rounded-full bg-brand-orange px-5 py-2.5 font-body text-[14px] font-semibold leading-[110%] text-cream transition-opacity hover:opacity-90"
             >
-              Build your AI
+              Try it for free
             </a>
             <BookDemoButton className="flex sm:w-full items-center rounded-full  bg-[#251f21]/10 px-5 py-2.5 font-body text-nowrap text-[14px] font-semibold leading-[110%] text-[#251f21] transition-colors hover:bg-[#251f21]/15">
               Talk to our team
@@ -89,9 +89,25 @@ export default function Footer() {
         <div className="mt-14 flex flex-col gap-14 lg:flex-row lg:items-end lg:justify-between">
         <div className="order-last lg:order-first">
           <p className={headingClass}>Proud members of</p>
+          {/* Hovering (or tapping/focusing) a logo shows its name above it,
+              centred, with a caret pointing down at the logo. Below lg the
+              first logo sits on the 24px gutter, so its label starts at the
+              logo's left edge instead of running off the screen. */}
           <ul className="mt-4 flex items-center gap-8" aria-label="Restaurant associations heytruffle belongs to">
-            {MEMBERSHIPS.map((m) => (
-              <li key={m.name}>
+            {MEMBERSHIPS.map((m, i) => (
+              <li key={m.name} tabIndex={0} className="group relative cursor-default outline-none">
+                <span
+                  aria-hidden
+                  className={`pointer-events-none absolute bottom-full z-10 mb-3 w-max max-w-[10rem] translate-y-1 border-t-2 border-brand-orange bg-[#251f21] px-3 py-2 text-center font-body text-[13px] font-medium leading-[1.3] text-cream opacity-0 shadow-[0_8px_24px_rgba(37,31,33,0.18)] transition duration-150 group-hover:translate-y-0 group-hover:opacity-100 group-focus:translate-y-0 group-focus:opacity-100 ${
+                    i === 0 ? "left-0 lg:left-1/2 lg:-translate-x-1/2" : "left-1/2 -translate-x-1/2"
+                  }`}
+                >
+                  {m.name}
+                </span>
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 h-2 w-2 -translate-x-1/2 rotate-45 bg-[#251f21] opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus:opacity-100"
+                />
                 <Image
                   src={m.src}
                   alt={m.name}
@@ -114,7 +130,7 @@ export default function Footer() {
                   <li key={item.label}>
                     <BookDemoButton
                       className={`${linkClass} text-left`}
-                      ariaLabel="Book a demo"
+                      ariaLabel="Try it for free"
                     >
                       {item.label}
                     </BookDemoButton>

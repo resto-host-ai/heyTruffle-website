@@ -137,7 +137,7 @@ export default async function BlogPostPage({
       {/* ---- Featured image ---- */}
       <div className="bg-cream">
         <div className="mx-auto max-w-[900px] px-6 md:px-10">
-          <div className="relative aspect-[16/9] -translate-y-8 overflow-hidden rounded-[25px] shadow-[0_24px_60px_rgba(0,0,0,0.18)] md:-translate-y-12">
+          <div className="relative aspect-[16/9] -translate-y-8 overflow-hidden rounded-card shadow-[0_24px_60px_rgba(0,0,0,0.18)] md:-translate-y-12">
             <Image
               src={post.image}
               alt={post.title}
@@ -172,7 +172,7 @@ export default async function BlogPostPage({
                 <Link
                   key={p.slug}
                   href={`/blog/${p.slug}/`}
-                  className="group flex flex-col overflow-hidden rounded-[25px] bg-white shadow-[0_14px_34px_rgba(0,0,0,0.06)] transition-shadow duration-300 hover:shadow-[0_22px_54px_rgba(0,0,0,0.12)]"
+                  className="group flex flex-col overflow-hidden rounded-card bg-white shadow-[0_14px_34px_rgba(0,0,0,0.06)] transition-shadow duration-300 hover:shadow-[0_22px_54px_rgba(0,0,0,0.12)]"
                 >
                   <div className="relative aspect-[16/10] overflow-hidden">
                     <Image
@@ -205,7 +205,7 @@ export default async function BlogPostPage({
       <section className="relative overflow-hidden bg-[#ece8df] pb-24 pt-4 md:pb-28">
         <div className="mx-auto w-full px-6 lg:px-[73px]">
           <div
-            className="relative flex w-full flex-col items-center overflow-hidden rounded-[40px] px-6 py-20 text-center text-cream md:rounded-[67px] md:px-10 md:py-24"
+            className="relative flex w-full flex-col items-center overflow-hidden rounded-card px-6 py-20 text-center text-cream md:px-10 md:py-24"
             style={{
               background: [
                 "radial-gradient(75% 95% at -8% 82%, rgba(239,114,0,0.5) 0%, rgba(239,114,0,0.12) 42%, transparent 68%)",

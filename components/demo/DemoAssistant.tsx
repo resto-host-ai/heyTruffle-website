@@ -106,7 +106,7 @@ export default function DemoAssistant({
       }}
       className="fixed inset-0 z-[100] grid place-items-center overflow-y-auto bg-[#1c1917]/75 p-4 backdrop-blur-md"
     >
-      <div className="relative w-full max-w-[520px] overflow-hidden rounded-[28px] bg-[#f6f3ec] text-[#251f21] shadow-2xl">
+      <div className="relative w-full max-w-[520px] overflow-hidden rounded-card bg-[#f6f3ec] text-[#251f21] shadow-2xl">
         <button
           type="button"
           onClick={onClose}

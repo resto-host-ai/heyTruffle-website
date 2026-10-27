@@ -236,7 +236,7 @@ export default function PricingRoiCalculator() {
           </p>
         </div>
 
-        <div className="mx-auto mt-10 grid max-w-[820px] gap-8 rounded-3xl bg-white p-8 shadow-[0_2px_10px_rgba(37,31,33,0.08)] md:grid-cols-2 md:p-10">
+        <div className="mx-auto mt-10 grid max-w-[820px] gap-8 rounded-card bg-white p-8 shadow-[0_2px_10px_rgba(37,31,33,0.08)] md:grid-cols-2 md:p-10">
           {/* ---- Inputs ---- */}
           <div className="flex flex-col gap-4">
             <NumberField

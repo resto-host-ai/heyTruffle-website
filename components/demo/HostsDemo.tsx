@@ -301,8 +301,8 @@ export default function HostsDemo() {
          page. */
       className={`w-full  scroll-mt-28 -mt-10 md:mt-18 md:min-h-[75vh] ${
         host
-          ? " rounded-[32px] bg-[#f6f3ec] p-2 shadow-2xl  md:p-3"
-          : " flex flex-col justify-center rounded-[32px] bg-[#f6f3ec] px-6 py-8 shadow-2xl  md:px-16 md:py-12"
+          ? " rounded-card bg-[#f6f3ec] p-2 shadow-2xl  md:p-3"
+          : " flex flex-col justify-center rounded-card bg-[#f6f3ec] px-6 py-8 shadow-2xl  md:px-16 md:py-12"
       }`}
     >
       {/* key on the active host so the animation replays on every swap, both
@@ -426,7 +426,7 @@ export default function HostsDemo() {
                8px on mobile and 12px from md. Concentric with a 32px card means
                32−8=24 and 32−12=20 — a single fixed value is right on only one
                of the two. */
-            className="relative flex max-h-[calc(100svh-132px)] flex-col overflow-hidden rounded-[24px] px-5 py-6 md:rounded-[20px] md:p-7"
+            className="relative flex max-h-[calc(100svh-132px)] flex-col overflow-hidden rounded-card px-5 py-6 md:p-7"
             style={{
               background: `linear-gradient(180deg, #f8f5ef 0%, ${host.color}14 42%, ${host.color}59 100%)`,
             }}
@@ -505,7 +505,7 @@ export default function HostsDemo() {
               </div>
 
               {/* ---- Call card (flower + transcript) ---- */}
-              <div className="mt-5 flex min-h-0 flex-1 flex-col overflow-hidden rounded-[20px] bg-white/55 shadow-[0_16px_50px_rgba(37,31,33,0.08)] backdrop-blur-sm">
+              <div className="mt-5 flex min-h-0 flex-1 flex-col overflow-hidden rounded-card bg-white/55 shadow-[0_16px_50px_rgba(37,31,33,0.08)] backdrop-blur-sm">
                 {/* Flower with a soft multi-colour halo */}
 
                 {/* Transcript */}
@@ -642,7 +642,7 @@ export default function HostsDemo() {
                    and "Call outcome", which move into the header line and above
                    the player respectively — four blocks stacked two-by-two ate
                    most of a phone screen. */}
-              <div className="mt-4 grid shrink-0 grid-cols-2 items-start gap-4 rounded-[20px] bg-white/35 px-5 py-4 backdrop-blur-sm md:grid-cols-[repeat(4,auto)] md:justify-between md:gap-x-8">
+              <div className="mt-4 grid shrink-0 grid-cols-2 items-start gap-4 rounded-card bg-white/35 px-5 py-4 backdrop-blur-sm md:grid-cols-[repeat(4,auto)] md:justify-between md:gap-x-8">
                 <div className="hidden md:block">
                   <p className="text-[13px] font-semibold" style={{ color: host.color }}>
                     Deployed at

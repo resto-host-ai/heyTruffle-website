@@ -10,6 +10,7 @@ import Clarity from "@/components/layout/Clarity";
 import Reb2b from "@/components/layout/Reb2b";
 import SiteJsonLd from "@/components/layout/JsonLd";
 import Graph8 from "@/components/layout/Graph8";
+import CalendlyModal from "@/components/ui/CalendlyModal";
 
 /* FONTS — self-hosted latin slices, NOT next/font/google. This is a measured
    performance fix, not a style change: the files in ./fonts are byte-identical
@@ -87,7 +88,7 @@ export const metadata: Metadata = {
   // Plain-string default title: it covers the home page and any route that
   // sets no title of its own. Existing pages already append "— heytruffle" to
   // their own titles, so no template is used (it would double the suffix).
-  title: "heytruffle — Fully managed AI Concierge for restaurants",
+  title: "heytruffle, the fully managed AI Concierge for restaurants",
   description:
     "heytruffle answers your restaurant's phones with an AI Concierge trained for your brand. Reservations, orders, catering and events, tuned every week.",
   alternates: { canonical: "/" },
@@ -98,14 +99,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "heytruffle",
-    title: "heytruffle — Fully managed AI Concierge for restaurants",
+    title: "heytruffle, the fully managed AI Concierge for restaurants",
     description:
       "heytruffle answers your restaurant's phones with an AI Concierge trained for your brand. Reservations, orders, catering and events, tuned every week.",
     url: "https://heytruffle.ai/",
   },
   twitter: {
     card: "summary_large_image",
-    title: "heytruffle — Fully managed AI Concierge for restaurants",
+    title: "heytruffle, the fully managed AI Concierge for restaurants",
     description:
       "heytruffle answers your restaurant's phones with an AI Concierge trained for your brand. Reservations, orders, catering and events, tuned every week.",
   },
@@ -174,6 +175,7 @@ export default function RootLayout({
         <Reb2b />
         <SiteJsonLd />
         <Graph8 />
+        <CalendlyModal />
       </body>
     </html>
   );

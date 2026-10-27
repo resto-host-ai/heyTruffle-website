@@ -124,13 +124,17 @@ function smoothScrollToAnchor(
 
 const stripSlash = (s: string) => s.replace(/\/+$/, "") || "/";
 
+/* Desktop nav items share one width (fits the widest, "Integrations" + its
+   chevron) so the row reads as a single group of equal buttons. */
+const NAV_ITEM_WIDTH = "inline-flex h-[calc(42*var(--fx))] w-[calc(160*var(--fx))] items-center justify-center";
+
 function NavLink({ label, href, demo }: NavItem) {
   const pathname = usePathname();
   const path = href.split("#")[0] || "/";
   // Only page-level links (not home-section anchors) get the active pill.
   const active = !demo && path !== "/" && stripSlash(pathname) === stripSlash(path);
 
-  const className = `whitespace-nowrap rounded-full border-2 px-[calc(16*var(--fx))] py-[calc(8*var(--fx))] text-center font-body text-[calc(19*var(--fx))] leading-[110%] text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream ${active ? "border-cream font-bold" : "border-transparent font-normal"
+  const className = `${NAV_ITEM_WIDTH} whitespace-nowrap rounded-full border-2 py-[calc(8*var(--fx))] text-center font-body text-[calc(19*var(--fx))] leading-[110%] text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream ${active ? "border-cream font-bold" : "border-transparent font-normal"
     }`;
 
   // Demo items open the Calendly popup instead of navigating.
@@ -244,7 +248,7 @@ export default function Header() {
             <div className="group">
               <button
                 type="button"
-                className="flex items-center gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-[calc(16*var(--fx))] py-[calc(8*var(--fx))] text-center font-body text-[calc(19*var(--fx))] font-normal leading-[110%] text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream"
+                className={`${NAV_ITEM_WIDTH} gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent py-[calc(8*var(--fx))] text-center font-body text-[calc(19*var(--fx))] font-normal leading-[110%] text-cream mix-blend-luminosity transition-all duration-200 hover:border-cream`}
               >
                 Integrations
                 <svg
@@ -309,7 +313,7 @@ export default function Header() {
             <button
               type="button"
               onClick={() => void openCalendly()}
-              className="whitespace-nowrap rounded-full bg-brand-orange px-[calc(20*var(--fx))] py-[calc(10*var(--fx))] text-center font-body text-[calc(18*var(--fx))] font-semibold leading-[110%] text-cream transition-colors duration-200 hover:bg-brand-orange/90"
+              className={`${NAV_ITEM_WIDTH} whitespace-nowrap rounded-full border-2 border-transparent bg-brand-orange py-[calc(8*var(--fx))] text-center font-body text-[calc(18*var(--fx))] font-semibold leading-[110%] text-cream transition-colors duration-200 hover:bg-brand-orange/90`}
             >
               Book a demo
             </button>
@@ -385,7 +389,7 @@ export default function Header() {
         {/* Sits 12px below the 80px header, inset by the same 24px gutter the
             header uses; max-height leaves the same gap at the bottom. */}
         <nav
-          className={`absolute inset-x-6 top-[92px] max-h-[calc(100vh-104px)] origin-top overflow-y-auto rounded-[28px] border border-white/12 bg-[#221a29]/80 shadow-[0_24px_60px_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-all duration-300 ease-out ${menuOpen
+          className={`absolute inset-x-6 top-[92px] max-h-[calc(100vh-104px)] origin-top overflow-y-auto rounded-card border border-white/12 bg-[#221a29]/80 shadow-[0_24px_60px_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-all duration-300 ease-out ${menuOpen
               ? "visible translate-y-0 opacity-100"
               : "invisible -translate-y-3 opacity-0"
             }`}

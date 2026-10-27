@@ -89,7 +89,7 @@ export default function Contact() {
         {/* Form card */}
         <form
           onSubmit={onSubmit}
-          className="reveal reveal-up w-full rounded-[22px] border border-white/10 bg-[#4A4345] p-6 lg:w-[calc(850*var(--fx))] lg:shrink-0 md:rounded-[calc(28*var(--fx))] md:p-[calc(58*var(--fx))]"
+          className="reveal reveal-up w-full rounded-card border border-white/10 bg-[#4A4345] p-6 lg:w-[calc(850*var(--fx))] lg:shrink-0 md:p-[calc(58*var(--fx))]"
           style={{ "--reveal-delay": "0.1s" } as React.CSSProperties}
         >
           {status === "submitted" ? (

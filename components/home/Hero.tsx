@@ -39,15 +39,14 @@ export default async function Hero() {
       <div className="relative z-10 flex w-full flex-col items-center justify-end gap-5 px-6 pt-[164px] text-center text-cream desk-tall:gap-6 desk-tall:pt-28 desk-short:gap-4 desk-short:pt-28 md:min-h-[calc(100svh-330px)] md:pt-24">
         {/* Headline — the page's single H1. */}
         <h1 className="m-0 max-w-[1000px] font-serif text-[32px] font-bold! leading-[105%] tracking-tight text-cream sm:max-w-[calc(1000*var(--fx))] sm:text-[calc(72*var(--fx))]">
-          Stop losing revenue
-          <br />
-          over the <span className="md:text-brand-orange">phone</span>
+          Grow sales from <br/> the calls you already get.
         </h1>
 
         {/* Subtitle */}
-        <p className="font-body w-full max-w-[800px] text-[16px] font-normal leading-[150%] text-cream/90 sm:max-w-[calc(800*var(--fx))] sm:text-[calc(24*var(--fx))]">
+        <p className="font-body w-full max-w-[800px] text-[16px] font-normal leading-[150%] text-cream/90 sm:max-w-[calc(800*var(--fx))] sm:text-[calc(20*var(--fx))]">
           A fully managed AI Concierge that books reservations, takes orders
-          and handles catering. Trained for your brand, run by our team.
+          and handles catering. Trained for your brand, run by our team. 
+          Free to try. No sign-up. Under 30 seconds.
         </p>
 
         {/* Search + primary CTA, with "Talk to our team" beside it.
@@ -60,18 +59,8 @@ export default async function Hero() {
               to a plain button. Results drop down inline, in the page, right
               below the bar — no modal takeover. */}
           <HeroSearch ctaLabel={label} />
-
-          {/* Secondary CTA — auto width at every size so it reads as the
-              quieter of the two actions, the way it does on desktop. */}
-          <BookDemoButton className="mt-1 flex h-[50px] w-auto shrink-0 items-center justify-center self-center rounded-full border border-white/40 bg-[#f6f3ec]/10 px-8 text-[16px] font-semibold text-cream shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-lg transition-all duration-300 sm:mt-0 sm:h-[54px] sm:self-auto hover:bg-[#f6f3ec]/20">
-            Talk to our team
-          </BookDemoButton>
         </div>
 
-        {/* Tertiary note under the search. */}
-        <p className="font-body text-[14px] font-medium text-cream/70 underline underline-offset-2 transition-colors hover:text-cream">
-          Free to try. No sign-up. Under 30 seconds.
-        </p>
       </div>
 
       {/* Host player */}
