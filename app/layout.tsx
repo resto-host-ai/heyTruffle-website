@@ -88,9 +88,9 @@ export const metadata: Metadata = {
   // Plain-string default title: it covers the home page and any route that
   // sets no title of its own. Existing pages already append "— heytruffle" to
   // their own titles, so no template is used (it would double the suffix).
-  title: "heytruffle, the fully managed AI Concierge for restaurants",
+  title: "heytruffle, AI phone answering for restaurant groups",
   description:
-    "heytruffle answers your restaurant's phones with an AI Concierge trained for your brand. Reservations, orders, catering and events, tuned every week.",
+    "An AI phone answering system for restaurant groups. We build it for your brand, run it, and tune it every week. Reservations, orders, catering and events.",
   alternates: { canonical: "/" },
   verification: {
     google: "A7AGiI5P2uFC-8t5bwNa0gRWdbT5sI5WZpVVQCgZRW0",
@@ -99,16 +99,16 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "heytruffle",
-    title: "heytruffle, the fully managed AI Concierge for restaurants",
+    title: "heytruffle, AI phone answering for restaurant groups",
     description:
-      "heytruffle answers your restaurant's phones with an AI Concierge trained for your brand. Reservations, orders, catering and events, tuned every week.",
+      "An AI phone answering system for restaurant groups. We build it for your brand, run it, and tune it every week. Reservations, orders, catering and events.",
     url: "https://heytruffle.ai/",
   },
   twitter: {
     card: "summary_large_image",
-    title: "heytruffle, the fully managed AI Concierge for restaurants",
+    title: "heytruffle, AI phone answering for restaurant groups",
     description:
-      "heytruffle answers your restaurant's phones with an AI Concierge trained for your brand. Reservations, orders, catering and events, tuned every week.",
+      "An AI phone answering system for restaurant groups. We build it for your brand, run it, and tune it every week. Reservations, orders, catering and events.",
   },
 };
 
